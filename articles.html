@@ -449,6 +449,7 @@
       .articles-grid { grid-template-columns: 1fr; }
     }
   </style>
+  <link rel="stylesheet" href="mobile.css">
 </head>
 <body>
   <div class="shell">
@@ -459,6 +460,7 @@
         <span>AZHY</span>
       </div>
 
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">&#9776;</button>
       <nav class="nav">
         <a class="nav-item" href="index.html">
           <span class="icon-box">H</span>
@@ -1181,6 +1183,19 @@
         });
       });
     });
+  </script>
+  <script>
+    (function () {
+      var toggle = document.getElementById('navToggle');
+      var nav = document.querySelector('.nav');
+      var bottom = document.querySelector('.sidebar-bottom');
+      if (!toggle) return;
+      toggle.addEventListener('click', function () {
+        var open = nav.classList.toggle('open');
+        if (bottom) bottom.classList.toggle('open', open);
+        toggle.innerHTML = open ? '&#10005;' : '&#9776;';
+      });
+    })();
   </script>
 </body>
 </html>
