@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mikhail Azhyshchev - CV</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sky: #61b5e8;
+      --mint: #b9ddb7;
+      --cream: #f8f0dc;
+      --yellow: #f5c84b;
+      --pink: #efb2d5;
+      --blue: #d8ebff;
+      --peach: #f7d4b1;
+      --coral: #ff9a77;
+      --rose: #ecb0c4;
+      --black: #111111;
+      --white: #ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--black);
+      background: linear-gradient(120deg,
+        var(--sky) 0 34%,
+        var(--peach) 34% 55%,
+        var(--coral) 55% 72%,
+        var(--rose) 72% 100%);
+      padding: 48px 24px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── SHELL ── */
+    .shell {
+      width: min(1320px, 100%);
+      margin: 0 auto;
+      border: 3px solid var(--black);
+      box-shadow: 12px 12px 0 var(--black);
+      background: var(--mint);
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      min-height: 820px;
+      overflow: hidden;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      border-right: 3px solid var(--black);
+      padding: 20px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin-bottom: 8px;
+    }
+
+    .brand-badge,
+    .icon-box,
+    .social-link,
+    .top-icon,
+    .avatar-chip {
+      border: 2px solid var(--black);
+      background: var(--white);
+      box-shadow: 3px 3px 0 var(--black);
+    }
+
+    .brand-badge {
+      width: 42px; height: 34px;
+      display: grid; place-items: center;
+      font-size: 1rem; font-weight: 800;
+    }
+
+    .nav { display: flex; flex-direction: column; gap: 8px; }
+
+    .nav-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 11px 12px;
+      font-size: 0.9rem; font-weight: 700;
+      border: 2px solid transparent;
+      transition: transform 0.18s ease;
+    }
+
+    .nav-item:hover,
+    .social-link:hover,
+    .dl-btn:hover { transform: translate(-2px, -2px); }
+
+    .nav-item.active {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .icon-box {
+      width: 24px; height: 24px;
+      display: grid; place-items: center;
+      box-shadow: none;
+      font-size: 0.75rem; font-weight: 800;
+    }
+
+    .nav-item.active .icon-box {
+      background: var(--yellow);
+      color: var(--black);
+    }
+
+    .sidebar-bottom {
+      margin-top: auto;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+
+    .socials { display: flex; gap: 10px; padding-top: 8px; }
+
+    .social-link,
+    .top-icon,
+    .avatar-chip {
+      width: 42px; height: 42px;
+      display: grid; place-items: center;
+      font-size: 0.8rem; font-weight: 800;
+    }
+
+    /* ── MAIN ── */
+    .main {
+      background: var(--cream);
+      padding: 22px;
+    }
+
+    .panel {
+      height: 100%;
+      border: 2px solid var(--black);
+      background: rgba(255,255,255,0.2);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 16px;
+    }
+
+    .page-title {
+      font-size: clamp(2.3rem, 4vw, 3.8rem);
+      font-weight: 800; line-height: 0.95;
+      letter-spacing: -0.05em;
+    }
+
+    .section-lead {
+      max-width: 60ch;
+      font-size: 0.92rem; line-height: 1.6;
+      margin-top: 8px;
+    }
+
+    .top-actions {
+      display: flex; align-items: center;
+      gap: 10px; flex-shrink: 0;
+    }
+
+    /* ── META STRIP ── */
+    .meta-strip {
+      display: flex; gap: 12px; flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .meta-chip {
+      padding: 6px 14px;
+      border: 2px solid var(--black);
+      background: var(--white);
+      box-shadow: 3px 3px 0 var(--black);
+      font-size: 0.78rem; font-weight: 700;
+    }
+
+    .meta-chip.yellow { background: var(--yellow); }
+
+    /* ── DOWNLOAD HERO ── */
+    .dl-hero {
+      border: 3px solid var(--black);
+      background: var(--yellow);
+      box-shadow: 6px 6px 0 var(--black);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .dl-hero-text strong {
+      display: block;
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .dl-hero-text p {
+      font-size: 0.85rem;
+      line-height: 1.6;
+      max-width: 55ch;
+    }
+
+    .dl-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 22px;
+      border: 2px solid var(--black);
+      background: var(--black);
+      color: var(--white);
+      box-shadow: 5px 5px 0 rgba(17,17,17,0.3);
+      font: inherit; font-size: 0.95rem; font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      text-decoration: none;
+    }
+
+    .dl-btn:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 8px 8px 0 rgba(17,17,17,0.3);
+    }
+
+    .dl-btn svg { flex-shrink: 0; }
+
+    /* ── PDF FRAME ── */
+    .pdf-wrap {
+      border: 3px solid var(--black);
+      box-shadow: 6px 6px 0 var(--black);
+      background: var(--white);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .pdf-frame {
+      width: 100%;
+      height: 820px;
+      border: none;
+      display: block;
+    }
+
+    /* Fallback when PDF doesn't render */
+    .pdf-fallback {
+      display: none;
+      padding: 48px 32px;
+      text-align: center;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .pdf-fallback p {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      opacity: 0.7;
+      max-width: 40ch;
+    }
+
+    .pdf-wrap.fallback .pdf-frame { display: none; }
+    .pdf-wrap.fallback .pdf-fallback { display: flex; }
+
+    /* ── FOOTER NOTE ── */
+    .footer-note {
+      display: flex; gap: 12px; flex-wrap: wrap;
+      align-items: center;
+      font-size: 0.78rem;
+      opacity: 0.6;
+    }
+
+    .footer-note span::before { content: '· '; }
+    .footer-note span:first-child::before { content: ''; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+      .shell { grid-template-columns: 220px 1fr; }
+      .pdf-frame { height: 680px; }
+    }
+
+    @media (max-width: 820px) {
+      body { padding: 20px 12px; }
+      .shell { grid-template-columns: 1fr; box-shadow: 8px 8px 0 var(--black); }
+      .sidebar { border-right: none; border-bottom: 3px solid var(--black); }
+      .main { padding: 14px; }
+      .topbar { flex-direction: column; }
+      .dl-hero { flex-direction: column; }
+      .pdf-frame { height: 500px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-badge">&lt;/&gt;</div>
+        <span>AZHY</span>
+      </div>
+
+      <nav class="nav">
+        <a class="nav-item" href="index.html">
+          <span class="icon-box">H</span>
+          <span>Home</span>
+        </a>
+        <a class="nav-item" href="experience.html">
+          <span class="icon-box">E</span>
+          <span>Experience</span>
+        </a>
+        <a class="nav-item" href="projects.html">
+          <span class="icon-box">P</span>
+          <span>Projects</span>
+        </a>
+        <a class="nav-item" href="articles.html">
+          <span class="icon-box">A</span>
+          <span>Articles</span>
+        </a>
+        <a class="nav-item" href="skills.html">
+          <span class="icon-box">S</span>
+          <span>Skills</span>
+        </a>
+        <a class="nav-item" href="contact.html">
+          <span class="icon-box">C</span>
+          <span>Contact</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <a class="nav-item" href="../01_Profile/CV.pdf" download>
+          <span class="icon-box">&#8595;</span>
+          <span>Download CV</span>
+        </a>
+        <a class="nav-item" href="mailto:azhyshchev@gmail.com">
+          <span class="icon-box">@</span>
+          <span>Email</span>
+        </a>
+        <div class="socials">
+          <a class="social-link" href="https://www.linkedin.com/in/azhyshchev/" target="_blank" rel="noreferrer">in</a>
+          <a class="social-link" href="https://github.com/Azhy34" target="_blank" rel="noreferrer">gh</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+      <div class="panel">
+
+        <!-- Topbar -->
+        <div class="topbar">
+          <div>
+            <h1 class="page-title">Curriculum<br>Vitae</h1>
+            <p class="section-lead">AI-Enabled Automation Engineer with 10+ years across B2B operations and production-grade AI development. Munich, Germany.</p>
+          </div>
+        </div>
+
+        <!-- Meta chips -->
+        <div class="meta-strip">
+          <span class="meta-chip yellow">Updated: April 2026</span>
+          <span class="meta-chip">Language: English</span>
+          <span class="meta-chip">Format: A4 PDF</span>
+          <span class="meta-chip">Munich, Germany</span>
+        </div>
+
+        <!-- Download hero -->
+        <div class="dl-hero">
+          <div class="dl-hero-text">
+            <strong>Mikhail Azhyshchev — AI-Enabled Automation Engineer</strong>
+            <p>10+ years of B2B operations combined with code-first AI development. Hybrid RAG pipelines, agentic workflows, process automation — built in VS Code, not drag-and-drop tools.</p>
+          </div>
+          <a class="dl-btn" href="../01_Profile/CV.pdf" download="CV_Mikhail_Azhyshchev.pdf">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Download PDF
+          </a>
+        </div>
+
+        <!-- PDF Preview -->
+        <div class="pdf-wrap" id="pdfWrap">
+          <iframe
+            class="pdf-frame"
+            id="pdfFrame"
+            src="../01_Profile/CV.pdf"
+            title="Mikhail Azhyshchev — Curriculum Vitae">
+          </iframe>
+          <div class="pdf-fallback">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+            </svg>
+            <p>PDF preview is not available in this browser. Download the file to view it.</p>
+            <a class="dl-btn" href="../01_Profile/CV.pdf" download="CV_Mikhail_Azhyshchev.pdf">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              Download PDF
+            </a>
+          </div>
+        </div>
+
+        <!-- Footer note -->
+        <div class="footer-note">
+          <span>PDF generated from CV.html</span>
+          <span>Available in English</span>
+          <span>Open to hybrid roles in Munich</span>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Show fallback if iframe fails to load PDF
+    const frame = document.getElementById('pdfFrame');
+    const wrap = document.getElementById('pdfWrap');
+
+    frame.addEventListener('error', () => {
+      wrap.classList.add('fallback');
+    });
+
+    // Some browsers block iframe PDF — detect via load timeout
+    let loaded = false;
+    frame.addEventListener('load', () => { loaded = true; });
+    setTimeout(() => {
+      if (!loaded) wrap.classList.add('fallback');
+    }, 4000);
+  </script>
+</body>
+</html>

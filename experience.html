@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mikhail Azhyshchev - Experience</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sky: #61b5e8;
+      --mint: #b9ddb7;
+      --cream: #f8f0dc;
+      --yellow: #f5c84b;
+      --pink: #efb2d5;
+      --blue: #d8ebff;
+      --peach: #f7d4b1;
+      --coral: #ff9a77;
+      --rose: #ecb0c4;
+      --black: #111111;
+      --white: #ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--black);
+      background: linear-gradient(120deg, var(--sky) 0 34%, var(--peach) 34% 55%, var(--coral) 55% 72%, var(--rose) 72% 100%);
+      padding: 48px 24px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── SHELL ── */
+    .shell {
+      width: min(1320px, 100%);
+      margin: 0 auto;
+      border: 3px solid var(--black);
+      box-shadow: 12px 12px 0 var(--black);
+      background: var(--mint);
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      min-height: 820px;
+      overflow: hidden;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      border-right: 3px solid var(--black);
+      padding: 20px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin-bottom: 8px;
+    }
+
+    .brand-badge,
+    .icon-box,
+    .social-link,
+    .chip,
+    .role-badge {
+      border: 2px solid var(--black);
+      background: var(--white);
+      box-shadow: 3px 3px 0 var(--black);
+    }
+
+    .brand-badge {
+      width: 42px; height: 34px;
+      display: grid; place-items: center;
+      font-size: 1rem; font-weight: 800;
+    }
+
+    .nav { display: flex; flex-direction: column; gap: 8px; }
+
+    .nav-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 11px 12px;
+      font-size: 0.9rem; font-weight: 700;
+      border: 2px solid transparent;
+      transition: transform 0.18s ease;
+    }
+
+    .nav-item:hover,
+    .social-link:hover,
+    .action-btn:hover,
+    .mini-btn:hover,
+    .chip:hover { transform: translate(-2px, -2px); }
+
+    .nav-item.active { background: var(--black); color: var(--white); }
+
+    .icon-box {
+      width: 24px; height: 24px;
+      display: grid; place-items: center;
+      box-shadow: none;
+      font-size: 0.75rem; font-weight: 800;
+    }
+
+    .nav-item.active .icon-box { background: var(--yellow); color: var(--black); }
+
+    .sidebar-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+
+    .socials { display: flex; gap: 10px; padding-top: 8px; }
+
+    .social-link {
+      width: 42px; height: 42px;
+      display: grid; place-items: center;
+      font-size: 0.8rem; font-weight: 800;
+    }
+
+    /* ── MAIN ── */
+    .main { background: var(--cream); padding: 22px; }
+
+    .panel {
+      height: 100%;
+      border: 2px solid var(--black);
+      background: rgba(255,255,255,0.2);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .page-title {
+      font-size: clamp(2.3rem, 4vw, 3.8rem);
+      font-weight: 800; line-height: 0.95;
+      letter-spacing: -0.05em;
+    }
+
+    .section-lead {
+      max-width: 72ch;
+      font-size: 0.95rem; line-height: 1.6;
+      margin-top: 8px;
+    }
+
+    /* ── SUMMARY STRIP ── */
+    .summary-strip {
+      border: 3px solid var(--black);
+      background: var(--white);
+      box-shadow: 6px 6px 0 var(--black);
+      padding: 16px;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .summary-strip p,
+    .summary-strip li { font-size: 0.86rem; line-height: 1.55; }
+
+    .summary-strip ul {
+      padding-left: 18px;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+
+    /* ── TIMELINE / CARDS ── */
+    .timeline { display: flex; flex-direction: column; gap: 16px; }
+
+    .experience-card {
+      border: 3px solid var(--black);
+      background: var(--white);
+      box-shadow: 6px 6px 0 var(--black);
+      padding: 18px;
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 18px;
+      align-items: start;
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .experience-card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 9px 9px 0 var(--black);
+    }
+
+    .experience-card.accent-yellow { background: #ffe17d; }
+    .experience-card.accent-blue   { background: #d8ebff; }
+    .experience-card.accent-pink   { background: #f8d2e7; }
+    .experience-card.accent-cream  { background: #fff9ec; }
+
+    .role-badge {
+      width: 92px; min-height: 92px;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      font-size: 1.1rem; font-weight: 800;
+      padding: 8px; background: var(--white);
+    }
+
+    .experience-body { display: flex; flex-direction: column; gap: 12px; }
+
+    .experience-head {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    }
+
+    .experience-title {
+      font-size: 1.35rem; line-height: 1.05;
+      font-weight: 800; letter-spacing: -0.04em;
+      margin-bottom: 6px;
+    }
+
+    .experience-meta { font-size: 0.8rem; line-height: 1.5; }
+
+    .date-badge {
+      border: 2px solid var(--black);
+      background: var(--white);
+      padding: 8px 10px;
+      font-size: 0.74rem; font-weight: 700;
+      box-shadow: 3px 3px 0 var(--black);
+      white-space: nowrap;
+    }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .chip {
+      padding: 7px 10px;
+      font-size: 0.72rem; font-weight: 700;
+      box-shadow: 3px 3px 0 var(--black);
+    }
+
+    .bullets { padding-left: 18px; display: flex; flex-direction: column; gap: 6px; }
+    .bullets li { font-size: 0.82rem; line-height: 1.55; }
+
+    .open-hint {
+      font-size: 0.72rem;
+      font-weight: 700;
+      opacity: 0.5;
+      margin-top: 4px;
+      display: block;
+    }
+
+    .mini-btn,
+    .action-btn {
+      border: 2px solid var(--black);
+      background: var(--white);
+      box-shadow: 4px 4px 0 var(--black);
+      padding: 12px 16px;
+      font: inherit; font-weight: 700;
+      display: inline-flex; align-items: center; justify-content: center;
+      cursor: pointer;
+    }
+
+    .action-btn.dark { background: var(--black); color: var(--white); }
+
+    .footer-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    /* ── MODAL ── */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(17,17,17,0.72);
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      z-index: 100;
+      padding: 40px 16px;
+      overflow-y: auto;
+    }
+
+    .overlay.open { display: flex; }
+
+    .modal {
+      width: min(860px, 100%);
+      background: var(--cream);
+      border: 3px solid var(--black);
+      box-shadow: 12px 12px 0 var(--black);
+      margin: auto;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-accent { height: 6px; }
+
+    .modal-header {
+      padding: 20px 24px;
+      border-bottom: 3px solid var(--black);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .modal-title {
+      font-size: 1.4rem; font-weight: 800;
+      letter-spacing: -0.04em; line-height: 1.1;
+    }
+
+    .modal-meta { font-size: 0.8rem; opacity: 0.65; margin-top: 6px; line-height: 1.5; }
+
+    .modal-close {
+      width: 36px; height: 36px;
+      border: 2px solid var(--black);
+      background: var(--white);
+      box-shadow: 3px 3px 0 var(--black);
+      cursor: pointer;
+      font: inherit; font-weight: 800; font-size: 1.1rem;
+      display: grid; place-items: center;
+      flex-shrink: 0;
+      transition: transform 0.15s;
+    }
+
+    .modal-close:hover { transform: translate(-2px,-2px); }
+
+    .modal-body {
+      padding: 24px;
+      display: flex; flex-direction: column; gap: 20px;
+    }
+
+    .modal-section h3 {
+      font-size: 0.72rem; font-weight: 800;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      opacity: 0.5; margin-bottom: 10px;
+    }
+
+    .modal-section ul {
+      padding-left: 18px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+
+    .modal-section li,
+    .modal-section p { font-size: 0.86rem; line-height: 1.6; }
+
+    .modal-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .modal-chip {
+      padding: 6px 10px;
+      border: 2px solid var(--black);
+      background: var(--white);
+      box-shadow: 3px 3px 0 var(--black);
+      font-size: 0.72rem; font-weight: 700;
+    }
+
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 3px solid var(--black);
+      display: flex; gap: 10px; flex-wrap: wrap;
+    }
+
+    .modal-btn {
+      padding: 10px 18px;
+      border: 2px solid var(--black);
+      background: var(--black);
+      color: var(--white);
+      box-shadow: 4px 4px 0 rgba(0,0,0,0.25);
+      font: inherit; font-weight: 700; font-size: 0.82rem;
+      cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center;
+      transition: transform 0.15s;
+    }
+
+    .modal-btn:hover { transform: translate(-2px,-2px); }
+    .modal-btn.light { background: var(--white); color: var(--black); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+      .shell { grid-template-columns: 220px 1fr; }
+      .summary-strip { grid-template-columns: 1fr; }
+      .experience-card { grid-template-columns: 96px 1fr; }
+    }
+
+    @media (max-width: 820px) {
+      body { padding: 20px 12px; }
+      .shell { grid-template-columns: 1fr; box-shadow: 8px 8px 0 var(--black); }
+      .sidebar { border-right: none; border-bottom: 3px solid var(--black); }
+      .main { padding: 14px; }
+      .experience-card { grid-template-columns: 1fr; }
+      .role-badge { width: 72px; min-height: 72px; }
+      .overlay { padding: 16px; }
+    }
+
+    @media (max-width: 560px) {
+      .panel { padding: 12px; }
+      .experience-head,
+      .footer-actions { flex-direction: column; align-items: stretch; }
+      .mini-btn, .action-btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-badge">&lt;/&gt;</div>
+        <span>AZHY</span>
+      </div>
+
+      <nav class="nav">
+        <a class="nav-item" href="index.html">
+          <span class="icon-box">H</span>
+          <span>Home</span>
+        </a>
+        <a class="nav-item active" href="experience.html">
+          <span class="icon-box">E</span>
+          <span>Experience</span>
+        </a>
+        <a class="nav-item" href="projects.html">
+          <span class="icon-box">P</span>
+          <span>Projects</span>
+        </a>
+        <a class="nav-item" href="articles.html">
+          <span class="icon-box">A</span>
+          <span>Articles</span>
+        </a>
+        <a class="nav-item" href="skills.html">
+          <span class="icon-box">S</span>
+          <span>Skills</span>
+        </a>
+        <a class="nav-item" href="contact.html">
+          <span class="icon-box">C</span>
+          <span>Contact</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <a class="nav-item" href="../01_Profile/CV.pdf" download>
+          <span class="icon-box">CV</span>
+          <span>Download CV</span>
+        </a>
+        <a class="nav-item" href="mailto:azhyshchev@gmail.com">
+          <span class="icon-box">@</span>
+          <span>Email</span>
+        </a>
+        <div class="socials">
+          <a class="social-link" href="https://www.linkedin.com/in/azhyshchev/" target="_blank" rel="noreferrer">in</a>
+          <a class="social-link" href="https://github.com/Azhy34" target="_blank" rel="noreferrer">gh</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+      <div class="panel">
+
+        <!-- Title -->
+        <div>
+          <h1 class="page-title">Experience</h1>
+          <p class="section-lead">10+ years across B2B operations, logistics, and commercial execution — now applied to AI systems work. Click any role to see full detail.</p>
+        </div>
+
+        <!-- Summary strip -->
+        <section class="summary-strip">
+          <div>
+            <p><strong>Career direction:</strong> AI-Enabled Automation Engineer with 10+ years across B2B operations, procurement, logistics, and commercial execution. The transition into AI systems work is grounded in real process ownership, stakeholder coordination, and end-to-end delivery.</p>
+          </div>
+          <div>
+            <ul>
+              <li>25+ client and business projects</li>
+              <li>15+ suppliers and service partners</li>
+              <li>Munich-based, open to hybrid roles</li>
+              <li>Business × tech translator mindset</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Timeline -->
+        <section class="timeline">
+
+          <!-- Card 1: AI Engineer -->
+          <article class="experience-card accent-yellow" data-modal="modal-ai">
+            <div class="role-badge">AI</div>
+            <div class="experience-body">
+              <div class="experience-head">
+                <div>
+                  <h2 class="experience-title">AI-Enabled Automation Engineer</h2>
+                  <div class="experience-meta">AZHYSHCHEV · Munich, Germany</div>
+                </div>
+                <div class="date-badge">Aug 2023 – Present</div>
+              </div>
+              <div class="chips">
+                <span class="chip">Hybrid RAG</span>
+                <span class="chip">AI agents</span>
+                <span class="chip">Workflow automation</span>
+                <span class="chip">Operations systems</span>
+              </div>
+              <ul class="bullets">
+                <li>Built production RAG agents, invoice pipelines, and AI-powered internal tools for B2B clients.</li>
+                <li>Code-first development: Python, TypeScript, LangGraph, Supabase, Gemini, GitHub Actions.</li>
+                <li>Owned P&amp;L, VAT reporting, and full business compliance in Germany.</li>
+              </ul>
+              <span class="open-hint">Click to expand full details →</span>
+            </div>
+          </article>
+
+          <!-- Card 2: VIBA -->
+          <article class="experience-card accent-blue" data-modal="modal-viba">
+            <div class="role-badge">MK</div>
+            <div class="experience-body">
+              <div class="experience-head">
+                <div>
+                  <h2 class="experience-title">Digital Marketing &amp; Operations Manager</h2>
+                  <div class="experience-meta">VIBA GmbH · Munich, Germany</div>
+                </div>
+                <div class="date-badge">Apr 2022 – Aug 2023</div>
+              </div>
+              <div class="chips">
+                <span class="chip">4K+ growth</span>
+                <span class="chip">Content automation</span>
+                <span class="chip">Retail operations</span>
+                <span class="chip">Procurement</span>
+              </div>
+              <ul class="bullets">
+                <li>Built full digital presence from zero: Instagram, Facebook, TikTok, Google Business Profile.</li>
+                <li>First automation pipeline: Google Apps Script + ChatGPT API for content production.</li>
+                <li>Managed procurement with Siemens, Bosch, Liebherr, Miele.</li>
+              </ul>
+              <span class="open-hint">Click to expand full details →</span>
+            </div>
+          </article>
+
+          <!-- Card 3: Black Sea Link -->
+          <article class="experience-card accent-pink" data-modal="modal-bsl">
+            <div class="role-badge">OP</div>
+            <div class="experience-body">
+              <div class="experience-head">
+                <div>
+                  <h2 class="experience-title">Head of Commercial Department</h2>
+                  <div class="experience-meta">Black Sea Link Ltd. · Odesa, Ukraine</div>
+                </div>
+                <div class="date-badge">Apr 2019 – Feb 2022</div>
+              </div>
+              <div class="chips">
+                <span class="chip">Team lead</span>
+                <span class="chip">KPI management</span>
+                <span class="chip">Business development</span>
+                <span class="chip">Stakeholders</span>
+              </div>
+              <ul class="bullets">
+                <li>Built and led a commercial department of 5 employees from scratch.</li>
+                <li>Expanded sales channels, developed forecasting and metrics tracking.</li>
+                <li>Maintained strategic relationships with international vendors and freight forwarders.</li>
+              </ul>
+              <span class="open-hint">Click to expand full details →</span>
+            </div>
+          </article>
+
+          <!-- Card 4: Earlier Logistics -->
+          <article class="experience-card accent-cream" data-modal="modal-logistics">
+            <div class="role-badge">LG</div>
+            <div class="experience-body">
+              <div class="experience-head">
+                <div>
+                  <h2 class="experience-title">Earlier Logistics &amp; Supply Chain Roles</h2>
+                  <div class="experience-meta">FMG Shipping and Forwarding, ITL Group · Ukraine</div>
+                </div>
+                <div class="date-badge">2012 – 2019</div>
+              </div>
+              <div class="chips">
+                <span class="chip">Multimodal transport</span>
+                <span class="chip">Warehouse ops</span>
+                <span class="chip">Export delivery</span>
+                <span class="chip">Fleet management</span>
+              </div>
+              <ul class="bullets">
+                <li>Cargo delivery from China and Europe to Ukraine — sea, rail, truck.</li>
+                <li>Launched a consolidation warehouse project for timber/grain export operations.</li>
+                <li>Managed container truck fleet and export documentation for port authorities.</li>
+              </ul>
+              <span class="open-hint">Click to expand full details →</span>
+            </div>
+          </article>
+
+        </section>
+
+        <!-- Footer actions -->
+        <div class="footer-actions">
+          <a class="action-btn dark" href="projects.html">View projects</a>
+          <a class="mini-btn" href="../01_Profile/CV.pdf" download>Download CV</a>
+          <a class="mini-btn" href="mailto:azhyshchev@gmail.com">Contact me</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ── MODALS ── -->
+
+  <!-- Modal: AI Engineer -->
+  <div class="overlay" id="modal-ai">
+    <div class="modal">
+      <div class="modal-accent" style="background:var(--yellow);"></div>
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">AI-Enabled Automation Engineer</div>
+          <div class="modal-meta">AZHYSHCHEV · Munich, Germany · Aug 2023 – Present · Freelance / Self-employed</div>
+        </div>
+        <button class="modal-close" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <p>AI-Enabled Automation Engineer with 10+ years across B2B operations, procurement, and supply chain, building code-first AI workflows and automation systems since 2022. Focused on removing manual bottlenecks and making businesses more efficient — from back-office process automation to agentic AI workflows, built in VS Code and shipped to production.</p>
+        </div>
+        <div class="modal-section">
+          <h3>Commercial &amp; operational delivery</h3>
+          <ul>
+            <li>Lead end-to-end B2B commercial delivery in Germany: client acquisition, negotiations, contract execution, procurement, supplier coordination, and partner network development — 25+ client projects delivered.</li>
+            <li>Built a partner network of 15+ suppliers and service providers, applying hands-on domain expertise directly in automation projects.</li>
+            <li>Own internal financial reporting automation for VAT/Umsatzsteuer and maintain full P&amp;L responsibility and German business compliance.</li>
+          </ul>
+        </div>
+        <div class="modal-section">
+          <h3>AI systems &amp; automation built</h3>
+          <ul>
+            <li>Production RAG Sales Agent for Polish e-commerce (da-vinchi.pl): LangGraph ReAct + Supabase pgvector + FastAPI. 355 SKUs, zero hallucinated prices, buyer-scenario tested.</li>
+            <li>Invoice Automation Pipeline: Gmail → PDF parsing → Gemini 2.5 Flash → Google Drive + Supabase. Weekly manual routine eliminated.</li>
+            <li>AI Image Composer: React 19 + Gemini multimodal for a creative studio. Identity replacement in 30 seconds instead of hours.</li>
+            <li>Hybrid RAG Telegram Bot: pgvector for structured data + Gemini File Search for semantic context. ~90% API cost reduction vs hot-cache approach.</li>
+            <li>QA framework for RAG pipelines: buyer-scenario integration tests, 98% data optimisation, GitHub Actions CI.</li>
+          </ul>
+        </div>
+        <div class="modal-section">
+          <h3>Tech stack</h3>
+          <div class="modal-chips">
+            <span class="modal-chip">Python</span>
+            <span class="modal-chip">TypeScript</span>
+            <span class="modal-chip">LangGraph</span>
+            <span class="modal-chip">FastAPI</span>
+            <span class="modal-chip">Supabase / pgvector</span>
+            <span class="modal-chip">Gemini 2.5 Flash</span>
+            <span class="modal-chip">GitHub Actions</span>
+            <span class="modal-chip">React 19</span>
+            <span class="modal-chip">Telegram Bot API</span>
+            <span class="modal-chip">n8n · Make.com</span>
+            <span class="modal-chip">Railway / Vercel</span>
+            <span class="modal-chip">Claude Code</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="modal-btn" href="projects.html">View projects</a>
+        <a class="modal-btn light" href="articles.html">Case studies</a>
+        <a class="modal-btn light" href="../01_Profile/CV.pdf" download>Download CV</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: VIBA -->
+  <div class="overlay" id="modal-viba">
+    <div class="modal">
+      <div class="modal-accent" style="background:var(--blue);"></div>
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">Digital Marketing &amp; Operations Manager</div>
+          <div class="modal-meta">VIBA GmbH · Munich, Germany · Apr 2022 – Aug 2023 · Full-time</div>
+        </div>
+        <button class="modal-close" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <p>Retail startup launching a German home appliances store in Munich. Owned digital marketing and procurement operations, reporting directly to the business owner. This role was the bridge from commercial operations into AI-powered automation — and became the catalyst for the full transition into AI systems work.</p>
+        </div>
+        <div class="modal-section">
+          <h3>Digital marketing &amp; AI content automation</h3>
+          <ul>
+            <li>Built the brand's digital presence from zero across Instagram, Facebook, TikTok, Google Business Profile, and WordPress — publishing reels and carousels daily across all platforms.</li>
+            <li>Grew Instagram to 4K+ followers through personally conceptualised and edited video content — a single reel reached 1M+ views and drove consistent client inquiries and sales calls.</li>
+            <li>Managed paid campaigns (Google Ads, Meta Ads) with keyword targeting; optimised for local SEO and Google Maps visibility.</li>
+            <li>Designed and automated an AI-supported content production workflow using Google Apps Script + ChatGPT API: keyword analysis → content briefs → automated cross-platform distribution. Weekly and monthly content plans ran with minimal manual effort.</li>
+          </ul>
+        </div>
+        <div class="modal-section">
+          <h3>Procurement &amp; vendor management</h3>
+          <ul>
+            <li>Coordinated procurement and order management across supplier systems for Siemens, Bosch, Liebherr, and Miele.</li>
+            <li>Supported store launch from zero to a fully operational, profitable business.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="modal-btn light" href="../01_Profile/CV.pdf" download>Download CV</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Black Sea Link -->
+  <div class="overlay" id="modal-bsl">
+    <div class="modal">
+      <div class="modal-accent" style="background:var(--pink);"></div>
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">Head of Commercial Department</div>
+          <div class="modal-meta">Black Sea Link Ltd. · Odesa, Ukraine · Apr 2019 – Feb 2022 · Full-time</div>
+        </div>
+        <button class="modal-close" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <p>Recruited to build and lead a new commercial department from scratch at a freight forwarding and logistics company. Responsible for team leadership, sales strategy, performance management, and international partnership development.</p>
+        </div>
+        <div class="modal-section">
+          <h3>Team leadership</h3>
+          <ul>
+            <li>Built and managed a commercial department of 5 employees across sales coordination, forecasting, and client relationships.</li>
+            <li>Conducted hiring, onboarding, and implemented KPI-based performance tracking across the team.</li>
+          </ul>
+        </div>
+        <div class="modal-section">
+          <h3>Sales &amp; business development</h3>
+          <ul>
+            <li>Developed new sales channels and expanded the client base through structured forecasting and metrics tracking.</li>
+            <li>Consolidated quarterly sales results and annual forecasts for management reporting.</li>
+            <li>Improved service delivery and cost optimization across sea, rail, air transport, and customs-related operations.</li>
+          </ul>
+        </div>
+        <div class="modal-section">
+          <h3>Partnership development</h3>
+          <ul>
+            <li>Established and maintained strategic relationships with international vendors, shipping lines, and freight forwarders.</li>
+            <li>Negotiated vendor contracts and maintained partner network across international logistics service providers.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="modal-btn light" href="../01_Profile/CV.pdf" download>Download CV</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Earlier Logistics -->
+  <div class="overlay" id="modal-logistics">
+    <div class="modal">
+      <div class="modal-accent" style="background:var(--mint);"></div>
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">Earlier Logistics &amp; Supply Chain Roles</div>
+          <div class="modal-meta">FMG Shipping and Forwarding, ITL Group · Ukraine · 2012 – 2019</div>
+        </div>
+        <button class="modal-close" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <p>Seven years of progressive logistics and supply chain roles across freight forwarding, warehousing, export operations, and fleet management. Foundation for all subsequent commercial, operations, and process management work.</p>
+        </div>
+        <div class="modal-section">
+          <h3>International Logistics &amp; Supply Chain Manager · Sep 2017 – Feb 2019</h3>
+          <div class="modal-meta" style="margin-bottom:10px;">FMG Shipping and Forwarding · Ukraine</div>
+          <ul>
+            <li>Led warehouse and export logistics for timber and grain, coordinating foreign trade contracts, multimodal transport, customs solutions, and shipment documentation.</li>
+            <li>Managed a team of 3 employees; contributed to a profitable warehouse operation and consistent on-time delivery performance.</li>
+          </ul>
+        </div>
+        <div class="modal-section">
+          <h3>Global Logistics Manager · Apr 2015 – Sep 2017</h3>
+          <div class="modal-meta" style="margin-bottom:10px;">FMG Shipping and Forwarding · Ukraine</div>
+          <ul>
+            <li>Managed import and export cargo deliveries from China and Europe to Ukraine — negotiating with shipping lines, freight forwarders, trucking companies, and railway operators.</li>
+            <li>Optimised transport routes and supported consolidation warehouse operations for grain and timber exports.</li>
+          </ul>
+        </div>
+        <div class="modal-section">
+          <h3>International Logistics Manager · Jul 2012 – Mar 2015</h3>
+          <div class="modal-meta" style="margin-bottom:10px;">ITL Group · Ukraine</div>
+          <ul>
+            <li>Managed a fleet of 5 container trucks, prepared registration documents for shipping lines and Ukrainian seaports.</li>
+            <li>Coordinated export cargo operations and international shipments.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="modal-btn light" href="../01_Profile/CV.pdf" download>Download CV</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Open modal on card click
+    document.querySelectorAll('.experience-card[data-modal]').forEach(card => {
+      card.addEventListener('click', () => {
+        const id = card.dataset.modal;
+        document.getElementById(id).classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    // Close modal on X button or overlay click
+    document.querySelectorAll('.overlay').forEach(overlay => {
+      overlay.addEventListener('click', e => {
+        if (e.target === overlay) closeAll();
+      });
+      overlay.querySelector('.modal-close').addEventListener('click', closeAll);
+    });
+
+    // Close on ESC
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeAll();
+    });
+
+    function closeAll() {
+      document.querySelectorAll('.overlay.open').forEach(o => o.classList.remove('open'));
+      document.body.style.overflow = '';
+    }
+  </script>
+</body>
+</html>

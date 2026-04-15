@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mikhail Azhyshchev - Projects</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sky: #61b5e8;
+      --mint: #b9ddb7;
+      --cream: #f8f0dc;
+      --yellow: #f5c84b;
+      --pink: #efb2d5;
+      --blue: #d8ebff;
+      --peach: #f7d4b1;
+      --coral: #ff9a77;
+      --rose: #ecb0c4;
+      --black: #111111;
+      --white: #ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--black);
+      background: linear-gradient(120deg, var(--sky) 0 34%, var(--peach) 34% 55%, var(--coral) 55% 72%, var(--rose) 72% 100%);
+      padding: 48px 24px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── SHELL ── */
+    .shell {
+      width: min(1320px, 100%);
+      margin: 0 auto;
+      border: 3px solid var(--black);
+      box-shadow: 12px 12px 0 var(--black);
+      background: var(--mint);
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      min-height: 820px;
+      overflow: hidden;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      border-right: 3px solid var(--black);
+      padding: 20px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .brand {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 1.6rem; font-weight: 800;
+      letter-spacing: -0.04em; margin-bottom: 8px;
+    }
+
+    .brand-badge, .icon-box, .social-link {
+      border: 2px solid var(--black);
+      background: var(--white);
+      box-shadow: 3px 3px 0 var(--black);
+    }
+
+    .brand-badge {
+      width: 42px; height: 34px;
+      display: grid; place-items: center;
+      font-size: 1rem; font-weight: 800;
+    }
+
+    .nav { display: flex; flex-direction: column; gap: 8px; }
+
+    .nav-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 11px 12px;
+      font-size: 0.9rem; font-weight: 700;
+      border: 2px solid transparent;
+      transition: transform 0.18s ease;
+    }
+
+    .nav-item:hover, .social-link:hover { transform: translate(-2px, -2px); }
+
+    .nav-item.active { background: var(--black); color: var(--white); }
+
+    .icon-box {
+      width: 24px; height: 24px;
+      display: grid; place-items: center;
+      box-shadow: none; font-size: 0.75rem; font-weight: 800;
+    }
+
+    .nav-item.active .icon-box { background: var(--yellow); color: var(--black); }
+
+    .sidebar-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+
+    .socials { display: flex; gap: 10px; padding-top: 8px; }
+
+    .social-link {
+      width: 42px; height: 42px;
+      display: grid; place-items: center;
+      font-size: 0.8rem; font-weight: 800;
+    }
+
+    /* ── MAIN ── */
+    .main { background: var(--cream); padding: 22px; }
+
+    .panel {
+      height: 100%;
+      border: 2px solid var(--black);
+      background: rgba(255,255,255,0.2);
+      padding: 18px;
+      display: flex; flex-direction: column; gap: 24px;
+    }
+
+    .page-title {
+      font-size: clamp(2.3rem, 4vw, 3.8rem);
+      font-weight: 800; line-height: 0.95; letter-spacing: -0.05em;
+    }
+
+    .section-lead {
+      max-width: 72ch; font-size: 0.95rem; line-height: 1.6; margin-top: 8px;
+    }
+
+    /* ── INTRO STRIP ── */
+    .intro-strip {
+      border: 3px solid var(--black);
+      background: var(--yellow);
+      box-shadow: 6px 6px 0 var(--black);
+      padding: 16px 20px;
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    }
+
+    .intro-strip p { font-size: 0.88rem; line-height: 1.55; max-width: 60ch; }
+    .intro-strip strong { display: block; margin-bottom: 5px; font-size: 0.95rem; }
+
+    .action-btn {
+      border: 2px solid var(--black);
+      background: var(--black);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--black);
+      padding: 12px 18px;
+      font: inherit; font-weight: 700;
+      cursor: pointer; white-space: nowrap;
+      display: inline-flex; align-items: center;
+      transition: transform 0.16s ease;
+    }
+
+    .action-btn:hover { transform: translate(-2px, -2px); }
+    .action-btn.light { background: var(--white); color: var(--black); }
+
+    /* ── PROJECTS GRID ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .project-card {
+      border: 3px solid var(--black);
+      background: var(--white);
+      box-shadow: 6px 6px 0 var(--black);
+      display: flex; flex-direction: column;
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      overflow: hidden;
+    }
+
+    .project-card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 9px 9px 0 var(--black);
+    }
+
+    .card-accent { height: 6px; flex-shrink: 0; }
+
+    .card-body {
+      padding: 18px; display: flex; flex-direction: column; gap: 10px; flex: 1;
+    }
+
+    .card-meta {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 8px;
+    }
+
+    .card-type { font-size: 0.72rem; font-weight: 800; opacity: 0.55; }
+    .card-readtime { font-size: 0.7rem; opacity: 0.45; }
+
+    .card-title {
+      font-size: 1.15rem; font-weight: 800;
+      line-height: 1.1; letter-spacing: -0.03em;
+    }
+
+    .card-excerpt { font-size: 0.82rem; line-height: 1.55; opacity: 0.8; }
+
+    .card-tags {
+      display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;
+    }
+
+    .tag {
+      border: 2px solid var(--black);
+      background: var(--white);
+      box-shadow: 2px 2px 0 var(--black);
+      padding: 4px 8px;
+      font-size: 0.68rem; font-weight: 700;
+    }
+
+    .card-footer {
+      border-top: 2px solid var(--black);
+      padding: 10px 18px;
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 10px;
+    }
+
+    .metric-pill {
+      font-size: 0.72rem; font-weight: 700; opacity: 0.7;
+    }
+
+    .metric-pill span { font-weight: 800; opacity: 1; }
+
+    .read-link {
+      font-size: 0.75rem; font-weight: 800;
+      white-space: nowrap;
+    }
+
+    /* ── INSIGHT STRIP ── */
+    .insight-strip {
+      border: 3px solid var(--black);
+      background: var(--white);
+      box-shadow: 6px 6px 0 var(--black);
+      padding: 16px 20px;
+      display: flex; align-items: flex-start; gap: 14px;
+    }
+
+    .insight-icon { font-size: 1.4rem; flex-shrink: 0; }
+
+    .insight-strip h2 { font-size: 1rem; font-weight: 800; margin-bottom: 6px; }
+    .insight-strip p { font-size: 0.84rem; line-height: 1.6; }
+
+    /* ── MODAL ── */
+    .overlay {
+      position: fixed; inset: 0;
+      background: rgba(17,17,17,0.72);
+      display: none;
+      align-items: flex-start; justify-content: center;
+      z-index: 100; padding: 40px 16px; overflow-y: auto;
+    }
+
+    .overlay.open { display: flex; }
+
+    .modal {
+      width: min(880px, 100%);
+      background: var(--cream);
+      border: 3px solid var(--black);
+      box-shadow: 12px 12px 0 var(--black);
+      margin: auto; position: relative;
+      display: flex; flex-direction: column;
+    }
+
+    .modal-accent { height: 6px; }
+
+    .modal-header {
+      padding: 20px 24px;
+      border-bottom: 3px solid var(--black);
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 16px;
+    }
+
+    .modal-title { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1.1; }
+    .modal-meta { font-size: 0.8rem; opacity: 0.6; margin-top: 6px; }
+
+    .modal-close {
+      width: 36px; height: 36px;
+      border: 2px solid var(--black);
+      background: var(--white);
+      box-shadow: 3px 3px 0 var(--black);
+      cursor: pointer; font: inherit; font-weight: 800; font-size: 1.1rem;
+      display: grid; place-items: center; flex-shrink: 0;
+      transition: transform 0.15s;
+    }
+
+    .modal-close:hover { transform: translate(-2px,-2px); }
+
+    .modal-body {
+      padding: 24px; display: flex; flex-direction: column; gap: 22px;
+    }
+
+    .modal-cols {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+
+    .modal-section h3 {
+      font-size: 0.72rem; font-weight: 800;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      opacity: 0.5; margin-bottom: 10px;
+    }
+
+    .modal-section p, .modal-section li { font-size: 0.86rem; line-height: 1.6; }
+
+    .modal-section ul { padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
+
+    .modal-metrics { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+
+    .metric-box {
+      border: 2px solid var(--black);
+      background: rgba(255,255,255,0.7);
+      padding: 12px;
+    }
+
+    .metric-box strong { display: block; font-size: 1.3rem; line-height: 1; margin-bottom: 6px; }
+    .metric-box span { font-size: 0.74rem; line-height: 1.4; opacity: 0.75; }
+
+    .modal-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .modal-chip {
+      padding: 6px 10px;
+      border: 2px solid var(--black);
+      background: var(--white);
+      box-shadow: 3px 3px 0 var(--black);
+      font-size: 0.72rem; font-weight: 700;
+    }
+
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 3px solid var(--black);
+      display: flex; gap: 10px; flex-wrap: wrap;
+    }
+
+    .modal-btn {
+      padding: 10px 18px;
+      border: 2px solid var(--black);
+      background: var(--black); color: var(--white);
+      box-shadow: 4px 4px 0 rgba(0,0,0,0.25);
+      font: inherit; font-weight: 700; font-size: 0.82rem;
+      cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center;
+      transition: transform 0.15s;
+    }
+
+    .modal-btn:hover { transform: translate(-2px,-2px); }
+    .modal-btn.light { background: var(--white); color: var(--black); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+      .shell { grid-template-columns: 220px 1fr; }
+    }
+
+    @media (max-width: 820px) {
+      body { padding: 20px 12px; }
+      .shell { grid-template-columns: 1fr; box-shadow: 8px 8px 0 var(--black); }
+      .sidebar { border-right: none; border-bottom: 3px solid var(--black); }
+      .main { padding: 14px; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .overlay { padding: 16px; }
+      .modal-cols { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      .panel { padding: 12px; }
+      .modal-metrics { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-badge">&lt;/&gt;</div>
+        <span>AZHY</span>
+      </div>
+
+      <nav class="nav">
+        <a class="nav-item" href="index.html">
+          <span class="icon-box">H</span>
+          <span>Home</span>
+        </a>
+        <a class="nav-item" href="experience.html">
+          <span class="icon-box">E</span>
+          <span>Experience</span>
+        </a>
+        <a class="nav-item active" href="projects.html">
+          <span class="icon-box">P</span>
+          <span>Projects</span>
+        </a>
+        <a class="nav-item" href="articles.html">
+          <span class="icon-box">A</span>
+          <span>Articles</span>
+        </a>
+        <a class="nav-item" href="skills.html">
+          <span class="icon-box">S</span>
+          <span>Skills</span>
+        </a>
+        <a class="nav-item" href="contact.html">
+          <span class="icon-box">C</span>
+          <span>Contact</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <a class="nav-item" href="../01_Profile/CV.pdf" download>
+          <span class="icon-box">CV</span>
+          <span>Download CV</span>
+        </a>
+        <a class="nav-item" href="mailto:azhyshchev@gmail.com">
+          <span class="icon-box">@</span>
+          <span>Email</span>
+        </a>
+        <div class="socials">
+          <a class="social-link" href="https://www.linkedin.com/in/azhyshchev/" target="_blank" rel="noreferrer">in</a>
+          <a class="social-link" href="https://github.com/Azhy34" target="_blank" rel="noreferrer">gh</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+      <div class="panel">
+
+        <!-- Title -->
+        <div>
+          <h1 class="page-title">Selected projects</h1>
+          <p class="section-lead">Real automation systems, not demos. Click any card for full architecture, metrics, and tech stack.</p>
+        </div>
+
+        <!-- Intro strip -->
+        <div class="intro-strip">
+          <div>
+            <strong>Hiring signal:</strong>
+            <p>Each project here shows how a business problem became a technical system — cost reduction, workflow automation, and production delivery across AI, B2B ops, and internal tools.</p>
+          </div>
+          <a class="action-btn" href="mailto:azhyshchev@gmail.com">Discuss a project</a>
+        </div>
+
+        <!-- Projects grid -->
+        <section class="projects-grid">
+
+          <!-- Card 1: Telegram Sales Agent / da-vinchi -->
+          <div class="project-card" data-modal="modal-agent">
+            <div class="card-accent" style="background: var(--yellow);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">RAG · AI Agent · E-commerce</span>
+                <span class="card-readtime">Production</span>
+              </div>
+              <h2 class="card-title">Telegram Sales Agent — da-vinchi.pl</h2>
+              <p class="card-excerpt">Production RAG assistant for a Polish wallpaper store. LangGraph ReAct + Hybrid RAG (SQL + pgvector). 355 SKUs, zero hallucinated prices, buyer-scenario tested.</p>
+              <div class="card-tags">
+                <span class="tag">Python</span>
+                <span class="tag">LangGraph</span>
+                <span class="tag">pgvector</span>
+                <span class="tag">FastAPI</span>
+                <span class="tag">Telegram</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Key result: <span>~90% API cost ↓</span></div>
+              <span class="read-link">View project →</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Invoice Automation -->
+          <div class="project-card" data-modal="modal-invoice">
+            <div class="card-accent" style="background: var(--blue);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">Automation · LLM Pipeline</span>
+                <span class="card-readtime">Production</span>
+              </div>
+              <h2 class="card-title">Invoice Automation Pipeline</h2>
+              <p class="card-excerpt">Gmail → PDF → Gemini 2.5 Flash → Drive + Supabase. End-to-end invoice intake, validation, and structured storage. Weekly manual routine eliminated.</p>
+              <div class="card-tags">
+                <span class="tag">TypeScript</span>
+                <span class="tag">Gemini 2.5 Flash</span>
+                <span class="tag">GitHub Actions</span>
+                <span class="tag">Supabase</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Key result: <span>Weekly routine → zero</span></div>
+              <span class="read-link">View project →</span>
+            </div>
+          </div>
+
+          <!-- Card 3: AI Image Composer / Wallpaper Try-On -->
+          <div class="project-card" data-modal="modal-image">
+            <div class="card-accent" style="background: var(--pink);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">Full-Stack · Multimodal AI</span>
+                <span class="card-readtime">Production</span>
+              </div>
+              <h2 class="card-title">AI Image Composer</h2>
+              <p class="card-excerpt">React 19 + Gemini multimodal web app for a creative studio. Replaced hours of manual prompting and mockup work. Identity replacement in 30 seconds.</p>
+              <div class="card-tags">
+                <span class="tag">React 19</span>
+                <span class="tag">TypeScript</span>
+                <span class="tag">Gemini</span>
+                <span class="tag">Canvas API</span>
+                <span class="tag">Railway</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Key result: <span>Hours → 30 sec per artwork</span></div>
+              <span class="read-link">View project →</span>
+            </div>
+          </div>
+
+          <!-- Card 4: B2B Lead Pipeline -->
+          <div class="project-card" data-modal="modal-b2b">
+            <div class="card-accent" style="background: var(--mint);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">Automation · B2B Ops</span>
+                <span class="card-readtime">Internal tool</span>
+              </div>
+              <h2 class="card-title">B2B Lead Pipeline</h2>
+              <p class="card-excerpt">Germany-focused outreach pipeline from Google Maps search to CRM-ready lead records. Automated company discovery, Impressum extraction, and lead enrichment.</p>
+              <div class="card-tags">
+                <span class="tag">Python</span>
+                <span class="tag">Apify</span>
+                <span class="tag">Gemini</span>
+                <span class="tag">Supabase</span>
+                <span class="tag">Pandas</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Key result: <span>80-120 leads in 15-25 min</span></div>
+              <span class="read-link">View project →</span>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- Insight strip -->
+        <div class="insight-strip">
+          <div class="insight-icon">&#9881;</div>
+          <div>
+            <h2>What these projects have in common</h2>
+            <p>Business problem first. Every system here started as a manual bottleneck — a weekly routine, a multi-hour task, a process that depended on one person. The engineering goal was always the same: make it reliable, repeatable, and measurably faster.</p>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ── MODALS ── -->
+
+  <!-- Modal: Telegram Sales Agent -->
+  <div class="overlay" id="modal-agent">
+    <div class="modal">
+      <div class="modal-accent" style="background:var(--yellow);"></div>
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">Telegram Sales Agent — da-vinchi.pl</div>
+          <div class="modal-meta">RAG · AI Agent · E-commerce · Production</div>
+        </div>
+        <button class="modal-close" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <p>Production AI Sales Assistant for a Polish wallpaper and décor e-commerce store. A LangGraph ReAct agent with 5 tools, Hybrid RAG architecture (SQL for hard facts + pgvector for semantic knowledge), ETL pipelines, buyer-scenario tests, and a Telegram interface. Production-grade, not a demo.</p>
+        </div>
+        <div class="modal-metrics">
+          <div class="metric-box">
+            <strong>355 SKU</strong>
+            <span>Zero hallucinated prices. Hard facts stored in SQL, not vector search.</span>
+          </div>
+          <div class="metric-box">
+            <strong>~90%</strong>
+            <span>API cost reduction vs. hot-cache approach through architectural design.</span>
+          </div>
+          <div class="metric-box">
+            <strong>5 tools</strong>
+            <span>LangGraph ReAct agent: search, filter, detail, recommend, FAQ.</span>
+          </div>
+          <div class="metric-box">
+            <strong>98%</strong>
+            <span>Data optimisation through ETL pipeline and knowledge-base contract tests.</span>
+          </div>
+        </div>
+        <div class="modal-cols">
+          <div class="modal-section">
+            <h3>Architecture</h3>
+            <ul>
+              <li>Hybrid RAG: SQL for deterministic facts (price, SKU, dimensions), pgvector for semantic knowledge (style, mood, recommendations).</li>
+              <li>LangGraph ReAct agent — tool-calling loop with fallback handling and observability.</li>
+              <li>FastAPI backend + Telegram Bot API interface.</li>
+              <li>ETL pipeline with deduplication and knowledge-base contract tests.</li>
+            </ul>
+          </div>
+          <div class="modal-section">
+            <h3>Business impact</h3>
+            <ul>
+              <li>Handles product search, filtering, detail queries, recommendations, and FAQ without human intervention.</li>
+              <li>Buyer-scenario integration tests ensure the agent behaves correctly under edge cases.</li>
+              <li>Production-deployed on Railway — not a prototype.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="modal-section">
+          <h3>Tech stack</h3>
+          <div class="modal-chips">
+            <span class="modal-chip">Python</span>
+            <span class="modal-chip">LangGraph</span>
+            <span class="modal-chip">FastAPI</span>
+            <span class="modal-chip">Supabase</span>
+            <span class="modal-chip">pgvector</span>
+            <span class="modal-chip">Gemini</span>
+            <span class="modal-chip">Telegram Bot API</span>
+            <span class="modal-chip">Docker</span>
+            <span class="modal-chip">Railway</span>
+            <span class="modal-chip">pytest</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="modal-btn" href="articles.html">Read case study</a>
+        <a class="modal-btn light" href="../01_Profile/CV.pdf" download>Download CV</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Invoice Automation -->
+  <div class="overlay" id="modal-invoice">
+    <div class="modal">
+      <div class="modal-accent" style="background:var(--blue);"></div>
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">Invoice Automation Pipeline</div>
+          <div class="modal-meta">Automation · LLM Pipeline · Production</div>
+        </div>
+        <button class="modal-close" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <p>Invoices from multiple suppliers arrive as PDFs by email in different formats. The manual routine was: find email, download PDF, classify supplier, extract fields, file to Drive, enter into accounting system. Now it runs on a schedule — automatically, end-to-end.</p>
+        </div>
+        <div class="modal-metrics">
+          <div class="metric-box">
+            <strong>2-layer</strong>
+            <span>Baseline parser first, Gemini verification second. Works even when API is down.</span>
+          </div>
+          <div class="metric-box">
+            <strong>Cron-ready</strong>
+            <span>GitHub Actions scheduling, deduplication, status tracking, Telegram summaries.</span>
+          </div>
+          <div class="metric-box">
+            <strong>Zero reruns</strong>
+            <span>Two-level deduplication prevents duplicate records from forwarded attachments.</span>
+          </div>
+          <div class="metric-box">
+            <strong>Multi-supplier</strong>
+            <span>Different PDF formats per supplier — handled by the LLM extraction layer.</span>
+          </div>
+        </div>
+        <div class="modal-cols">
+          <div class="modal-section">
+            <h3>Pipeline flow</h3>
+            <ul>
+              <li>IMAP inbox scan → PDF attachment detection → supplier classification.</li>
+              <li>Baseline regex parser extracts structured fields first.</li>
+              <li>Gemini 2.5 Flash verifies and fills gaps, handles format variations.</li>
+              <li>Validated records upserted to Supabase, filed to Google Drive.</li>
+              <li>Telegram summary with run results and any flagged anomalies.</li>
+            </ul>
+          </div>
+          <div class="modal-section">
+            <h3>Engineering decisions</h3>
+            <ul>
+              <li>Reliability over extraction accuracy — the pipeline never silently fails.</li>
+              <li>Deterministic baseline ensures LLM is a verification layer, not a dependency.</li>
+              <li>Production-grade: idempotent, logged, scheduled, and monitored.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="modal-section">
+          <h3>Tech stack</h3>
+          <div class="modal-chips">
+            <span class="modal-chip">TypeScript</span>
+            <span class="modal-chip">Node.js</span>
+            <span class="modal-chip">Gemini 2.5 Flash</span>
+            <span class="modal-chip">Supabase</span>
+            <span class="modal-chip">Google Drive API</span>
+            <span class="modal-chip">IMAP</span>
+            <span class="modal-chip">GitHub Actions</span>
+            <span class="modal-chip">Telegram Bot API</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="modal-btn" href="articles.html">Read case study</a>
+        <a class="modal-btn light" href="../01_Profile/CV.pdf" download>Download CV</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: AI Image Composer -->
+  <div class="overlay" id="modal-image">
+    <div class="modal">
+      <div class="modal-accent" style="background:var(--pink);"></div>
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">AI Image Composer</div>
+          <div class="modal-meta">Full-Stack · Multimodal AI · Production</div>
+        </div>
+        <button class="modal-close" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <p>A Polish creative studio was spending hours on trial-and-error prompting to produce personalized AI paintings for clients. The bottleneck was identity replacement — getting the client's face into a scene without quality loss. Built a production web app in one day that turns this into a 30-second workflow.</p>
+        </div>
+        <div class="modal-metrics">
+          <div class="metric-box">
+            <strong>30 sec</strong>
+            <span>Per artwork from upload to result. Was hours of manual work per image.</span>
+          </div>
+          <div class="metric-box">
+            <strong>1 day</strong>
+            <span>From requirement to production deployment. Built with React 19 + Gemini.</span>
+          </div>
+          <div class="metric-box">
+            <strong>85-90%</strong>
+            <span>Daily team adoption — because the tool was simpler than the manual process.</span>
+          </div>
+          <div class="metric-box">
+            <strong>Mobile-first</strong>
+            <span>Optimized for phones and field usage, not just desktop demo behavior.</span>
+          </div>
+        </div>
+        <div class="modal-cols">
+          <div class="modal-section">
+            <h3>How it works</h3>
+            <ul>
+              <li>User uploads source photo + selects style template.</li>
+              <li>Canvas API extracts face region with masking.</li>
+              <li>Gemini multimodal API performs identity-preserving style transfer.</li>
+              <li>Result delivered in the browser within seconds.</li>
+            </ul>
+          </div>
+          <div class="modal-section">
+            <h3>Engineering choices</h3>
+            <ul>
+              <li>Chose AI generation over geometric transformation — adoption mattered more than technical elegance.</li>
+              <li>React 19 for instant UI feedback without page reloads.</li>
+              <li>Railway deployment for zero-config backend scaling.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="modal-section">
+          <h3>Tech stack</h3>
+          <div class="modal-chips">
+            <span class="modal-chip">React 19</span>
+            <span class="modal-chip">TypeScript</span>
+            <span class="modal-chip">Gemini</span>
+            <span class="modal-chip">Canvas API</span>
+            <span class="modal-chip">Node.js</span>
+            <span class="modal-chip">Railway</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="modal-btn" href="articles.html">Read case study</a>
+        <a class="modal-btn light" href="../01_Profile/CV.pdf" download>Download CV</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: B2B Lead Pipeline -->
+  <div class="overlay" id="modal-b2b">
+    <div class="modal">
+      <div class="modal-accent" style="background:var(--mint);"></div>
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">B2B Lead Pipeline</div>
+          <div class="modal-meta">Automation · B2B Ops · Internal tool</div>
+        </div>
+        <button class="modal-close" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <p>Germany-focused outreach pipeline that turns a Google Maps search query into CRM-ready lead records. Automated company discovery, Impressum extraction, contact enrichment, and deduplication. Replaced a multi-hour manual research process with a repeatable 15-25 minute workflow.</p>
+        </div>
+        <div class="modal-metrics">
+          <div class="metric-box">
+            <strong>15-25 min</strong>
+            <span>Typical pipeline run time for 80-120 companies from search to CRM-ready output.</span>
+          </div>
+          <div class="metric-box">
+            <strong>~250 lines</strong>
+            <span>Lean Python implementation with strong practical output and Supabase deduplication.</span>
+          </div>
+          <div class="metric-box">
+            <strong>Multi-layer</strong>
+            <span>Apify scraper + Tavily / Exa search + Gemini extraction + Pandas cleaning.</span>
+          </div>
+          <div class="metric-box">
+            <strong>Germany-specific</strong>
+            <span>Impressum parsing for contact extraction — compliant with German business structure.</span>
+          </div>
+        </div>
+        <div class="modal-cols">
+          <div class="modal-section">
+            <h3>Pipeline flow</h3>
+            <ul>
+              <li>Google Maps search via Apify → company list with basic metadata.</li>
+              <li>Tavily + Exa search for each company website → Impressum page discovery.</li>
+              <li>Gemini extracts structured contact fields from unstructured Impressum text.</li>
+              <li>Pandas cleaning + deduplication → Supabase upsert → CSV export.</li>
+            </ul>
+          </div>
+          <div class="modal-section">
+            <h3>Use case</h3>
+            <ul>
+              <li>Built for B2B outreach in German market — kitchen studios, home appliance retailers, interior design firms.</li>
+              <li>Output is ready for mail merge or CRM import without manual cleanup.</li>
+              <li>Combined multiple search and extraction layers to improve coverage and data quality.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="modal-section">
+          <h3>Tech stack</h3>
+          <div class="modal-chips">
+            <span class="modal-chip">Python</span>
+            <span class="modal-chip">Apify</span>
+            <span class="modal-chip">Tavily</span>
+            <span class="modal-chip">Exa</span>
+            <span class="modal-chip">Gemini</span>
+            <span class="modal-chip">Supabase</span>
+            <span class="modal-chip">Pandas</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="modal-btn light" href="../01_Profile/CV.pdf" download>Download CV</a>
+        <a class="modal-btn light" href="mailto:azhyshchev@gmail.com">Contact me</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.project-card[data-modal]').forEach(card => {
+      card.addEventListener('click', () => {
+        document.getElementById(card.dataset.modal).classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    document.querySelectorAll('.overlay').forEach(overlay => {
+      overlay.addEventListener('click', e => { if (e.target === overlay) closeAll(); });
+      overlay.querySelector('.modal-close').addEventListener('click', closeAll);
+    });
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAll(); });
+
+    function closeAll() {
+      document.querySelectorAll('.overlay.open').forEach(o => o.classList.remove('open'));
+      document.body.style.overflow = '';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mikhail Azhyshchev - Contact</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sky: #61b5e8;
+      --mint: #b9ddb7;
+      --cream: #f8f0dc;
+      --yellow: #f5c84b;
+      --pink: #efb2d5;
+      --blue: #d8ebff;
+      --peach: #f7d4b1;
+      --coral: #ff9a77;
+      --rose: #ecb0c4;
+      --black: #111111;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--black);
+      background: linear-gradient(120deg, var(--sky) 0 34%, var(--peach) 34% 55%, var(--coral) 55% 72%, var(--rose) 72% 100%);
+      padding: 48px 24px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .shell {
+      width: min(1320px, 100%);
+      margin: 0 auto;
+      border: 3px solid var(--black);
+      box-shadow: 12px 12px 0 var(--black);
+      background: var(--mint);
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      min-height: 820px;
+      overflow: hidden;
+    }
+
+    .sidebar {
+      border-right: 3px solid var(--black);
+      padding: 20px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin-bottom: 8px;
+    }
+
+    .brand-badge,
+    .icon-box,
+    .social-link,
+    .top-icon,
+    .avatar-chip,
+    .contact-card,
+    .mini-card,
+    .action-btn,
+    .mini-btn {
+      border: 2px solid var(--black);
+      background: var(--white);
+      box-shadow: 3px 3px 0 var(--black);
+    }
+
+    .brand-badge {
+      width: 42px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      font-size: 1rem;
+      font-weight: 800;
+    }
+
+    .nav {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 12px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      border: 2px solid transparent;
+      transition: transform 0.18s ease;
+    }
+
+    .nav-item:hover,
+    .social-link:hover,
+    .action-btn:hover,
+    .mini-btn:hover {
+      transform: translate(-2px, -2px);
+    }
+
+    .nav-item.active {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .icon-box {
+      width: 24px;
+      height: 24px;
+      display: grid;
+      place-items: center;
+      box-shadow: none;
+      font-size: 0.75rem;
+      font-weight: 800;
+    }
+
+    .nav-item.active .icon-box {
+      background: var(--yellow);
+      color: var(--black);
+    }
+
+    .sidebar-bottom {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .socials {
+      display: flex;
+      gap: 10px;
+      padding-top: 8px;
+    }
+
+    .social-link,
+    .top-icon,
+    .avatar-chip {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      font-size: 0.8rem;
+      font-weight: 800;
+    }
+
+    .main {
+      background: var(--cream);
+      padding: 22px;
+    }
+
+    .panel {
+      height: 100%;
+      border: 2px solid var(--black);
+      background: rgba(255, 255, 255, 0.2);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .search {
+      width: 340px;
+      max-width: 100%;
+      padding: 10px 12px;
+      border: 2px solid var(--black);
+      background: var(--white);
+      box-shadow: 4px 4px 0 var(--black);
+      font: inherit;
+      outline: none;
+    }
+
+    .page-title {
+      font-size: clamp(2.3rem, 4vw, 3.8rem);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+    }
+
+    .section-lead {
+      max-width: 70ch;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .hero-strip {
+      border: 3px solid var(--black);
+      background: var(--yellow);
+      box-shadow: 6px 6px 0 var(--black);
+      padding: 18px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .hero-strip p {
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    .hero-strip strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    .action-btn,
+    .mini-btn {
+      padding: 12px 16px;
+      font: inherit;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .action-btn.dark {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .contact-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .contact-card,
+    .mini-card {
+      padding: 16px;
+    }
+
+    .contact-card {
+      box-shadow: 6px 6px 0 var(--black);
+      height: 100%;
+    }
+
+    .contact-card h2,
+    .mini-card h2 {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      line-height: 1.1;
+    }
+
+    .contact-row {
+      display: grid;
+      grid-template-columns: 110px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 10px 0;
+      border-top: 2px solid rgba(17, 17, 17, 0.12);
+    }
+
+    .contact-row:first-of-type {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    .contact-label,
+    .contact-value,
+    .contact-note,
+    .mini-card p,
+    .mini-card li {
+      font-size: 0.82rem;
+      line-height: 1.5;
+    }
+
+    .contact-label {
+      font-weight: 800;
+    }
+
+    .contact-link {
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .contact-note {
+      opacity: 0.72;
+      text-align: right;
+    }
+
+    .mini-card {
+      background: var(--white);
+      box-shadow: 6px 6px 0 var(--black);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .mini-card.blue { background: var(--blue); }
+    .mini-card.pink { background: var(--pink); }
+
+    .mini-card ul {
+      padding-left: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    @media (max-width: 1100px) {
+      .shell {
+        grid-template-columns: 220px 1fr;
+      }
+
+      .hero-strip,
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 820px) {
+      body {
+        padding: 20px 12px;
+      }
+
+      .shell {
+        grid-template-columns: 1fr;
+        box-shadow: 8px 8px 0 var(--black);
+      }
+
+      .sidebar {
+        border-right: none;
+        border-bottom: 3px solid var(--black);
+      }
+
+      .main {
+        padding: 14px;
+      }
+
+      .topbar,
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .top-actions {
+        justify-content: flex-start;
+      }
+
+      .search {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .panel {
+        padding: 12px;
+      }
+
+      .contact-row {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-note {
+        text-align: left;
+      }
+
+      .action-btn,
+      .mini-btn,
+      .top-icon,
+      .avatar-chip {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-badge">&lt;/&gt;</div>
+        <span>AZHY</span>
+      </div>
+
+      <nav class="nav">
+        <a class="nav-item" href="index.html">
+          <span class="icon-box">H</span>
+          <span>Home</span>
+        </a>
+        <a class="nav-item" href="experience.html">
+          <span class="icon-box">E</span>
+          <span>Experience</span>
+        </a>
+        <a class="nav-item" href="projects.html">
+          <span class="icon-box">P</span>
+          <span>Projects</span>
+        </a>
+        <a class="nav-item" href="articles.html">
+          <span class="icon-box">A</span>
+          <span>Articles</span>
+        </a>
+        <a class="nav-item" href="skills.html">
+          <span class="icon-box">S</span>
+          <span>Skills</span>
+        </a>
+        <a class="nav-item active" href="contact.html">
+          <span class="icon-box">C</span>
+          <span>Contact</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <a class="nav-item" href="../01_Profile/CV.pdf" download>
+          <span class="icon-box">CV</span>
+          <span>Download CV</span>
+        </a>
+        <a class="nav-item" href="mailto:azhyshchev@gmail.com">
+          <span class="icon-box">@</span>
+          <span>Email</span>
+        </a>
+
+        <div class="socials">
+          <a class="social-link" href="https://www.linkedin.com/in/azhyshchev/" target="_blank" rel="noreferrer">in</a>
+          <a class="social-link" href="https://github.com/Azhy34" target="_blank" rel="noreferrer">gh</a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="panel">
+        <div class="topbar">
+          <div>
+            <h1 class="page-title">Contact</h1>
+            <p class="section-lead">Open to hybrid roles in Munich and selected remote opportunities. If you are hiring for AI automation, workflow systems, internal tools, or business process improvement, this is the fastest way to reach me.</p>
+          </div>
+        </div>
+
+        <section class="hero-strip">
+          <div>
+            <strong>Best fit:</strong>
+            <p>I am especially interested in roles where practical automation matters more than hype: AI-enabled operations, process automation, internal business tools, workflow systems, and B2B product support. Munich-based and comfortable working across business and technical stakeholders.</p>
+          </div>
+          <div class="hero-actions">
+            <a class="action-btn dark" href="mailto:azhyshchev@gmail.com">Email me</a>
+            <a class="mini-btn" href="../01_Profile/CV.pdf" download>Download CV</a>
+          </div>
+        </section>
+
+        <section class="contact-grid">
+          <div class="contact-card">
+            <h2>Direct contact</h2>
+
+            <div class="contact-row">
+              <div class="contact-label">Email</div>
+              <div class="contact-value"><a class="contact-link" href="mailto:azhyshchev@gmail.com">azhyshchev@gmail.com</a></div>
+              <div class="contact-note">Best for job outreach</div>
+            </div>
+
+            <div class="contact-row">
+              <div class="contact-label">Phone</div>
+              <div class="contact-value"><a class="contact-link" href="tel:+491783642227">+49 178 364 2227</a></div>
+              <div class="contact-note">Munich, Germany</div>
+            </div>
+
+            <div class="contact-row">
+              <div class="contact-label">LinkedIn</div>
+              <div class="contact-value"><a class="contact-link" href="https://www.linkedin.com/in/azhyshchev/" target="_blank" rel="noreferrer">linkedin.com/in/azhyshchev</a></div>
+              <div class="contact-note">Professional profile</div>
+            </div>
+
+            <div class="contact-row">
+              <div class="contact-label">GitHub</div>
+              <div class="contact-value"><a class="contact-link" href="https://github.com/Azhy34" target="_blank" rel="noreferrer">github.com/Azhy34</a></div>
+              <div class="contact-note">Code and repos</div>
+            </div>
+
+            <div class="contact-row">
+              <div class="contact-label">Location</div>
+              <div class="contact-value">Munich, Germany</div>
+              <div class="contact-note">Open to hybrid work</div>
+            </div>
+          </div>
+
+          <div class="contact-stack">
+            <div class="mini-card blue">
+              <h2>Role focus</h2>
+              <ul>
+                <li>AI-Enabled Automation Engineer</li>
+                <li>Operations Automation Specialist</li>
+                <li>Business Process Automation Engineer</li>
+                <li>AI Solutions Architect</li>
+              </ul>
+            </div>
+
+            <div class="mini-card pink">
+              <h2>Good reasons to reach out</h2>
+              <ul>
+                <li>Hiring in Munich or Germany</li>
+                <li>Need workflow automation or AI systems</li>
+                <li>Want business-aware technical delivery</li>
+                <li>Looking for practical automation, not demos</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
