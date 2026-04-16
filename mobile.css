@@ -153,8 +153,9 @@ a.brand {
   /* ── MODALS MOBILE ── */
   .overlay,
   .modal-overlay {
-    padding: 8px 8px 72px !important;
+    padding: 8px !important;
     align-items: flex-start;
+    z-index: 1100 !important; /* above bottom nav (999) */
   }
 
   .modal {

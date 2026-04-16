@@ -850,7 +850,8 @@
     document.querySelectorAll('.project-card[data-modal]').forEach(card => {
       card.addEventListener('click', () => {
         document.getElementById(card.dataset.modal).classList.add('open');
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden'; var bn = document.getElementById('mobileBottomNav'); if (bn) bn.style.display = 'none';
+        var bn = document.getElementById('mobileBottomNav'); if (bn) bn.style.display = 'none';
       });
     });
 
@@ -864,6 +865,7 @@
     function closeAll() {
       document.querySelectorAll('.overlay.open').forEach(o => o.classList.remove('open'));
       document.body.style.overflow = '';
+      var bn = document.getElementById('mobileBottomNav'); if (bn) bn.style.display = '';
     }
   </script>
   <script>

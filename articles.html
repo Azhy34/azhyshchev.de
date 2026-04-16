@@ -1127,12 +1127,13 @@
     // ── MODAL LOGIC ──
     function openModal(id) {
       document.getElementById(id).classList.add('open');
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden'; var bn = document.getElementById('mobileBottomNav'); if (bn) bn.style.display = 'none';
     }
 
     function closeModal(id) {
       document.getElementById(id).classList.remove('open');
       document.body.style.overflow = '';
+      var bn = document.getElementById('mobileBottomNav'); if (bn) bn.style.display = '';
     }
 
     // Click on card to open modal
