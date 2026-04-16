@@ -153,7 +153,7 @@ a.brand {
   /* ── MODALS MOBILE ── */
   .overlay,
   .modal-overlay {
-    padding: 8px !important;
+    padding: 8px 8px 72px !important;
     align-items: flex-start;
   }
 
@@ -233,6 +233,11 @@ a.brand {
   /* ── PROJECTS GRID MOBILE ── */
   .projects-grid {
     grid-template-columns: 1fr !important;
+  }
+
+  /* ── HIDE reviews section on mobile (index.html) ── */
+  .reviews {
+    display: none !important;
   }
 }
 
