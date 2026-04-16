@@ -1011,6 +1011,11 @@
       document.querySelectorAll('.mbn-item').forEach(function (el) {
         if (el.getAttribute('href') === page) el.classList.add('active');
       });
+      /* Hide reviews section on mobile */
+      if (window.innerWidth <= 820) {
+        var reviews = document.querySelector('.reviews');
+        if (reviews) reviews.style.display = 'none';
+      }
     })();
   </script>
 </body>
