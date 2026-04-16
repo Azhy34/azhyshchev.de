@@ -4,6 +4,12 @@ a.brand {
   color: inherit;
 }
 
+/* ── BRAND FONT SCALE ── */
+.brand {
+  font-size: clamp(0.95rem, 2.5vw, 1.6rem);
+  letter-spacing: -0.05em;
+}
+
 /* ── HAMBURGER BUTTON ── */
 .nav-toggle {
   display: none;
