@@ -958,6 +958,7 @@
     </main>
   </div>
   <script>
+    /* ── HAMBURGER (desktop fallback) + close on link click ── */
     (function () {
       var toggle = document.getElementById('navToggle');
       var nav = document.querySelector('.nav');
@@ -967,6 +968,47 @@
         var open = nav.classList.toggle('open');
         if (bottom) bottom.classList.toggle('open', open);
         toggle.innerHTML = open ? '&#10005;' : '&#9776;';
+      });
+      /* Close nav when any nav link is clicked */
+      document.querySelectorAll('.nav .nav-item').forEach(function (link) {
+        link.addEventListener('click', function () {
+          nav.classList.remove('open');
+          if (bottom) bottom.classList.remove('open');
+          toggle.innerHTML = '&#9776;';
+        });
+      });
+    })();
+  </script>
+  <!-- MOBILE BOTTOM NAV -->
+  <nav class="mobile-bottom-nav" id="mobileBottomNav">
+    <a class="mbn-item" href="index.html">
+      <span class="mbn-icon">&lt;/&gt;</span>
+      <span class="mbn-label">Home</span>
+    </a>
+    <a class="mbn-item" href="projects.html">
+      <span class="mbn-icon">P</span>
+      <span class="mbn-label">Projects</span>
+    </a>
+    <a class="mbn-item" href="articles.html">
+      <span class="mbn-icon">A</span>
+      <span class="mbn-label">Articles</span>
+    </a>
+    <a class="mbn-item" href="contact.html">
+      <span class="mbn-icon">C</span>
+      <span class="mbn-label">Contact</span>
+    </a>
+    <a class="mbn-item" href="CV.pdf" download>
+      <span class="mbn-icon">CV</span>
+      <span class="mbn-label">Download</span>
+    </a>
+  </nav>
+  <script>
+    /* ── MOBILE BOTTOM NAV: active state ── */
+    (function () {
+      var page = window.location.pathname.split('/').pop() || 'index.html';
+      if (!page || page === '') page = 'index.html';
+      document.querySelectorAll('.mbn-item').forEach(function (el) {
+        if (el.getAttribute('href') === page) el.classList.add('active');
       });
     })();
   </script>
