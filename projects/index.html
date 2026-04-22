@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Production AI systems: Web Sales Assistant RAG agent, invoice automation pipeline, AI image composer. LangGraph, Python, TypeScript, Gemini, Supabase, GitHub Actions.">
+  <meta name="description" content="Production AI systems: Web Sales Assistant RAG agent, invoice automation, wallpaper try-on, AI image composer, B2B lead pipeline. LangGraph, Python, TypeScript, Gemini, Supabase.">
   <meta name="keywords" content="AI automation engineer, business process automation, RAG agent, LangGraph, Python, TypeScript, n8n, Make.com, workflow automation, Munich, Germany, operations automation, LLM integration, Supabase, pgvector, FastAPI, GitHub Actions">
   <meta name="author" content="Mikhail Azhyshchev">
   <link rel="canonical" href="https://azhyshchev.de/projects">
@@ -358,6 +358,8 @@
     .modal-btn:hover { transform: translate(-2px,-2px); }
     .modal-btn.light { background: var(--white); color: var(--black); }
 
+    .project-card--linkedin { background: var(--blue); }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 1100px) {
       .shell { grid-template-columns: 220px 1fr; }
@@ -547,6 +549,50 @@
             <div class="card-footer">
               <div class="metric-pill">Key result: <span>80-120 leads in 15-25 min</span></div>
               <span class="read-link">View project →</span>
+            </div>
+          </div>
+
+          <!-- Card 5: Virtual Wallpaper Try-On -->
+          <div class="project-card" data-modal="modal-wallpaper">
+            <div class="card-accent" style="background: var(--coral);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">Full-Stack · Multimodal AI · BPA</span>
+                <span class="card-readtime">Production</span>
+              </div>
+              <h2 class="card-title">Virtual Wallpaper Try-On</h2>
+              <p class="card-excerpt">Replaced 4-6 hours of daily Photoshop mockup work for a wallpaper manufacturer's sales team. React 19 + Gemini multimodal generates photorealistic room visualizations in under 2 minutes.</p>
+              <div class="card-tags">
+                <span class="tag">React 19</span>
+                <span class="tag">Node.js</span>
+                <span class="tag">Gemini</span>
+                <span class="tag">Firebase</span>
+                <span class="tag">Vercel</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Key result: <span>75% manual work ↓</span></div>
+              <span class="read-link">View project →</span>
+            </div>
+          </div>
+
+          <!-- Card 6: LinkedIn CTA -->
+          <div class="project-card project-card--linkedin" onclick="window.open('https://www.linkedin.com/in/azhyshchev/recent-activity/all/','_blank')">
+            <div class="card-accent" style="background: var(--sky);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">More projects</span>
+              </div>
+              <h2 class="card-title" style="font-size:1.4rem;">View all on LinkedIn ↗</h2>
+              <p class="card-excerpt">Full case studies, LinkedIn posts, and technical breakdowns of all projects — including QA automation for RAG, Flask dev sandbox, RAG architecture insights, and more.</p>
+              <div class="card-tags">
+                <span class="tag">Case studies</span>
+                <span class="tag">LinkedIn</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">6+ published articles</div>
+              <span class="read-link">Open LinkedIn →</span>
             </div>
           </div>
 
@@ -856,6 +902,79 @@
       <div class="modal-footer">
         <a class="modal-btn light" href="../CV.pdf" download>Download CV</a>
         <a class="modal-btn light" href="mailto:azhyshchev@gmail.com">Contact me</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Virtual Wallpaper Try-On -->
+  <div class="overlay" id="modal-wallpaper">
+    <div class="modal">
+      <div class="modal-accent" style="background:var(--coral);"></div>
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">Virtual Wallpaper Try-On</div>
+          <div class="modal-meta">Full-Stack · Multimodal AI · Business Process Automation · Production</div>
+        </div>
+        <button class="modal-close" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <p>A wallpaper manufacturer's sales team was spending 4-6 hours daily creating client visualizations in Photoshop — manual perspective correction, lighting adjustments, pattern alignment for every single order. Built a production web app that replaces this with a 2-minute AI-generation workflow.</p>
+        </div>
+        <div class="modal-metrics">
+          <div class="metric-box">
+            <strong>75%</strong>
+            <span>Manual work reduction. 4-6 hours/day → 15-20 minutes/day.</span>
+          </div>
+          <div class="metric-box">
+            <strong>&lt;2 min</strong>
+            <span>Per mockup. Was 2-4 hours of Photoshop work per visualization.</span>
+          </div>
+          <div class="metric-box">
+            <strong>85-90%</strong>
+            <span>Daily team adoption — because the tool was simpler than manual work.</span>
+          </div>
+          <div class="metric-box">
+            <strong>Same day</strong>
+            <span>Client turnaround. Was 2-3 days for a single mockup set.</span>
+          </div>
+        </div>
+        <div class="modal-cols">
+          <div class="modal-section">
+            <h3>Engineering decisions</h3>
+            <ul>
+              <li>Prototyped two approaches: geometric transformation (SAM2 segmentation) vs. AI generation. AI won — not because it's more sophisticated, but because non-technical sales team members actually use it.</li>
+              <li>Gemini multimodal handles perspective, lighting, and pattern placement automatically — no masks or corrections needed.</li>
+              <li>Mobile-first design: sales team uses phones on client visits.</li>
+              <li>Multi-office billing: client-side API key injection for separate Poland / Ukraine office quotas.</li>
+            </ul>
+          </div>
+          <div class="modal-section">
+            <h3>Business impact</h3>
+            <ul>
+              <li>Unlimited parallel mockup processing — no longer limited by designer availability.</li>
+              <li>Same-day client delivery replaced the 2-3 day turnaround.</li>
+              <li>85-90% daily adoption from day one — adoption over elegance.</li>
+              <li>Sales team can now handle more clients with the same headcount.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="modal-section">
+          <h3>Tech stack</h3>
+          <div class="modal-chips">
+            <span class="modal-chip">React 19</span>
+            <span class="modal-chip">Node.js</span>
+            <span class="modal-chip">Gemini (image-preview)</span>
+            <span class="modal-chip">Firebase</span>
+            <span class="modal-chip">Canvas API</span>
+            <span class="modal-chip">Vercel</span>
+            <span class="modal-chip">GitHub CI/CD</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="modal-btn" href="/articles">Read case study</a>
+        <a class="modal-btn light" href="../CV.pdf" download>Download CV</a>
       </div>
     </div>
   </div>
