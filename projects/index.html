@@ -4,18 +4,18 @@
   <meta charset="UTF-8">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Production AI systems: Telegram RAG sales agent, invoice automation pipeline, AI image composer. LangGraph, Python, TypeScript, Gemini, Supabase, GitHub Actions.">
+  <meta name="description" content="Production AI systems: Web Sales Assistant RAG agent, invoice automation pipeline, AI image composer. LangGraph, Python, TypeScript, Gemini, Supabase, GitHub Actions.">
   <meta name="keywords" content="AI automation engineer, business process automation, RAG agent, LangGraph, Python, TypeScript, n8n, Make.com, workflow automation, Munich, Germany, operations automation, LLM integration, Supabase, pgvector, FastAPI, GitHub Actions">
   <meta name="author" content="Mikhail Azhyshchev">
   <link rel="canonical" href="https://azhyshchev.de/projects">
   <meta property="og:title" content="Projects — AI Automation & RAG Systems | Mikhail Azhyshchev">
-  <meta property="og:description" content="Production AI systems: Telegram RAG sales agent, invoice automation pipeline, AI image composer. LangGraph, Python, TypeScript, Gemini, Supabase, GitHub Actions.">
+  <meta property="og:description" content="Production AI systems: Web Sales Assistant RAG agent, invoice automation pipeline, AI image composer. LangGraph, Python, TypeScript, Gemini, Supabase, GitHub Actions.">
   <meta property="og:url" content="https://azhyshchev.de/projects">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://azhyshchev.de/Azhyschev.JPG">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Projects — AI Automation & RAG Systems | Mikhail Azhyshchev">
-  <meta name="twitter:description" content="Production AI systems: Telegram RAG sales agent, invoice automation pipeline, AI image composer. LangGraph, Python, TypeScript, Gemini, Supabase, GitHub Actions.">
+  <meta name="twitter:description" content="Production AI systems: Web Sales Assistant RAG agent, invoice automation pipeline, AI image composer. LangGraph, Python, TypeScript, Gemini, Supabase, GitHub Actions.">
 
   <title>Projects — AI Automation & RAG Systems | Mikhail Azhyshchev</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -455,7 +455,7 @@
         <!-- Projects grid -->
         <section class="projects-grid">
 
-          <!-- Card 1: Telegram Sales Agent / da-vinchi -->
+          <!-- Card 1: Web Sales Assistant / da-vinchi -->
           <div class="project-card" data-modal="modal-agent">
             <div class="card-accent" style="background: var(--yellow);"></div>
             <div class="card-body">
@@ -463,14 +463,14 @@
                 <span class="card-type">RAG · AI Agent · E-commerce</span>
                 <span class="card-readtime">Production</span>
               </div>
-              <h2 class="card-title">Telegram Sales Agent — da-vinchi.pl</h2>
-              <p class="card-excerpt">Production RAG assistant for a Polish wallpaper store. LangGraph ReAct + Hybrid RAG (SQL + pgvector). 355 SKUs, zero hallucinated prices, buyer-scenario tested.</p>
+              <h2 class="card-title">Web Sales Assistant — da-vinchi.pl</h2>
+              <p class="card-excerpt">Production RAG web chat assistant for a Polish wallpaper store. LangGraph ReAct + Hybrid RAG (SQL + pgvector). 1,200+ SKU catalog, zero hallucinated prices, buyer-scenario tested.</p>
               <div class="card-tags">
                 <span class="tag">Python</span>
                 <span class="tag">LangGraph</span>
                 <span class="tag">pgvector</span>
                 <span class="tag">FastAPI</span>
-                <span class="tag">Telegram</span>
+                <span class="tag">LangSmith</span>
               </div>
             </div>
             <div class="card-footer">
@@ -567,24 +567,24 @@
 
   <!-- ── MODALS ── -->
 
-  <!-- Modal: Telegram Sales Agent -->
+  <!-- Modal: Web Sales Assistant -->
   <div class="overlay" id="modal-agent">
     <div class="modal">
       <div class="modal-accent" style="background:var(--yellow);"></div>
       <div class="modal-header">
         <div>
-          <div class="modal-title">Telegram Sales Agent — da-vinchi.pl</div>
+          <div class="modal-title">Web Sales Assistant — da-vinchi.pl</div>
           <div class="modal-meta">RAG · AI Agent · E-commerce · Production</div>
         </div>
         <button class="modal-close" aria-label="Close">&times;</button>
       </div>
       <div class="modal-body">
         <div class="modal-section">
-          <p>Production AI Sales Assistant for a Polish wallpaper and décor e-commerce store. A LangGraph ReAct agent with 5 tools, Hybrid RAG architecture (SQL for hard facts + pgvector for semantic knowledge), ETL pipelines, buyer-scenario tests, and a Telegram interface. Production-grade, not a demo.</p>
+          <p>Production AI Sales Assistant for a Polish wallpaper and décor e-commerce store. A LangGraph ReAct agent with 5 tools, Hybrid RAG architecture (SQL for hard facts + pgvector for semantic knowledge), ETL pipelines, buyer-scenario tests, and a web chat widget interface (FastAPI /chat endpoint). Production-grade, not a demo.</p>
         </div>
         <div class="modal-metrics">
           <div class="metric-box">
-            <strong>355 SKU</strong>
+            <strong>1,200+ SKU</strong>
             <span>Zero hallucinated prices. Hard facts stored in SQL, not vector search.</span>
           </div>
           <div class="metric-box">
@@ -606,7 +606,7 @@
             <ul>
               <li>Hybrid RAG: SQL for deterministic facts (price, SKU, dimensions), pgvector for semantic knowledge (style, mood, recommendations).</li>
               <li>LangGraph ReAct agent — tool-calling loop with fallback handling and observability.</li>
-              <li>FastAPI backend + Telegram Bot API interface.</li>
+              <li>FastAPI backend + web chat widget (/chat endpoint). Telegram used for internal debugging only.</li>
               <li>ETL pipeline with deduplication and knowledge-base contract tests.</li>
             </ul>
           </div>
@@ -628,7 +628,8 @@
             <span class="modal-chip">Supabase</span>
             <span class="modal-chip">pgvector</span>
             <span class="modal-chip">Gemini</span>
-            <span class="modal-chip">Telegram Bot API</span>
+            <span class="modal-chip">Sentence-Transformers</span>
+            <span class="modal-chip">LangSmith</span>
             <span class="modal-chip">Docker</span>
             <span class="modal-chip">Railway</span>
             <span class="modal-chip">pytest</span>
