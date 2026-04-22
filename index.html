@@ -638,6 +638,70 @@
       line-height: 1.5;
     }
 
+    /* ── EXPERIENCE MODALS ── */
+    .overlay {
+      position: fixed; inset: 0;
+      background: rgba(17,17,17,0.72);
+      display: none;
+      align-items: flex-start; justify-content: center;
+      z-index: 1100; padding: 40px 16px; overflow-y: auto;
+    }
+    .overlay.open { display: flex; }
+    .modal {
+      width: min(860px, 100%);
+      background: var(--cream);
+      border: 3px solid var(--black);
+      box-shadow: 12px 12px 0 var(--black);
+      margin: auto; position: relative;
+      display: flex; flex-direction: column;
+    }
+    .modal-accent { height: 6px; }
+    .modal-header {
+      padding: 20px 24px;
+      border-bottom: 3px solid var(--black);
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 16px;
+    }
+    .modal-title { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1.1; }
+    .modal-meta { font-size: 0.8rem; opacity: 0.65; margin-top: 6px; line-height: 1.5; }
+    .modal-close {
+      width: 36px; height: 36px;
+      border: 2px solid var(--black); background: var(--white);
+      box-shadow: 3px 3px 0 var(--black);
+      cursor: pointer; font: inherit; font-weight: 800; font-size: 1.1rem;
+      display: grid; place-items: center; flex-shrink: 0;
+      transition: transform 0.15s;
+    }
+    .modal-close:hover { transform: translate(-2px,-2px); }
+    .modal-body { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+    .modal-section h3 {
+      font-size: 0.72rem; font-weight: 800;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      opacity: 0.5; margin-bottom: 10px;
+    }
+    .modal-section ul { padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
+    .modal-section li, .modal-section p { font-size: 0.86rem; line-height: 1.6; }
+    .modal-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .modal-chip {
+      padding: 6px 10px; border: 2px solid var(--black); background: var(--white);
+      box-shadow: 3px 3px 0 var(--black); font-size: 0.72rem; font-weight: 700;
+    }
+    .modal-footer {
+      padding: 16px 24px; border-top: 3px solid var(--black);
+      display: flex; gap: 10px; flex-wrap: wrap;
+    }
+    .modal-btn {
+      padding: 10px 18px; border: 2px solid var(--black);
+      background: var(--black); color: var(--white);
+      box-shadow: 4px 4px 0 rgba(0,0,0,0.25);
+      font: inherit; font-weight: 700; font-size: 0.82rem;
+      cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center; transition: transform 0.15s;
+    }
+    .modal-btn:hover { transform: translate(-2px,-2px); }
+    .modal-btn.light { background: var(--white); color: var(--black); }
+    .open-hint { font-size: 0.62rem; font-weight: 700; opacity: 0.4; margin-top: 6px; display: block; }
+
     @media (max-width: 1100px) {
       .shell {
         grid-template-columns: 220px 1fr;
@@ -865,7 +929,7 @@
 
           <aside class="experience-col" id="work">
             <div class="experience-list">
-              <article class="neo-card experience-card">
+              <article class="neo-card experience-card" data-modal="modal-home-ai">
                 <div class="experience-icon">AI</div>
                 <div class="experience-copy">
                   <h3>AI-Enabled Automation Engineer</h3>
@@ -876,10 +940,11 @@
                     <span class="experience-tag">AI workflows</span>
                     <span class="experience-tag">Sales auto</span>
                   </div>
+                  <span class="open-hint">Click to expand →</span>
                 </div>
               </article>
 
-              <article class="neo-card experience-card">
+              <article class="neo-card experience-card" data-modal="modal-home-viba">
                 <div class="experience-icon">MK</div>
                 <div class="experience-copy">
                   <h3>Digital Marketing and Operations Manager</h3>
@@ -890,10 +955,11 @@
                     <span class="experience-tag">Content ops</span>
                     <span class="experience-tag">Procurement</span>
                   </div>
+                  <span class="open-hint">Click to expand →</span>
                 </div>
               </article>
 
-              <article class="neo-card experience-card">
+              <article class="neo-card experience-card" data-modal="modal-home-bsl">
                 <div class="experience-icon">OP</div>
                 <div class="experience-copy">
                   <h3>Head of Commercial Department</h3>
@@ -904,6 +970,7 @@
                     <span class="experience-tag">KPI ops</span>
                     <span class="experience-tag">Partners</span>
                   </div>
+                  <span class="open-hint">Click to expand →</span>
                 </div>
               </article>
             </div>
@@ -971,6 +1038,170 @@
       </div>
     </main>
   </div>
+  <!-- ── EXPERIENCE MODALS ── -->
+
+  <!-- Modal: AI Engineer -->
+  <div class="overlay" id="modal-home-ai">
+    <div class="modal">
+      <div class="modal-accent" style="background:var(--yellow);"></div>
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">AI-Enabled Automation Engineer</div>
+          <div class="modal-meta">AZHYSHCHEV · Munich, Germany · Aug 2023 – Present · Freelance / Self-employed</div>
+        </div>
+        <button class="modal-close" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <p>AI-Enabled Automation Engineer with 10+ years across B2B operations, procurement, and supply chain, building code-first AI workflows and automation systems since 2022. Focused on removing manual bottlenecks and making businesses more efficient — from back-office process automation to agentic AI workflows, built in VS Code and shipped to production.</p>
+        </div>
+        <div class="modal-section">
+          <h3>Commercial &amp; operational delivery</h3>
+          <ul>
+            <li>Lead end-to-end B2B commercial delivery in Germany: client acquisition, negotiations, contract execution, procurement, supplier coordination — 25+ client projects delivered.</li>
+            <li>Built a partner network of 15+ suppliers and service providers, applying hands-on domain expertise directly in automation projects.</li>
+            <li>Own internal financial reporting automation for VAT/Umsatzsteuer and maintain full P&amp;L responsibility and German business compliance.</li>
+          </ul>
+        </div>
+        <div class="modal-section">
+          <h3>AI systems &amp; automation built</h3>
+          <ul>
+            <li>Web Sales Assistant for Polish e-commerce (da-vinchi.pl): LangGraph ReAct + Supabase pgvector + FastAPI. 1,200+ SKUs, zero hallucinated prices, buyer-scenario tested.</li>
+            <li>Invoice Automation Pipeline: Gmail → PDF parsing → Gemini 2.5 Flash → Google Drive + Supabase. Weekly manual routine eliminated.</li>
+            <li>AI Image Composer: React 19 + Gemini multimodal for a creative studio. Identity replacement in 30 seconds instead of hours.</li>
+            <li>Virtual Wallpaper Try-On: replaced 4-6 hours/day of Photoshop mockup work with a 2-minute AI-generation workflow. 75% manual work reduction.</li>
+            <li>QA framework for RAG pipelines: buyer-scenario integration tests, 98% data optimisation, GitHub Actions CI.</li>
+          </ul>
+        </div>
+        <div class="modal-section">
+          <h3>Tech stack</h3>
+          <div class="modal-chips">
+            <span class="modal-chip">Python</span>
+            <span class="modal-chip">TypeScript</span>
+            <span class="modal-chip">LangGraph</span>
+            <span class="modal-chip">FastAPI</span>
+            <span class="modal-chip">Supabase / pgvector</span>
+            <span class="modal-chip">Gemini 2.5 Flash</span>
+            <span class="modal-chip">GitHub Actions</span>
+            <span class="modal-chip">React 19</span>
+            <span class="modal-chip">LangSmith</span>
+            <span class="modal-chip">Railway / Vercel</span>
+            <span class="modal-chip">Claude Code</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="modal-btn" href="/projects">View projects</a>
+        <a class="modal-btn light" href="/articles">Case studies</a>
+        <a class="modal-btn light" href="CV.pdf" download>Download CV</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: VIBA -->
+  <div class="overlay" id="modal-home-viba">
+    <div class="modal">
+      <div class="modal-accent" style="background:var(--sky);"></div>
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">Digital Marketing &amp; Operations Manager</div>
+          <div class="modal-meta">VIBA GmbH · Munich, Germany · Apr 2022 – Aug 2023 · Full-time</div>
+        </div>
+        <button class="modal-close" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <p>Retail startup launching a German home appliances store in Munich. Owned digital marketing and procurement operations, reporting directly to the business owner. This role was the bridge from commercial operations into AI-powered automation — and became the catalyst for the full transition into AI systems work.</p>
+        </div>
+        <div class="modal-section">
+          <h3>Digital marketing &amp; AI content automation</h3>
+          <ul>
+            <li>Built the brand's digital presence from zero across Instagram, Facebook, TikTok, Google Business Profile, and WordPress — publishing reels and carousels daily across all platforms.</li>
+            <li>Grew Instagram to 4K+ followers; a single reel reached 1M+ views and drove consistent client inquiries and sales calls.</li>
+            <li>Managed paid campaigns (Google Ads, Meta Ads) with keyword targeting; optimised for local SEO and Google Maps visibility.</li>
+            <li>Designed and automated an AI-supported content production workflow using Google Apps Script + ChatGPT API: keyword analysis → content briefs → automated cross-platform distribution.</li>
+          </ul>
+        </div>
+        <div class="modal-section">
+          <h3>Procurement &amp; vendor management</h3>
+          <ul>
+            <li>Coordinated procurement and order management across supplier systems for Siemens, Bosch, Liebherr, and Miele.</li>
+            <li>Supported store launch from zero to a fully operational, profitable business.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="modal-btn light" href="CV.pdf" download>Download CV</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Black Sea Link -->
+  <div class="overlay" id="modal-home-bsl">
+    <div class="modal">
+      <div class="modal-accent" style="background:var(--pink);"></div>
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">Head of Commercial Department</div>
+          <div class="modal-meta">Black Sea Link Ltd. · Odesa, Ukraine · Apr 2019 – Feb 2022 · Full-time</div>
+        </div>
+        <button class="modal-close" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <p>Recruited to build and lead a new commercial department from scratch at a freight forwarding and logistics company. Responsible for team leadership, sales strategy, performance management, and international partnership development.</p>
+        </div>
+        <div class="modal-section">
+          <h3>Team leadership</h3>
+          <ul>
+            <li>Built and managed a commercial department of 5 employees across sales coordination, forecasting, and client relationships.</li>
+            <li>Conducted hiring, onboarding, and implemented KPI-based performance tracking across the team.</li>
+          </ul>
+        </div>
+        <div class="modal-section">
+          <h3>Sales &amp; business development</h3>
+          <ul>
+            <li>Developed new sales channels and expanded the client base through structured forecasting and metrics tracking.</li>
+            <li>Consolidated quarterly sales results and annual forecasts for management reporting.</li>
+            <li>Improved service delivery and cost optimization across sea, rail, air transport, and customs-related operations.</li>
+          </ul>
+        </div>
+        <div class="modal-section">
+          <h3>Partnership development</h3>
+          <ul>
+            <li>Established and maintained strategic relationships with international vendors, shipping lines, and freight forwarders.</li>
+            <li>Negotiated vendor contracts and maintained partner network across international logistics service providers.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="modal-btn light" href="CV.pdf" download>Download CV</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Open experience modals
+    document.querySelectorAll('.experience-card[data-modal]').forEach(function(card) {
+      card.addEventListener('click', function() {
+        document.getElementById(card.dataset.modal).classList.add('open');
+        document.body.style.overflow = 'hidden';
+        var bn = document.getElementById('mobileBottomNav'); if (bn) bn.style.display = 'none';
+      });
+    });
+    // Close
+    function closeAllModals() {
+      document.querySelectorAll('.overlay.open').forEach(function(o) { o.classList.remove('open'); });
+      document.body.style.overflow = '';
+      var bn = document.getElementById('mobileBottomNav'); if (bn) bn.style.display = '';
+    }
+    document.querySelectorAll('.overlay').forEach(function(overlay) {
+      overlay.addEventListener('click', function(e) { if (e.target === overlay) closeAllModals(); });
+      overlay.querySelector('.modal-close').addEventListener('click', closeAllModals);
+    });
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeAllModals(); });
+  </script>
+
   <script>
     /* ── HAMBURGER (desktop fallback) + close on link click ── */
     (function () {
