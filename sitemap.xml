@@ -30,4 +30,19 @@
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
+  <url>
+    <loc>https://azhyshchev.de/impressum</loc>
+    <priority>0.3</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://azhyshchev.de/datenschutz</loc>
+    <priority>0.3</priority>
+    <changefreq>yearly</changefreq>
+  </url>
+  <url>
+    <loc>https://azhyshchev.de/agb</loc>
+    <priority>0.2</priority>
+    <changefreq>yearly</changefreq>
+  </url>
 </urlset>
