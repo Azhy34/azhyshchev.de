@@ -1016,45 +1016,32 @@
       </div>
       <div class="modal-body">
         <div class="modal-section">
-          <p>Full-stack AI music SaaS built for a client in two weeks with zero prior experience in AI music generation. Users describe an occasion, AI writes Polish lyrics and sings a full track, the MP3 lands in the personal cabinet. Payments, token-based access, permanent song storage on client VPS.</p>
+          <p>What happens when a developer with zero experience in AI music generation decides to build a SaaS in two weeks?</p>
+          <p>You get a working product with payments, a personal cabinet, and Suno V5.5 in production.</p>
+          <p>The project: hitdlaciebie.pl, a client SaaS that generates personalized songs in Polish. You describe who the song is for and the occasion, AI writes the lyrics and sings a full track, the MP3 lands in your personal cabinet.</p>
         </div>
-        <div class="modal-metrics">
-          <div class="metric-box">
-            <strong>2 weeks</strong>
-            <span>Idea to production. New domain, solo developer, full-stack delivery.</span>
-          </div>
-          <div class="metric-box">
-            <strong>4 APIs</strong>
-            <span>Music providers tested before shipping: fal.ai, ElevenLabs, Udio, Suno.</span>
-          </div>
-          <div class="metric-box">
-            <strong>2 LLMs</strong>
-            <span>In sequence for lyrics: Gemini 2.5 Flash (draft) + Claude Sonnet 4.6 (polish).</span>
-          </div>
-          <div class="metric-box">
-            <strong>3 security fixes</strong>
-            <span>SSRF in proxy, duplicate webhook idempotency, Shopify HMAC verification.</span>
-          </div>
+        <div class="modal-section">
+          <h3>Here is how it happened</h3>
+          <p>Before writing a single line of code, I did research. Connected four music APIs, ran identical prompts through each, and built the spec around what actually worked. Suno V5.5 won on vocal quality and Polish language handling.</p>
+          <p>Then the pipeline:</p>
+          <ul>
+            <li>Step 1. Gemini 2.5 Flash generates a raw draft of the lyrics (high temperature, fast, creative)</li>
+            <li>Step 2. Claude Sonnet 4.6 polishes the draft (low temperature, structure, rhyme quality)</li>
+            <li>Step 3. Suno V5.5 sings the full track and returns an MP3</li>
+          </ul>
+          <p>Two LLMs in sequence for one task. Not because it is fancy, but because draft quality and final quality require different temperature profiles and different strengths.</p>
         </div>
-        <div class="modal-cols">
-          <div class="modal-section">
-            <h3>Architecture</h3>
-            <ul>
-              <li>Two-model lyrics pipeline via OpenRouter: Gemini 2.5 Flash for creative draft, Claude Sonnet 4.6 for structure and rhyme.</li>
-              <li>Suno V5.5 for music generation — selected after comparative testing of four providers.</li>
-              <li>Shopify for payments: webhook triggers token credit and song generation automatically.</li>
-              <li>proxy-audio route for permanent CDN-independent song access.</li>
-              <li>Magic link auth, no passwords. PostgreSQL for users, tokens, songs.</li>
-            </ul>
-          </div>
-          <div class="modal-section">
-            <h3>Real problems solved</h3>
-            <ul>
-              <li>SSRF vulnerability in audio proxy — strict URL.hostname allowlist, not regex.</li>
-              <li>Duplicate Shopify webhooks — unique constraint + ON CONFLICT DO NOTHING.</li>
-              <li>Shopify test mode: spent 2 days debugging correct code — issue was a UI checkbox in admin panel.</li>
-            </ul>
-          </div>
+        <div class="modal-section">
+          <h3>Payments and delivery</h3>
+          <p>Payments run through Shopify. After purchase, a webhook hits my API, tokens are credited automatically, and song generation starts. No manual steps, no Make.com, no n8n — just Shopify calling my endpoint.</p>
+          <p>Users get a personal cabinet: token balance, full song history, permanent access to every track. Songs live on the client's VPS, no expiring CDN links.</p>
+          <p>The product is live. Three free demos per user, then token-based access.</p>
+        </div>
+        <div class="modal-section">
+          <h3>Development setup</h3>
+          <p>Developed in VS Code in two weeks with a multi-LLM setup. GPT-4.5 wrote code fast. Claude Sonnet 4.6 handled refactoring and kept specs and docs in sync with what was actually built.</p>
+          <p>Basic SEO is in place: sitemap, robots.txt, and llms.txt so the site is visible to both search engines and LLM crawlers.</p>
+          <p>If you have solid programming fundamentals and know how to work with LLMs, the domain does not matter. You can build anything.</p>
         </div>
         <div class="modal-section">
           <h3>Tech stack</h3>
@@ -1069,13 +1056,13 @@
             <span class="modal-chip">Shopify</span>
             <span class="modal-chip">Resend</span>
             <span class="modal-chip">VPS Frankfurt</span>
-            <span class="modal-chip">GitHub Actions</span>
+            <span class="modal-chip">GitHub Actions CI/CD</span>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <a class="modal-btn" href="/articles">Read case study</a>
-        <a class="modal-btn light" href="https://hitdlaciebie.pl" target="_blank" rel="noreferrer">Visit site ↗</a>
+        <a class="modal-btn" href="https://hitdlaciebie.pl" target="_blank" rel="noreferrer">Visit site ↗</a>
+        <a class="modal-btn light" href="https://www.linkedin.com/in/azhyshchev/details/projects/" target="_blank" rel="noreferrer">Full breakdown on LinkedIn ↗</a>
       </div>
     </div>
   </div>
