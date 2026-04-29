@@ -1115,7 +1115,7 @@
           <p>The project: hitdlaciebie.pl, a client SaaS that generates personalized songs in Polish. You describe who the song is for and the occasion, AI writes the lyrics and sings a full track, the MP3 lands in your personal cabinet.</p>
         </div>
         <div class="modal-section">
-          <h3>Here is how it happened</h3>
+          <h3 style="font-size:1rem;font-weight:800;margin-bottom:10px;letter-spacing:-0.02em;text-transform:none;opacity:1;">Here is how it happened</h3>
           <p>Before writing a single line of code, I did research. Connected four music APIs, ran identical prompts through each, and built the spec around what actually worked. Suno V5.5 won on vocal quality and Polish language handling.</p>
           <p>Then the pipeline:</p>
           <ul>
@@ -1126,19 +1126,19 @@
           <p>Two LLMs in sequence for one task. Not because it is fancy, but because draft quality and final quality require different temperature profiles and different strengths.</p>
         </div>
         <div class="modal-section">
-          <h3>Payments and delivery</h3>
+          <h3 style="font-size:1rem;font-weight:800;margin-bottom:10px;letter-spacing:-0.02em;text-transform:none;opacity:1;">Payments and delivery</h3>
           <p>Payments run through Shopify. After purchase, a webhook hits my API, tokens are credited automatically, and song generation starts. No manual steps, no Make.com, no n8n — just Shopify calling my endpoint.</p>
           <p>Users get a personal cabinet: token balance, full song history, permanent access to every track. Songs live on the client's VPS, no expiring CDN links.</p>
           <p>The product is live. Three free demos per user, then token-based access.</p>
         </div>
         <div class="modal-section">
-          <h3>Development setup</h3>
+          <h3 style="font-size:1rem;font-weight:800;margin-bottom:10px;letter-spacing:-0.02em;text-transform:none;opacity:1;">Development setup</h3>
           <p>Developed in VS Code in two weeks with a multi-LLM setup. GPT-4.5 wrote code fast. Claude Sonnet 4.6 handled refactoring and kept specs and docs in sync with what was actually built.</p>
           <p>Basic SEO is in place: sitemap, robots.txt, and llms.txt so the site is visible to both search engines and LLM crawlers.</p>
           <p>If you have solid programming fundamentals and know how to work with LLMs, the domain does not matter. You can build anything.</p>
         </div>
         <div class="modal-section">
-          <h3>Tech stack</h3>
+          <h3 style="font-size:1rem;font-weight:800;margin-bottom:10px;letter-spacing:-0.02em;text-transform:none;opacity:1;">Tech stack</h3>
           <div class="modal-chips">
             <span class="modal-chip">Next.js 14</span>
             <span class="modal-chip">TypeScript</span>
