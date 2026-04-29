@@ -576,7 +576,31 @@
             </div>
           </div>
 
-          <!-- Card 6: LinkedIn CTA -->
+          <!-- Card 6: hitdlaciebie.pl AI Music SaaS -->
+          <div class="project-card" data-modal="modal-hitdlaciebie">
+            <div class="card-accent" style="background: var(--coral);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">Full-Stack · AI Music · SaaS</span>
+                <span class="card-readtime">Production</span>
+              </div>
+              <h2 class="card-title">AI Music SaaS — hitdlaciebie.pl</h2>
+              <p class="card-excerpt">Personalized AI-generated songs in Polish. Two-model lyrics pipeline (Gemini 2.5 Flash + Claude Sonnet 4.6), four music APIs tested, Suno V5.5 in production. Shopify payments, magic link auth, personal cabinet, VPS hosting. Built in two weeks.</p>
+              <div class="card-tags">
+                <span class="tag">Next.js 14</span>
+                <span class="tag">TypeScript</span>
+                <span class="tag">Suno V5.5</span>
+                <span class="tag">PostgreSQL</span>
+                <span class="tag">Shopify</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Key result: <span>2 weeks · live product</span></div>
+              <span class="read-link">View project →</span>
+            </div>
+          </div>
+
+          <!-- Card 7: LinkedIn CTA -->
           <div class="project-card project-card--linkedin" onclick="window.open('https://www.linkedin.com/in/azhyshchev/recent-activity/all/','_blank')">
             <div class="card-accent" style="background: var(--sky);"></div>
             <div class="card-body">
@@ -975,6 +999,83 @@
       <div class="modal-footer">
         <a class="modal-btn" href="/articles">Read case study</a>
         <a class="modal-btn light" href="../CV.pdf" download>Download CV</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: hitdlaciebie.pl -->
+  <div class="overlay" id="modal-hitdlaciebie">
+    <div class="modal">
+      <div class="modal-accent" style="background:var(--coral);"></div>
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">AI Music SaaS — hitdlaciebie.pl</div>
+          <div class="modal-meta">Full-Stack · AI Music · SaaS · Production</div>
+        </div>
+        <button class="modal-close" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <p>Full-stack AI music SaaS built for a client in two weeks with zero prior experience in AI music generation. Users describe an occasion, AI writes Polish lyrics and sings a full track, the MP3 lands in the personal cabinet. Payments, token-based access, permanent song storage on client VPS.</p>
+        </div>
+        <div class="modal-metrics">
+          <div class="metric-box">
+            <strong>2 weeks</strong>
+            <span>Idea to production. New domain, solo developer, full-stack delivery.</span>
+          </div>
+          <div class="metric-box">
+            <strong>4 APIs</strong>
+            <span>Music providers tested before shipping: fal.ai, ElevenLabs, Udio, Suno.</span>
+          </div>
+          <div class="metric-box">
+            <strong>2 LLMs</strong>
+            <span>In sequence for lyrics: Gemini 2.5 Flash (draft) + Claude Sonnet 4.6 (polish).</span>
+          </div>
+          <div class="metric-box">
+            <strong>3 security fixes</strong>
+            <span>SSRF in proxy, duplicate webhook idempotency, Shopify HMAC verification.</span>
+          </div>
+        </div>
+        <div class="modal-cols">
+          <div class="modal-section">
+            <h3>Architecture</h3>
+            <ul>
+              <li>Two-model lyrics pipeline via OpenRouter: Gemini 2.5 Flash for creative draft, Claude Sonnet 4.6 for structure and rhyme.</li>
+              <li>Suno V5.5 for music generation — selected after comparative testing of four providers.</li>
+              <li>Shopify for payments: webhook triggers token credit and song generation automatically.</li>
+              <li>proxy-audio route for permanent CDN-independent song access.</li>
+              <li>Magic link auth, no passwords. PostgreSQL for users, tokens, songs.</li>
+            </ul>
+          </div>
+          <div class="modal-section">
+            <h3>Real problems solved</h3>
+            <ul>
+              <li>SSRF vulnerability in audio proxy — strict URL.hostname allowlist, not regex.</li>
+              <li>Duplicate Shopify webhooks — unique constraint + ON CONFLICT DO NOTHING.</li>
+              <li>Shopify test mode: spent 2 days debugging correct code — issue was a UI checkbox in admin panel.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="modal-section">
+          <h3>Tech stack</h3>
+          <div class="modal-chips">
+            <span class="modal-chip">Next.js 14</span>
+            <span class="modal-chip">TypeScript</span>
+            <span class="modal-chip">PostgreSQL</span>
+            <span class="modal-chip">Suno V5.5</span>
+            <span class="modal-chip">Gemini 2.5 Flash</span>
+            <span class="modal-chip">Claude Sonnet 4.6</span>
+            <span class="modal-chip">OpenRouter</span>
+            <span class="modal-chip">Shopify</span>
+            <span class="modal-chip">Resend</span>
+            <span class="modal-chip">VPS Frankfurt</span>
+            <span class="modal-chip">GitHub Actions</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="modal-btn" href="/articles">Read case study</a>
+        <a class="modal-btn light" href="https://hitdlaciebie.pl" target="_blank" rel="noreferrer">Visit site ↗</a>
       </div>
     </div>
   </div>

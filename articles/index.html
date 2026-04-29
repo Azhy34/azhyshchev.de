@@ -687,6 +687,30 @@
             </div>
           </div>
 
+          <!-- Card 7: hitdlaciebie.pl AI Music SaaS -->
+          <div class="article-card" data-tags="full-stack" data-modal="modal-hitdlaciebie">
+            <div class="card-accent" style="background: var(--coral);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">Full-Stack · AI Music · SaaS</span>
+                <span class="card-readtime">5 min read</span>
+              </div>
+              <h2 class="card-title">AI Music SaaS: Personalized Songs in Polish — hitdlaciebie.pl</h2>
+              <p class="card-excerpt">Built a full-stack AI music SaaS for a client in two weeks with zero prior experience in AI music generation. Two-model lyrics pipeline (Gemini 2.5 Flash + Claude Sonnet 4.6), four music APIs tested, Suno V5.5 shipped. Real problems: SSRF, duplicate webhooks, Shopify test mode.</p>
+              <div class="card-tags">
+                <span class="tag">Next.js 14</span>
+                <span class="tag">TypeScript</span>
+                <span class="tag">Suno V5.5</span>
+                <span class="tag">Shopify</span>
+                <span class="tag">PostgreSQL</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Key result: <span>2 weeks · zero domain expertise · live product</span></div>
+              <span class="read-link">Read case study →</span>
+            </div>
+          </div>
+
         </div>
 
         <!-- Insight callout -->
@@ -1133,6 +1157,89 @@
       <div class="modal-footer">
         <a class="action-btn dark" href="https://www.linkedin.com/feed/update/urn:li:activity:7445109114369720322/" target="_blank" rel="noreferrer">Read on LinkedIn ↗</a>
         <button class="mini-btn" onclick="closeModal('modal-da-vinchi')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: hitdlaciebie.pl -->
+  <div class="modal-overlay" id="modal-hitdlaciebie" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-section-label">Case Study · Full-Stack · AI Music · SaaS</div>
+          <h2 class="modal-title">AI Music SaaS — hitdlaciebie.pl</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-hitdlaciebie')">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="modal-section-label">The project</div>
+          <div class="modal-text">
+            <p>Full-stack AI music SaaS built for a client in two weeks with zero prior experience in AI music generation. hitdlaciebie.pl generates personalized songs in Polish: user describes the occasion and who the song is for, AI writes lyrics and sings a full track, the MP3 lands in the personal cabinet.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Lyrics pipeline — why two models instead of one</div>
+          <div class="modal-text">
+            <p>Generation uses a two-model chain via OpenRouter. Gemini 2.5 Flash (temperature 0.8) generates a raw creative draft fast — imaginative but structurally inconsistent. Claude Sonnet 4.6 (temperature 0.35) polishes the draft — enforces rhyme scheme, formats [Verse][Chorus] tags that Suno needs. Single-model attempts failed in both directions: high temperature broke structure, low temperature killed creativity.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Music API selection — tested four, shipped one</div>
+          <div class="modal-text">
+            <p><strong>fal.ai / Minimax</strong> — fast queue, but Polish phonetics were weak. Vocals sounded synthesized on vowel-heavy words.</p>
+            <p><strong>ElevenLabs Music</strong> — good timbre, but no verse/chorus structure awareness. Treated the entire lyric as a single block.</p>
+            <p><strong>Udio</strong> — promising quality, unstable API during testing. Requests failed silently.</p>
+            <p><strong>Suno V5.5</strong> — natural Polish vocals, correct structure from lyrics tags, consistent generation. Shipped to production. All four remain as registered providers — architecture is provider-agnostic.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">What broke along the way</div>
+          <div class="modal-text">
+            <p><strong>Problem 1 — two days lost to a UI checkbox.</strong> Token credits were not appearing after test purchases. Reviewed the entire webhook flow: HMAC verification, DB writes, token logic — everything was correct. The actual issue: Shopify test mode requires manually clicking "Mark as paid" in admin. Standard practice for anyone who knows Shopify. The code worked from day one.</p>
+            <p><strong>Problem 2 — SSRF in the audio proxy.</strong> Suno CDN URLs expire, so I built a proxy-audio route. Missed that it accepted arbitrary URLs. Fixed with strict URL.hostname validation — only *.suno.ai over HTTPS. Legacy fal.ai URLs in DB (tempfile.aiquickdraw.com) broke after the fix — extended allowlist for backward compatibility.</p>
+            <p><strong>Problem 3 — duplicate webhook delivery.</strong> Shopify can fire the same event twice. Fixed with unique constraint on shopify_order_id + ON CONFLICT DO NOTHING. Idempotent by design.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Key metrics</div>
+          <div class="modal-metrics">
+            <div class="modal-metric">
+              <span class="modal-metric-val">2 weeks</span>
+              <span class="modal-metric-lbl">Idea to production</span>
+            </div>
+            <div class="modal-metric">
+              <span class="modal-metric-val">4 APIs</span>
+              <span class="modal-metric-lbl">Tested before shipping</span>
+            </div>
+            <div class="modal-metric">
+              <span class="modal-metric-val">2 LLMs</span>
+              <span class="modal-metric-lbl">In sequence for lyrics</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Tech stack</div>
+          <div class="modal-stack">
+            <span class="stack-chip">Next.js 14</span>
+            <span class="stack-chip">TypeScript</span>
+            <span class="stack-chip">PostgreSQL</span>
+            <span class="stack-chip">Suno V5.5</span>
+            <span class="stack-chip">Gemini 2.5 Flash</span>
+            <span class="stack-chip">Claude Sonnet 4.6</span>
+            <span class="stack-chip">OpenRouter</span>
+            <span class="stack-chip">Shopify</span>
+            <span class="stack-chip">Resend</span>
+            <span class="stack-chip">VPS Frankfurt</span>
+            <span class="stack-chip">GitHub Actions CI/CD</span>
+            <span class="stack-chip">VS Code + GPT-4.5 + Claude Code</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="action-btn dark" href="https://www.linkedin.com/feed/update/urn:li:activity:7455277852507332608/" target="_blank" rel="noreferrer">Read on LinkedIn ↗</a>
+        <a class="action-btn" href="https://hitdlaciebie.pl" target="_blank" rel="noreferrer" style="background:var(--white);color:var(--black);">Visit site ↗</a>
+        <button class="mini-btn" onclick="closeModal('modal-hitdlaciebie')">Close</button>
       </div>
     </div>
   </div>
