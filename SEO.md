@@ -62,13 +62,30 @@ Added `<script type="application/ld+json">` blocks using the `@graph` pattern so
 - `portfolio/skills/index.html` — WebPage + Person with `knowsAbout` array
 - `portfolio/contact/index.html` — WebPage + Person with ContactPoint + Language + Country
 
-### Refactor pass — fixes applied to all 6 project pages
+### Refactor pass 1 — fixes applied to all 6 project pages
 
 | Fix | Pages affected |
 |-----|----------------|
 | Added `description` to WebPage JSON-LD node | ai-image-automation, wallpaper-visualization-automation, ai-music-saas |
 | Added `BreadcrumbList` inside WebPage JSON-LD node | All 6 project pages |
 | Added missing `twitter:description` meta tag | ai-image-automation |
+
+### Refactor pass 2 — Google Rich Results warnings fixed
+
+Google Rich Results Test showed 2 optional warnings on `SoftwareApplication` schema:
+- `offers` — missing (optional but improves rich snippet)
+- `aggregateRating` — missing (left intentionally — requires real user reviews, fake data gets penalized)
+
+Fixed by adding `Offer` node to all 6 project pages:
+```json
+"offers": {
+  "@type": "Offer",
+  "price": "0",
+  "priceCurrency": "EUR",
+  "availability": "https://schema.org/InStock",
+  "description": "Custom development — contact for pricing"
+}
+```
 
 BreadcrumbList enables Google sitelinks breadcrumb display in search results:
 ```json
@@ -183,6 +200,46 @@ Pages targeting the German B2B market use:
   - "Haben Sie ähnliche manuelle Prozesse in Ihrem Betrieb?"
 - **German compliance references:** DATEV compatibility, GoBD compliance, Impressum legal structure, Handelsregisternummer
 - **DACH areaServed** in contact/person schema: Germany, Austria, Switzerland
+
+---
+
+## Current SEO scorecard (May 2026)
+
+| Criterion | Score | Status | Notes |
+|-----------|-------|--------|-------|
+| Technical SEO | 8/10 | ✅ Improved | robots, sitemap, canonical, lastmod — all done |
+| AI bot access | 9/10 | ✅ | GPTBot, Claude-Web, anthropic-ai, PerplexityBot explicitly allowed |
+| Indexable content | 7/10 | ✅ Improved | 6 project pages with full text now exist (was 4/10 — modals not indexed) |
+| Keywords in page text | 7/10 | ✅ Improved | Each project page has German keywords in visible body text |
+| JSON-LD schema | 9/10 | ✅ | Person, WebSite, WebPage, SoftwareApplication, BreadcrumbList, Offer |
+| For HR/recruiter | 6/10 | → Pending | Design attracts, but no inline skills list or testimonials |
+| For hiring manager | 8/10 | ✅ Improved | Projects with metrics on dedicated pages |
+| Mobile | 8/10 | ✅ | Bottom nav, mobile.css, responsive grid |
+| Articles as content | 3/10 | ❌ Gap | /articles is a LinkedIn link wall — no text for Google to index |
+| Backlinks | 2/10 | ❌ Gap | No external sites linking to azhyshchev.de yet |
+
+---
+
+## Remaining gaps (what's left to do)
+
+### Gap 1 — Articles as HTML pages (biggest SEO opportunity)
+**Current state:** `/articles` page links to LinkedIn. Google cannot index LinkedIn content for your domain.
+**Impact:** No long-tail keyword traffic from searches like "invoice automation Germany tutorial", "RAG agent e-commerce aufbauen", etc.
+**What to do:** See section below — no layout rebuild needed, pure inner work.
+
+### Gap 2 — Backlinks (zero currently)
+**Current state:** No external sites link to azhyshchev.de.
+**Why it matters:** Google ranks pages partly by how many other sites reference them.
+**Quick wins:**
+- Add link to azhyshchev.de in every LinkedIn post's first comment
+- Add to GitHub profile README: `Portfolio: https://azhyshchev.de`
+- Submit to: wellfound.com/u/profile, dev.to author profile, Munich tech directories
+
+### Gap 3 — No German-language pages
+**Current state:** All content in English. German businesses often search in German.
+**Quick win (no layout changes needed):** Duplicate the 2 most commercial project pages in German:
+- `/projekte/rechnungsautomatisierung/` — ranks for "Rechnungsautomatisierung Software"
+- `/projekte/leadgenerierung-deutschland/` — ranks for "Leadgenerierung automatisieren"
 
 ---
 
