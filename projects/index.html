@@ -590,7 +590,7 @@
             <div class="card-footer">
               <div class="metric-pill">Key result: <span>2 weeks · live product</span></div>
               <!-- Full project page for SEO indexing — keeps modal UX intact -->
-              <a class="read-link" href="/projects/ai-music-saas/" onclick="event.stopPropagation()">Open full page →</a>
+              <a class="read-link" href="/projects/ai-music-saas/">Open full page →</a>
             </div>
           </div>
 
@@ -616,7 +616,7 @@
             <div class="card-footer">
               <div class="metric-pill">Key result: <span>~90% API cost ↓</span></div>
               <!-- Full project page for SEO indexing — keeps modal UX intact -->
-              <a class="read-link" href="/projects/ai-sales-agent-rag/" onclick="event.stopPropagation()">Open full page →</a>
+              <a class="read-link" href="/projects/ai-sales-agent-rag/">Open full page →</a>
             </div>
           </div>
 
@@ -640,7 +640,7 @@
             <div class="card-footer">
               <div class="metric-pill">Key result: <span>Weekly routine → zero</span></div>
               <!-- Full project page for SEO indexing — keeps modal UX intact -->
-              <a class="read-link" href="/projects/invoice-automation-germany/" onclick="event.stopPropagation()">Open full page →</a>
+              <a class="read-link" href="/projects/invoice-automation-germany/">Open full page →</a>
             </div>
           </div>
 
@@ -665,7 +665,7 @@
             <div class="card-footer">
               <div class="metric-pill">Key result: <span>Hours → 30 sec per artwork</span></div>
               <!-- Full project page for SEO indexing — keeps modal UX intact -->
-              <a class="read-link" href="/projects/ai-image-automation/" onclick="event.stopPropagation()">Open full page →</a>
+              <a class="read-link" href="/projects/ai-image-automation/">Open full page →</a>
             </div>
           </div>
 
@@ -690,7 +690,7 @@
             <div class="card-footer">
               <div class="metric-pill">Key result: <span>80-120 leads in 15-25 min</span></div>
               <!-- Full project page for SEO indexing — keeps modal UX intact -->
-              <a class="read-link" href="/projects/b2b-lead-generation-germany/" onclick="event.stopPropagation()">Open full page →</a>
+              <a class="read-link" href="/projects/b2b-lead-generation-germany/">Open full page →</a>
             </div>
           </div>
 
@@ -715,7 +715,7 @@
             <div class="card-footer">
               <div class="metric-pill">Key result: <span>75% manual work ↓</span></div>
               <!-- Full project page for SEO indexing — keeps modal UX intact -->
-              <a class="read-link" href="/projects/wallpaper-visualization-automation/" onclick="event.stopPropagation()">Open full page →</a>
+              <a class="read-link" href="/projects/wallpaper-visualization-automation/">Open full page →</a>
             </div>
           </div>
 
@@ -1200,7 +1200,9 @@
     }
 
     document.querySelectorAll('.project-card[data-modal]').forEach(card => {
-      card.addEventListener('click', () => {
+      card.addEventListener('click', function(e) {
+        // If the click came from a link inside the card — let it navigate, don't open modal
+        if (e.target.closest('a')) return;
         document.getElementById(card.dataset.modal).classList.add('open');
         document.body.style.overflow = 'hidden';
         var bn = document.getElementById('mobileBottomNav');
