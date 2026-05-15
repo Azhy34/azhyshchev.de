@@ -2,46 +2,93 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://azhyshchev.de/</loc>
+    <lastmod>2026-05-15</lastmod>
     <priority>1.0</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://azhyshchev.de/experience</loc>
+    <lastmod>2026-05-15</lastmod>
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://azhyshchev.de/projects</loc>
+    <lastmod>2026-05-15</lastmod>
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://azhyshchev.de/articles</loc>
+    <lastmod>2026-05-15</lastmod>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://azhyshchev.de/skills</loc>
+    <lastmod>2026-05-15</lastmod>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://azhyshchev.de/contact</loc>
+    <lastmod>2026-05-15</lastmod>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
+  <!-- Individual project pages — separate URLs for Google indexing (content was previously only in modals) -->
+  <url>
+    <loc>https://azhyshchev.de/projects/ai-sales-agent-rag/</loc>
+    <lastmod>2026-05-15</lastmod>
+    <priority>0.85</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://azhyshchev.de/projects/invoice-automation-germany/</loc>
+    <lastmod>2026-05-15</lastmod>
+    <priority>0.85</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://azhyshchev.de/projects/b2b-lead-generation-germany/</loc>
+    <lastmod>2026-05-15</lastmod>
+    <priority>0.85</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://azhyshchev.de/projects/ai-image-automation/</loc>
+    <lastmod>2026-05-15</lastmod>
+    <priority>0.85</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://azhyshchev.de/projects/wallpaper-visualization-automation/</loc>
+    <lastmod>2026-05-15</lastmod>
+    <priority>0.85</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://azhyshchev.de/projects/ai-music-saas/</loc>
+    <lastmod>2026-05-15</lastmod>
+    <priority>0.85</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
   <url>
     <loc>https://azhyshchev.de/impressum</loc>
+    <lastmod>2026-01-01</lastmod>
     <priority>0.3</priority>
     <changefreq>yearly</changefreq>
   </url>
   <url>
     <loc>https://azhyshchev.de/datenschutz</loc>
+    <lastmod>2026-01-01</lastmod>
     <priority>0.3</priority>
     <changefreq>yearly</changefreq>
   </url>
   <url>
     <loc>https://azhyshchev.de/agb</loc>
+    <lastmod>2026-01-01</lastmod>
     <priority>0.2</priority>
     <changefreq>yearly</changefreq>
   </url>

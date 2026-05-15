@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO: описание страницы для Google — заточено под запросы бизнесов в Германии -->
+  <meta name="description" content="AI Sales Assistant with RAG architecture for e-commerce. LangGraph ReAct agent, Hybrid RAG (SQL + pgvector), 90% API cost reduction, 1200+ SKU catalog. Built for production in Germany.">
+  <meta name="keywords" content="AI sales assistant Germany, RAG agent e-commerce, LangGraph production, Hybrid RAG pgvector, AI chatbot München, sales automation Deutschland, KI Verkaufsassistent">
+  <meta name="author" content="Mikhail Azhyshchev">
+  <link rel="canonical" href="https://azhyshchev.de/projects/ai-sales-agent-rag/">
+
+  <!-- Open Graph — для шеринга в LinkedIn и соцсетях -->
+  <meta property="og:title" content="AI Sales Assistant RAG Agent — Production Case Study | Mikhail Azhyshchev">
+  <meta property="og:description" content="Production RAG web sales assistant: LangGraph ReAct agent, Hybrid RAG (SQL + pgvector), 1200+ SKU, ~90% API cost reduction. Built by AI Automation Engineer in Munich.">
+  <meta property="og:url" content="https://azhyshchev.de/projects/ai-sales-agent-rag/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://azhyshchev.de/Azhyschev.JPG">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="AI Sales Assistant RAG Agent — Production Case Study | Mikhail Azhyshchev">
+  <meta name="twitter:description" content="Production RAG web sales assistant built in Munich. LangGraph, Hybrid RAG, 90% API cost reduction.">
+
+  <title>AI Sales Assistant RAG Agent — Production Case Study | Mikhail Azhyshchev</title>
+
+  <!-- JSON-LD: structured data для Google Knowledge Graph -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://azhyshchev.de/projects/ai-sales-agent-rag/#webpage",
+        "url": "https://azhyshchev.de/projects/ai-sales-agent-rag/",
+        "name": "AI Sales Assistant RAG Agent — Production Case Study",
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" },
+        "author": { "@id": "https://azhyshchev.de/#person" },
+        "dateModified": "2026-05-15",
+        "description": "Production RAG web sales assistant built in Munich. LangGraph ReAct agent, Hybrid RAG, 90% API cost reduction.",
+        "inLanguage": "en",
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://azhyshchev.de/" },
+            { "@type": "ListItem", "position": 2, "name": "Projects", "item": "https://azhyshchev.de/projects" },
+            { "@type": "ListItem", "position": 3, "name": "AI Sales Assistant RAG" }
+          ]
+        }
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://azhyshchev.de/projects/ai-sales-agent-rag/#project",
+        "name": "Web Sales Assistant — AI RAG Agent",
+        "description": "Production AI Sales Assistant for e-commerce with Hybrid RAG architecture. LangGraph ReAct agent with 5 tools, SQL + pgvector for zero-hallucination product queries, ~90% API cost reduction. Built and deployed in Germany.",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "author": { "@id": "https://azhyshchev.de/#person" },
+        "keywords": "RAG agent, AI sales assistant, LangGraph, Hybrid RAG, pgvector, Supabase, FastAPI, sales automation Germany, KI Verkaufsassistent Deutschland"
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── DESIGN TOKENS (те же что на всём сайте) ── */
+    :root {
+      --sky: #61b5e8;
+      --mint: #b9ddb7;
+      --cream: #f8f0dc;
+      --yellow: #f5c84b;
+      --pink: #efb2d5;
+      --blue: #d8ebff;
+      --peach: #f7d4b1;
+      --coral: #ff9a77;
+      --rose: #ecb0c4;
+      --black: #111111;
+      --white: #ffffff;
+      /* Акцентный цвет этого проекта */
+      --accent: var(--yellow);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--black);
+      background: linear-gradient(120deg, var(--sky) 0 34%, var(--peach) 34% 55%, var(--coral) 55% 72%, var(--rose) 72% 100%);
+      padding: 48px 24px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── SHELL: та же двухколоночная сетка что на /projects ── */
+    .shell {
+      width: min(1320px, 100%);
+      margin: 0 auto;
+      border: 3px solid var(--black);
+      box-shadow: 12px 12px 0 var(--black);
+      background: var(--mint);
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      min-height: 820px;
+      overflow: hidden;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      border-right: 3px solid var(--black);
+      padding: 20px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .brand {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 1.6rem; font-weight: 800;
+      letter-spacing: -0.04em; margin-bottom: 8px;
+    }
+
+    .brand-badge {
+      width: 42px; height: 34px;
+      border: 2px solid var(--black);
+      background: var(--white);
+      box-shadow: 3px 3px 0 var(--black);
+      display: grid; place-items: center;
+      font-size: 1rem; font-weight: 800;
+    }
+
+    .nav { display: flex; flex-direction: column; gap: 8px; }
+
+    .nav-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 11px 12px;
+      font-size: 0.9rem; font-weight: 700;
+      border: 2px solid transparent;
+      transition: transform 0.18s ease;
+    }
+
+    .nav-item:hover { transform: translate(-2px, -2px); }
+
+    .nav-item.active {
+      background: var(--black); color: var(--white);
+    }
+
+    .icon-box {
+      width: 24px; height: 24px;
+      display: grid; place-items: center;
+      border: 2px solid var(--black);
+      background: var(--white);
+      box-shadow: 3px 3px 0 var(--black);
+      font-size: 0.75rem; font-weight: 800;
+    }
+
+    .nav-item.active .icon-box { background: var(--yellow); color: var(--black); }
+
+    .sidebar-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+
+    .socials { display: flex; gap: 10px; padding-top: 8px; }
+
+    .social-link {
+      width: 42px; height: 42px;
+      border: 2px solid var(--black);
+      background: var(--white);
+      box-shadow: 3px 3px 0 var(--black);
+      display: grid; place-items: center;
+      font-size: 0.8rem; font-weight: 800;
+      transition: transform 0.18s ease;
+    }
+
+    .social-link:hover { transform: translate(-2px, -2px); }
+
+    /* ── MAIN CONTENT ── */
+    .main { background: var(--cream); padding: 22px; }
+
+    .panel {
+      border: 2px solid var(--black);
+      background: rgba(255,255,255,0.2);
+      padding: 18px;
+      display: flex; flex-direction: column; gap: 28px;
+    }
+
+    /* ── BREADCRUMB ── */
+    .breadcrumb {
+      font-size: 0.78rem; opacity: 0.6;
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .breadcrumb a:hover { opacity: 1; text-decoration: underline; }
+
+    /* ── HERO ── */
+    .project-hero {
+      border: 3px solid var(--black);
+      background: var(--accent);
+      box-shadow: 6px 6px 0 var(--black);
+      padding: 24px;
+    }
+
+    .project-type {
+      font-size: 0.72rem; font-weight: 800;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      opacity: 0.6; margin-bottom: 12px;
+    }
+
+    .project-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800; line-height: 1;
+      letter-spacing: -0.05em; margin-bottom: 16px;
+    }
+
+    .project-lead {
+      font-size: 0.95rem; line-height: 1.6;
+      max-width: 70ch; margin-bottom: 20px;
+    }
+
+    /* ── МЕТРИКИ ── */
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .metric-box {
+      border: 2px solid var(--black);
+      background: rgba(255,255,255,0.75);
+      padding: 14px 12px;
+    }
+
+    .metric-box strong {
+      display: block; font-size: 1.4rem;
+      line-height: 1; margin-bottom: 6px;
+    }
+
+    .metric-box span { font-size: 0.72rem; line-height: 1.4; opacity: 0.8; }
+
+    /* ── CONTENT SECTIONS ── */
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .neo-card {
+      border: 3px solid var(--black);
+      background: var(--white);
+      box-shadow: 6px 6px 0 var(--black);
+      padding: 20px;
+    }
+
+    .section-label {
+      font-size: 0.68rem; font-weight: 800;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      opacity: 0.45; margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: 1.05rem; font-weight: 800;
+      margin-bottom: 14px; letter-spacing: -0.02em;
+    }
+
+    ul.detail-list {
+      padding-left: 16px;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+
+    ul.detail-list li { font-size: 0.86rem; line-height: 1.6; }
+
+    /* ── TECH STACK CHIPS ── */
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+
+    .chip {
+      padding: 6px 10px;
+      border: 2px solid var(--black);
+      background: var(--white);
+      box-shadow: 3px 3px 0 var(--black);
+      font-size: 0.72rem; font-weight: 700;
+    }
+
+    /* ── CTA STRIP ── */
+    .cta-strip {
+      border: 3px solid var(--black);
+      background: var(--black);
+      color: var(--white);
+      box-shadow: 6px 6px 0 rgba(0,0,0,0.3);
+      padding: 20px 24px;
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    }
+
+    .cta-strip p { font-size: 0.9rem; line-height: 1.5; max-width: 60ch; }
+    .cta-strip strong { display: block; font-size: 1rem; margin-bottom: 4px; }
+
+    .cta-btn {
+      padding: 12px 20px;
+      border: 2px solid var(--white);
+      background: var(--white);
+      color: var(--black);
+      font: inherit; font-weight: 700;
+      box-shadow: 4px 4px 0 rgba(255,255,255,0.3);
+      cursor: pointer; white-space: nowrap;
+      transition: transform 0.15s;
+    }
+
+    .cta-btn:hover { transform: translate(-2px,-2px); }
+
+    .cta-btn.outline {
+      background: transparent;
+      color: var(--white);
+    }
+
+    /* ── BACK BUTTON ── */
+    .back-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 16px;
+      border: 2px solid var(--black);
+      background: var(--white);
+      box-shadow: 4px 4px 0 var(--black);
+      font-size: 0.82rem; font-weight: 700;
+      transition: transform 0.15s;
+      align-self: flex-start;
+    }
+
+    .back-link:hover { transform: translate(-2px,-2px); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+      .shell { grid-template-columns: 220px 1fr; }
+      .metrics-row { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 820px) {
+      body { padding: 10px 8px 72px; }
+      .shell { grid-template-columns: 1fr; box-shadow: 6px 6px 0 var(--black); min-height: unset; }
+      .sidebar { border-right: none; border-bottom: 3px solid var(--black); padding: 10px 14px; flex-direction: row; align-items: center; justify-content: space-between; }
+      .brand { font-size: clamp(0.95rem, 2.5vw, 1.6rem); }
+      .nav { display: none; }
+      .sidebar-bottom { display: none; }
+      .main { padding: 14px; }
+      .content-grid { grid-template-columns: 1fr; }
+      .metrics-row { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 520px) {
+      .metrics-row { grid-template-columns: 1fr; }
+      .project-title { font-size: 1.7rem; }
+    }
+  </style>
+  <link rel="stylesheet" href="../../mobile.css">
+</head>
+<body>
+  <div class="shell">
+
+    <!-- SIDEBAR: идентичен остальным страницам сайта -->
+    <aside class="sidebar">
+      <a class="brand" href="/">
+        <div class="brand-badge">&lt;/&gt;</div>
+        <span>AZHYSHCHEV</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">&#9776;</button>
+      <nav class="nav">
+        <a class="nav-item" href="/"><span class="icon-box">H</span><span>Home</span></a>
+        <a class="nav-item" href="/experience"><span class="icon-box">E</span><span>Experience</span></a>
+        <!-- Projects активен — мы внутри раздела /projects -->
+        <a class="nav-item active" href="/projects"><span class="icon-box">P</span><span>Projects</span></a>
+        <a class="nav-item" href="/articles"><span class="icon-box">A</span><span>Articles</span></a>
+        <a class="nav-item" href="/skills"><span class="icon-box">S</span><span>Skills</span></a>
+        <a class="nav-item" href="/contact"><span class="icon-box">C</span><span>Contact</span></a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a class="nav-item" href="/CV.pdf" download><span class="icon-box">CV</span><span>Download CV</span></a>
+        <a class="nav-item" href="mailto:azhyshchev@gmail.com"><span class="icon-box">@</span><span>Email</span></a>
+        <div class="socials">
+          <a class="social-link" href="https://www.linkedin.com/in/azhyshchev/" target="_blank" rel="noreferrer">in</a>
+          <a class="social-link" href="https://github.com/Azhy34" target="_blank" rel="noreferrer">gh</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+      <div class="panel">
+
+        <!-- Breadcrumb: помогает Google понять структуру сайта -->
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Home</a>
+          <span>→</span>
+          <a href="/projects">Projects</a>
+          <span>→</span>
+          <span>AI Sales Assistant RAG</span>
+        </nav>
+
+        <!-- HERO BLOCK -->
+        <div class="project-hero">
+          <div class="project-type">RAG · AI Agent · E-commerce · Production</div>
+          <h1 class="project-title">Web Sales Assistant — AI RAG Agent</h1>
+          <p class="project-lead">
+            Production AI Sales Assistant for a Polish wallpaper and décor e-commerce store. A LangGraph ReAct agent with Hybrid RAG architecture — SQL for hard facts, pgvector for semantic knowledge. Zero hallucinated prices, 1,200+ SKU catalog, ~90% API cost reduction.
+            Built and deployed in production — not a demo.
+          </p>
+
+          <!-- Ключевые метрики — первое что видит и Google, и рекрутер -->
+          <div class="metrics-row">
+            <div class="metric-box">
+              <strong>~90%</strong>
+              <span>API cost reduction vs. hot-cache approach through architectural design</span>
+            </div>
+            <div class="metric-box">
+              <strong>1,200+ SKU</strong>
+              <span>Zero hallucinated prices — hard facts in SQL, not vector search</span>
+            </div>
+            <div class="metric-box">
+              <strong>5 tools</strong>
+              <span>LangGraph ReAct agent: search, filter, detail, recommend, FAQ</span>
+            </div>
+            <div class="metric-box">
+              <strong>98%</strong>
+              <span>Data optimisation through ETL pipeline and knowledge-base contract tests</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CONTENT GRID: архитектура + бизнес-импакт -->
+        <div class="content-grid">
+
+          <div class="neo-card">
+            <div class="section-label">Architecture</div>
+            <h2 class="section-title">How it works</h2>
+            <ul class="detail-list">
+              <!-- Гибридный RAG — ключевое архитектурное решение -->
+              <li>Hybrid RAG: SQL for deterministic facts (price, SKU, dimensions), pgvector for semantic knowledge (style, mood, recommendations).</li>
+              <li>LangGraph ReAct agent — tool-calling loop with fallback handling and observability via LangSmith.</li>
+              <li>FastAPI backend + web chat widget (/chat endpoint). Telegram used for internal debugging only.</li>
+              <li>ETL pipeline with deduplication and knowledge-base contract tests to prevent data drift.</li>
+              <li>Production-deployed on Railway — auto-scaling, zero-downtime.</li>
+            </ul>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Business impact</div>
+            <h2 class="section-title">What it replaced</h2>
+            <ul class="detail-list">
+              <!-- Именно это ищут немецкие бизнесы — конкретный результат -->
+              <li>Handles product search, filtering, detail queries, recommendations, and FAQ without human intervention.</li>
+              <li>Buyer-scenario integration tests ensure the agent behaves correctly under edge cases.</li>
+              <li>~90% reduction in API costs compared to naive LLM-for-every-query approach.</li>
+              <li>Sales team gets a working AI assistant that answers complex product questions instantly.</li>
+              <li>Scales to any catalogue size — not limited by context window.</li>
+            </ul>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Engineering decisions</div>
+            <h2 class="section-title">Why this approach</h2>
+            <ul class="detail-list">
+              <li>Split SQL vs. vector intentionally — price hallucinations are a business risk, not a technical inconvenience.</li>
+              <li>ReAct agent over single-shot prompting — complex user queries often require multi-step tool use.</li>
+              <li>LangSmith observability from day one — not bolted on later.</li>
+              <li>Baseline ETL tests before embedding — garbage in, garbage out is the most common RAG failure.</li>
+            </ul>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Relevance for your business</div>
+            <!-- Этот блок напрямую обращается к немецкому бизнесу -->
+            <h2 class="section-title">Can this work for you?</h2>
+            <ul class="detail-list">
+              <li>Any e-commerce or product catalogue business in Germany with 100+ SKUs can benefit from this architecture.</li>
+              <li>Works for: furniture stores, electronics retailers, B2B parts suppliers, wholesale catalogs.</li>
+              <li>Integrates into existing websites as a chat widget — no full rebuild required.</li>
+              <li>Cost-effective: designed to minimise API spend from the start.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- TECH STACK -->
+        <div class="neo-card">
+          <div class="section-label">Tech stack</div>
+          <h2 class="section-title">Tools used</h2>
+          <div class="chips">
+            <span class="chip">Python</span>
+            <span class="chip">LangGraph</span>
+            <span class="chip">FastAPI</span>
+            <span class="chip">Supabase</span>
+            <span class="chip">pgvector</span>
+            <span class="chip">Gemini 2.5 Flash</span>
+            <span class="chip">Sentence-Transformers</span>
+            <span class="chip">LangSmith</span>
+            <span class="chip">Docker</span>
+            <span class="chip">Railway</span>
+            <span class="chip">pytest</span>
+          </div>
+        </div>
+
+        <!-- CTA: призыв к действию для бизнеса -->
+        <div class="cta-strip">
+          <div>
+            <strong>Need a similar system for your business?</strong>
+            <p>I build AI sales assistants and RAG agents for e-commerce and B2B companies in Germany and EU. Let's talk about your use case.</p>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <a class="cta-btn" href="mailto:azhyshchev@gmail.com">Contact me</a>
+            <a class="cta-btn outline" href="/projects">All projects</a>
+          </div>
+        </div>
+
+        <!-- Back link -->
+        <a class="back-link" href="/projects">← Back to projects</a>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- MOBILE BOTTOM NAV -->
+  <nav class="mobile-bottom-nav" id="mobileBottomNav">
+    <a class="mbn-item" href="/"><span class="mbn-icon">&lt;/&gt;</span><span class="mbn-label">Home</span></a>
+    <a class="mbn-item" href="/experience"><span class="mbn-icon">E</span><span class="mbn-label">Experience</span></a>
+    <a class="mbn-item active" href="/projects"><span class="mbn-icon">P</span><span class="mbn-label">Projects</span></a>
+    <a class="mbn-item" href="/articles"><span class="mbn-icon">A</span><span class="mbn-label">Articles</span></a>
+    <a class="mbn-item" href="/contact"><span class="mbn-icon">C</span><span class="mbn-label">Contact</span></a>
+  </nav>
+
+  <script>
+    /* Hamburger для мобайла */
+    (function () {
+      var toggle = document.getElementById('navToggle');
+      var nav = document.querySelector('.nav');
+      var bottom = document.querySelector('.sidebar-bottom');
+      if (!toggle) return;
+      toggle.addEventListener('click', function () {
+        var open = nav.classList.toggle('open');
+        if (bottom) bottom.classList.toggle('open', open);
+        toggle.innerHTML = open ? '&#10005;' : '&#9776;';
+      });
+    })();
+  </script>
+</body>
+</html>

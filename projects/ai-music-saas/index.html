@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI Music SaaS (hitdlaciebie.pl): personalized AI-generated songs built with Next.js 14, Gemini 2.5 Flash + Claude Sonnet, Suno V5.5, Shopify payments. Full-stack SaaS shipped in 2 weeks.">
+  <meta name="keywords" content="AI music SaaS, AI song generation, Next.js SaaS, Suno music API, full-stack AI product, SaaS development Germany, KI Musik generieren, personalized music AI">
+  <meta name="author" content="Mikhail Azhyshchev">
+  <link rel="canonical" href="https://azhyshchev.de/projects/ai-music-saas/">
+  <meta property="og:title" content="AI Music SaaS — hitdlaciebie.pl Case Study | Mikhail Azhyshchev">
+  <meta property="og:description" content="Full-stack AI Music SaaS with personalized song generation. Two-model lyrics pipeline, Suno V5.5, Shopify payments, magic link auth. Built in 2 weeks.">
+  <meta property="og:url" content="https://azhyshchev.de/projects/ai-music-saas/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://azhyshchev.de/Azhyschev.JPG">
+  <meta name="twitter:card" content="summary">
+  <title>AI Music SaaS — hitdlaciebie.pl | Full-Stack AI Product | Mikhail Azhyshchev</title>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://azhyshchev.de/projects/ai-music-saas/#webpage",
+        "url": "https://azhyshchev.de/projects/ai-music-saas/",
+        "name": "AI Music SaaS — hitdlaciebie.pl Case Study",
+        "description": "Full-stack AI Music SaaS for personalized song generation. Two-model lyrics pipeline (Gemini + Claude), Suno V5.5, Shopify payments. Shipped in 2 weeks.",
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" },
+        "author": { "@id": "https://azhyshchev.de/#person" },
+        "dateModified": "2026-05-15",
+        "inLanguage": "en",
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://azhyshchev.de/" },
+            { "@type": "ListItem", "position": 2, "name": "Projects", "item": "https://azhyshchev.de/projects" },
+            { "@type": "ListItem", "position": 3, "name": "AI Music SaaS" }
+          ]
+        }
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://azhyshchev.de/projects/ai-music-saas/#project",
+        "name": "AI Music SaaS — hitdlaciebie.pl",
+        "description": "Full-stack AI Music SaaS for personalized song generation. Two-model lyrics pipeline (Gemini 2.5 Flash + Claude Sonnet), Suno V5.5 music generation, Shopify payments, magic link auth, personal cabinet. Shipped in 2 weeks.",
+        "applicationCategory": "EntertainmentApplication",
+        "operatingSystem": "Web",
+        "author": { "@id": "https://azhyshchev.de/#person" },
+        "keywords": "AI music SaaS, song generation, Next.js, Gemini, Claude, Suno, Shopify, full-stack AI product"
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --sky: #61b5e8; --mint: #b9ddb7; --cream: #f8f0dc; --yellow: #f5c84b; --pink: #efb2d5; --blue: #d8ebff; --peach: #f7d4b1; --coral: #ff9a77; --rose: #ecb0c4; --black: #111111; --white: #ffffff; --accent: var(--coral); }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { min-height: 100vh; font-family: 'JetBrains Mono', monospace; color: var(--black); background: linear-gradient(120deg, var(--sky) 0 34%, var(--peach) 34% 55%, var(--coral) 55% 72%, var(--rose) 72% 100%); padding: 48px 24px; }
+    a { color: inherit; text-decoration: none; }
+    .shell { width: min(1320px, 100%); margin: 0 auto; border: 3px solid var(--black); box-shadow: 12px 12px 0 var(--black); background: var(--mint); display: grid; grid-template-columns: 250px 1fr; min-height: 820px; overflow: hidden; }
+    .sidebar { border-right: 3px solid var(--black); padding: 20px 18px; display: flex; flex-direction: column; gap: 22px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 8px; }
+    .brand-badge { width: 42px; height: 34px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 1rem; font-weight: 800; }
+    .nav { display: flex; flex-direction: column; gap: 8px; }
+    .nav-item { display: flex; align-items: center; gap: 12px; padding: 11px 12px; font-size: 0.9rem; font-weight: 700; border: 2px solid transparent; transition: transform 0.18s ease; }
+    .nav-item:hover { transform: translate(-2px, -2px); }
+    .nav-item.active { background: var(--black); color: var(--white); }
+    .icon-box { width: 24px; height: 24px; display: grid; place-items: center; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); font-size: 0.75rem; font-weight: 800; }
+    .nav-item.active .icon-box { background: var(--yellow); color: var(--black); }
+    .sidebar-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+    .socials { display: flex; gap: 10px; padding-top: 8px; }
+    .social-link { width: 42px; height: 42px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 0.8rem; font-weight: 800; transition: transform 0.18s ease; }
+    .social-link:hover { transform: translate(-2px, -2px); }
+    .main { background: var(--cream); padding: 22px; }
+    .panel { border: 2px solid var(--black); background: rgba(255,255,255,0.2); padding: 18px; display: flex; flex-direction: column; gap: 28px; }
+    .breadcrumb { font-size: 0.78rem; opacity: 0.6; display: flex; align-items: center; gap: 8px; }
+    .breadcrumb a:hover { opacity: 1; text-decoration: underline; }
+    .project-hero { border: 3px solid var(--black); background: var(--accent); box-shadow: 6px 6px 0 var(--black); padding: 24px; }
+    .project-type { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; margin-bottom: 12px; }
+    .project-title { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800; line-height: 1; letter-spacing: -0.05em; margin-bottom: 16px; }
+    .project-lead { font-size: 0.95rem; line-height: 1.6; max-width: 70ch; margin-bottom: 20px; }
+    .metrics-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+    .metric-box { border: 2px solid var(--black); background: rgba(255,255,255,0.75); padding: 14px 12px; }
+    .metric-box strong { display: block; font-size: 1.4rem; line-height: 1; margin-bottom: 6px; }
+    .metric-box span { font-size: 0.72rem; line-height: 1.4; opacity: 0.8; }
+    .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .neo-card { border: 3px solid var(--black); background: var(--white); box-shadow: 6px 6px 0 var(--black); padding: 20px; }
+    .section-label { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.45; margin-bottom: 12px; }
+    .section-title { font-size: 1.05rem; font-weight: 800; margin-bottom: 14px; letter-spacing: -0.02em; }
+    ul.detail-list { padding-left: 16px; display: flex; flex-direction: column; gap: 10px; }
+    ul.detail-list li { font-size: 0.86rem; line-height: 1.6; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+    .chip { padding: 6px 10px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); font-size: 0.72rem; font-weight: 700; }
+    .cta-strip { border: 3px solid var(--black); background: var(--black); color: var(--white); box-shadow: 6px 6px 0 rgba(0,0,0,0.3); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .cta-strip p { font-size: 0.9rem; line-height: 1.5; max-width: 60ch; }
+    .cta-strip strong { display: block; font-size: 1rem; margin-bottom: 4px; }
+    .cta-btn { padding: 12px 20px; border: 2px solid var(--white); background: var(--white); color: var(--black); font: inherit; font-weight: 700; cursor: pointer; white-space: nowrap; transition: transform 0.15s; }
+    .cta-btn:hover { transform: translate(-2px,-2px); }
+    .cta-btn.outline { background: transparent; color: var(--white); }
+    .back-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 2px solid var(--black); background: var(--white); box-shadow: 4px 4px 0 var(--black); font-size: 0.82rem; font-weight: 700; transition: transform 0.15s; align-self: flex-start; }
+    .back-link:hover { transform: translate(-2px,-2px); }
+    @media (max-width: 1100px) { .shell { grid-template-columns: 220px 1fr; } .metrics-row { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 820px) { body { padding: 10px 8px 72px; } .shell { grid-template-columns: 1fr; box-shadow: 6px 6px 0 var(--black); min-height: unset; } .sidebar { border-right: none; border-bottom: 3px solid var(--black); padding: 10px 14px; flex-direction: row; align-items: center; justify-content: space-between; } .brand { font-size: clamp(0.95rem, 2.5vw, 1.6rem); } .nav { display: none; } .sidebar-bottom { display: none; } .main { padding: 14px; } .content-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 520px) { .metrics-row { grid-template-columns: 1fr; } .project-title { font-size: 1.7rem; } }
+  </style>
+  <link rel="stylesheet" href="../../mobile.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="/"><div class="brand-badge">&lt;/&gt;</div><span>AZHYSHCHEV</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">&#9776;</button>
+      <nav class="nav">
+        <a class="nav-item" href="/"><span class="icon-box">H</span><span>Home</span></a>
+        <a class="nav-item" href="/experience"><span class="icon-box">E</span><span>Experience</span></a>
+        <a class="nav-item active" href="/projects"><span class="icon-box">P</span><span>Projects</span></a>
+        <a class="nav-item" href="/articles"><span class="icon-box">A</span><span>Articles</span></a>
+        <a class="nav-item" href="/skills"><span class="icon-box">S</span><span>Skills</span></a>
+        <a class="nav-item" href="/contact"><span class="icon-box">C</span><span>Contact</span></a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a class="nav-item" href="/CV.pdf" download><span class="icon-box">CV</span><span>Download CV</span></a>
+        <a class="nav-item" href="mailto:azhyshchev@gmail.com"><span class="icon-box">@</span><span>Email</span></a>
+        <div class="socials">
+          <a class="social-link" href="https://www.linkedin.com/in/azhyshchev/" target="_blank" rel="noreferrer">in</a>
+          <a class="social-link" href="https://github.com/Azhy34" target="_blank" rel="noreferrer">gh</a>
+        </div>
+      </div>
+    </aside>
+    <main class="main">
+      <div class="panel">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Home</a><span>→</span><a href="/projects">Projects</a><span>→</span><span>AI Music SaaS</span>
+        </nav>
+        <div class="project-hero">
+          <div class="project-type">Full-Stack · AI SaaS · Music Generation · 2 weeks</div>
+          <h1 class="project-title">AI Music SaaS — hitdlaciebie.pl</h1>
+          <p class="project-lead">Personalized AI-generated songs in Polish — from a one-line idea to a finished track with vocals, instrumentation, and production. Two-model lyrics pipeline (Gemini 2.5 Flash + Claude Sonnet 4.6), four music APIs tested, Suno V5.5 in production. Full-stack SaaS with Shopify payments, magic link auth, personal cabinet. Shipped in 2 weeks.</p>
+          <div class="metrics-row">
+            <div class="metric-box"><strong>2 weeks</strong><span>From idea to live paying product — full SaaS, not a prototype</span></div>
+            <div class="metric-box"><strong>2-model</strong><span>Lyrics pipeline: Gemini 2.5 Flash for structure, Claude Sonnet for quality</span></div>
+            <div class="metric-box"><strong>4 APIs tested</strong><span>Evaluated Suno, Udio, and others — Suno V5.5 won on quality and reliability</span></div>
+            <div class="metric-box"><strong>Full-stack</strong><span>Payments, auth, personal cabinet, VPS hosting — complete production system</span></div>
+          </div>
+        </div>
+        <div class="content-grid">
+          <div class="neo-card">
+            <div class="section-label">Architecture</div>
+            <h2 class="section-title">How it's built</h2>
+            <ul class="detail-list">
+              <!-- Двухмодельный пайплайн — интересное техническое решение -->
+              <li>Two-model lyrics pipeline: Gemini 2.5 Flash generates structure and rhyme candidates, Claude Sonnet 4.6 refines for quality and emotional impact.</li>
+              <li>Suno V5.5 API for music generation — selected after testing 4 different music APIs.</li>
+              <li>Shopify for payments — embedded checkout without custom payment infrastructure.</li>
+              <li>Magic link auth — no passwords, frictionless for non-technical users.</li>
+              <li>Personal cabinet: order history, track downloads, status tracking.</li>
+            </ul>
+          </div>
+          <div class="neo-card">
+            <div class="section-label">Product decisions</div>
+            <h2 class="section-title">Key choices</h2>
+            <ul class="detail-list">
+              <li>Tested Suno, Udio, and two others — chose Suno V5.5 for consistent output quality at scale.</li>
+              <li>Two LLMs for lyrics instead of one — Gemini is faster and cheaper for drafts, Claude is better at emotional nuance for final output.</li>
+              <li>Shopify over custom payments — 2 weeks is not enough time to build payment infrastructure properly.</li>
+              <li>VPS over serverless — predictable costs for a music generation workload that has long API response times.</li>
+            </ul>
+          </div>
+          <div class="neo-card">
+            <div class="section-label">What this demonstrates</div>
+            <h2 class="section-title">Capabilities shown</h2>
+            <ul class="detail-list">
+              <li>End-to-end full-stack AI product delivery — from idea to paying customers in 2 weeks.</li>
+              <li>Multi-LLM pipeline design: using different models for different strengths in the same workflow.</li>
+              <li>Third-party API integration: music generation, payments, auth — combined into one product.</li>
+              <li>Production-grade: real users, real payments, real infrastructure.</li>
+            </ul>
+          </div>
+          <div class="neo-card">
+            <div class="section-label">Your use case</div>
+            <h2 class="section-title">Need a SaaS product?</h2>
+            <ul class="detail-list">
+              <li>This project shows I can take an AI product from zero to production fast.</li>
+              <li>If your business needs a customer-facing AI tool — I can build the full stack.</li>
+              <li>Custom AI SaaS, internal tools, client-facing automation platforms.</li>
+              <li>Germany and EU focus — GDPR-aware architecture from the start.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="neo-card">
+          <div class="section-label">Tech stack</div>
+          <h2 class="section-title">Tools used</h2>
+          <div class="chips">
+            <span class="chip">Next.js 14</span><span class="chip">TypeScript</span><span class="chip">Gemini 2.5 Flash</span><span class="chip">Claude Sonnet 4.6</span><span class="chip">Suno V5.5 API</span><span class="chip">PostgreSQL</span><span class="chip">Shopify</span><span class="chip">VPS</span>
+          </div>
+        </div>
+        <div class="cta-strip">
+          <div>
+            <strong>Need a full-stack AI product built fast?</strong>
+            <p>I build end-to-end AI SaaS products and internal tools for businesses in Germany and EU. From idea to production — no handoffs, one engineer. Let's talk.</p>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <a class="cta-btn" href="mailto:azhyshchev@gmail.com">Contact me</a>
+            <a class="cta-btn outline" href="/projects">All projects</a>
+          </div>
+        </div>
+        <a class="back-link" href="/projects">← Back to projects</a>
+      </div>
+    </main>
+  </div>
+  <nav class="mobile-bottom-nav" id="mobileBottomNav">
+    <a class="mbn-item" href="/"><span class="mbn-icon">&lt;/&gt;</span><span class="mbn-label">Home</span></a>
+    <a class="mbn-item" href="/experience"><span class="mbn-icon">E</span><span class="mbn-label">Experience</span></a>
+    <a class="mbn-item active" href="/projects"><span class="mbn-icon">P</span><span class="mbn-label">Projects</span></a>
+    <a class="mbn-item" href="/articles"><span class="mbn-icon">A</span><span class="mbn-label">Articles</span></a>
+    <a class="mbn-item" href="/contact"><span class="mbn-icon">C</span><span class="mbn-label">Contact</span></a>
+  </nav>
+  <script>
+    (function () { var toggle = document.getElementById('navToggle'); var nav = document.querySelector('.nav'); var bottom = document.querySelector('.sidebar-bottom'); if (!toggle) return; toggle.addEventListener('click', function () { var open = nav.classList.toggle('open'); if (bottom) bottom.classList.toggle('open', open); toggle.innerHTML = open ? '&#10005;' : '&#9776;'; }); })();
+  </script>
+</body>
+</html>

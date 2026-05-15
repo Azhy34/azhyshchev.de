@@ -18,6 +18,118 @@
   <meta name="twitter:description" content="Production AI systems: Web Sales Assistant RAG agent, invoice automation pipeline, AI image composer. LangGraph, Python, TypeScript, Gemini, Supabase, GitHub Actions.">
 
   <title>Projects — AI Automation & RAG Systems | Mikhail Azhyshchev</title>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://azhyshchev.de/projects#webpage",
+        "url": "https://azhyshchev.de/projects",
+        "name": "Projects — AI Automation & RAG Systems | Mikhail Azhyshchev",
+        "description": "Production AI systems built in Munich: RAG agents, invoice automation, AI image composer, B2B lead pipeline, virtual try-on. Python, LangGraph, TypeScript, Gemini, Supabase.",
+        "inLanguage": "en",
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" },
+        "author": { "@id": "https://azhyshchev.de/#person" },
+        "dateModified": "2026-05-15"
+      },
+      {
+        "@type": "ItemList",
+        "@id": "https://azhyshchev.de/projects#list",
+        "name": "AI Automation Projects — Mikhail Azhyshchev",
+        "description": "Portfolio of production AI automation systems built for German and European businesses.",
+        "url": "https://azhyshchev.de/projects",
+        "numberOfItems": 6,
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "item": {
+              "@type": "SoftwareApplication",
+              "@id": "https://azhyshchev.de/projects#web-sales-assistant",
+              "name": "Web Sales Assistant — da-vinchi.pl",
+              "description": "Hybrid RAG-based AI sales agent with ~90% API cost reduction. Answers product queries, processes documents, and integrates with real sales workflows. Stack: LangGraph, Python, Supabase, pgvector, Gemini.",
+              "applicationCategory": "BusinessApplication",
+              "operatingSystem": "Web",
+              "author": { "@id": "https://azhyshchev.de/#person" },
+              "keywords": "RAG agent, sales automation, LangGraph, Supabase, pgvector, Gemini, AI assistant, München, Deutschland"
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "item": {
+              "@type": "SoftwareApplication",
+              "@id": "https://azhyshchev.de/projects#invoice-automation",
+              "name": "Invoice Automation Pipeline",
+              "description": "End-to-end invoice processing pipeline using LLM extraction, validation, and automated accounting integration. Eliminates manual data entry for German business operations.",
+              "applicationCategory": "BusinessApplication",
+              "operatingSystem": "Web",
+              "author": { "@id": "https://azhyshchev.de/#person" },
+              "keywords": "invoice automation, document processing, LLM extraction, business automation, Germany, Rechnungsautomatisierung, Buchhaltung"
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "item": {
+              "@type": "SoftwareApplication",
+              "@id": "https://azhyshchev.de/projects#ai-image-composer",
+              "name": "AI Image Composer",
+              "description": "Multimodal AI workflow reducing artwork production from hours to ~30 seconds per unit. Uses Gemini image generation integrated into an automated production pipeline.",
+              "applicationCategory": "MultimediaApplication",
+              "operatingSystem": "Web",
+              "author": { "@id": "https://azhyshchev.de/#person" },
+              "keywords": "AI image generation, multimodal AI, Gemini, creative automation, workflow automation"
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "item": {
+              "@type": "SoftwareApplication",
+              "@id": "https://azhyshchev.de/projects#b2b-lead-pipeline",
+              "name": "B2B Lead Pipeline",
+              "description": "Automated B2B lead generation and qualification pipeline using AI agents. Finds, enriches, and scores prospects for German market outreach.",
+              "applicationCategory": "BusinessApplication",
+              "operatingSystem": "Web",
+              "author": { "@id": "https://azhyshchev.de/#person" },
+              "keywords": "B2B lead generation, sales automation, AI agents, German market, Leadgenerierung, Kundenakquise"
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 5,
+            "item": {
+              "@type": "SoftwareApplication",
+              "@id": "https://azhyshchev.de/projects#wallpaper-tryon",
+              "name": "Virtual Wallpaper Try-On",
+              "description": "AI-assisted room visualization workflow. Replaced a 4-6 hour daily manual mockup process with a 15-20 minute automated pipeline used by a real sales team.",
+              "applicationCategory": "BusinessApplication",
+              "operatingSystem": "Web",
+              "author": { "@id": "https://azhyshchev.de/#person" },
+              "keywords": "virtual try-on, AI visualization, workflow automation, sales tool, mockup automation"
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 6,
+            "item": {
+              "@type": "SoftwareApplication",
+              "@id": "https://azhyshchev.de/projects#ai-music-saas",
+              "name": "AI Music SaaS — hitdlaciebie.pl",
+              "description": "AI-powered music generation SaaS platform. Full-stack application with LLM-driven music personalization and automated content delivery.",
+              "applicationCategory": "EntertainmentApplication",
+              "operatingSystem": "Web",
+              "author": { "@id": "https://azhyshchev.de/#person" },
+              "keywords": "AI music, SaaS, LLM, full-stack, TypeScript, automation"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
@@ -477,7 +589,8 @@
             </div>
             <div class="card-footer">
               <div class="metric-pill">Key result: <span>2 weeks · live product</span></div>
-              <span class="read-link">View project →</span>
+              <!-- Full project page for SEO indexing — keeps modal UX intact -->
+              <a class="read-link" href="/projects/ai-music-saas/" onclick="event.stopPropagation()">Open full page →</a>
             </div>
           </div>
 
@@ -502,7 +615,8 @@
             </div>
             <div class="card-footer">
               <div class="metric-pill">Key result: <span>~90% API cost ↓</span></div>
-              <span class="read-link">View project →</span>
+              <!-- Full project page for SEO indexing — keeps modal UX intact -->
+              <a class="read-link" href="/projects/ai-sales-agent-rag/" onclick="event.stopPropagation()">Open full page →</a>
             </div>
           </div>
 
@@ -525,7 +639,8 @@
             </div>
             <div class="card-footer">
               <div class="metric-pill">Key result: <span>Weekly routine → zero</span></div>
-              <span class="read-link">View project →</span>
+              <!-- Full project page for SEO indexing — keeps modal UX intact -->
+              <a class="read-link" href="/projects/invoice-automation-germany/" onclick="event.stopPropagation()">Open full page →</a>
             </div>
           </div>
 
@@ -549,7 +664,8 @@
             </div>
             <div class="card-footer">
               <div class="metric-pill">Key result: <span>Hours → 30 sec per artwork</span></div>
-              <span class="read-link">View project →</span>
+              <!-- Full project page for SEO indexing — keeps modal UX intact -->
+              <a class="read-link" href="/projects/ai-image-automation/" onclick="event.stopPropagation()">Open full page →</a>
             </div>
           </div>
 
@@ -573,7 +689,8 @@
             </div>
             <div class="card-footer">
               <div class="metric-pill">Key result: <span>80-120 leads in 15-25 min</span></div>
-              <span class="read-link">View project →</span>
+              <!-- Full project page for SEO indexing — keeps modal UX intact -->
+              <a class="read-link" href="/projects/b2b-lead-generation-germany/" onclick="event.stopPropagation()">Open full page →</a>
             </div>
           </div>
 
@@ -597,7 +714,8 @@
             </div>
             <div class="card-footer">
               <div class="metric-pill">Key result: <span>75% manual work ↓</span></div>
-              <span class="read-link">View project →</span>
+              <!-- Full project page for SEO indexing — keeps modal UX intact -->
+              <a class="read-link" href="/projects/wallpaper-visualization-automation/" onclick="event.stopPropagation()">Open full page →</a>
             </div>
           </div>
 
