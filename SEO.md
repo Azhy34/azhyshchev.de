@@ -203,29 +203,48 @@ Pages targeting the German B2B market use:
 
 ---
 
+## 7. Article HTML pages — 4 new URLs ✅ Done 2026-05-15
+
+**Problem:** `/articles` page linked to LinkedIn — Google cannot index LinkedIn content for your domain. No long-tail keyword traffic.
+
+**Solution:** Created 4 standalone HTML article pages with full body text, Article JSON-LD, BreadcrumbList, and German SEO keywords.
+
+| URL | File | Accent | German SEO focus |
+|-----|------|--------|-----------------|
+| `/articles/rag-sales-agent/` | `articles/rag-sales-agent/index.html` | --yellow | KI Verkaufsassistent, Hybrid RAG, LangGraph ReAct agent |
+| `/articles/b2b-lead-pipeline-germany/` | `articles/b2b-lead-pipeline-germany/index.html` | --mint | B2B Leadgenerierung Deutschland, §7 UWG, Impressum scraping |
+| `/articles/wallpaper-ai-automation/` | `articles/wallpaper-ai-automation/index.html` | --coral | Photoshop Automatisierung KI, Tapetenhändler, Raumvisualisierung |
+| `/articles/ai-image-composer/` | `articles/ai-image-composer/index.html` | --pink | KI Bildkomposition, Gemini multimodal, kreative Prozesse |
+
+**Also updated:**
+- `articles/index.html` — added "Read full article →" links on matching cards; added 2 new cards (B2B lead pipeline, Wallpaper automation); fixed modal click handler to allow link navigation
+- `sitemap.xml` — added 4 new article URLs (priority 0.85)
+
+**JSON-LD on each article page:** `Article` + `WebPage` with `BreadcrumbList`, German `inLanguage: "de"` on Article node, `author @id` cross-reference.
+
+---
+
 ## Current SEO scorecard (May 2026)
 
 | Criterion | Score | Status | Notes |
 |-----------|-------|--------|-------|
 | Technical SEO | 8/10 | ✅ Improved | robots, sitemap, canonical, lastmod — all done |
 | AI bot access | 9/10 | ✅ | GPTBot, Claude-Web, anthropic-ai, PerplexityBot explicitly allowed |
-| Indexable content | 7/10 | ✅ Improved | 6 project pages with full text now exist (was 4/10 — modals not indexed) |
-| Keywords in page text | 7/10 | ✅ Improved | Each project page has German keywords in visible body text |
-| JSON-LD schema | 9/10 | ✅ | Person, WebSite, WebPage, SoftwareApplication, BreadcrumbList, Offer |
+| Indexable content | 9/10 | ✅ Improved | 6 project pages + 4 article pages with full text (was 3/10 — modals/LinkedIn not indexed) |
+| Keywords in page text | 8/10 | ✅ Improved | German keywords in visible body text on all project + article pages |
+| JSON-LD schema | 9/10 | ✅ | Person, WebSite, WebPage, SoftwareApplication, Article, BreadcrumbList, Offer |
 | For HR/recruiter | 6/10 | → Pending | Design attracts, but no inline skills list or testimonials |
 | For hiring manager | 8/10 | ✅ Improved | Projects with metrics on dedicated pages |
 | Mobile | 8/10 | ✅ | Bottom nav, mobile.css, responsive grid |
-| Articles as content | 3/10 | ❌ Gap | /articles is a LinkedIn link wall — no text for Google to index |
+| Articles as content | 8/10 | ✅ Improved | 4 full HTML article pages live (was 3/10) |
 | Backlinks | 2/10 | ❌ Gap | No external sites linking to azhyshchev.de yet |
 
 ---
 
 ## Remaining gaps (what's left to do)
 
-### Gap 1 — Articles as HTML pages (biggest SEO opportunity)
-**Current state:** `/articles` page links to LinkedIn. Google cannot index LinkedIn content for your domain.
-**Impact:** No long-tail keyword traffic from searches like "invoice automation Germany tutorial", "RAG agent e-commerce aufbauen", etc.
-**What to do:** See section below — no layout rebuild needed, pure inner work.
+### Gap 1 — Articles as HTML pages ✅ DONE
+Created 4 full article pages: rag-sales-agent, b2b-lead-pipeline-germany, wallpaper-ai-automation, ai-image-composer. Pushed 2026-05-15.
 
 ### Gap 2 — Backlinks (zero currently)
 **Current state:** No external sites link to azhyshchev.de.
