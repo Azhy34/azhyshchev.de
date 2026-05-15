@@ -74,6 +74,32 @@
     <changefreq>monthly</changefreq>
   </url>
 
+  <!-- Article pages — full HTML content for Google indexing (previously only on LinkedIn) -->
+  <url>
+    <loc>https://azhyshchev.de/articles/rag-sales-agent/</loc>
+    <lastmod>2026-05-15</lastmod>
+    <priority>0.85</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://azhyshchev.de/articles/b2b-lead-pipeline-germany/</loc>
+    <lastmod>2026-05-15</lastmod>
+    <priority>0.85</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://azhyshchev.de/articles/wallpaper-ai-automation/</loc>
+    <lastmod>2026-05-15</lastmod>
+    <priority>0.85</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://azhyshchev.de/articles/ai-image-composer/</loc>
+    <lastmod>2026-05-15</lastmod>
+    <priority>0.85</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
   <url>
     <loc>https://azhyshchev.de/impressum</loc>
     <lastmod>2026-01-01</lastmod>

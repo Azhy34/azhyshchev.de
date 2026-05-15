@@ -633,7 +633,7 @@
             </div>
             <div class="card-footer">
               <div class="metric-pill">Key result: <span>1,200+ SKU · zero hallucinated prices</span></div>
-              <span class="read-link">Read case study →</span>
+              <a class="read-link" href="/articles/rag-sales-agent/">Read full article →</a>
             </div>
           </div>
 
@@ -681,7 +681,55 @@
             </div>
             <div class="card-footer">
               <div class="metric-pill">Key result: <span>Hours → 30 sec per artwork</span></div>
-              <span class="read-link">Read case study →</span>
+              <a class="read-link" href="/articles/ai-image-composer/">Read full article →</a>
+            </div>
+          </div>
+
+          <!-- Card: B2B Lead Pipeline Germany -->
+          <div class="article-card" data-tags="automation,ai-agents" data-modal="">
+            <div class="card-accent" style="background: var(--mint);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">Automation · B2B · Lead Gen</span>
+                <span class="card-readtime">6 min read</span>
+              </div>
+              <h2 class="card-title">B2B Lead Pipeline: 107 German Companies, $4.80 Cost, 22 Min</h2>
+              <p class="card-excerpt">Built an automated B2B lead generation pipeline for the German market: Google Maps → Impressum scraping → Gemini enrichment → Supabase → CSV. 107 companies, 54 emails, §7 UWG compliant — all in 22 minutes for under $5.</p>
+              <div class="card-tags">
+                <span class="tag">Python</span>
+                <span class="tag">Apify</span>
+                <span class="tag">Tavily</span>
+                <span class="tag">Gemini</span>
+                <span class="tag">Supabase</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Key result: <span>107 leads · $4.80 · 22 min</span></div>
+              <a class="read-link" href="/articles/b2b-lead-pipeline-germany/">Read full article →</a>
+            </div>
+          </div>
+
+          <!-- Card: Wallpaper AI Automation -->
+          <div class="article-card" data-tags="automation,full-stack" data-modal="">
+            <div class="card-accent" style="background: var(--coral);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">Automation · AI Image · Retail</span>
+                <span class="card-readtime">5 min read</span>
+              </div>
+              <h2 class="card-title">Wallpaper Visualization Automation: AI Replaces Photoshop</h2>
+              <p class="card-excerpt">Automated the manual Photoshop workflow for a wallpaper retailer: geometric transformation vs. AI generation — the architecture decision that matters. What works for Tapetenhändler, Küchenstudios, Möbelhäuser, and any German retail shop with room visualization needs.</p>
+              <div class="card-tags">
+                <span class="tag">Python</span>
+                <span class="tag">FastAPI</span>
+                <span class="tag">Gemini</span>
+                <span class="tag">React</span>
+                <span class="tag">Supabase</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Key result: <span>Manual process → fully automated</span></div>
+              <a class="read-link" href="/articles/wallpaper-ai-automation/">Read full article →</a>
             </div>
           </div>
 
@@ -1304,9 +1352,10 @@
       var bn = document.getElementById('mobileBottomNav'); if (bn) bn.style.display = '';
     }
 
-    // Click on card to open modal
+    // Click on card to open modal (but allow link clicks to navigate)
     document.querySelectorAll('.article-card').forEach(card => {
-      card.addEventListener('click', () => {
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('a')) return;
         const modalId = card.getAttribute('data-modal');
         if (modalId) openModal(modalId);
       });

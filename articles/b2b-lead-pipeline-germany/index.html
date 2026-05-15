@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="Automated B2B lead generation pipeline for Germany: Google Maps → Impressum scraping → Gemini AI extraction → CRM-ready CSV. 80-120 leads in 25 minutes for ~$5. Legal under §7 UWG. Python, Apify, Tavily, Exa.">
+  <meta name="keywords" content="B2B Leadgenerierung Deutschland automatisieren, Impressum scraping Python, Google Maps Leads automatisch, Kundenakquise automatisieren, Geschäftsführer Kontakt extrahieren, §7 UWG Direktmarketing, B2B lead generation Germany pipeline, Apify Google Maps, Gemini Datenextraktion">
+  <meta name="author" content="Mikhail Azhyshchev">
+  <link rel="canonical" href="https://azhyshchev.de/articles/b2b-lead-pipeline-germany/">
+
+  <meta property="og:title" content="Automated B2B Lead Generation for Germany: Google Maps → Impressum → CRM | Mikhail Azhyshchev">
+  <meta property="og:description" content="How to build a B2B lead pipeline for Germany: Google Maps → Impressum extraction → Gemini AI → CRM. 80-120 leads in 25 min, ~$5 cost. Legal under §7 UWG.">
+  <meta property="og:url" content="https://azhyshchev.de/articles/b2b-lead-pipeline-germany/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://azhyshchev.de/Azhyschev.JPG">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="B2B Lead Pipeline Germany — Impressum → CRM in 25 min | Mikhail Azhyshchev">
+  <meta name="twitter:description" content="Automated B2B leads for German market. Google Maps → Impressum → Gemini → CRM. 80-120 leads, $5 cost, 25 minutes.">
+
+  <title>Automated B2B Lead Generation for Germany — Impressum Pipeline | Mikhail Azhyshchev</title>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://azhyshchev.de/articles/b2b-lead-pipeline-germany/#article",
+        "headline": "Automated B2B Lead Generation for Germany: Google Maps → Impressum → CRM",
+        "description": "How to build an automated B2B lead pipeline for Germany: Google Maps via Apify, Impressum scraping with Tavily and Exa, Gemini AI extraction, Supabase storage, CSV export. 80-120 leads in 25 minutes for ~$5.",
+        "author": { "@id": "https://azhyshchev.de/#person" },
+        "publisher": { "@id": "https://azhyshchev.de/#person" },
+        "datePublished": "2026-01-01",
+        "dateModified": "2026-05-15",
+        "inLanguage": "en",
+        "keywords": "B2B lead generation Germany, Impressum scraping, Leadgenerierung automatisieren, Google Maps automation, Apify, Gemini, Kundenakquise Deutschland, §7 UWG",
+        "url": "https://azhyshchev.de/articles/b2b-lead-pipeline-germany/",
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://azhyshchev.de/articles/b2b-lead-pipeline-germany/#webpage",
+        "url": "https://azhyshchev.de/articles/b2b-lead-pipeline-germany/",
+        "name": "Automated B2B Lead Generation for Germany — Impressum Pipeline",
+        "description": "Automated B2B lead pipeline for Germany: Google Maps → Impressum extraction → Gemini AI → CRM. 80-120 leads in 25 minutes.",
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" },
+        "author": { "@id": "https://azhyshchev.de/#person" },
+        "dateModified": "2026-05-15",
+        "inLanguage": "en",
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://azhyshchev.de/" },
+            { "@type": "ListItem", "position": 2, "name": "Articles", "item": "https://azhyshchev.de/articles" },
+            { "@type": "ListItem", "position": 3, "name": "B2B Lead Pipeline Germany" }
+          ]
+        }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --sky: #61b5e8; --mint: #b9ddb7; --cream: #f8f0dc; --yellow: #f5c84b; --pink: #efb2d5; --blue: #d8ebff; --peach: #f7d4b1; --coral: #ff9a77; --rose: #ecb0c4; --black: #111111; --white: #ffffff; --accent: var(--mint); }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { min-height: 100vh; font-family: 'JetBrains Mono', monospace; color: var(--black); background: linear-gradient(120deg, var(--sky) 0 34%, var(--peach) 34% 55%, var(--coral) 55% 72%, var(--rose) 72% 100%); padding: 48px 24px; }
+    a { color: inherit; text-decoration: none; }
+    .shell { width: min(1320px, 100%); margin: 0 auto; border: 3px solid var(--black); box-shadow: 12px 12px 0 var(--black); background: var(--mint); display: grid; grid-template-columns: 250px 1fr; min-height: 820px; overflow: hidden; }
+    .sidebar { border-right: 3px solid var(--black); padding: 20px 18px; display: flex; flex-direction: column; gap: 22px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 8px; }
+    .brand-badge { width: 42px; height: 34px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 1rem; font-weight: 800; }
+    .nav { display: flex; flex-direction: column; gap: 8px; }
+    .nav-item { display: flex; align-items: center; gap: 12px; padding: 11px 12px; font-size: 0.9rem; font-weight: 700; border: 2px solid transparent; transition: transform 0.18s ease; }
+    .nav-item:hover { transform: translate(-2px, -2px); }
+    .nav-item.active { background: var(--black); color: var(--white); }
+    .icon-box { width: 24px; height: 24px; display: grid; place-items: center; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); font-size: 0.75rem; font-weight: 800; }
+    .nav-item.active .icon-box { background: var(--yellow); color: var(--black); }
+    .sidebar-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+    .socials { display: flex; gap: 10px; padding-top: 8px; }
+    .social-link { width: 42px; height: 42px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 0.8rem; font-weight: 800; transition: transform 0.18s ease; }
+    .social-link:hover { transform: translate(-2px, -2px); }
+    .main { background: var(--cream); padding: 22px; }
+    .panel { border: 2px solid var(--black); background: rgba(255,255,255,0.2); padding: 18px; display: flex; flex-direction: column; gap: 28px; }
+    .breadcrumb { font-size: 0.78rem; opacity: 0.6; display: flex; align-items: center; gap: 8px; }
+    .breadcrumb a:hover { opacity: 1; text-decoration: underline; }
+    .article-hero { border: 3px solid var(--black); background: var(--accent); box-shadow: 6px 6px 0 var(--black); padding: 28px 24px; }
+    .article-type { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; margin-bottom: 12px; }
+    .article-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.04em; margin-bottom: 16px; }
+    .article-lead { font-size: 0.95rem; line-height: 1.65; max-width: 72ch; }
+    .metrics-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+    .metric-box { border: 2px solid var(--black); background: rgba(255,255,255,0.75); padding: 14px 12px; }
+    .metric-box strong { display: block; font-size: 1.3rem; line-height: 1; margin-bottom: 6px; }
+    .metric-box span { font-size: 0.72rem; line-height: 1.4; opacity: 0.8; }
+    .article-body { display: flex; flex-direction: column; gap: 24px; }
+    .neo-card { border: 3px solid var(--black); background: var(--white); box-shadow: 6px 6px 0 var(--black); padding: 24px; }
+    .section-label { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.45; margin-bottom: 10px; }
+    .section-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.02em; }
+    .prose { display: flex; flex-direction: column; gap: 14px; }
+    .prose p { font-size: 0.88rem; line-height: 1.75; }
+    .prose h3 { font-size: 0.95rem; font-weight: 800; margin-top: 8px; letter-spacing: -0.02em; }
+    .prose ul { padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
+    .prose li { font-size: 0.88rem; line-height: 1.65; }
+    .prose code { background: var(--cream); border: 1px solid var(--black); padding: 1px 5px; font-size: 0.82rem; }
+    .arch-diagram { border: 2px solid var(--black); background: var(--cream); padding: 16px 20px; font-size: 0.82rem; line-height: 2; font-weight: 700; margin: 16px 0; }
+    .legal-box { border: 3px solid var(--black); background: var(--yellow); box-shadow: 4px 4px 0 var(--black); padding: 18px 20px; }
+    .legal-box h3 { font-size: 0.9rem; font-weight: 800; margin-bottom: 10px; }
+    .legal-box p { font-size: 0.84rem; line-height: 1.65; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .chip { padding: 6px 10px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); font-size: 0.72rem; font-weight: 700; }
+    .cta-strip { border: 3px solid var(--black); background: var(--black); color: var(--white); box-shadow: 6px 6px 0 rgba(0,0,0,0.3); padding: 22px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .cta-strip p { font-size: 0.9rem; line-height: 1.5; max-width: 58ch; }
+    .cta-strip strong { display: block; font-size: 1rem; margin-bottom: 4px; }
+    .cta-btn { padding: 12px 20px; border: 2px solid var(--white); background: var(--white); color: var(--black); font: inherit; font-weight: 700; cursor: pointer; white-space: nowrap; transition: transform 0.15s; display: inline-block; }
+    .cta-btn:hover { transform: translate(-2px,-2px); }
+    .cta-btn.outline { background: transparent; color: var(--white); }
+    .back-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 2px solid var(--black); background: var(--white); box-shadow: 4px 4px 0 var(--black); font-size: 0.82rem; font-weight: 700; transition: transform 0.15s; align-self: flex-start; }
+    .back-link:hover { transform: translate(-2px,-2px); }
+    @media (max-width: 1100px) { .shell { grid-template-columns: 220px 1fr; } .metrics-row { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 820px) { body { padding: 10px 8px 72px; } .shell { grid-template-columns: 1fr; box-shadow: 6px 6px 0 var(--black); min-height: unset; } .sidebar { border-right: none; border-bottom: 3px solid var(--black); padding: 10px 14px; flex-direction: row; align-items: center; justify-content: space-between; } .brand { font-size: clamp(0.95rem,2.5vw,1.6rem); } .nav { display: none; } .sidebar-bottom { display: none; } .main { padding: 14px; } .two-col { grid-template-columns: 1fr; } }
+    @media (max-width: 520px) { .metrics-row { grid-template-columns: 1fr; } .article-title { font-size: 1.5rem; } }
+  </style>
+  <link rel="stylesheet" href="../../mobile.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="/"><div class="brand-badge">&lt;/&gt;</div><span>AZHYSHCHEV</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">&#9776;</button>
+      <nav class="nav">
+        <a class="nav-item" href="/"><span class="icon-box">H</span><span>Home</span></a>
+        <a class="nav-item" href="/experience"><span class="icon-box">E</span><span>Experience</span></a>
+        <a class="nav-item" href="/projects"><span class="icon-box">P</span><span>Projects</span></a>
+        <a class="nav-item active" href="/articles"><span class="icon-box">A</span><span>Articles</span></a>
+        <a class="nav-item" href="/skills"><span class="icon-box">S</span><span>Skills</span></a>
+        <a class="nav-item" href="/contact"><span class="icon-box">C</span><span>Contact</span></a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a class="nav-item" href="/CV.pdf" download><span class="icon-box">CV</span><span>Download CV</span></a>
+        <a class="nav-item" href="mailto:azhyshchev@gmail.com"><span class="icon-box">@</span><span>Email</span></a>
+        <div class="socials">
+          <a class="social-link" href="https://www.linkedin.com/in/azhyshchev/" target="_blank" rel="noreferrer">in</a>
+          <a class="social-link" href="https://github.com/Azhy34" target="_blank" rel="noreferrer">gh</a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="panel">
+
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Home</a><span>→</span>
+          <a href="/articles">Articles</a><span>→</span>
+          <span>B2B Lead Pipeline Germany</span>
+        </nav>
+
+        <div class="article-hero">
+          <div class="article-type">Automation · B2B · Germany · Lead Generation</div>
+          <h1 class="article-title">Automated B2B Lead Generation for Germany: Google Maps → Impressum → CRM in 25 Minutes</h1>
+          <p class="article-lead">Cold email is dead. But Germany has something better: every business is legally required to publish its Geschäftsführer name, address, and contact data in a public Impressum. I built a pipeline that turns this into a systematic lead source — 80–120 CRM-ready contacts per run, ~$5 total cost, 25 minutes end-to-end.</p>
+          <div class="metrics-row">
+            <div class="metric-box"><strong>80–120</strong><span>CRM-ready leads per pipeline run</span></div>
+            <div class="metric-box"><strong>~$5</strong><span>Total pipeline cost per run</span></div>
+            <div class="metric-box"><strong>25 min</strong><span>End-to-end: search → clean CSV export</span></div>
+            <div class="metric-box"><strong>~250 lines</strong><span>Python — lean, readable, production-ready</span></div>
+          </div>
+        </div>
+
+        <div class="article-body">
+
+          <div class="legal-box">
+            <h3>Legal note — important for Germany</h3>
+            <p>Sending physical (postal) marketing letters to businesses in Germany is generally permitted without prior consent under §7 UWG, unlike cold email or phone outreach. Data extracted from Impressum pages is publicly available and legally required to be published under §5 TMG. Processing it to contact the same company falls under berechtigtes Interesse (Art. 6(1)(f) DSGVO). Verify your specific use case with a lawyer before running campaigns.</p>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">The problem</div>
+            <h2 class="section-title">Why B2B outreach in Germany is different</h2>
+            <div class="prose">
+              <p>Cold email outreach to German businesses has two problems: low deliverability (spam filters, shared IPs) and legal risk (DSGVO restrictions on unsolicited electronic marketing to individuals). The inbox is crowded and legally complicated.</p>
+              <p>Physical mail, on the other hand, is underused, legally clear for B2B, and has near-zero algorithmic competition. A physical letter from a real company to a Geschäftsführer gets opened. The problem is scale — you can't manually research 100 companies, find the right contact, and prepare personalized letters.</p>
+              <p>Germany solves this problem for you, accidentally. By law (§5 TMG), every business website must publish an Impressum containing: Geschäftsführer full name, legal company name, registered address including PLZ and city, phone number, email, Steuernummer or USt-IdNr., and in many cases Handelsregisternummer.</p>
+              <p>This is a structured, legally required, publicly available database of German business contacts. The pipeline reads it automatically.</p>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Pipeline architecture</div>
+            <h2 class="section-title">How it works step by step</h2>
+            <div class="arch-diagram">
+              Google Maps (Apify actor)<br>
+              &nbsp;&nbsp;↓ company list: name, address, phone, website, category<br>
+              Tavily API → Impressum page discovery<br>
+              &nbsp;&nbsp;↓ strategy 1: site.com/impressum<br>
+              &nbsp;&nbsp;↓ strategy 2: site:domain impressum<br>
+              &nbsp;&nbsp;↓ strategy 3: fallback to homepage<br>
+              Exa API → semantic search fallback<br>
+              &nbsp;&nbsp;↓ finds contact data by company name if Tavily misses<br>
+              Gemini 2.5 Flash → structured JSON extraction<br>
+              &nbsp;&nbsp;↓ Geschäftsführer name, email, address, PLZ, city<br>
+              Supabase → upsert + deduplication by apify_place_id<br>
+              &nbsp;&nbsp;↓<br>
+              Pandas → CSV export → CRM import or mail merge
+            </div>
+            <div class="prose">
+              <h3>Step 1 — Google Maps via Apify</h3>
+              <p>Apify's <code>compass/crawler-google-places</code> actor scrapes Google Maps by geolocation coordinates and radius. Input: city center coordinates, radius in km, business category. Output: company list with name, address, phone, website URL, Google Maps category. Cost: ~$7 per 1,000 results.</p>
+              <p>Why Apify and not direct scraping? Google Maps has no open API for bulk business search. Direct scraping with Selenium or Playwright gets blocked instantly. Apify handles proxy rotation, rate limiting, and deduplication — the $7/1k cost is worth not maintaining that infrastructure.</p>
+              <h3>Step 2 — Impressum discovery (Tavily + Exa)</h3>
+              <p>For each company website, the pipeline tries three strategies in order to find the Impressum page. Tavily is an AI-powered web extractor that returns clean text even from JS-rendered React/Angular sites — standard requests + BeautifulSoup fails on 40-60% of modern German business sites.</p>
+              <p>If Tavily doesn't find the Impressum, Exa performs a semantic search by company name to find contact data from a different source. The two-layer approach gets ~90% coverage vs. ~60% with either alone.</p>
+              <h3>Step 3 — Gemini 2.5 Flash extraction</h3>
+              <p>Raw Impressum text goes to Gemini 2.5 Flash with a prompt that extracts a structured JSON card: Geschäftsführer full name, email, phone, street address, PLZ, city, company legal name, Steuernummer. Gemini Flash was chosen over GPT-4 for three reasons: strong German language performance, sub-second extraction speed, and cost of fractions of a cent per request.</p>
+              <p>Enrichment rate: ~70-80% of companies get a Geschäftsführer name extracted successfully. The rest have malformed or missing Impressum pages.</p>
+              <h3>Step 4 — Storage and export</h3>
+              <p>Results upsert to Supabase (PostgreSQL) with deduplication by Apify's unique <code>place_id</code>. Status tracking: <code>pending → done / no_impressum / error</code>. Re-running the pipeline on the same city never creates duplicates. Pandas exports a filtered CSV (contacts with email only) ready for CRM import or print-partner mail merge.</p>
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="neo-card">
+              <div class="section-label">Why Germany specifically</div>
+              <h2 class="section-title">The Impressum advantage</h2>
+              <div class="prose">
+                <p>The Impressum law (§5 TMG) was designed for consumer protection — so that anyone can identify and contact a business. As a side effect, it creates the most structured B2B contact database in Europe.</p>
+                <p>Compare this to the UK or US: business contact data is scattered across LinkedIn, company websites, WHOIS records. In Germany, it's in a standardized legal page on every business domain.</p>
+                <p>The Impressum typically contains more reliable data than a LinkedIn profile: the legal company address (not a virtual office), the actual Geschäftsführer (not a PR contact), and a direct email.</p>
+                <p>This is a structural advantage that only exists in DACH markets — Germany, Austria (§25 MedienG), and Switzerland have similar requirements.</p>
+              </div>
+            </div>
+
+            <div class="neo-card">
+              <div class="section-label">Real results</div>
+              <h2 class="section-title">What the pipeline produces</h2>
+              <div class="prose">
+                <p>A typical run targeting kitchen studios in Munich (radius 20km):</p>
+                <ul>
+                  <li>107 companies from Google Maps</li>
+                  <li>89 with website URLs found</li>
+                  <li>76 with Impressum page discovered</li>
+                  <li>61 with Geschäftsführer name extracted</li>
+                  <li>54 with email address found</li>
+                  <li>Total pipeline cost: $4.80</li>
+                  <li>Time: 22 minutes</li>
+                </ul>
+                <p>The 54 contacts with email are exported to CSV with columns: company name, Geschäftsführer name, email, street, PLZ, city, phone, Google Maps category, website URL.</p>
+                <p>A client using this for postal outreach sent 100 letters at €1.20 each (print + delivery). Three warm responses in the first week from a total send cost of €120.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Technical deep dive</div>
+            <h2 class="section-title">Key implementation decisions</h2>
+            <div class="prose">
+              <h3>Why ~250 lines of Python and not a no-code tool</h3>
+              <p>Make.com and n8n can handle simple API chains. This pipeline has conditional logic at every step: three Impressum discovery strategies with fallback, Gemini prompt calibration per company type, deduplication logic that requires SQL upsert with status tracking, and Pandas filtering with multiple output formats. No-code tools struggle with multi-step conditional branching and custom data transformations. Python handles it in 250 readable lines.</p>
+              <h3>Why Gemini Flash over other models for German text</h3>
+              <p>Impressum pages are dense legal text with German-specific formatting: "Geschäftsführer: Max Mustermann" vs. "Verantwortlicher: M. Mustermann" vs. just a name in a paragraph. Gemini 2.5 Flash handles German legal text structure better than equivalent-cost alternatives, likely due to German web data in training. The extraction prompt is calibrated once per business category, not per company — this keeps cost minimal.</p>
+              <h3>Idempotency by design</h3>
+              <p>The pipeline can be re-run on the same city at any time without creating duplicate records. Supabase upsert by <code>apify_place_id</code> (Google Maps' unique ID per business) ensures that if a company already exists in the database, its record is updated rather than duplicated. Status tracking allows resuming a partially failed run without re-processing successful records.</p>
+              <h3>Scaling the pipeline</h3>
+              <p>The current implementation runs sequentially — one company at a time for Impressum discovery. For large runs (500+ companies), adding async processing with <code>asyncio</code> and rate-limited Tavily/Exa batching would reduce runtime from 25 minutes to ~5 minutes. The Supabase upsert layer already supports concurrent writes.</p>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Use cases for German businesses</div>
+            <h2 class="section-title">Who benefits from this pipeline</h2>
+            <div class="prose">
+              <p>Any B2B business targeting local German companies can use this pipeline for systematic outreach. The most effective use cases:</p>
+              <ul>
+                <li><strong>Service providers targeting local SMBs</strong> — marketing agencies, IT consultants, accounting firms, cleaning services targeting Handwerksbetriebe and Einzelhändler in a specific city or region.</li>
+                <li><strong>B2B product suppliers</strong> — companies selling equipment, materials, or software to specific industry verticals (e.g., restaurant equipment to Gaststätten, safety equipment to Bauunternehmen).</li>
+                <li><strong>Event and trade show outreach</strong> — building an invite list for industry events by targeting all companies in a specific category within 50km.</li>
+                <li><strong>Partnership and distributor recruitment</strong> — finding potential resellers or partners in specific German cities without paying for LinkedIn Sales Navigator.</li>
+              </ul>
+              <p>The pipeline is parameterized: change the Google Maps search query, coordinates, and radius — get a completely different lead list. One codebase, unlimited market segments.</p>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Tech stack</div>
+            <h2 class="section-title">Tools used</h2>
+            <div class="chips">
+              <span class="chip">Python 3.12</span>
+              <span class="chip">Apify</span>
+              <span class="chip">Tavily API</span>
+              <span class="chip">Exa API</span>
+              <span class="chip">Gemini 2.5 Flash</span>
+              <span class="chip">Supabase</span>
+              <span class="chip">PostgreSQL</span>
+              <span class="chip">Pandas</span>
+              <span class="chip">VS Code</span>
+              <span class="chip">Claude Code</span>
+            </div>
+          </div>
+
+          <div class="cta-strip">
+            <div>
+              <strong>Automatische Leadgenerierung für Ihr B2B-Geschäft in Deutschland?</strong>
+              <p>I build B2B lead generation pipelines for German market outreach. Google Maps → Impressum → CRM, custom industry targeting, physical mail integration. Let's discuss your target segment.</p>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a class="cta-btn" href="mailto:azhyshchev@gmail.com">Contact me</a>
+              <a class="cta-btn outline" href="/projects/b2b-lead-generation-germany/">See project page</a>
+            </div>
+          </div>
+
+          <a class="back-link" href="/articles">← Back to articles</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <nav class="mobile-bottom-nav" id="mobileBottomNav">
+    <a class="mbn-item" href="/"><span class="mbn-icon">&lt;/&gt;</span><span class="mbn-label">Home</span></a>
+    <a class="mbn-item" href="/experience"><span class="mbn-icon">E</span><span class="mbn-label">Experience</span></a>
+    <a class="mbn-item" href="/projects"><span class="mbn-icon">P</span><span class="mbn-label">Projects</span></a>
+    <a class="mbn-item active" href="/articles"><span class="mbn-icon">A</span><span class="mbn-label">Articles</span></a>
+    <a class="mbn-item" href="/contact"><span class="mbn-icon">C</span><span class="mbn-label">Contact</span></a>
+  </nav>
+  <script>
+    (function () { var toggle = document.getElementById('navToggle'); var nav = document.querySelector('.nav'); var bottom = document.querySelector('.sidebar-bottom'); if (!toggle) return; toggle.addEventListener('click', function () { var open = nav.classList.toggle('open'); if (bottom) bottom.classList.toggle('open', open); toggle.innerHTML = open ? '&#10005;' : '&#9776;'; }); })();
+  </script>
+</body>
+</html>

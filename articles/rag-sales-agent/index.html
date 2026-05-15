@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="How to build a Hybrid RAG AI sales agent for e-commerce: SQL for prices, pgvector for semantic search, LangGraph ReAct agent. Zero hallucinations, 90% API cost reduction. Production case study from Munich.">
+  <meta name="keywords" content="Hybrid RAG e-commerce, RAG sales agent Germany, LangGraph ReAct agent, pgvector Supabase, AI chatbot hallucinations prevent, KI Verkaufsassistent bauen, AI sales automation Deutschland, RAG architecture business, Geschäftsprozessautomatisierung KI">
+  <meta name="author" content="Mikhail Azhyshchev">
+  <link rel="canonical" href="https://azhyshchev.de/articles/rag-sales-agent/">
+
+  <meta property="og:title" content="How I Built a Hybrid RAG Sales Agent with Zero Price Hallucinations | Mikhail Azhyshchev">
+  <meta property="og:description" content="Production RAG sales agent for e-commerce: SQL for hard facts, pgvector for semantics, LangGraph ReAct. ~90% API cost reduction, 1200+ SKU, zero hallucinated prices.">
+  <meta property="og:url" content="https://azhyshchev.de/articles/rag-sales-agent/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://azhyshchev.de/Azhyschev.JPG">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Hybrid RAG Sales Agent — Zero Hallucinations | Mikhail Azhyshchev">
+  <meta name="twitter:description" content="Production RAG agent for e-commerce: SQL + pgvector + LangGraph. 90% API cost reduction, zero price hallucinations.">
+
+  <title>How to Build a Hybrid RAG Sales Agent — Production Case Study | Mikhail Azhyshchev</title>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://azhyshchev.de/articles/rag-sales-agent/#article",
+        "headline": "How I Built a Hybrid RAG Sales Agent with Zero Price Hallucinations",
+        "description": "Production RAG sales agent for e-commerce with SQL + pgvector Hybrid RAG architecture, LangGraph ReAct agent. ~90% API cost reduction, zero price hallucinations.",
+        "author": { "@id": "https://azhyshchev.de/#person" },
+        "publisher": { "@id": "https://azhyshchev.de/#person" },
+        "datePublished": "2026-01-01",
+        "dateModified": "2026-05-15",
+        "inLanguage": "en",
+        "keywords": "Hybrid RAG, RAG agent, e-commerce AI, LangGraph, pgvector, Supabase, AI sales assistant, business automation Germany",
+        "url": "https://azhyshchev.de/articles/rag-sales-agent/",
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://azhyshchev.de/articles/rag-sales-agent/#webpage",
+        "url": "https://azhyshchev.de/articles/rag-sales-agent/",
+        "name": "How to Build a Hybrid RAG Sales Agent — Production Case Study",
+        "description": "How to build a production RAG sales agent: SQL for prices, pgvector for semantics, LangGraph ReAct. Zero hallucinations, 90% cost reduction.",
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" },
+        "author": { "@id": "https://azhyshchev.de/#person" },
+        "dateModified": "2026-05-15",
+        "inLanguage": "en",
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://azhyshchev.de/" },
+            { "@type": "ListItem", "position": 2, "name": "Articles", "item": "https://azhyshchev.de/articles" },
+            { "@type": "ListItem", "position": 3, "name": "Hybrid RAG Sales Agent" }
+          ]
+        }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --sky: #61b5e8; --mint: #b9ddb7; --cream: #f8f0dc;
+      --yellow: #f5c84b; --pink: #efb2d5; --blue: #d8ebff;
+      --peach: #f7d4b1; --coral: #ff9a77; --rose: #ecb0c4;
+      --black: #111111; --white: #ffffff;
+      --accent: var(--yellow);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { min-height: 100vh; font-family: 'JetBrains Mono', monospace; color: var(--black); background: linear-gradient(120deg, var(--sky) 0 34%, var(--peach) 34% 55%, var(--coral) 55% 72%, var(--rose) 72% 100%); padding: 48px 24px; }
+    a { color: inherit; text-decoration: none; }
+    .shell { width: min(1320px, 100%); margin: 0 auto; border: 3px solid var(--black); box-shadow: 12px 12px 0 var(--black); background: var(--mint); display: grid; grid-template-columns: 250px 1fr; min-height: 820px; overflow: hidden; }
+    .sidebar { border-right: 3px solid var(--black); padding: 20px 18px; display: flex; flex-direction: column; gap: 22px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 8px; }
+    .brand-badge { width: 42px; height: 34px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 1rem; font-weight: 800; }
+    .nav { display: flex; flex-direction: column; gap: 8px; }
+    .nav-item { display: flex; align-items: center; gap: 12px; padding: 11px 12px; font-size: 0.9rem; font-weight: 700; border: 2px solid transparent; transition: transform 0.18s ease; }
+    .nav-item:hover { transform: translate(-2px, -2px); }
+    .nav-item.active { background: var(--black); color: var(--white); }
+    .icon-box { width: 24px; height: 24px; display: grid; place-items: center; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); font-size: 0.75rem; font-weight: 800; }
+    .nav-item.active .icon-box { background: var(--yellow); color: var(--black); }
+    .sidebar-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+    .socials { display: flex; gap: 10px; padding-top: 8px; }
+    .social-link { width: 42px; height: 42px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 0.8rem; font-weight: 800; transition: transform 0.18s ease; }
+    .social-link:hover { transform: translate(-2px, -2px); }
+    .main { background: var(--cream); padding: 22px; }
+    .panel { border: 2px solid var(--black); background: rgba(255,255,255,0.2); padding: 18px; display: flex; flex-direction: column; gap: 28px; }
+    .breadcrumb { font-size: 0.78rem; opacity: 0.6; display: flex; align-items: center; gap: 8px; }
+    .breadcrumb a:hover { opacity: 1; text-decoration: underline; }
+
+    /* ── ARTICLE HERO ── */
+    .article-hero { border: 3px solid var(--black); background: var(--accent); box-shadow: 6px 6px 0 var(--black); padding: 28px 24px; }
+    .article-type { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; margin-bottom: 12px; }
+    .article-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.04em; margin-bottom: 16px; }
+    .article-lead { font-size: 0.95rem; line-height: 1.65; max-width: 72ch; }
+
+    /* ── METRICS ROW ── */
+    .metrics-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+    .metric-box { border: 2px solid var(--black); background: rgba(255,255,255,0.75); padding: 14px 12px; }
+    .metric-box strong { display: block; font-size: 1.3rem; line-height: 1; margin-bottom: 6px; }
+    .metric-box span { font-size: 0.72rem; line-height: 1.4; opacity: 0.8; }
+
+    /* ── ARTICLE BODY ── */
+    .article-body { display: flex; flex-direction: column; gap: 24px; }
+
+    .neo-card { border: 3px solid var(--black); background: var(--white); box-shadow: 6px 6px 0 var(--black); padding: 24px; }
+
+    .section-label { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.45; margin-bottom: 10px; }
+    .section-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.02em; }
+
+    .prose { display: flex; flex-direction: column; gap: 14px; }
+    .prose p { font-size: 0.88rem; line-height: 1.75; }
+    .prose h3 { font-size: 0.95rem; font-weight: 800; margin-top: 8px; letter-spacing: -0.02em; }
+    .prose ul { padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
+    .prose li { font-size: 0.88rem; line-height: 1.65; }
+    .prose code { background: var(--cream); border: 1px solid var(--black); padding: 1px 5px; font-size: 0.82rem; }
+
+    .arch-diagram { border: 2px solid var(--black); background: var(--cream); padding: 16px 20px; font-size: 0.82rem; line-height: 2; font-weight: 700; }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .chip { padding: 6px 10px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); font-size: 0.72rem; font-weight: 700; }
+
+    .cta-strip { border: 3px solid var(--black); background: var(--black); color: var(--white); box-shadow: 6px 6px 0 rgba(0,0,0,0.3); padding: 22px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .cta-strip p { font-size: 0.9rem; line-height: 1.5; max-width: 58ch; }
+    .cta-strip strong { display: block; font-size: 1rem; margin-bottom: 4px; }
+    .cta-btn { padding: 12px 20px; border: 2px solid var(--white); background: var(--white); color: var(--black); font: inherit; font-weight: 700; cursor: pointer; white-space: nowrap; transition: transform 0.15s; display: inline-block; }
+    .cta-btn:hover { transform: translate(-2px,-2px); }
+    .cta-btn.outline { background: transparent; color: var(--white); }
+
+    .back-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 2px solid var(--black); background: var(--white); box-shadow: 4px 4px 0 var(--black); font-size: 0.82rem; font-weight: 700; transition: transform 0.15s; align-self: flex-start; }
+    .back-link:hover { transform: translate(-2px,-2px); }
+
+    @media (max-width: 1100px) { .shell { grid-template-columns: 220px 1fr; } .metrics-row { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 820px) { body { padding: 10px 8px 72px; } .shell { grid-template-columns: 1fr; box-shadow: 6px 6px 0 var(--black); min-height: unset; } .sidebar { border-right: none; border-bottom: 3px solid var(--black); padding: 10px 14px; flex-direction: row; align-items: center; justify-content: space-between; } .brand { font-size: clamp(0.95rem,2.5vw,1.6rem); } .nav { display: none; } .sidebar-bottom { display: none; } .main { padding: 14px; } .two-col { grid-template-columns: 1fr; } }
+    @media (max-width: 520px) { .metrics-row { grid-template-columns: 1fr; } .article-title { font-size: 1.5rem; } }
+  </style>
+  <link rel="stylesheet" href="../../mobile.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="/"><div class="brand-badge">&lt;/&gt;</div><span>AZHYSHCHEV</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">&#9776;</button>
+      <nav class="nav">
+        <a class="nav-item" href="/"><span class="icon-box">H</span><span>Home</span></a>
+        <a class="nav-item" href="/experience"><span class="icon-box">E</span><span>Experience</span></a>
+        <a class="nav-item" href="/projects"><span class="icon-box">P</span><span>Projects</span></a>
+        <a class="nav-item active" href="/articles"><span class="icon-box">A</span><span>Articles</span></a>
+        <a class="nav-item" href="/skills"><span class="icon-box">S</span><span>Skills</span></a>
+        <a class="nav-item" href="/contact"><span class="icon-box">C</span><span>Contact</span></a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a class="nav-item" href="/CV.pdf" download><span class="icon-box">CV</span><span>Download CV</span></a>
+        <a class="nav-item" href="mailto:azhyshchev@gmail.com"><span class="icon-box">@</span><span>Email</span></a>
+        <div class="socials">
+          <a class="social-link" href="https://www.linkedin.com/in/azhyshchev/" target="_blank" rel="noreferrer">in</a>
+          <a class="social-link" href="https://github.com/Azhy34" target="_blank" rel="noreferrer">gh</a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="panel">
+
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Home</a><span>→</span>
+          <a href="/articles">Articles</a><span>→</span>
+          <span>Hybrid RAG Sales Agent</span>
+        </nav>
+
+        <div class="article-hero">
+          <div class="article-type">AI Architecture · RAG · E-commerce · Production</div>
+          <h1 class="article-title">How I Built a Hybrid RAG Sales Agent with Zero Price Hallucinations</h1>
+          <p class="article-lead">
+            An e-commerce store with 1,200+ SKUs needed an AI assistant that could answer product questions accurately — without inventing prices or stock status. Pure vector search wasn't enough. Here's the production architecture that solved it: Hybrid RAG with SQL for hard facts, pgvector for semantic knowledge, and a LangGraph ReAct agent tying it together.
+          </p>
+          <div class="metrics-row">
+            <div class="metric-box"><strong>~90%</strong><span>API cost reduction vs. naive LLM-per-query approach</span></div>
+            <div class="metric-box"><strong>1,200+ SKU</strong><span>Zero hallucinated prices — hard facts in SQL, never in vector search</span></div>
+            <div class="metric-box"><strong>5 tools</strong><span>LangGraph ReAct: search, filter, detail, recommend, FAQ</span></div>
+            <div class="metric-box"><strong>98%</strong><span>Data quality after ETL pipeline with contract tests</span></div>
+          </div>
+        </div>
+
+        <div class="article-body">
+
+          <div class="neo-card">
+            <div class="section-label">The problem</div>
+            <h2 class="section-title">Why pure vector search fails for e-commerce</h2>
+            <div class="prose">
+              <p>The client — a Polish wallpaper and décor e-commerce store — had a 57MB PDF catalog with 1,200+ products. The first instinct was: vectorize the whole thing, let the LLM answer questions. That's the wrong approach for e-commerce, and here's why.</p>
+              <p>When a customer asks "How much is SKU-4821?" the answer must be exact. A semantic vector search returns the most similar chunks — but similarity doesn't mean accuracy. Prices can hallucinate. Dimensions can be mixed between products. Stock status gets confused between variants.</p>
+              <p>The original catalog was also 57MB of raw PDF — uploading it directly to Gemini File Search hit the hot-cache pricing tier (~$45/month) and caused 8+ second response latency. Unusable for a chat widget.</p>
+              <h3>The root cause</h3>
+              <p>E-commerce data has two fundamentally different types of information that require different retrieval strategies:</p>
+              <ul>
+                <li><strong>Hard facts</strong> — price, SKU, stock status, dimensions. Must be exact. Hallucination here = business loss.</li>
+                <li><strong>Soft knowledge</strong> — style descriptions, use cases, recommendations, FAQ. Can be approximate. Semantic retrieval works well here.</li>
+              </ul>
+              <p>A single retrieval strategy cannot serve both. That's the core insight behind Hybrid RAG.</p>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">The architecture</div>
+            <h2 class="section-title">Hybrid RAG: SQL + pgvector</h2>
+            <div class="prose">
+              <p>The solution splits the catalog into two layers, each serving queries it's suited for:</p>
+            </div>
+            <div class="arch-diagram" style="margin: 16px 0;">
+              User query<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+              LangGraph ReAct Agent<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;↓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+              SQL tool (hard facts)&nbsp;&nbsp;&nbsp;&nbsp;pgvector tool (semantics)<br>
+              price, SKU, stock&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;style, FAQ, recommendations<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;↓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ Gemini 2.5 Flash ←<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Response
+            </div>
+            <div class="prose">
+              <h3>Layer 1 — SQL (Supabase PostgreSQL)</h3>
+              <p>All deterministic facts live in structured tables: product ID, name, price, stock status, dimensions, category, supplier. When the agent needs a price or availability check, it runs a SQL query via the <code>get_product_detail</code> tool. The answer is always exact — no embedding distance, no approximation.</p>
+              <h3>Layer 2 — pgvector (semantic search)</h3>
+              <p>Product descriptions, style notes, use case text, and FAQ content are chunked, embedded with Sentence-Transformers, and stored in pgvector. When a user asks "what works well for a small bathroom?" or "something modern for a kids' room?", the agent runs a similarity search and retrieves the most relevant style context.</p>
+              <h3>The ETL pipeline</h3>
+              <p>Before any query can be answered correctly, the data must be clean. I built an ETL pipeline that: extracts structured fields from the raw PDF, deduplicates product entries, runs contract tests on every category before mass embedding (dry-run on a single item to verify prompt accuracy), and upserts to both Supabase tables. The 57MB PDF became a 5MB clean knowledge base.</p>
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="neo-card">
+              <div class="section-label">Agent design</div>
+              <h2 class="section-title">LangGraph ReAct — why not a simple chain</h2>
+              <div class="prose">
+                <p>A single-shot LLM prompt can't handle real e-commerce queries. "Do you have any beige wallpapers under €30 that work in a humid bathroom and are in stock?" requires multiple retrieval steps: filter by color and price (SQL), check humidity suitability (semantic), verify stock (SQL again).</p>
+                <p>LangGraph ReAct agent solves this with a tool-calling loop:</p>
+                <ul>
+                  <li><code>search_products</code> — keyword + category filter in SQL</li>
+                  <li><code>filter_by_attributes</code> — price range, stock, dimensions</li>
+                  <li><code>get_product_detail</code> — exact facts for a specific SKU</li>
+                  <li><code>semantic_recommend</code> — style and use-case similarity</li>
+                  <li><code>get_faq</code> — common questions about installation, care</li>
+                </ul>
+                <p>The agent decides which tools to call, in what order, based on the user query. LangSmith provides full observability into every tool call and token usage.</p>
+              </div>
+            </div>
+
+            <div class="neo-card">
+              <div class="section-label">Cost reduction</div>
+              <h2 class="section-title">How ~90% API cost reduction happens</h2>
+              <div class="prose">
+                <p>The naive approach — send the full catalog to the LLM for every query — is expensive. 57MB = millions of tokens per request at hot-cache pricing.</p>
+                <p>The Hybrid RAG approach sends only what's needed:</p>
+                <ul>
+                  <li>SQL query returns exact rows — 200-500 tokens of structured data</li>
+                  <li>pgvector returns top-3 relevant chunks — 400-800 tokens of context</li>
+                  <li>Total context per query: ~1,000-1,500 tokens vs. millions</li>
+                </ul>
+                <p>Gemini 2.5 Flash (not Pro) handles the final synthesis — fast, cheap, accurate enough for this task. The architectural decision to split retrieval is worth more than any model optimization.</p>
+                <p>Result: the cost per query dropped from ~$0.045 (hot-cache full PDF) to ~$0.004 (Hybrid RAG). At scale, this difference is the entire profit margin.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Production deployment</div>
+            <h2 class="section-title">From dev to live: FastAPI + Railway</h2>
+            <div class="prose">
+              <p>The agent is exposed via a FastAPI <code>/chat</code> endpoint. The frontend is a lightweight web chat widget embedded on the store's product pages. Telegram was used only for internal debugging during development — not in the production customer-facing interface.</p>
+              <p>Deployment is on Railway with Docker — zero-config autoscaling, no server management. The Supabase instance handles both the PostgreSQL data and pgvector extension. No separate vector database infrastructure needed.</p>
+              <h3>Observability from day one</h3>
+              <p>LangSmith is wired in before the first production query. Every agent run is logged: which tools were called, in what order, how many tokens were used, where the agent hesitated or retried. This is not optional — without observability, debugging a misbehaving agent in production is guesswork.</p>
+              <h3>Quality assurance</h3>
+              <p>Buyer-scenario integration tests run against the live agent: 20+ test queries covering price questions, stock checks, style recommendations, and edge cases (discontinued products, out-of-stock variants). These tests run in CI before any deployment. The agent cannot go to production with a failing buyer scenario.</p>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Key lessons</div>
+            <h2 class="section-title">What I'd do differently — and what works</h2>
+            <div class="prose">
+              <h3>Split by data type, not by retrieval method</h3>
+              <p>The biggest mistake in RAG implementations is vectorizing everything. The correct question is: "Does this piece of data need exact retrieval or approximate retrieval?" Prices and SKUs need exact. Descriptions and recommendations need approximate. Build your retrieval layer accordingly.</p>
+              <h3>ETL quality determines agent quality</h3>
+              <p>Garbage in, garbage out is the most common RAG failure. I spent more time on the ETL pipeline — deduplication, field normalization, contract tests — than on the agent itself. A well-structured knowledge base makes the agent dramatically more accurate without any prompt engineering.</p>
+              <h3>ReAct over chains for multi-step queries</h3>
+              <p>Chains work for single-step retrieval. Real user queries are multi-step. A ReAct agent with well-designed tools handles conversational context, follow-up questions, and compound queries without special-casing every scenario.</p>
+              <h3>Observability is not optional in production</h3>
+              <p>LangSmith from day one — not bolted on after the first production incident. You need to see what the agent is doing before users tell you it's wrong.</p>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">For German businesses</div>
+            <h2 class="section-title">When does a RAG sales agent make sense for your business?</h2>
+            <div class="prose">
+              <p>This architecture makes sense for any e-commerce or B2B business in Germany that has:</p>
+              <ul>
+                <li>100+ products with structured attributes (price, category, specifications)</li>
+                <li>Customers who ask questions before buying — not just browse and click</li>
+                <li>A catalog that changes regularly (seasonal, stock updates)</li>
+                <li>A support team spending time answering repetitive product questions</li>
+              </ul>
+              <p>The integration is a chat widget on the existing site — no full rebuild required. The agent connects to your product database and existing infrastructure. Build time for a standard e-commerce setup: 3-6 weeks.</p>
+              <p>Industries where this works well in Germany: furniture and interior design retailers (Möbelhändler), building materials suppliers (Baustoffhändler), B2B parts and components distributors, wallpaper and flooring specialists, specialty food and beverage wholesale.</p>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Tech stack</div>
+            <h2 class="section-title">Tools used in production</h2>
+            <div class="chips">
+              <span class="chip">Python</span>
+              <span class="chip">LangGraph</span>
+              <span class="chip">FastAPI</span>
+              <span class="chip">Supabase</span>
+              <span class="chip">pgvector</span>
+              <span class="chip">Gemini 2.5 Flash</span>
+              <span class="chip">Sentence-Transformers</span>
+              <span class="chip">LangSmith</span>
+              <span class="chip">Docker</span>
+              <span class="chip">Railway</span>
+              <span class="chip">pytest</span>
+              <span class="chip">VS Code</span>
+              <span class="chip">Claude Code</span>
+            </div>
+          </div>
+
+          <div class="cta-strip">
+            <div>
+              <strong>Brauchen Sie einen KI-Verkaufsassistenten für Ihren Online-Shop?</strong>
+              <p>I build production RAG agents for e-commerce and B2B businesses in Germany. SQL + vector search hybrid, zero hallucinations, integrated into your existing site. Let's talk about your catalog.</p>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a class="cta-btn" href="mailto:azhyshchev@gmail.com">Contact me</a>
+              <a class="cta-btn outline" href="/projects/ai-sales-agent-rag/">See the project page</a>
+            </div>
+          </div>
+
+          <a class="back-link" href="/articles">← Back to articles</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <nav class="mobile-bottom-nav" id="mobileBottomNav">
+    <a class="mbn-item" href="/"><span class="mbn-icon">&lt;/&gt;</span><span class="mbn-label">Home</span></a>
+    <a class="mbn-item" href="/experience"><span class="mbn-icon">E</span><span class="mbn-label">Experience</span></a>
+    <a class="mbn-item" href="/projects"><span class="mbn-icon">P</span><span class="mbn-label">Projects</span></a>
+    <a class="mbn-item active" href="/articles"><span class="mbn-icon">A</span><span class="mbn-label">Articles</span></a>
+    <a class="mbn-item" href="/contact"><span class="mbn-icon">C</span><span class="mbn-label">Contact</span></a>
+  </nav>
+  <script>
+    (function () { var toggle = document.getElementById('navToggle'); var nav = document.querySelector('.nav'); var bottom = document.querySelector('.sidebar-bottom'); if (!toggle) return; toggle.addEventListener('click', function () { var open = nav.classList.toggle('open'); if (bottom) bottom.classList.toggle('open', open); toggle.innerHTML = open ? '&#10005;' : '&#9776;'; }); })();
+  </script>
+</body>
+</html>
