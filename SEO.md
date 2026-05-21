@@ -313,6 +313,9 @@ Created llms.txt at portfolio root. B2B positioning for CEOs/business owners in 
 - [ ] **Add Google Analytics or Plausible** — track which project pages get organic traffic to know what's working.
 - [ ] **Add `hreflang="de"` alternates** for German-language versions if you create DE pages in the future.
 
+### Gap 4 — Education & Certifications page (idea)
+Create a dedicated `/education` page listing all IBM, Coursera, and other certifications with dates, grades, and verify links. Benefits: additional indexable content, trust signal for recruiters, new keywords (IBM, Coursera, RAG, LangChain, LlamaIndex). Add to sitemap, llms.txt, and sidebar nav. Structure: card per certificate with logo, course name, issuer, date, grade, verify link.
+
 ### Medium-term (1-3 months)
 - [ ] **Create German-language versions** of the most commercial pages:
   - `/de/projekte/rechnungsautomatisierung/` — invoice automation in German
