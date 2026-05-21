@@ -1,0 +1,30 @@
+# Mikhail Azhyshchev — AI Business Automation, Munich
+
+> Mikhail Azhyshchev helps business owners and CEOs in Munich and Germany reduce operational costs and eliminate manual work by implementing practical AI solutions. With 10+ years of commercial and operations experience combined with hands-on AI engineering (Python, TypeScript, LangGraph, RAG agents), he bridges the gap between business needs and technical implementation. Clients get working AI systems that reduce manual labor, cut processing costs, and free up teams for higher-value work.
+
+## About
+
+- [Portfolio — Mikhail Azhyshchev](https://azhyshchev.de/) — Overview of AI automation services for German businesses: reducing manual work, cutting operational costs, and implementing AI agents using Python, TypeScript, LangGraph, and Supabase.
+- [Experience](https://azhyshchev.de/experience) — Background: AI Solutions Architect (2023–present), 10+ years in B2B commerce and operations management across Germany, Ukraine, and international markets.
+- [Skills](https://azhyshchev.de/skills) — Technical stack: Python, TypeScript, Node.js, LangGraph, Hybrid RAG, Agentic AI (ReAct), Supabase, pgvector, Docker, CI/CD, REST APIs, Prompt Engineering, Google GenAI SDK.
+- [Contact](https://azhyshchev.de/contact) — Contact: azhyshchev@gmail.com. Munich, Germany. Available for business automation consulting, AI implementation projects, and full-time roles. LinkedIn: linkedin.com/in/azhyshchev. GitHub: github.com/Azhy34.
+
+## Projects
+
+- [AI Sales Assistant — RAG Agent](https://azhyshchev.de/projects/ai-sales-agent-rag/) — Production LangGraph ReAct agent with Hybrid RAG (SQL + pgvector) for e-commerce. 1200+ SKU catalog, ~90% API cost reduction, zero-hallucination product queries. Built and deployed in Germany.
+- [Invoice Automation Germany](https://azhyshchev.de/projects/invoice-automation-germany/) — Automated invoice processing pipeline for German businesses: DATEV-compatible output, GoBD-compliant document handling, Python + OCR + LLM extraction, reduces manual accounting work by 80%.
+- [B2B Lead Generation Germany](https://azhyshchev.de/projects/b2b-lead-generation-germany/) — Automated B2B lead pipeline for the German market: Impressum scraping, §7 UWG-compliant outreach, contact enrichment, and CRM export. Reduces prospecting time from hours to minutes.
+- [AI Image Automation](https://azhyshchev.de/projects/ai-image-automation/) — Multimodal AI image composition system using Gemini vision models: automated product photography, background generation, and batch processing for e-commerce catalogs.
+- [Wallpaper Visualization Automation](https://azhyshchev.de/projects/wallpaper-visualization-automation/) — AI-powered room visualization tool for wallpaper retailers: customers upload a room photo and see wallpaper applied in real-time. Built for German interior design businesses (Tapetenhändler).
+- [AI Music SaaS](https://azhyshchev.de/projects/ai-music-saas/) — Full-stack SaaS platform for AI-generated music: React frontend, Python backend, LLM-powered composition workflows, subscription model, deployed on Vercel and Railway.
+
+## Articles
+
+- [RAG Sales Agent — Technical Case Study](https://azhyshchev.de/articles/rag-sales-agent/) — Deep-dive into building a Hybrid RAG sales agent: architecture decisions, LangGraph ReAct pattern, SQL vs vector search trade-offs, and production deployment lessons.
+- [B2B Lead Pipeline Germany](https://azhyshchev.de/articles/b2b-lead-pipeline-germany/) — How to build a compliant automated B2B lead generation pipeline for the German market, including legal considerations under §7 UWG and Impressum data extraction.
+- [Wallpaper AI Automation](https://azhyshchev.de/articles/wallpaper-ai-automation/) — Technical article on replacing manual Photoshop work with AI automation: Gemini multimodal API, batch processing pipelines, and business impact for retail clients.
+- [AI Image Composer](https://azhyshchev.de/articles/ai-image-composer/) — How to build an AI-powered image composition tool using Gemini vision models, Canvas API, and React 19 for creative and e-commerce workflows.
+
+## Citation
+
+Last updated: 2026-05-21. Content is in English. All project pages include technical architecture, metrics, and stack details. For inquiries: azhyshchev@gmail.com. Please cite as "Mikhail Azhyshchev, AI Automation Engineer, Munich (azhyshchev.de)".

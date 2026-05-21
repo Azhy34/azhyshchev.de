@@ -224,29 +224,58 @@ Pages targeting the German B2B market use:
 
 ---
 
+## 8. llms.txt — AI crawler index file (Done 2026-05-21)
+
+Created `portfolio/llms.txt` at domain root so AI engines (ChatGPT, Perplexity, Claude, Gemini) can understand the site and cite it in responses.
+
+**Positioning:** "Mikhail Azhyshchev helps business owners and CEOs in Munich reduce costs and eliminate manual work by implementing AI solutions." B2B service framing, not job-seeker framing.
+
+**File structure:**
+- H1: site title
+- Blockquote: 3-sentence summary (who, what, for whom, results)
+- ## About: 4 links (portfolio, experience, skills, contact) with descriptions
+- ## Projects: 6 project links with metrics in descriptions
+- ## Articles: 4 article links with topic descriptions
+- ## Citation: last updated date, email, citation format
+
+**Key decisions:**
+- English only (matches site language)
+- German keywords embedded in descriptions (DATEV, GoBD, Tapetenhändler, §7 UWG)
+- LinkedIn + GitHub added to Contact entry
+- 15 URLs total (within 10-20 optimal range)
+- No llms-full.txt (site is small but descriptions are sufficient)
+
+**Update trigger:** Add new entry whenever a new project page or article is published.
+
+---
+
 ## Current SEO scorecard (May 2026)
 
 | Criterion | Score | Status | Notes |
 |-----------|-------|--------|-------|
-| Technical SEO | 8/10 | ✅ Improved | robots, sitemap, canonical, lastmod — all done |
-| AI bot access | 9/10 | ✅ | GPTBot, Claude-Web, anthropic-ai, PerplexityBot explicitly allowed |
-| Indexable content | 9/10 | ✅ Improved | 6 project pages + 4 article pages with full text (was 3/10 — modals/LinkedIn not indexed) |
-| Keywords in page text | 8/10 | ✅ Improved | German keywords in visible body text on all project + article pages |
+| Technical SEO | 8/10 | ✅ | robots, sitemap, canonical, lastmod — all done |
+| AI bot access | 9/10 | ✅ | GPTBot, Claude-Web, anthropic-ai, PerplexityBot allowed in robots.txt |
+| LLM SEO (llms.txt) | 9/10 | ✅ Done 2026-05-21 | llms.txt at domain root, B2B positioning, 15 URLs with descriptions |
+| Indexable content | 9/10 | ✅ | 6 project pages + 4 article pages with full text |
+| Keywords in page text | 8/10 | ✅ | German keywords in visible body text on all project + article pages |
 | JSON-LD schema | 9/10 | ✅ | Person, WebSite, WebPage, SoftwareApplication, Article, BreadcrumbList, Offer |
 | For HR/recruiter | 6/10 | → Pending | Design attracts, but no inline skills list or testimonials |
-| For hiring manager | 8/10 | ✅ Improved | Projects with metrics on dedicated pages |
+| For hiring manager | 8/10 | ✅ | Projects with metrics on dedicated pages |
 | Mobile | 8/10 | ✅ | Bottom nav, mobile.css, responsive grid |
-| Articles as content | 8/10 | ✅ Improved | 4 full HTML article pages live (was 3/10) |
-| Backlinks | 2/10 | ❌ Gap | No external sites linking to azhyshchev.de yet |
+| Articles as content | 8/10 | ✅ | 4 full HTML article pages live |
+| Backlinks | 3/10 | → In progress | GitHub README done. LinkedIn + dev.to pending |
 
 ---
 
 ## Remaining gaps (what's left to do)
 
-### Gap 1 — Articles as HTML pages ✅ DONE
-Created 4 full article pages: rag-sales-agent, b2b-lead-pipeline-germany, wallpaper-ai-automation, ai-image-composer. Pushed 2026-05-15.
+### Gap 1 — Articles as HTML pages ✅ DONE 2026-05-15
+Created 4 full article pages: rag-sales-agent, b2b-lead-pipeline-germany, wallpaper-ai-automation, ai-image-composer.
 
-### Gap 2 — Backlinks (zero currently)
+### Gap 1b — llms.txt ✅ DONE 2026-05-21
+Created llms.txt at portfolio root. B2B positioning for CEOs/business owners in Munich. 15 URLs with descriptions.
+
+### Gap 2 — Backlinks (in progress)
 **Current state:** No external sites link to azhyshchev.de.
 **Why it matters:** Google ranks pages partly by how many other sites reference them.
 **Quick wins:**
