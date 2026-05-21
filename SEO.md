@@ -249,6 +249,27 @@ Created `portfolio/llms.txt` at domain root so AI engines (ChatGPT, Perplexity, 
 
 ---
 
+## 9. JS Refactoring — shared nav.js (Done 2026-05-21)
+
+Extracted duplicated JavaScript to shared file `js/nav.js`.
+
+**What was extracted:**
+- Hamburger menu toggle (was duplicated in 17 files)
+- Mobile bottom nav active state detection (was duplicated in 17 files)
+- Reviews section mobile hide logic
+
+**Result:**
+- Created `portfolio/js/nav.js` — single source of truth for navigation JS
+- All 20 HTML pages now reference `<script src="/js/nav.js"></script>`
+- Removed ~350 lines of duplicated inline JS across the project
+- Future nav changes require editing 1 file instead of 20
+
+**Files NOT refactored (intentional):**
+- `index.html`, `experience/`, `projects/`, `articles/` — contain modal JS that uses `getElementById` for overlays, not hamburger. Kept inline.
+- `cv/index.html` — has PDF iframe logic, unrelated to nav.
+
+---
+
 ## Current SEO scorecard (May 2026)
 
 | Criterion | Score | Status | Notes |

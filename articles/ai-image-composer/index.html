@@ -346,8 +346,6 @@
     <a class="mbn-item active" href="/articles"><span class="mbn-icon">A</span><span class="mbn-label">Articles</span></a>
     <a class="mbn-item" href="/contact"><span class="mbn-icon">C</span><span class="mbn-label">Contact</span></a>
   </nav>
-  <script>
-    (function () { var toggle = document.getElementById('navToggle'); var nav = document.querySelector('.nav'); var bottom = document.querySelector('.sidebar-bottom'); if (!toggle) return; toggle.addEventListener('click', function () { var open = nav.classList.toggle('open'); if (bottom) bottom.classList.toggle('open', open); toggle.innerHTML = open ? '&#10005;' : '&#9776;'; }); })();
-  </script>
+  <script src="/js/nav.js"></script>
 </body>
 </html>
