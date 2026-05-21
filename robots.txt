@@ -18,3 +18,4 @@ User-agent: Googlebot
 Allow: /
 
 Sitemap: https://azhyshchev.de/sitemap.xml
+LLMs: https://azhyshchev.de/llms.txt
