@@ -138,6 +138,46 @@
     @media (max-width: 520px) { .metrics-row { grid-template-columns: 1fr; } .project-title { font-size: 1.7rem; } }
   </style>
   <link rel="stylesheet" href="../../mobile.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Wie kann ich die Rechnungsverarbeitung in meinem deutschen Unternehmen automatisieren?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Eine KI-gestützte Rechnungsautomatisierung liest eingehende PDFs aus Gmail, extrahiert Daten mit Gemini AI (Lieferant, Betrag, Datum, Rechnungsnummer) und speichert sie strukturiert in Supabase und Google Drive. Der gesamte Prozess läuft automatisch per Cron-Job ohne manuelle Eingriffe und ist GoBD-konform für deutsche Unternehmen."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is automated invoice processing GoBD-compliant for businesses in Germany?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. The invoice automation pipeline built for German businesses stores original PDF files unmodified in Google Drive (GoBD requires original document preservation) and creates a structured audit trail in Supabase with timestamps, idempotent processing IDs, and full extraction logs. DATEV-compatible CSV export is included."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much time does invoice automation save for a small business in Munich?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "For a Munich SMB processing 20-50 invoices per week, manual handling typically takes 2-4 hours weekly. Automated processing reduces this to near-zero: the pipeline runs on a schedule, processes all incoming invoices in under 2 minutes, and sends a structured summary. That is 80-100% reduction in manual accounting overhead."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Welche Unternehmen in München und Deutschland profitieren am meisten von Rechnungsautomatisierung?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Besonders geeignet sind kleine und mittlere Unternehmen (KMU) in München und ganz Deutschland, die regelmäßig Lieferantenrechnungen per E-Mail erhalten: Handwerksbetriebe, Agenturen, E-Commerce-Händler, Dienstleister. Ab 10-15 Rechnungen pro Woche amortisiert sich die Automatisierung innerhalb weniger Monate."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <div class="shell">
