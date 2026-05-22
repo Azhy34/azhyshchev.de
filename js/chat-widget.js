@@ -45,6 +45,7 @@
   let currentLang = null;
   let conversationHistory = []; // Limit: 8 messages total (4 rounds)
   let isWaitingResponse = false;
+  let savedScrollY = 0;
 
   // Retrieve or generate unique sessionId
   let sessionId = sessionStorage.getItem('portfolio_chat_session_id');
@@ -202,6 +203,8 @@
       
       // Lock background scrolling on mobile
       if (window.innerWidth <= 480) {
+        savedScrollY = window.scrollY;
+        document.body.style.top = `-${savedScrollY}px`;
         document.body.classList.add('nbw-no-scroll');
       }
 
@@ -223,8 +226,10 @@
       drawer.classList.add('closing');
       launcher.setAttribute('aria-expanded', 'false');
       
-      // Unlock background scrolling
+      // Unlock background scrolling and restore scroll position
       document.body.classList.remove('nbw-no-scroll');
+      document.body.style.top = '';
+      window.scrollTo(0, savedScrollY);
       
       let animationEnded = false;
       const handleCloseAnimation = (e) => {
