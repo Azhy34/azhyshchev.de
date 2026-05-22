@@ -38,6 +38,11 @@
   let conversationHistory = []; // Limit: 8 messages total (4 rounds)
   let isWaitingResponse = false;
 
+  // Synchronously capture current script details at load time
+  // (document.currentScript is only defined during synchronous execution)
+  const currentScript = document.currentScript;
+  const widgetToken = (currentScript && currentScript.getAttribute('data-token')) || 'dev-token-default-12345';
+  
   // Resolve API Endpoint
   const getApiUrl = () => {
     const hostname = window.location.hostname;
@@ -47,6 +52,9 @@
     }
     return '/api/chat';
   };
+  const widgetApiUrl = (currentScript && currentScript.getAttribute('data-api-url')) || getApiUrl();
+  const scriptSrc = currentScript ? currentScript.src : '';
+  const cssUrl = scriptSrc ? scriptSrc.replace('.js', '.css') : '/js/chat-widget.css';
 
   // Input Sanitizer: Strips HTML tags client-side
   const sanitizeInput = (text) => {
@@ -56,20 +64,11 @@
 
   // Setup DOM Elements and Widget Logic
   const initChatWidget = () => {
-    // 1. Resolve CSS URL relative to this script path (so it is self-sufficient)
-    const currentScript = document.currentScript;
-    const scriptSrc = currentScript ? currentScript.src : '';
-    const cssUrl = scriptSrc ? scriptSrc.replace('.js', '.css') : '/js/chat-widget.css';
-    
+    // 1. Resolve and inject CSS
     const linkEl = document.createElement('link');
     linkEl.rel = 'stylesheet';
     linkEl.href = cssUrl;
     document.head.appendChild(linkEl);
-
-    // Get Auth Token from script data attribute or use a safe development token
-    const widgetToken = (currentScript && currentScript.getAttribute('data-token')) || 'dev-token-default-12345';
-    // Get API URL from script data attribute or resolve dynamically
-    const widgetApiUrl = (currentScript && currentScript.getAttribute('data-api-url')) || getApiUrl();
 
     // 2. Create and Inject the Chat Widget Structure
     const container = document.createElement('div');
