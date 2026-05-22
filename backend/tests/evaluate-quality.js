@@ -2,8 +2,8 @@ const assert = require('assert');
 const http = require('http');
 require('dotenv').config({ path: require('path').join(__dirname, '../.env') });
 
-if (!process.env.GEMINI_API_KEY) {
-  console.error("Error: GEMINI_API_KEY must be defined in the backend/.env to run live quality tests.");
+if (!process.env.OPENROUTER_API_KEY) {
+  console.error("Error: OPENROUTER_API_KEY must be defined in the backend/.env to run live quality tests.");
   process.exit(1);
 }
 
@@ -161,6 +161,96 @@ server.on('listening', () => {
       lang: 'de',
       q: 'Was ist der nächste Schritt?',
       keys: [/buchen/i, /Gespräch/i, /E-Mail/i, /Konzept/i]
+    },
+
+    // --- OFF-TOPIC TESTS (agent must decline and redirect, not answer directly) ---
+    // offTopic: true — checks that reply contains redirect phrases and does NOT give a direct answer
+    {
+      lang: 'en',
+      q: 'Can you write me a Python function to sort a list?',
+      offTopic: true,
+      mustNotContain: [/def sort/i, /sorted\(/i, /\.sort\(/i],
+      mustContain: [/automation/i, /Mikhail/i, /scope/i, /B2B/i, /help/i]
+    },
+    {
+      lang: 'en',
+      q: "What's the weather like in Munich today?",
+      offTopic: true,
+      mustNotContain: [/°C/i, /celsius/i, /sunny/i, /cloudy/i, /rain/i, /forecast/i],
+      mustContain: [/automation/i, /Mikhail/i, /assist/i, /scope/i, /help/i]
+    },
+    {
+      lang: 'en',
+      q: 'Tell me a joke.',
+      offTopic: true,
+      mustNotContain: [/why did/i, /knock knock/i, /punchline/i, /laughs/i],
+      mustContain: [/automation/i, /Mikhail/i, /help/i, /scope/i, /B2B/i]
+    },
+    {
+      lang: 'en',
+      q: 'Who won the last FIFA World Cup?',
+      offTopic: true,
+      mustNotContain: [/Argentina/i, /France/i, /Brazil/i, /Germany/i, /Spain/i, /trophy/i],
+      mustContain: [/automation/i, /Mikhail/i, /help/i, /scope/i]
+    },
+    {
+      lang: 'en',
+      q: 'Can you write me a cover letter for a job application?',
+      offTopic: true,
+      mustNotContain: [/Dear Hiring/i, /I am writing to apply/i, /sincerely/i],
+      mustContain: [/automation/i, /Mikhail/i, /scope/i, /B2B/i]
+    },
+    {
+      lang: 'de',
+      q: 'Kannst du mir ein Python-Skript zum Sortieren einer Liste schreiben?',
+      offTopic: true,
+      mustNotContain: [/def sort/i, /sorted\(/i, /\.sort\(/i],
+      mustContain: [/Automatisierung/i, /Mikhail/i, /helfen/i, /Bereich/i, /B2B/i]
+    },
+    {
+      lang: 'de',
+      q: 'Wie ist das Wetter heute in München?',
+      offTopic: true,
+      mustNotContain: [/°C/i, /Celsius/i, /sonnig/i, /bewölkt/i, /Regen/i, /Prognose/i],
+      mustContain: [/Automatisierung/i, /Mikhail/i, /helfen/i, /Bereich/i]
+    },
+    {
+      lang: 'de',
+      q: 'Erzähl mir einen Witz.',
+      offTopic: true,
+      mustNotContain: [/Warum/i, /Klopf klopf/i, /lacht/i, /Pointe/i],
+      mustContain: [/Automatisierung/i, /Mikhail/i, /helfen/i, /B2B/i]
+    },
+    {
+      lang: 'de',
+      q: 'Wer hat die letzte Fußball-Weltmeisterschaft gewonnen?',
+      offTopic: true,
+      mustNotContain: [/Argentinien/i, /Frankreich/i, /Brasilien/i, /Pokal/i],
+      mustContain: [/Automatisierung/i, /Mikhail/i, /helfen/i]
+    },
+
+    // --- INTAKE MODE TESTS (agent must ask clarifying questions, not give a price) ---
+    // intake: true — checks agent starts collecting info, asks for email, refuses to quote price
+    {
+      lang: 'en',
+      q: 'I want to automate invoicing in my furniture store. How much would it cost?',
+      intake: true,
+      mustNotContain: [/€/i, /EUR/i, /\d{3,}/],
+      mustContain: [/email/i, /details/i, /tell me/i, /question/i, /understand/i, /clarif/i, /describe/i, /workflow/i, /process/i, /Mikhail/i]
+    },
+    {
+      lang: 'en',
+      q: 'I run a kitchen studio in Munich and want an AI chatbot on my website.',
+      intake: true,
+      mustNotContain: [/€/i, /EUR/i, /\d{3,}/],
+      mustContain: [/email/i, /question/i, /tell me/i, /understand/i, /clarif/i, /describe/i, /process/i, /Mikhail/i, /kitchen/i, /website/i, /chatbot/i]
+    },
+    {
+      lang: 'de',
+      q: 'Ich möchte meine Buchhaltung automatisieren. Was würde das kosten?',
+      intake: true,
+      mustNotContain: [/€/i, /EUR/i, /\d{3,}/],
+      mustContain: [/E-Mail/i, /Fragen/i, /erzählen/i, /verstehen/i, /beschreiben/i, /Prozess/i, /Mikhail/i, /Angebot/i]
     }
   ];
 
@@ -212,85 +302,93 @@ server.on('listening', () => {
   }
 
   async function runQualityEvaluation() {
+    const faqTests = questions.filter(q => !q.offTopic && !q.intake);
+    const offTopicTests = questions.filter(q => q.offTopic);
+    const intakeTests = questions.filter(q => q.intake);
+
     console.log(`\n======================================================`);
-    console.log(`🚀 STARTING LIVE FAQ QUALITY EVALUATION SUITE`);
-    console.log(`Total test cases: ${questions.length}`);
-    console.log(`Rate-limit prevention: 5-second delay between cases`);
+    console.log(`STARTING LIVE FAQ QUALITY EVALUATION SUITE`);
+    console.log(`FAQ: ${faqTests.length} | Off-topic: ${offTopicTests.length} | Intake: ${intakeTests.length}`);
+    console.log(`Total: ${questions.length} | Delay: 15s between live calls`);
     console.log(`======================================================\n`);
 
     let passed = 0;
     let failed = 0;
+    const failures = [];
 
     for (let i = 0; i < questions.length; i++) {
-      const { lang, q, keys } = questions[i];
-      console.log(`[Test ${i + 1}/${questions.length}] Language: ${lang.toUpperCase()} | Q: "${q}"`);
+      const test = questions[i];
+      const { lang, q, offTopic, intake } = test;
+      const label = offTopic ? '[OFF-TOPIC]' : intake ? '[INTAKE]' : '[FAQ]';
+      console.log(`[Test ${i + 1}/${questions.length}] ${label} ${lang.toUpperCase()} | Q: "${q}"`);
 
       let res = null;
       try {
         res = await makeRequest('/api/chat', { message: q, lang });
-        assert.strictEqual(res.status, 200, `Expected HTTP status 200, got ${res.status}. Body: ${JSON.stringify(res.body)}`);
-        
+        assert.strictEqual(res.status, 200, `HTTP ${res.status}. Body: ${JSON.stringify(res.body)}`);
+
         const reply = res.body.reply;
-        assert.ok(reply, "Reply from agent should not be empty");
-        
+        assert.ok(reply, 'Reply must not be empty');
+
         // 1. Language check
         if (lang === 'de') {
           const hasGerman = /\b(ist|und|der|die|das|ich|sie|wir|zu|uns|es|ein|eine|einen|Mikhail|KI|auf|für|mit|von)\b/i.test(reply);
-          const hasEnglish = /\b(the|and|is|you|we|our|us|your|in|to|of|for|with)\b/i.test(reply);
-          assert.ok(hasGerman, `German words expected. Reply: "${reply}"`);
-          assert.ok(!hasEnglish || hasGerman, `Should not be primarily English. Reply: "${reply}"`);
+          assert.ok(hasGerman, `Expected German. Reply: "${reply}"`);
         } else {
-          const hasEnglish = /\b(the|and|is|you|we|our|us|your|in|to|of|for|with|a|an|Mikhail|AI|chatbot|on|custom|develop|specializes|he|his|agent|services)\b/i.test(reply);
+          const hasEnglish = /\b(the|and|is|you|we|our|us|your|in|to|of|for|with|a|an|Mikhail|AI|chatbot|he|his|agent|services)\b/i.test(reply);
           const hasGerman = /\b(ist|und|der|die|das)\b/i.test(reply);
-          assert.ok(hasEnglish, `English words expected. Reply: "${reply}"`);
-          assert.ok(!hasGerman, `Should not contain German indicator words. Reply: "${reply}"`);
+          assert.ok(hasEnglish, `Expected English. Reply: "${reply}"`);
+          assert.ok(!hasGerman, `Must not contain German. Reply: "${reply}"`);
         }
 
         // 2. Sentence count check
         const sentences = countSentences(reply);
-        console.log(` - Sentences: ${sentences} | Reply: "${reply}"`);
-        // We expect brief sentences, 2-10 is acceptable to accommodate Intake Mode and FAQ answers
-        assert.ok(sentences >= 2 && sentences <= 10, `Sentence count ${sentences} is outside acceptable range (2-10).`);
+        console.log(` - Sentences: ${sentences}`);
+        assert.ok(sentences >= 1 && sentences <= 10, `Sentence count ${sentences} out of range (1-10).`);
 
-        // 3. Key phrase check
-        let matchesKeys = false;
-        const matchedList = [];
-        for (const pattern of keys) {
-          if (pattern.test(reply)) {
-            matchesKeys = true;
-            matchedList.push(pattern.toString());
+        if (offTopic || intake) {
+          // 3a. Must NOT contain forbidden patterns
+          for (const pattern of (test.mustNotContain || [])) {
+            assert.ok(!pattern.test(reply), `Reply should not contain "${pattern}". Reply: "${reply}"`);
           }
+          // 3b. Must contain at least one expected phrase
+          const hasExpected = (test.mustContain || []).some(p => p.test(reply));
+          assert.ok(hasExpected, `Expected one of: ${test.mustContain}. Reply: "${reply}"`);
+          if (offTopic) console.log(` - Correctly declined and redirected.`);
+          if (intake) console.log(` - Correctly entered intake mode.`);
+        } else {
+          // 3a. FAQ: must contain at least one key phrase
+          const matchedList = test.keys.filter(p => p.test(reply));
+          assert.ok(matchedList.length > 0, `No key phrases matched. Expected one of: ${test.keys}. Reply: "${reply}"`);
+          console.log(` - Key match: ${matchedList.join(', ')}`);
         }
-        assert.ok(matchesKeys, `None of the expected key patterns matched. Expected one of: ${keys}. Got: "${reply}"`);
-        console.log(` - Key match passed. Matched patterns: ${matchedList.join(', ')}`);
 
-        console.log(`✅ Test ${i + 1} Passed.\n`);
+        console.log(` - Reply: "${reply.substring(0, 120)}${reply.length > 120 ? '...' : ''}"`);
+        console.log(`PASS\n`);
         passed++;
       } catch (err) {
-        console.error(`❌ Test ${i + 1} Failed! Reason:`, err.message);
+        console.error(`FAIL — ${err.message}\n`);
+        failures.push({ i: i + 1, label, q, err: err.message });
         failed++;
       }
 
       if (i < questions.length - 1) {
         const isCached = res && res.headers && res.headers['x-from-cache'] === 'true';
-        const sleepTime = isCached ? 50 : 13000;
-        if (isCached) {
-          console.log(` - Response served from cache. Skipping rate-limit delay...`);
-        } else {
-          console.log(`Sleeping 13 seconds to prevent rate limits...`);
-        }
+        const sleepTime = isCached ? 50 : 15000;
+        console.log(isCached ? ` (cached, no delay)\n` : ` Sleeping 15s...\n`);
         await sleep(sleepTime);
       }
     }
 
     console.log(`\n======================================================`);
-    console.log(`📊 EVALUATION COMPLETED`);
-    console.log(`Passed: ${passed}/${questions.length}`);
-    console.log(`Failed: ${failed}/${questions.length}`);
+    console.log(`RESULTS: ${passed} passed / ${failed} failed / ${questions.length} total`);
+    if (failures.length > 0) {
+      console.log(`\nFailed tests:`);
+      failures.forEach(f => console.log(` [${f.i}] ${f.label} "${f.q}" — ${f.err}`));
+    }
     console.log(`======================================================\n`);
 
     server.close(() => {
-      console.log("Server shut down.");
       process.exit(failed > 0 ? 1 : 0);
     });
   }

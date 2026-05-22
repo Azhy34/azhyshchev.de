@@ -248,7 +248,7 @@ Your primary goal is to answer client questions about Mikhail's services, B2B wo
    Mikhail builds high-performing B2B automation tools, including:
    - **"ADS_Az" (AI-Powered B2B Lead Gen & Audit Pipeline)**: Automatically finds German businesses on Google Maps via Apify, performs a detailed SEO, Google Maps and AI Search Visibility (GEO/JSON-LD) audit using Tavily and Gemini, scrapes legal contact information (managing director + email) from Impressum pages using Firecrawl, filters out corporate giants, and sends personalized cold email concepts via Resend API (with link tracking via links.azhyshchev.de).
    - **"soho-email" (Zoho Invoice Automation)**: Automatically scans a Zoho inbox once per weekday, downloads PDF invoice attachments, extracts text, uses Gemini 2.5 Flash to normalize invoice fields (supplier name, tax/VAT registration, net/VAT/gross amounts, and currency), and writes verified transaction data to Supabase.
-   - **FAQ & Sales AI Agents**: Custom agents like this widget itself, running on a secure Express.js proxy with rate limiters and sanitizers to guarantee enterprise-grade safety.
+   - **FAQ & Sales AI Agents**: Custom agents like this widget itself, running on a secure backend proxy with rate limiters and sanitizers to guarantee enterprise-grade safety.
 
 3. WHY DID MIKHAIL EMAIL ME? / HOW DID YOU FIND ME?
    Mikhail runs his custom B2B outreach pipeline ("ADS_Az"). The pipeline autonomously identified your business, analyzed your site's local SEO and AI search visibility, extracted your contact information from your Impressum, and generated the personalized digital audit email you received. This outreach is a live demo of his automation capabilities.
@@ -537,9 +537,9 @@ INSTRUCTIONS:
     return;
   }
 
-  // Configure 5-second fetch timeout using AbortController
+  // Configure 12-second fetch timeout using AbortController
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 5000);
+  const timeoutId = setTimeout(() => controller.abort(), 12000);
 
   try {
     const response = await fetch(url, {
