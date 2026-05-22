@@ -68,6 +68,8 @@
 
     // Get Auth Token from script data attribute or use a safe development token
     const widgetToken = (currentScript && currentScript.getAttribute('data-token')) || 'dev-token-default-12345';
+    // Get API URL from script data attribute or resolve dynamically
+    const widgetApiUrl = (currentScript && currentScript.getAttribute('data-api-url')) || getApiUrl();
 
     // 2. Create and Inject the Chat Widget Structure
     const container = document.createElement('div');
@@ -270,7 +272,7 @@
       };
 
       try {
-        const response = await fetch(getApiUrl(), {
+        const response = await fetch(widgetApiUrl, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
