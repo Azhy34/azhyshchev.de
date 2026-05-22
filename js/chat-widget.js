@@ -55,7 +55,7 @@
 
   // Synchronously capture current script details at load time
   // (document.currentScript is only defined during synchronous execution)
-  const currentScript = document.currentScript;
+  const currentScript = document.currentScript || document.querySelector('script[src*="chat-widget.js"]');
   const widgetToken = (currentScript && currentScript.getAttribute('data-token')) || 'dev-token-default-12345';
   
   // Resolve API Endpoint
