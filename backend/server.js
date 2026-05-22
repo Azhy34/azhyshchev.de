@@ -25,9 +25,25 @@ app.use((req, res, next) => {
   const origin = req.headers.origin;
   
   // Whitelisted origins
-  const whitelist = ['https://azhyshchev.de'];
+  const whitelist = [
+    'https://azhyshchev.de',
+    'https://www.azhyshchev.de'
+  ];
+
+  // Dynamically add CORS_ORIGIN env var if present (supports comma-separated list)
+  if (process.env.CORS_ORIGIN) {
+    const customOrigins = process.env.CORS_ORIGIN.split(',').map(o => o.trim());
+    customOrigins.forEach(o => {
+      if (o && !whitelist.includes(o)) {
+        whitelist.push(o);
+      }
+    });
+  }
+  
   if (process.env.NODE_ENV === 'development') {
     whitelist.push('http://localhost:5500');
+    whitelist.push('http://127.0.0.1:5500');
+    whitelist.push('http://localhost:3000');
   }
   
   // Apply CORS restriction if Origin header is present
