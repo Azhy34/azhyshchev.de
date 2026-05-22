@@ -8,13 +8,13 @@ This task list breaks down the implementation of the FAQ Chat Agent into actiona
 
 Goal: Build a responsive, user-friendly chat UI widget that loads with a slight delay, manages language state, sanitizes user input, and maintains conversation history.
 
-- [ ] **Task 1.1**: Create Chat Widget CSS Stylesheet
+- [x] **Task 1.1**: Create Chat Widget CSS Stylesheet
   - **Target File**: `public/css/chat-widget.css`
   - **Description**: Add CSS rules for the floating chat bubble (bottom-right), sliding chat container drawer, language selection screen buttons, message bubbles (user vs. assistant), input fields, character counter, and a smooth typing indicator animation.
   - **Dependencies**: None
   - **Parallel Execution**: [P]
 
-- [ ] **Task 1.2**: Implement Chat Widget Core Logic
+- [x] **Task 1.2**: Implement Chat Widget Core Logic
   - **Target File**: `public/js/chat-widget.js`
   - **Description**: Implement Javascript to:
     - Delay loading the widget by 2 seconds after page load.
@@ -27,7 +27,7 @@ Goal: Build a responsive, user-friendly chat UI widget that loads with a slight 
   - **Dependencies**: None
   - **Parallel Execution**: [P]
 
-- [ ] **Task 1.3**: Embed Widget into Portfolio HTML
+- [x] **Task 1.3**: Embed Widget into Portfolio HTML
   - **Target File**: `public/index.html`
   - **Description**: Include references to `chat-widget.css` and `chat-widget.js` at the bottom of the main HTML file. Add a container div where the widget will mount, or have JavaScript inject it dynamically.
   - **Dependencies**: Task 1.1, Task 1.2
@@ -45,13 +45,13 @@ Goal: Build a responsive, user-friendly chat UI widget that loads with a slight 
 
 Goal: Develop the Express.js proxy server with input verification, custom rate-limiting middleware, CORS restriction, and Gemini API integration using native fetch requests.
 
-- [ ] **Task 2.1**: Initialize Express Project
+- [x] **Task 2.1**: Initialize Express Project
   - **Target File**: `backend/package.json`
   - **Description**: Create `package.json` with dependencies `express`, `cors`, `dotenv`, and `helmet`. Include a dev start script using `nodemon`.
   - **Dependencies**: None
   - **Parallel Execution**: [P]
 
-- [ ] **Task 2.2**: Configure Environment Variables & Basic Server
+- [x] **Task 2.2**: Configure Environment Variables & Basic Server
   - **Target Files**: `backend/.env.example`, `backend/.gitignore`, `backend/server.js`
   - **Description**: 
     - Set up `.env.example` with placeholders for `PORT`, `CORS_ORIGIN`, `SECRET_WIDGET_TOKEN`, and `GEMINI_API_KEY`.
@@ -59,14 +59,14 @@ Goal: Develop the Express.js proxy server with input verification, custom rate-l
     - Create `server.js` establishing an Express server with JSON parser, `helmet()`, and CORS configuration whitelisting `process.env.CORS_ORIGIN`.
   - **Dependencies**: Task 2.1
 
-- [ ] **Task 2.3**: Implement Request Validation and Input Sanitization Middleware
+- [x] **Task 2.3**: Implement Request Validation and Input Sanitization Middleware
   - **Target File**: `backend/server.js`
   - **Description**: Create middleware to validate incoming payloads:
     - Reject requests immediately with `400 Bad Request` if `message` is missing/longer than 500 characters, if `lang` is not `"de"` or `"en"`, or if `history` exceeds 8 items.
     - Strip all HTML tags from the message and history items using regular expressions.
   - **Dependencies**: Task 2.2
 
-- [ ] **Task 2.4**: Implement Custom In-Memory Rate Limiting
+- [x] **Task 2.4**: Implement Custom In-Memory Rate Limiting
   - **Target File**: `backend/server.js`
   - **Description**: Implement a middleware tracking IP addresses and global counts:
     - Keep request timestamps in memory. Evict timestamps older than 24 hours.
@@ -74,7 +74,7 @@ Goal: Develop the Express.js proxy server with input verification, custom rate-l
     - Limit global requests to 300 in 24 hours (return `503 Service Unavailable` on breach).
   - **Dependencies**: Task 2.2
 
-- [ ] **Task 2.5**: Integrate Gemini API with System Prompt and Knowledge Base
+- [x] **Task 2.5**: Integrate Gemini API with System Prompt and Knowledge Base
   - **Target File**: `backend/server.js`
   - **Description**: Add route `POST /api/chat`. Inside the handler:
     - Validate `X-Widget-Token` header against `process.env.SECRET_WIDGET_TOKEN` (return `401 Unauthorized` on mismatch).
@@ -97,7 +97,7 @@ Goal: Develop the Express.js proxy server with input verification, custom rate-l
 
 Goal: Connect the frontend widget to the backend proxy, handle errors in the UI gracefully, and document deployment.
 
-- [ ] **Task 3.1**: Connect Frontend to Proxy API
+- [x] **Task 3.1**: Connect Frontend to Proxy API
   - **Target File**: `public/js/chat-widget.js`
   - **Description**: 
     - Configure the fetch destination in `chat-widget.js` to target the local backend port (`http://localhost:3000/api/chat`) for dev, and read a configurable/production endpoint for deployment.
@@ -105,7 +105,7 @@ Goal: Connect the frontend widget to the backend proxy, handle errors in the UI 
     - Update UI: on 200, display the response; on 429/503/errors, display the custom error message suggesting emailing `azhyshchev@gmail.com`.
   - **Dependencies**: Task 1.2, Task 2.5
 
-- [ ] **Task 3.2**: Prepare Deployment Files
+- [x] **Task 3.2**: Prepare Deployment Files
   - **Target File**: `backend/README.md`
   - **Description**: Document how to configure and deploy the backend on Railway: specifying environment variables, health check paths, and how to whitelist production CORS origin (`https://azhyshchev.de`).
   - **Dependencies**: Task 2.5
@@ -122,7 +122,7 @@ Goal: Connect the frontend widget to the backend proxy, handle errors in the UI 
 
 Goal: Run automated limits testing and manually verify edge-case behaviors (GDPR, website access, and Intake Mode).
 
-- [ ] **Task 4.1**: Create Automated Limits and Security Verification Script
+- [x] **Task 4.1**: Create Automated Limits and Security Verification Script
   - **Target File**: `backend/tests/verify-limits.js`
   - **Description**: Write a Node script using native `fetch` to run a battery of tests against a running local backend server:
     - Assert that 26 sequential requests from one IP trigger `429 Too Many Requests` on the 26th call.
@@ -131,7 +131,7 @@ Goal: Run automated limits testing and manually verify edge-case behaviors (GDPR
   - **Dependencies**: Task 2.5
   - **Parallel Execution**: [P]
 
-- [ ] **Task 4.2**: Manually Verify Intake Mode and GDPR Compliance FAQ
+- [x] **Task 4.2**: Manually Verify Intake Mode and GDPR Compliance FAQ
   - **Target File**: `public/js/chat-widget.js` / manual inspection
   - **Description**:
     - Interact with chatbot, type: "Ich möchte ein Automatisierungsprojekt". Check that it enters intake mode, asks clarifying questions, and asks for an email.
