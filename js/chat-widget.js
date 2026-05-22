@@ -90,11 +90,12 @@
     container.id = 'neobrutalist-chat-widget';
     container.className = 'nbw-container';
     container.innerHTML = `
-      <!-- Launcher Bubble Button -->
-      <button class="nbw-launcher" id="nbw-launcher" aria-label="Open chat assistant" aria-haspopup="dialog" aria-expanded="false">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true">
-          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+      <!-- Launcher Pill Button -->
+      <button class="nbw-launcher" id="nbw-launcher" aria-label="Open AI chat assistant" aria-haspopup="dialog" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true">
+          <path d="M12 3l-1.9 5.8a2 2 0 0 1-1.2 1.2L3 12l5.8 1.9a2 2 0 0 1 1.2 1.2L12 21l1.9-5.8a2 2 0 0 1 1.2-1.2L21 12l-5.8-1.9a2 2 0 0 1-1.2-1.2Z"></path>
         </svg>
+        <span class="nbw-launcher-text">ASK AI</span>
       </button>
 
       <!-- Chat Drawer -->

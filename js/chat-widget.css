@@ -40,26 +40,51 @@
   outline: none;
 }
 
-/* Launcher Bubble Buttons */
+/* Launcher Pill Button */
 .nbw-launcher {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 60px;
-  height: 60px;
+  gap: 10px;
+  padding: 0 24px;
+  height: 56px;
   background-color: var(--nbw-yellow);
   border: 3px solid var(--nbw-black);
-  border-radius: 50%;
+  border-radius: 28px;
   box-shadow: 4px 4px 0 var(--nbw-black);
   cursor: pointer;
-  transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.1s;
   pointer-events: auto; /* Enable clicks on the button */
+  animation: nbw-attention-pulse 10s infinite;
+}
+
+.nbw-launcher-text {
+  font-weight: 800;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+@keyframes nbw-attention-pulse {
+  0%, 85%, 100% {
+    transform: translate(0, 0);
+  }
+  88% {
+    transform: translate(0, -6px);
+  }
+  92% {
+    transform: translate(0, 0);
+  }
+  96% {
+    transform: translate(0, -3px);
+  }
 }
 
 .nbw-launcher:hover {
   transform: translate(-2px, -2px);
   box-shadow: 6px 6px 0 var(--nbw-black);
   background-color: var(--nbw-sky);
+  animation: none; /* Stop pulsing on hover */
 }
 
 .nbw-launcher:active {
