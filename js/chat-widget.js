@@ -59,7 +59,7 @@
     // 1. Resolve CSS URL relative to this script path (so it is self-sufficient)
     const currentScript = document.currentScript;
     const scriptSrc = currentScript ? currentScript.src : '';
-    const cssUrl = scriptSrc ? scriptSrc.replace('.js', '.css') : 'js/chat-widget.css';
+    const cssUrl = scriptSrc ? scriptSrc.replace('.js', '.css') : '/js/chat-widget.css';
     
     const linkEl = document.createElement('link');
     linkEl.rel = 'stylesheet';
@@ -203,7 +203,12 @@
       drawer.classList.add('closing');
       launcher.setAttribute('aria-expanded', 'false');
       
-      const handleCloseAnimation = () => {
+      let animationEnded = false;
+      const handleCloseAnimation = (e) => {
+        if (e && e.target !== drawer) return;
+        if (animationEnded) return;
+        animationEnded = true;
+        
         drawer.style.display = 'none';
         drawer.classList.remove('closing');
         launcher.style.display = 'flex';
@@ -211,6 +216,13 @@
       };
 
       drawer.addEventListener('animationend', handleCloseAnimation);
+
+      // Fallback timeout to ensure launcher is restored even if animationend event is missed
+      setTimeout(() => {
+        if (!animationEnded) {
+          handleCloseAnimation();
+        }
+      }, 300);
     };
 
     const appendMessage = (role, text) => {
@@ -376,15 +388,15 @@
     sendBtn.addEventListener('click', sendMessage);
   };
 
-  // 6. Page load trigger with 2-second delay
+  // 6. Page load trigger with a brief delay (500ms) for smoother rendering
   const startWidgetTimer = () => {
-    setTimeout(initChatWidget, 2000);
+    setTimeout(initChatWidget, 500);
   };
 
-  if (document.readyState === 'complete') {
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
     startWidgetTimer();
   } else {
-    window.addEventListener('load', startWidgetTimer);
+    document.addEventListener('DOMContentLoaded', startWidgetTimer);
   }
 
 })();

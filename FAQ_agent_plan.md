@@ -57,11 +57,10 @@ Widget displays response
 ```
 portfolio/
   js/
-    chat-widget.js       <- NEW: widget UI + API calls
-  css/
-    chat-widget.css      <- NEW: widget styles
-  index.html             <- add <script src="/js/chat-widget.js">
-  (all other pages)      <- same script tag
+    chat-widget.js       <- Widget UI, API calls, and initialization logic
+    chat-widget.css      <- Widget styling, including pointer-events and mobile dvh rules
+  index.html             <- Root page (embeds script tag using absolute path)
+  **/index.html          <- Deployed on all subpages (impressum, cv, datenschutz, projects, articles, etc.)
 ```
 
 ### Railway proxy repo (new, separate)
@@ -529,18 +528,27 @@ in writing and prepare a short concept PDF with specific recommendations. No cos
 
 ---
 
-## Open Questions (confirm before coding)
+## Open Questions (Resolved)
 
-- [ ] Confirm exact Gemini model ID — check in Google AI Studio (likely `gemini-2.5-flash` or `gemini-3.1-flash`)
-- [ ] Confirm price ranges in FAQ: 1,500 EUR / 3,000 EUR / 300 EUR/month — correct?
-- [ ] Calendly link for booking? Or use email only for now?
-- [ ] Rate limit 25 req/IP/day — ok? Or higher?
+- [x] Confirm exact Gemini model ID — `gemini-2.5-flash` deployed on Railway.
+- [x] Confirm price ranges in FAQ: Dynamic intake mode configured. Mikhail provides custom proposals based on free Concept PDFs instead of standard fixed pricing tiers.
+- [x] Calendly link for booking? Booking links / email outreach coordinates set to `azhyshchev@gmail.com` and site references.
+- [x] Rate limit 25 req/IP/day — Implemented and active.
 
 ---
 
 ## Pre-coding Checklist
 
-- [ ] Get Gemini API key from Google AI Studio (aistudio.google.com)
-- [ ] Create GitHub repo `azhyshchev-chat-proxy`
-- [ ] Create Railway account or confirm login at railway.app
-- [ ] Confirm all Open Questions above
+- [x] Get Gemini API key from Google AI Studio (aistudio.google.com) — Configured.
+- [x] Create GitHub repo `azhyshchev-chat-proxy` — Created and synced.
+- [x] Create Railway account or confirm login at railway.app — Logged in and active.
+- [x] Confirm all Open Questions above — Confirmed and documented.
+
+---
+
+## Final UX and Multi-page Deployment Details
+- **Absolute Path Injection**: Widget script injected with an absolute `/js/chat-widget.js` path across all 20 HTML files, preventing 404s on subpages.
+- **Fast Load Trigger**: Initialized via `DOMContentLoaded` (with a 500ms delay) to prevent page asset loading delays from blocking the chat launcher.
+- **Pointer Events Isolation**: Container set to `pointer-events: none` and interactive components to `pointer-events: auto` to prevent widget layout from blocking clicks on the rest of the page.
+- **Mobile Viewport Optimization**: Drawer height set to `calc(100dvh - 24px)` to adapt dynamically to mobile address bar state and avoid keyboard occlusion.
+- **Robust Animation Transitions**: Close transitions use a 300ms fallback timeout in JS to prevent widget bubble from getting frozen in background tabs or reduced-motion environments.

@@ -191,12 +191,12 @@ portfolio/
 │   ├── package.json            # npm package definition
 │   ├── server.js               # Express application entrypoint
 │   └── README.md               # Deploy instructions
-└── public/                     # Static website root
-    ├── index.html              # Main website file
-    ├── css/
-    │   └── chat-widget.css     # CSS stylesheet for chatbot UI
-    └── js/
-        └── chat-widget.js      # Widget logic (sanitization, API calls, state)
+├── js/                         # Widget Assets
+│   ├── chat-widget.js          # Core widget logic (DOMContentLoaded, safety close timer)
+│   ├── chat-widget.css         # Styling (pointer-events isolation, mobile dvh layout)
+│   └── nav.js                  # Navigation handler
+├── index.html                  # Main portfolio index page (uses absolute script path)
+└── **/index.html               # Subpages (cv, impressum, projects, articles, etc. containing widget script)
 ```
 
 ---

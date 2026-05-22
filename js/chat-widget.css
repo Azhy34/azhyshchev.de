@@ -23,6 +23,7 @@
   z-index: 999999;
   font-family: var(--nbw-font);
   font-size: 14px;
+  pointer-events: none; /* Let clicks pass through the container */
 }
 
 /* Strict Namespace Resets */
@@ -52,6 +53,7 @@
   box-shadow: 4px 4px 0 var(--nbw-black);
   cursor: pointer;
   transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  pointer-events: auto; /* Enable clicks on the button */
 }
 
 .nbw-launcher:hover {
@@ -84,6 +86,7 @@
   transform-origin: bottom right;
   z-index: 100000;
   animation: nbw-slide-in 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  pointer-events: auto; /* Enable clicks inside the drawer */
 }
 
 .nbw-drawer.closing {
@@ -435,6 +438,7 @@
     left: 12px;
     width: calc(100vw - 24px);
     height: calc(100vh - 24px);
+    height: calc(100dvh - 24px); /* Fallback compatibility + dynamic viewport height */
     max-height: none;
   }
 }

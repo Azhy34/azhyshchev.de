@@ -9,32 +9,33 @@ This task list breaks down the implementation of the FAQ Chat Agent into actiona
 Goal: Build a responsive, user-friendly chat UI widget that loads with a slight delay, manages language state, sanitizes user input, and maintains conversation history.
 
 - [x] **Task 1.1**: Create Chat Widget CSS Stylesheet
-  - **Target File**: `public/css/chat-widget.css`
-  - **Description**: Add CSS rules for the floating chat bubble (bottom-right), sliding chat container drawer, language selection screen buttons, message bubbles (user vs. assistant), input fields, character counter, and a smooth typing indicator animation.
+  - **Target File**: `js/chat-widget.css`
+  - **Description**: Add CSS rules for the floating chat bubble (bottom-right), sliding chat container drawer, language selection screen buttons, message bubbles (user vs. assistant), input fields, character counter, and a smooth typing indicator animation. Includes pointer-events isolation and mobile viewport height adaptations.
   - **Dependencies**: None
   - **Parallel Execution**: [P]
 
 - [x] **Task 1.2**: Implement Chat Widget Core Logic
-  - **Target File**: `public/js/chat-widget.js`
+  - **Target File**: `js/chat-widget.js`
   - **Description**: Implement Javascript to:
-    - Delay loading the widget by 2 seconds after page load.
+    - Load the widget 500ms after DOMContentLoaded event.
     - Show initial screen asking for "Deutsch" or "English".
     - Save language selection in `sessionStorage` (for persistence across navigations).
     - Handle user typing: enforce the 500-character limit dynamically.
     - Strip HTML tags from input string before sending to backend.
     - Manage an in-memory conversation history array (up to 8 messages total / 4 conversation rounds).
     - Show typing indicator when awaiting a response.
+    - Handle drawer closing animation with a robust safety timeout to avoid freezing.
   - **Dependencies**: None
   - **Parallel Execution**: [P]
 
 - [x] **Task 1.3**: Embed Widget into Portfolio HTML
-  - **Target File**: `public/index.html`
-  - **Description**: Include references to `chat-widget.css` and `chat-widget.js` at the bottom of the main HTML file. Add a container div where the widget will mount, or have JavaScript inject it dynamically.
+  - **Target File**: `index.html` and `**/index.html`
+  - **Description**: Include references to `chat-widget.js` (using absolute paths) at the bottom of the root HTML file and all nested subpage HTML files (cv, impressum, datenschutz, etc.).
   - **Dependencies**: Task 1.1, Task 1.2
 
 ### 🔍 Phase 1 Checkpoint Verification
-1. Load `public/index.html` locally.
-2. Confirm the chat launcher button appears after 2 seconds.
+1. Load `index.html` locally.
+2. Confirm the chat launcher button appears after 500ms.
 3. Click the launcher and verify the language selector screen displays.
 4. Select a language and confirm the interface switches to the chat screen.
 5. Attempt to paste text longer than 500 characters and confirm it is blocked or trimmed.
@@ -98,7 +99,7 @@ Goal: Develop the Express.js proxy server with input verification, custom rate-l
 Goal: Connect the frontend widget to the backend proxy, handle errors in the UI gracefully, and document deployment.
 
 - [x] **Task 3.1**: Connect Frontend to Proxy API
-  - **Target File**: `public/js/chat-widget.js`
+  - **Target File**: `js/chat-widget.js`
   - **Description**: 
     - Configure the fetch destination in `chat-widget.js` to target the local backend port (`http://localhost:3000/api/chat`) for dev, and read a configurable/production endpoint for deployment.
     - Send `X-Widget-Token` in headers and payload containing user input, lang, and history.
@@ -132,11 +133,11 @@ Goal: Run automated limits testing and manually verify edge-case behaviors (GDPR
   - **Parallel Execution**: [P]
 
 - [x] **Task 4.2**: Manually Verify Intake Mode and GDPR Compliance FAQ
-  - **Target File**: `public/js/chat-widget.js` / manual inspection
+  - **Target File**: `js/chat-widget.js` / manual inspection
   - **Description**:
     - Interact with chatbot, type: "Ich möchte ein Automatisierungsprojekt". Check that it enters intake mode, asks clarifying questions, and asks for an email.
     - Type: "Wie steht es um die DSGVO?". Check that it explains EU hosting and the provision of an AV-Vertrag.
-    - Type: "Muss ich Ihnen vollen Zugriff auf мои сайт?". Check that it explains the limited developer access model.
+    - Type: "Muss ich Ihnen vollen Zugriff auf meine Website geben?". Check that it explains the limited developer access model.
   - **Dependencies**: Task 3.1
 
 ### 🔍 Phase 4 Checkpoint Verification
