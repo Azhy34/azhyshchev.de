@@ -25,8 +25,8 @@ function saveCache() {
 }
 
 // Fail-fast environment variable checks
-if (!process.env.GEMINI_API_KEY) {
-  console.error('CRITICAL ERROR: GEMINI_API_KEY environment variable is not defined.');
+if (!process.env.OPENROUTER_API_KEY) {
+  console.error('CRITICAL ERROR: OPENROUTER_API_KEY environment variable is not defined.');
   process.exit(1);
 }
 if (!process.env.SECRET_WIDGET_TOKEN) {
@@ -415,14 +415,8 @@ app.get('/api/logs', async (req, res) => {
 
 // Chat Integration Route
 app.post('/api/chat', rateLimiter, authenticateToken, validateAndSanitizeInput, async (req, res) => {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`;
-
-  // Build the contents array from conversation history + latest message
-  const contents = [...req.sanitizedHistory];
-  contents.push({
-    role: 'user',
-    parts: [{ text: req.sanitizedMessage }]
-  });
+  const url = 'https://openrouter.ai/api/v1/chat/completions';
+  const model = process.env.OPENROUTER_MODEL || 'google/gemini-2.5-flash';
 
   // Extract email address if present in the current message or history
   let detectedEmail = extractEmail(req.sanitizedMessage);
@@ -505,17 +499,23 @@ INSTRUCTIONS:
     systemInstructionText += leadContext;
   }
 
+  // Build OpenAI-compatible messages array
+  const messages = [{ role: 'system', content: systemInstructionText }];
+  for (const item of req.sanitizedHistory) {
+    messages.push({
+      role: item.role === 'model' ? 'assistant' : 'user',
+      content: item.parts.map(p => p.text).join('\n')
+    });
+  }
+  messages.push({ role: 'user', content: req.sanitizedMessage });
+
   const payload = {
-    contents,
-    systemInstruction: {
-      parts: [{ text: systemInstructionText }]
-    },
-    generationConfig: {
-      temperature: 0.3,
-      maxOutputTokens: 300
-    }
+    model,
+    messages,
+    temperature: 0.3,
+    max_tokens: 300
   };
-  const isDevOrTest = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
+  const isDevOrTest = (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') && process.env.DISABLE_CACHE !== 'true';
   const cacheKey = `${req.body.lang || 'en'}:${req.sanitizedMessage.trim().toLowerCase()}`;
 
   if (isDevOrTest && geminiCache[cacheKey]) {
@@ -545,7 +545,10 @@ INSTRUCTIONS:
     const response = await fetch(url, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+        'HTTP-Referer': 'https://azhyshchev.de',
+        'X-Title': 'Mikhail Azhyshchev Portfolio Chat'
       },
       body: JSON.stringify(payload),
       signal: controller.signal
@@ -555,12 +558,12 @@ INSTRUCTIONS:
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error(`Gemini API Error (status ${response.status}):`, errorText);
+      console.error(`OpenRouter API Error (status ${response.status}):`, errorText);
       return res.status(502).json({ error: 'Failed to communicate with the AI model. Please try again later.' });
     }
 
     const data = await response.json();
-    const replyText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+    const replyText = data.choices?.[0]?.message?.content;
 
     if (!replyText) {
       console.error('Invalid response format from Gemini API:', JSON.stringify(data));

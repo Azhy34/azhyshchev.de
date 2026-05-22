@@ -1,6 +1,6 @@
 # FAQ Chat Agent — Backend Proxy
 
-Express.js proxy server between the frontend chat widget (`js/chat-widget.js`) and Google Gemini API (`gemini-2.5-flash`). Handles security, rate limiting, conversation logging, and personalized lead context injection.
+Express.js proxy server between the frontend chat widget (`js/chat-widget.js`) and AI models via [OpenRouter](https://openrouter.ai). Default model: `google/gemini-2.5-flash`. Model can be swapped via `OPENROUTER_MODEL` env var without code changes. Handles security, rate limiting, conversation logging, and personalized lead context injection.
 
 ## Features
 
@@ -67,8 +67,11 @@ Header `X-From-Cache: true` is set when the response was served from local cache
    NODE_ENV=development
 
    # Required
-   GEMINI_API_KEY=AIza...
+   OPENROUTER_API_KEY=sk-or-v1-...
    SECRET_WIDGET_TOKEN=your-secret-token
+
+   # Model (default: google/gemini-2.5-flash — swap anytime without code changes)
+   OPENROUTER_MODEL=google/gemini-2.5-flash
 
    # CORS (production URL, localhost added automatically in dev mode)
    CORS_ORIGIN=https://azhyshchev.de
@@ -129,7 +132,8 @@ node tests/check-db.js
    ```
    PORT=3000
    NODE_ENV=production
-   GEMINI_API_KEY=AIza...
+   OPENROUTER_API_KEY=sk-or-v1-...
+   OPENROUTER_MODEL=google/gemini-2.5-flash
    SECRET_WIDGET_TOKEN=your-secret-token
    CORS_ORIGIN=https://azhyshchev.de
    TELEGRAM_BOT_TOKEN=...       (optional)
@@ -156,7 +160,7 @@ Railway Server (Express.js)
     → Rate limit (25/IP/day, 300 global/day)
     → Input validation + HTML strip
     → Email extraction → Supabase leads lookup → lead context
-    → Gemini API call (gemini-2.5-flash, temp=0.3, max 300 tokens)
+    → OpenRouter API call (model via OPENROUTER_MODEL, temp=0.3, max 300 tokens)
     → Cache check (dev/test only)
     → Background: Telegram log + Supabase chat_logs write
     |
