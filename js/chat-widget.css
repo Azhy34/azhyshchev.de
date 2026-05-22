@@ -38,6 +38,7 @@
   color: var(--nbw-black);
   line-height: 1.4;
   outline: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* Launcher Pill Button */
