@@ -15,7 +15,7 @@
       langSelectSubtitle: "Wie möchtest du fortfahren?",
       placeholder: "Schreibe eine Nachricht...",
       send: "Senden",
-      welcome: "Hallo! Ich bin dein Portfolio-Assistent. Wie kann ich dir heute helfen?",
+      welcome: "Hallo! Ich bin dein Portfolio-Assistent. Wie kann ich dir heute helfen? (Falls du ein personalisiertes B2B-Audit erhalten hast, nenne mir gerne die entsprechende E-Mail-Adresse, damit ich deine Ergebnisse abrufen und dir präziser helfen kann!)",
       error429: "Zu viele Anfragen. Bitte versuche es später noch einmal oder wende dich direkt an azhyshchev@gmail.com.",
       error503: "Der Dienst ist derzeit nicht verfügbar. Bitte wende dich direkt an azhyshchev@gmail.com.",
       errorGeneric: "Ein Fehler ist aufgetreten. Bitte wende dich direkt an azhyshchev@gmail.com."
@@ -26,7 +26,7 @@
       langSelectSubtitle: "Select language to start chatting",
       placeholder: "Type a message...",
       send: "Send",
-      welcome: "Hello! I'm your portfolio assistant. How can I help you today?",
+      welcome: "Hello! I'm your portfolio assistant. How can I help you today? (If you received a personalized B2B audit, feel free to share the email address it was sent to so I can retrieve your results and assist you more precisely!)",
       error429: "Too many requests. Please try again later or email azhyshchev@gmail.com directly.",
       error503: "The service is temporarily unavailable. Please email azhyshchev@gmail.com directly.",
       errorGeneric: "An error occurred. Please email azhyshchev@gmail.com directly."

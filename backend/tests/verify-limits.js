@@ -33,7 +33,11 @@ global.fetch = async (url, options) => {
       })
     };
   }
-  return { ok: false, status: 404 };
+  return {
+    ok: false,
+    status: 404,
+    text: async () => 'Not Found'
+  };
 };
 
 async function runTests() {

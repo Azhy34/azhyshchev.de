@@ -1,7 +1,28 @@
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
+const fs = require('fs');
+const path = require('path');
 require('dotenv').config();
+
+// Local cache configuration for development and test modes
+const cachePath = path.join(__dirname, 'gemini-cache.json');
+let geminiCache = {};
+try {
+  if (fs.existsSync(cachePath)) {
+    geminiCache = JSON.parse(fs.readFileSync(cachePath, 'utf8'));
+  }
+} catch (e) {
+  console.error('Failed to load gemini-cache.json:', e);
+}
+
+function saveCache() {
+  try {
+    fs.writeFileSync(cachePath, JSON.stringify(geminiCache, null, 2), 'utf8');
+  } catch (e) {
+    console.error('Failed to save gemini-cache.json:', e);
+  }
+}
 
 // Fail-fast environment variable checks
 if (!process.env.GEMINI_API_KEY) {
@@ -69,6 +90,9 @@ const ONE_DAY_MS = 24 * 60 * 60 * 1000;
 
 // Custom Rate Limiting Middleware (Max 25 requests/IP/day, max 300 global/day)
 function rateLimiter(req, res, next) {
+  if (process.env.NODE_ENV === 'test') {
+    return next();
+  }
   const now = Date.now();
 
   // Clean old entries from global history
@@ -210,6 +234,12 @@ Your primary goal is to answer client questions about Mikhail's services, B2B wo
 - Never guess or extrapolate. If an answer is not in the FAQ database, politely state that you do not have that information and offer to connect them with Mikhail (email: azhyshchev@gmail.com).
 - Never decline to help with automation inquiries, but decline out-of-scope requests (e.g. coding general projects, news, weather, etc.) politely, offering to help with B2B automation instead.
 
+### PROPOSALS & EMAIL AUDIT LOOKUP
+- Active B2B outreach pipeline info: Mikhail runs his B2B lead generation and audit pipeline ("ADS_Az"), which scans Google Maps, performs SEO/GEO audits, and sends personalized proposals via Resend.
+- Email request at the beginning: At the very beginning of the conversation (in your first response), if the visitor hasn't provided their email address yet, politely ask if they have an email address where they received Mikhail's proposal/audit. Explain that if they share it, you can load their specific audit details and assist them more precisely.
+- E.g.: "If you received a personalized digital presence audit or proposal from Mikhail, please share the email address you received it on so I can retrieve your specific results and assist you more precisely!"
+- When they provide their email address, the backend will fetch their audit data. If you see the [LEAD SPECIFIC AUDIT CONTEXT] in the prompt, reference the specific Google Maps score, SEO issues, or diagnosis for their company and explain that Mikhail's B2B outreach pipeline ("ADS_Az") analyzed their website and sent them the email as a live demo of his automation capabilities.
+
 ### KNOWLEDGE BASE / FAQ DATABASE
 1. WHO IS MIKHAIL AZHYSCHEV?
    Mikhail is a freelance AI Automation Engineer based in Munich, Germany. He specializes in designing and implementing automated B2B workflows, integrating large language models (LLMs) and APIs into existing business processes, developing custom AI agents, and deploying secure integrations.
@@ -338,6 +368,51 @@ async function logConversation(sessionId, clientIp, lang, message, reply) {
   }
 }
 
+// Helper to extract the first valid email address from a text string
+function extractEmail(text) {
+  if (!text || typeof text !== 'string') return null;
+  // Match standard email formats
+  const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
+  const matches = text.match(emailRegex);
+  return matches ? matches[0].toLowerCase() : null;
+}
+
+// Log Retrieval Endpoint (GET /api/logs)
+app.get('/api/logs', async (req, res) => {
+  const token = req.headers['x-widget-token'] || req.query.token;
+  if (!token || token !== process.env.SECRET_WIDGET_TOKEN) {
+    return res.status(401).json({ error: 'Unauthorized: Invalid or missing token' });
+  }
+
+  if (!process.env.SUPABASE_URL || !process.env.SUPABASE_KEY) {
+    return res.status(500).json({ error: 'Database configuration missing' });
+  }
+
+  try {
+    // Fetch latest 100 logs from chat_logs table, ordered by timestamp descending
+    const url = `${process.env.SUPABASE_URL}/rest/v1/chat_logs?order=timestamp.desc&limit=100`;
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'apikey': process.env.SUPABASE_KEY,
+        'Authorization': `Bearer ${process.env.SUPABASE_KEY}`
+      }
+    });
+
+    if (!response.ok) {
+      const errText = await response.text();
+      console.error(`Failed to fetch logs from Supabase: ${response.status}`, errText);
+      return res.status(502).json({ error: 'Failed to retrieve logs from database' });
+    }
+
+    const logs = await response.json();
+    res.json(logs);
+  } catch (error) {
+    console.error('Error fetching logs:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 // Chat Integration Route
 app.post('/api/chat', rateLimiter, authenticateToken, validateAndSanitizeInput, async (req, res) => {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`;
@@ -349,11 +424,86 @@ app.post('/api/chat', rateLimiter, authenticateToken, validateAndSanitizeInput, 
     parts: [{ text: req.sanitizedMessage }]
   });
 
+  // Extract email address if present in the current message or history
+  let detectedEmail = extractEmail(req.sanitizedMessage);
+  if (!detectedEmail && req.sanitizedHistory) {
+    for (const item of req.sanitizedHistory) {
+      if (item.parts) {
+        for (const part of item.parts) {
+          detectedEmail = extractEmail(part.text);
+          if (detectedEmail) break;
+        }
+      }
+      if (detectedEmail) break;
+    }
+  }
+
+  let leadContext = '';
+  if (detectedEmail && process.env.SUPABASE_URL && process.env.SUPABASE_KEY) {
+    try {
+      const dbController = new AbortController();
+      const dbTimeout = setTimeout(() => dbController.abort(), 3000);
+      const dbRes = await fetch(`${process.env.SUPABASE_URL}/rest/v1/leads?email=eq.${encodeURIComponent(detectedEmail)}`, {
+        method: 'GET',
+        headers: {
+          'apikey': process.env.SUPABASE_KEY,
+          'Authorization': `Bearer ${process.env.SUPABASE_KEY}`
+        },
+        signal: dbController.signal
+      });
+      clearTimeout(dbTimeout);
+      if (dbRes.ok) {
+        const leads = await dbRes.json();
+        if (Array.isArray(leads) && leads.length > 0) {
+          const lead = leads[0];
+          const companyName = lead.company_name || 'N/A';
+          const responsiblePerson = lead.responsible_person || 'N/A';
+          const gmapsScore = lead.gmaps_score !== null && lead.gmaps_score !== undefined ? lead.gmaps_score : 'N/A';
+          
+          let parsedAiUseCase = {};
+          if (lead.ai_use_case) {
+            try {
+              parsedAiUseCase = typeof lead.ai_use_case === 'string' ? JSON.parse(lead.ai_use_case) : lead.ai_use_case;
+            } catch (e) {
+              console.error('Failed to parse ai_use_case JSON:', e);
+            }
+          }
+          
+          const diagnosis = parsedAiUseCase.diagnosis || 'N/A';
+          const solution = parsedAiUseCase.solution || 'N/A';
+          const seoDetails = parsedAiUseCase.seo_content?.details || 'N/A';
+          const mapsDetails = parsedAiUseCase.google_maps?.details || 'N/A';
+          const aiSearchDetails = parsedAiUseCase.ai_search?.details || 'N/A';
+          
+          leadContext = `\n\n[LEAD SPECIFIC AUDIT CONTEXT FOR ${detectedEmail.toUpperCase()}]
+- The user represents the company: ${companyName}
+- Responsible Person / Contact: ${responsiblePerson}
+- Google Maps Audit Score: ${gmapsScore}/100
+- SEO Audit Details: ${seoDetails}
+- Google Maps Audit Details: ${mapsDetails}
+- AI Search Visibility Status: ${aiSearchDetails}
+- Audit Diagnosis: ${diagnosis}
+- Proposed Solution: ${solution}
+
+INSTRUCTIONS:
+1. Refer to these specific findings for ${companyName} naturally and professionally in your answer.
+2. Confirm you have loaded their audit and explain that Mikhail's B2B lead generation pipeline automatically analyzed their website to identify these bottlenecks.
+3. Keep the response brief, reassuring, and completely in the target language (3-5 sentences).`;
+        }
+      }
+    } catch (dbErr) {
+      console.error('Error fetching lead context from Supabase:', dbErr);
+    }
+  }
+
   // Inject target language instructions directly into system instructions
   const languageTarget = req.body.lang === 'de'
     ? 'German (de). You must respond in German.'
     : 'English (en). You must respond in English.';
-  const systemInstructionText = `${SYSTEM_INSTRUCTIONS}\n\nCRITICAL: The user has selected the language: ${languageTarget}`;
+  let systemInstructionText = `${SYSTEM_INSTRUCTIONS}\n\nCRITICAL: The user has selected the language: ${languageTarget}`;
+  if (leadContext) {
+    systemInstructionText += leadContext;
+  }
 
   const payload = {
     contents,
@@ -365,6 +515,27 @@ app.post('/api/chat', rateLimiter, authenticateToken, validateAndSanitizeInput, 
       maxOutputTokens: 300
     }
   };
+  const isDevOrTest = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
+  const cacheKey = `${req.body.lang || 'en'}:${req.sanitizedMessage.trim().toLowerCase()}`;
+
+  if (isDevOrTest && geminiCache[cacheKey]) {
+    const cachedReply = geminiCache[cacheKey];
+    res.setHeader('X-From-Cache', 'true');
+    res.json({ reply: cachedReply });
+
+    // Background Logging (non-blocking)
+    const clientIp = req.headers['x-forwarded-for']?.split(',')[0].trim() || req.ip || req.socket.remoteAddress;
+    logConversation(
+      req.sanitizedSessionId,
+      clientIp,
+      req.body.lang,
+      req.sanitizedMessage,
+      cachedReply
+    ).catch(err => {
+      console.error('Error in logConversation wrapper (cached):', err);
+    });
+    return;
+  }
 
   // Configure 5-second fetch timeout using AbortController
   const controller = new AbortController();
@@ -396,7 +567,14 @@ app.post('/api/chat', rateLimiter, authenticateToken, validateAndSanitizeInput, 
       return res.status(502).json({ error: 'Received an empty or invalid response from the AI model.' });
     }
 
-    res.json({ reply: replyText.trim() });
+    const trimmedReply = replyText.trim();
+
+    if (isDevOrTest) {
+      geminiCache[cacheKey] = trimmedReply;
+      saveCache();
+    }
+
+    res.json({ reply: trimmedReply });
 
     // Background Logging (non-blocking)
     const clientIp = req.headers['x-forwarded-for']?.split(',')[0].trim() || req.ip || req.socket.remoteAddress;

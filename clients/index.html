@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Audit Logs — Neobrutalist Dashboard</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📊</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8f0dc;
+      --black: #111111;
+      --white: #ffffff;
+      --sky: #61b5e8;
+      --mint: #b9ddb7;
+      --yellow: #f5c84b;
+      --pink: #efb2d5;
+      --coral: #ff9a77;
+      --rose: #ecb0c4;
+      --font: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font);
+      color: var(--black);
+    }
+
+    body {
+      background-color: var(--bg);
+      padding: 24px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Scrollbars */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+      border-left: 3px solid var(--black);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--yellow);
+      border: 3px solid var(--black);
+    }
+
+    /* Main layouts */
+    header {
+      background-color: var(--sky);
+      border: 3px solid var(--black);
+      box-shadow: 6px 6px 0 var(--black);
+      padding: 20px 24px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -1px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    button, input, select {
+      background-color: var(--white);
+      border: 3px solid var(--black);
+      box-shadow: 3px 3px 0 var(--black);
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: 700;
+      outline: none;
+      cursor: pointer;
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
+    }
+
+    button:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 5px 5px 0 var(--black);
+    }
+
+    button:active {
+      transform: translate(1px, 1px);
+      box-shadow: 2px 2px 0 var(--black);
+    }
+
+    button.btn-primary {
+      background-color: var(--yellow);
+    }
+
+    button.btn-danger {
+      background-color: var(--pink);
+    }
+
+    /* Dashboard Container */
+    .dashboard {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 24px;
+      flex: 1;
+      height: calc(100vh - 140px);
+    }
+
+    /* Sidebar - Session List */
+    .sidebar {
+      background-color: var(--white);
+      border: 3px solid var(--black);
+      box-shadow: 6px 6px 0 var(--black);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .sidebar-header {
+      padding: 16px;
+      border-bottom: 3px solid var(--black);
+      background-color: var(--rose);
+    }
+
+    .search-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .search-input {
+      width: 100%;
+      box-shadow: none;
+    }
+
+    .filter-container {
+      display: flex;
+      gap: 8px;
+    }
+
+    .filter-select {
+      flex: 1;
+      box-shadow: none;
+    }
+
+    .session-list {
+      flex: 1;
+      overflow-y: auto;
+      background-color: var(--white);
+    }
+
+    .session-item {
+      padding: 16px;
+      border-bottom: 3px solid var(--black);
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .session-item:hover {
+      background-color: var(--bg);
+    }
+
+    .session-item.active {
+      background-color: var(--yellow);
+    }
+
+    .session-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .session-date {
+      font-size: 11px;
+      font-weight: 500;
+      color: #666;
+    }
+
+    .session-badge {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border: 2px solid var(--black);
+      background-color: var(--white);
+      text-transform: uppercase;
+    }
+
+    .session-badge.lang-de {
+      background-color: var(--coral);
+    }
+    
+    .session-badge.lang-en {
+      background-color: var(--sky);
+    }
+
+    .session-email {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--black);
+      word-break: break-all;
+      background-color: var(--mint);
+      padding: 2px 6px;
+      border: 2px solid var(--black);
+      align-self: flex-start;
+      margin-top: 4px;
+    }
+
+    .session-preview {
+      font-size: 12px;
+      color: #555;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Main Chat Thread Area */
+    .main-view {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      background-color: var(--white);
+      border: 3px solid var(--black);
+      box-shadow: 6px 6px 0 var(--black);
+      overflow: hidden;
+    }
+
+    .main-view-placeholder {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background-color: var(--bg);
+      padding: 24px;
+    }
+
+    .placeholder-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+      animation: bounce 2s infinite ease-in-out;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .placeholder-title {
+      font-size: 20px;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .thread-header {
+      padding: 20px;
+      border-bottom: 3px solid var(--black);
+      background-color: var(--mint);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .thread-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .thread-details {
+      font-size: 13px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 6px 12px;
+    }
+
+    .thread-details span.label {
+      font-weight: 700;
+      color: #666;
+    }
+
+    .thread-messages {
+      flex: 1;
+      padding: 24px;
+      overflow-y: auto;
+      background-color: var(--bg);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .msg-block {
+      display: flex;
+      flex-direction: column;
+      max-width: 80%;
+    }
+
+    .msg-block.msg-user {
+      align-self: flex-end;
+      align-items: flex-end;
+    }
+
+    .msg-block.msg-assistant {
+      align-self: flex-start;
+      align-items: flex-start;
+    }
+
+    .msg-meta {
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: #666;
+    }
+
+    .msg-bubble {
+      padding: 14px 18px;
+      border: 3px solid var(--black);
+      box-shadow: 4px 4px 0 var(--black);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .msg-user .msg-bubble {
+      background-color: var(--coral);
+      border-radius: 12px 12px 0 12px;
+    }
+
+    .msg-assistant .msg-bubble {
+      background-color: var(--white);
+      border-radius: 12px 12px 12px 0;
+    }
+
+    /* Passcode Modal Overlay */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(248, 240, 220, 0.95);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .passcode-box {
+      width: 100%;
+      max-width: 460px;
+      background-color: var(--white);
+      border: 4px solid var(--black);
+      box-shadow: 8px 8px 0 var(--black);
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .passcode-header {
+      background-color: var(--yellow);
+      border: 3px solid var(--black);
+      padding: 12px;
+      text-align: center;
+      font-weight: 800;
+      font-size: 18px;
+      text-transform: uppercase;
+    }
+
+    .passcode-box p {
+      font-size: 14px;
+      color: #555;
+      text-align: center;
+    }
+
+    .passcode-input {
+      font-size: 18px;
+      text-align: center;
+      letter-spacing: 2px;
+    }
+
+    .error-msg {
+      color: red;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+      display: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      body {
+        padding: 12px;
+      }
+      .dashboard {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+      .sidebar {
+        height: 300px;
+      }
+      .main-view {
+        height: 500px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🤖 Client Audit Logs Dashboard</h1>
+    <div class="header-actions">
+      <button id="refresh-btn" class="btn-primary">🔄 REFRESH LOGS</button>
+      <button id="logout-btn" class="btn-danger">🔒 LOCK</button>
+    </div>
+  </header>
+
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <div class="search-container">
+          <input type="text" id="search-input" class="search-input" placeholder="Search logs, email, IP...">
+          <div class="filter-container">
+            <select id="lang-filter" class="filter-select">
+              <option value="all">ALL LANGUAGES</option>
+              <option value="de">GERMAN (DE)</option>
+              <option value="en">ENGLISH (EN)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="session-list" id="session-list">
+        <!-- Sessions populated here -->
+      </div>
+    </div>
+
+    <!-- Main View -->
+    <div class="main-view" id="main-view">
+      <div class="main-view-placeholder">
+        <div class="placeholder-icon">📊</div>
+        <div class="placeholder-title">Select a session</div>
+        <p>Choose a conversation thread from the sidebar to view details and full message logs.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Passcode Overlay -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="passcode-box">
+      <div class="passcode-header">🔐 Client Audit Portal</div>
+      <p>Enter your Secret Widget Token to access client interaction logs.</p>
+      <input type="password" id="passcode-input" class="passcode-input" placeholder="••••••••••••••••" autofocus>
+      <div class="error-msg" id="error-msg">Invalid token or API failure. Please check your config.</div>
+      <button id="access-btn" class="btn-primary">ACCESS LOGS</button>
+    </div>
+  </div>
+
+  <script>
+    'use strict';
+
+    // State Variables
+    let allLogs = [];
+    let groupedSessions = {};
+    let selectedSessionId = null;
+
+    // DOM Elements
+    const modalOverlay = document.getElementById('modal-overlay');
+    const passcodeInput = document.getElementById('passcode-input');
+    const accessBtn = document.getElementById('access-btn');
+    const errorMsg = document.getElementById('error-msg');
+    const refreshBtn = document.getElementById('refresh-btn');
+    const logoutBtn = document.getElementById('logout-btn');
+    const sessionList = document.getElementById('session-list');
+    const mainView = document.getElementById('main-view');
+    const searchInput = document.getElementById('search-input');
+    const langFilter = document.getElementById('lang-filter');
+
+    // API URL Discovery
+    const getApiUrl = () => {
+      const hostname = window.location.hostname;
+      if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '[::1]') {
+        return 'http://localhost:3000/api/logs';
+      }
+      return '/api/logs';
+    };
+
+    // Extract email from text
+    const extractEmail = (text) => {
+      if (!text || typeof text !== 'string') return null;
+      const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
+      const matches = text.match(emailRegex);
+      return matches ? matches[0].toLowerCase() : null;
+    };
+
+    // Format Date
+    const formatDateTime = (isoString) => {
+      if (!isoString) return 'N/A';
+      const d = new Date(isoString);
+      return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) + ' ' + 
+             d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    };
+
+    // Load Token from local storage
+    const getStoredToken = () => localStorage.getItem('widget_logs_token');
+    const storeToken = (token) => localStorage.setItem('widget_logs_token', token);
+    const clearToken = () => localStorage.removeItem('widget_logs_token');
+
+    // Run Initialization
+    const init = () => {
+      const token = getStoredToken();
+      if (token) {
+        modalOverlay.style.display = 'none';
+        fetchLogs(token);
+      } else {
+        modalOverlay.style.display = 'flex';
+      }
+    };
+
+    // Fetch Logs from Backend
+    const fetchLogs = async (token) => {
+      const url = getApiUrl();
+      try {
+        errorMsg.style.display = 'none';
+        const res = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'X-Widget-Token': token
+          }
+        });
+
+        if (!res.ok) {
+          throw new Error('Access denied');
+        }
+
+        allLogs = await res.json();
+        modalOverlay.style.display = 'none';
+        storeToken(token);
+        
+        processAndRenderLogs();
+      } catch (err) {
+        console.error('Failed to fetch logs:', err);
+        errorMsg.style.display = 'block';
+        clearToken();
+        modalOverlay.style.display = 'flex';
+      }
+    };
+
+    // Group logs by session ID and process threads
+    const processAndRenderLogs = () => {
+      groupedSessions = {};
+
+      allLogs.forEach(log => {
+        // Fallback session ID if missing
+        const sessId = log.session_id || 'no-session-id';
+        if (!groupedSessions[sessId]) {
+          groupedSessions[sessId] = {
+            sessionId: sessId,
+            ipAddress: log.ip_address || 'N/A',
+            language: log.language || 'en',
+            latestTimestamp: log.timestamp || '',
+            messages: [],
+            email: null
+          };
+        }
+
+        // Add message block
+        groupedSessions[sessId].messages.push({
+          user: log.user_message,
+          reply: log.agent_reply,
+          timestamp: log.timestamp
+        });
+
+        // Track if email is detected
+        const userEmail = extractEmail(log.user_message);
+        if (userEmail) {
+          groupedSessions[sessId].email = userEmail;
+        }
+
+        // Update latest timestamp if needed
+        if (new Date(log.timestamp) > new Date(groupedSessions[sessId].latestTimestamp)) {
+          groupedSessions[sessId].latestTimestamp = log.timestamp;
+        }
+      });
+
+      // Sort messages in each session ascending chronologically
+      Object.keys(groupedSessions).forEach(sessId => {
+        groupedSessions[sessId].messages.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+      });
+
+      renderSessionList();
+    };
+
+    // Render list of sessions in sidebar
+    const renderSessionList = () => {
+      sessionList.innerHTML = '';
+      const filter = langFilter.value;
+      const query = searchInput.value.toLowerCase().trim();
+
+      // Convert to array and sort descending by latest timestamp
+      const sortedSessions = Object.values(groupedSessions).sort((a, b) => new Date(b.latestTimestamp) - new Date(a.latestTimestamp));
+
+      const filteredSessions = sortedSessions.filter(session => {
+        // Lang check
+        if (filter !== 'all' && session.language !== filter) return false;
+
+        // Query check
+        if (query) {
+          const matchIp = session.ipAddress.toLowerCase().includes(query);
+          const matchEmail = session.email && session.email.includes(query);
+          const matchSessionId = session.sessionId.toLowerCase().includes(query);
+          
+          let matchContent = false;
+          for (let m of session.messages) {
+            if ((m.user && m.user.toLowerCase().includes(query)) || (m.reply && m.reply.toLowerCase().includes(query))) {
+              matchContent = true;
+              break;
+            }
+          }
+
+          return matchIp || matchEmail || matchSessionId || matchContent;
+        }
+
+        return true;
+      });
+
+      if (filteredSessions.length === 0) {
+        sessionList.innerHTML = `<div style="padding:20px;text-align:center;font-size:12px;color:#777;">No sessions found.</div>`;
+        return;
+      }
+
+      filteredSessions.forEach(session => {
+        const item = document.createElement('div');
+        item.className = `session-item ${session.sessionId === selectedSessionId ? 'active' : ''}`;
+        item.dataset.id = session.sessionId;
+
+        const latestMsg = session.messages[session.messages.length - 1];
+        const previewText = latestMsg ? latestMsg.user : '';
+
+        item.innerHTML = `
+          <div class="session-meta-row">
+            <span class="session-date">${formatDateTime(session.latestTimestamp)}</span>
+            <span class="session-badge lang-${session.language}">${session.language}</span>
+          </div>
+          <div style="font-size: 13px; font-weight: 700;">IP: ${session.ipAddress}</div>
+          ${session.email ? `<div class="session-email">📬 ${session.email}</div>` : ''}
+          <div class="session-preview">${previewText}</div>
+        `;
+
+        item.addEventListener('click', () => {
+          selectSession(session.sessionId);
+        });
+
+        sessionList.appendChild(item);
+      });
+    };
+
+    // Select and render a session in main view
+    const selectSession = (sessionId) => {
+      selectedSessionId = sessionId;
+      
+      // Update sidebar active highlights
+      document.querySelectorAll('.session-item').forEach(el => {
+        if (el.dataset.id === sessionId) {
+          el.classList.add('active');
+        } else {
+          el.classList.remove('active');
+        }
+      });
+
+      const session = groupedSessions[sessionId];
+      if (!session) return;
+
+      mainView.innerHTML = `
+        <div class="thread-header">
+          <div class="thread-title-row">
+            <h2 style="font-size: 18px; font-weight:800; text-transform: uppercase;">Conversation Thread</h2>
+            <span class="session-badge lang-${session.language}">${session.language.toUpperCase()}</span>
+          </div>
+          <div class="thread-details">
+            <span class="label">Session ID:</span>
+            <span style="font-weight:700; word-break:break-all;">${session.sessionId}</span>
+            <span class="label">Client IP:</span>
+            <span>${session.ipAddress}</span>
+            ${session.email ? `
+              <span class="label">Client Email:</span>
+              <span style="background-color: var(--yellow); padding: 2px 6px; border:2px solid var(--black); font-weight:800; align-self: flex-start;">${session.email}</span>
+            ` : ''}
+          </div>
+        </div>
+
+        <div class="thread-messages" id="thread-messages">
+          ${session.messages.map(msg => `
+            <div class="msg-block msg-user">
+              <span class="msg-meta">User @ ${formatDateTime(msg.timestamp)}</span>
+              <div class="msg-bubble">${msg.user}</div>
+            </div>
+            <div class="msg-block msg-assistant">
+              <span class="msg-meta">Agent @ ${formatDateTime(msg.timestamp)}</span>
+              <div class="msg-bubble">${msg.reply}</div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      // Auto scroll messages to bottom
+      const threadMsgs = document.getElementById('thread-messages');
+      if (threadMsgs) {
+        threadMsgs.scrollTop = threadMsgs.scrollHeight;
+      }
+    };
+
+    // Event Handlers
+    accessBtn.addEventListener('click', () => {
+      const passcode = passcodeInput.value.trim();
+      if (passcode) {
+        fetchLogs(passcode);
+      }
+    });
+
+    passcodeInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        accessBtn.click();
+      }
+    });
+
+    refreshBtn.addEventListener('click', () => {
+      const token = getStoredToken();
+      if (token) {
+        fetchLogs(token);
+      }
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      clearToken();
+      allLogs = [];
+      groupedSessions = {};
+      selectedSessionId = null;
+      mainView.innerHTML = `
+        <div class="main-view-placeholder">
+          <div class="placeholder-icon">📊</div>
+          <div class="placeholder-title">Select a session</div>
+          <p>Choose a conversation thread from the sidebar to view details and full message logs.</p>
+        </div>
+      `;
+      sessionList.innerHTML = '';
+      passcodeInput.value = '';
+      modalOverlay.style.display = 'flex';
+    });
+
+    searchInput.addEventListener('input', renderSessionList);
+    langFilter.addEventListener('change', renderSessionList);
+
+    // Run dashboard
+    init();
+
+  </script>
+</body>
+</html>
