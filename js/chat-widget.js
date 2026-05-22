@@ -324,8 +324,8 @@
         appendMessage('assistant', reply);
 
         // 6. Push local messages to conversation history array (Limit: 8 messages / 4 rounds)
-        conversationHistory.push({ role: 'user', content: sanitized });
-        conversationHistory.push({ role: 'assistant', content: reply });
+        conversationHistory.push({ role: 'user', parts: [{ text: sanitized }] });
+        conversationHistory.push({ role: 'model', parts: [{ text: reply }] });
 
         while (conversationHistory.length > 8) {
           conversationHistory.shift();
