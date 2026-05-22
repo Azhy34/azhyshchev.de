@@ -229,6 +229,68 @@ server.on('listening', () => {
       mustContain: [/Automatisierung/i, /Mikhail/i, /helfen/i]
     },
 
+    // --- OBJECTION TESTS ---
+    {
+      lang: 'de',
+      q: 'Sprechen Sie überhaupt Deutsch?',
+      keys: [/Deutsch/i, /schriftlich/i, /E-Mail/i, /Englisch/i]
+    },
+    {
+      lang: 'en',
+      q: 'Do you speak German?',
+      keys: [/German/i, /written/i, /email/i, /English/i, /communication/i]
+    },
+    {
+      lang: 'de',
+      q: 'Wir haben schon eine IT-Agentur, warum brauchen wir Sie?',
+      keys: [/ersetzt/i, /spezialisiert/i, /KI/i, /Automatisierung/i, /parallel/i]
+    },
+    {
+      lang: 'de',
+      q: 'KI ist nichts für uns, wir sind ein traditionelles Geschäft.',
+      keys: [/traditionell/i, /Feierabend/i, /Kerngeschäft/i, /Ergänzung/i, /Anfragen/i]
+    },
+    {
+      lang: 'de',
+      q: 'Wir hatten schon mal einen Chatbot und das hat nicht funktioniert.',
+      keys: [/Skript/i, /Sprachmodell/i, /Unterschied/i, /verstehen/i, /modern/i]
+    },
+    {
+      lang: 'en',
+      q: 'We tried a chatbot before and it did not work.',
+      keys: [/script/i, /language model/i, /difference/i, /understand/i, /modern/i]
+    },
+    {
+      lang: 'de',
+      q: 'Können Sie mir ein Beispiel zeigen?',
+      keys: [/Demo/i, /Projekte/i, /azhyshchev\.de/i, /Beispiel/i, /live/i]
+    },
+    {
+      lang: 'de',
+      q: 'Was passiert nach dem Projekt wenn etwas nicht funktioniert?',
+      keys: [/Support/i, /monatlich/i, /kündbar/i, /E-Mail/i, /erreichbar/i]
+    },
+    {
+      lang: 'de',
+      q: 'Wir haben gerade kein Budget dafür.',
+      keys: [/Stunden/i, /rechnet/i, /Monate/i, /Konzept/i, /kostenlos/i]
+    },
+    {
+      lang: 'de',
+      q: 'Wir sind ein kleines Unternehmen, lohnt sich das überhaupt?',
+      keys: [/klein/i, /Stunden/i, /lohnt/i, /Tag/i, /spart/i]
+    },
+    {
+      lang: 'de',
+      q: 'Ich muss das erst mit meinem Geschäftspartner besprechen.',
+      keys: [/Konzept/i, /PDF/i, /E-Mail/i, /Partner/i, /kostenlos/i]
+    },
+    {
+      lang: 'de',
+      q: 'Warum soll ich Ihnen vertrauen? Sie haben mir einfach eine E-Mail geschickt.',
+      keys: [/eingetragen/i, /Impressum/i, /LinkedIn/i, /Projekte/i, /Demo/i, /individuell/i]
+    },
+
     // --- INTAKE MODE TESTS (agent must ask clarifying questions, not give a price) ---
     // intake: true — checks agent starts collecting info, asks for email, refuses to quote price
     {
