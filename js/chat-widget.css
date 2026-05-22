@@ -419,9 +419,9 @@
 /* Responsive Breakpoint (Mobile-first adjustment) */
 @media (max-width: 480px) {
   .nbw-container {
-    bottom: 12px;
-    right: 12px;
-    left: 12px;
+    bottom: 0;
+    right: 0;
+    left: 0;
     width: auto;
   }
 
@@ -433,12 +433,17 @@
 
   .nbw-drawer {
     position: fixed;
-    bottom: 12px;
-    right: 12px;
+    top: 12px;
     left: 12px;
-    width: calc(100vw - 24px);
-    height: calc(100vh - 24px);
-    height: calc(100dvh - 24px); /* Fallback compatibility + dynamic viewport height */
+    right: 18px; /* Leave room for the 6px box-shadow */
+    bottom: 18px; /* Leave room for the 6px box-shadow */
+    width: auto;
+    height: auto;
     max-height: none;
+  }
+
+  /* Prevent iOS Safari auto-zoom on form elements */
+  .nbw-input {
+    font-size: 16px !important;
   }
 }
