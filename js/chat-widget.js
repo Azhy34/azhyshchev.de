@@ -33,10 +33,25 @@
     }
   };
 
+  // Generate a unique session ID
+  const generateSessionId = () => {
+    if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+      return crypto.randomUUID();
+    }
+    return 'sess_' + Math.random().toString(36).substring(2, 15) + '_' + Date.now().toString(36);
+  };
+
   // State Management
   let currentLang = null;
   let conversationHistory = []; // Limit: 8 messages total (4 rounds)
   let isWaitingResponse = false;
+
+  // Retrieve or generate unique sessionId
+  let sessionId = sessionStorage.getItem('portfolio_chat_session_id');
+  if (!sessionId) {
+    sessionId = generateSessionId();
+    sessionStorage.setItem('portfolio_chat_session_id', sessionId);
+  }
 
   // Synchronously capture current script details at load time
   // (document.currentScript is only defined during synchronous execution)
@@ -279,7 +294,8 @@
       const payload = {
         message: sanitized,
         lang: currentLang,
-        history: historyCopy
+        history: historyCopy,
+        sessionId: sessionId
       };
 
       try {

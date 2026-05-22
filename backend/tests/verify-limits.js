@@ -188,6 +188,39 @@ async function runTests() {
     assert.strictEqual(globalLimitExceededRes.status, 503);
     console.log('✅ 301st global request blocked with 503 Service Unavailable.');
 
+    // Test 10: Session ID Validation
+    console.log('Testing Session ID validation...');
+    ipHistory.clear();
+    globalHistory.length = 0;
+    
+    // Non-string sessionId
+    const invalidSessionIdRes = await makeRequest('/api/chat', {
+      method: 'POST',
+      headers: { 'X-Widget-Token': 'test-secret-token' },
+      body: { message: 'Hello', lang: 'en', sessionId: 12345 }
+    });
+    assert.strictEqual(invalidSessionIdRes.status, 400);
+    console.log('✅ Non-string sessionId rejected with 400.');
+
+    // Too long sessionId
+    const longSessionId = 's'.repeat(101);
+    const longSessionIdRes = await makeRequest('/api/chat', {
+      method: 'POST',
+      headers: { 'X-Widget-Token': 'test-secret-token' },
+      body: { message: 'Hello', lang: 'en', sessionId: longSessionId }
+    });
+    assert.strictEqual(longSessionIdRes.status, 400);
+    console.log('✅ SessionId exceeding 100 characters rejected with 400.');
+
+    // Valid sessionId
+    const validSessionIdRes = await makeRequest('/api/chat', {
+      method: 'POST',
+      headers: { 'X-Widget-Token': 'test-secret-token' },
+      body: { message: 'Hello', lang: 'en', sessionId: 'valid-sess-uuid-123456789' }
+    });
+    assert.strictEqual(validSessionIdRes.status, 200);
+    console.log('✅ Valid sessionId accepted with 200.');
+
     console.log('\n🎉 ALL TESTS PASSED SUCCESSFULLY! 🎉');
     cleanup(0);
 
