@@ -199,6 +199,11 @@
       launcher.setAttribute('aria-expanded', 'true');
       drawer.style.display = 'flex';
       drawer.classList.remove('closing');
+      
+      // Lock background scrolling on mobile
+      if (window.innerWidth <= 480) {
+        document.body.classList.add('nbw-no-scroll');
+      }
 
       // Check if language has already been selected and persisted in sessionStorage
       const savedLang = sessionStorage.getItem('portfolio_chat_lang');
@@ -217,6 +222,9 @@
     const closeDrawer = () => {
       drawer.classList.add('closing');
       launcher.setAttribute('aria-expanded', 'false');
+      
+      // Unlock background scrolling
+      document.body.classList.remove('nbw-no-scroll');
       
       let animationEnded = false;
       const handleCloseAnimation = (e) => {

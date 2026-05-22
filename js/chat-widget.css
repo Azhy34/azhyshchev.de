@@ -454,7 +454,7 @@
 
   .nbw-launcher {
     position: fixed;
-    bottom: 16px;
+    bottom: 90px; /* Shifted up to clear site's bottom navigation bar */
     right: 16px;
   }
 
@@ -463,7 +463,7 @@
     top: 12px;
     left: 12px;
     right: 18px; /* Leave room for the 6px box-shadow */
-    bottom: 18px; /* Leave room for the 6px box-shadow */
+    bottom: 90px; /* Shifted up to clear site's bottom navigation bar */
     width: auto;
     height: auto;
     max-height: none;
