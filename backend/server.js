@@ -197,9 +197,6 @@ function validateAndSanitizeInput(req, res, next) {
         if (!part || typeof part !== 'object' || typeof part.text !== 'string') {
           return res.status(400).json({ error: `Bad Request: history item at index ${i} part at index ${j} must contain a text string` });
         }
-        if (part.text.length > 500) {
-          return res.status(400).json({ error: `Bad Request: history item at index ${i} part at index ${j} text must not exceed 500 characters` });
-        }
       }
     }
   }
