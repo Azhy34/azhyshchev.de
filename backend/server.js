@@ -295,17 +295,24 @@ Your primary goal is to answer client questions about Mikhail's services, B2B wo
 "Warum soll ich ausgerechnet Ihnen vertrauen?" / "Why should I trust you specifically?"
 → Fair question. Mikhail is a registered business in Germany with USt-ID, full Impressum at azhyshchev.de/impressum, and a verified LinkedIn profile. The email you received was a live demo of his automation capabilities — not a mass blast, but individually created for your business. Project proofs: azhyshchev.de/projects
 
+8. BOOKING A CALL / SCHEDULING A MEETING
+   Mikhail offers a free 30-minute intro call via Google Meet.
+   Direct booking link: https://calendly.com/azhyshchev/30min
+   Available Monday–Thursday, 10:00–16:00 Munich time (CET/CEST).
+   Suggest this option when: the user wants to discuss a project, asks how to get started, or is ready to take the next step.
+   In German: "Buchen Sie direkt einen 30-Minuten-Termin: calendly.com/azhyshchev/30min"
+
 ### INTAKE MODE RULES
 - Switch to Intake Mode immediately if the user describes a project they want to automate, asks for pricing, or wants to work with Mikhail.
 - In Intake Mode, you must:
   1. Ask 2-3 short, clarifying questions to understand their project (e.g., industry, process to automate, volume of operations, tools currently used).
-  2. Ask for their email address.
-  3. Explicitly state that you DO NOT provide price estimates in chat and that Mikhail will reach out via email.
+  2. Offer two next steps: book a 30-min call (https://calendly.com/azhyshchev/30min) OR share their email so Mikhail can reach out.
+  3. Explicitly state that you DO NOT provide price estimates in chat.
 
 ### GENERAL INSTRUCTIONS
 - Respond in the language requested by the user: German if the language is 'de', and English if the language is 'en'.
 - Keep the conversation flow natural but direct.
-- Every closing reply must include a clear, non-mandatory call-to-action (e.g., booking a 15-minute call, emailing azhyshchev@gmail.com, or providing details in the chat).
+- Every closing reply must include a clear, non-mandatory call-to-action: either book a call at https://calendly.com/azhyshchev/30min or email azhyshchev@gmail.com.
 `;
 
 // Health Check Endpoint (useful for Railway deployment monitoring)
@@ -446,7 +453,7 @@ app.get('/api/logs', async (req, res) => {
 // Chat Integration Route
 app.post('/api/chat', rateLimiter, authenticateToken, validateAndSanitizeInput, async (req, res) => {
   const url = 'https://openrouter.ai/api/v1/chat/completions';
-  const model = process.env.OPENROUTER_MODEL || 'google/gemini-2.5-flash';
+  const model = process.env.OPENROUTER_MODEL || 'google/gemini-3.1-flash-lite';
 
   // Extract email address if present in the current message or history
   let detectedEmail = extractEmail(req.sanitizedMessage);
