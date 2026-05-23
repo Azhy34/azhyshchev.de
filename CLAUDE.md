@@ -1,0 +1,183 @@
+# CLAUDE.md — portfolio/
+
+Technical documentation for azhyshchev.de. Keep this file up to date when adding features.
+
+## Architecture overview
+
+| Layer | Technology | Hosting | Deploy |
+|-------|-----------|---------|--------|
+| Frontend | Static HTML/CSS/JS | GitHub Pages | `git push` auto-deploys |
+| Backend | Node.js + Express | Railway | `git push` same repo, Railway watches it |
+| Database / Logs | Supabase (PostgreSQL) | Supabase cloud | — |
+| AI model | OpenRouter API | — | model: `google/gemini-3.1-flash-lite` |
+| Email outreach | Resend API | — | used in ADS_Az pipeline (separate project) |
+| Scheduling | Calendly | calendly.com | `calendly.com/azhyshchev/30min` |
+
+**One `git push` deploys both frontend and backend.**
+
+---
+
+## File structure
+
+```
+portfolio/
+├── index.html                  # Home / landing
+├── experience/index.html       # Work experience
+├── projects/index.html         # Projects gallery (cards + modals)
+├── skills/index.html           # Skills overview
+├── articles/index.html         # LinkedIn articles
+├── cv/index.html               # CV page
+├── contact/index.html          # Contact — has Calendly "Book a call" button
+├── impressum/index.html        # Legal
+├── datenschutz/index.html      # GDPR — covers GA4, chat widget, B2B outreach
+├── agb/index.html              # Terms
+├── mobile.css                  # Shared mobile responsive styles (≤820px)
+├── js/
+│   ├── chat-widget.js          # Chat widget (IIFE, vanilla JS)
+│   ├── chat-widget.css         # Widget styles (neobrutalist)
+│   └── nav.js                  # Mobile nav toggle
+└── backend/
+    ├── server.js               # Express API server
+    ├── package.json
+    ├── gemini-cache.json       # Dev/test response cache
+    └── test-faq.js             # Live FAQ test suite (node test-faq.js)
+```
+
+---
+
+## Frontend
+
+### Design system
+- Font: JetBrains Mono (Google Fonts)
+- Colors: `--black #111111`, `--white #ffffff`, `--cream #f8f0dc`, `--sky #61b5e8`, `--yellow #f5c84b`, `--pink #efb2d5`
+- Style: neobrutalist — 2-3px solid borders, offset box-shadows (`4px 4px 0 black`)
+
+### Pages — shared layout pattern
+Every page: sidebar nav (desktop) + `.mobile-bottom-nav` (mobile, fixed bottom, z-index 999)
+Mobile breakpoint: `mobile.css` at ≤820px
+
+### Adding a project card (`projects/index.html`)
+1. Add `<div class="project-card" data-modal="modal-ID">` with card-meta, card-title, card-excerpt, card-tags, card-footer
+2. Add matching `<div class="overlay" id="modal-ID">` modal block
+3. Both must exist together
+
+---
+
+## Chat widget (`js/chat-widget.js` + `chat-widget.css`)
+
+### How it works
+- IIFE injected via `<script src="/js/chat-widget.js" data-token="..." data-api-url="..." defer>`
+- Reads `data-token` and `data-api-url` from its own script tag (with fallback querySelector)
+- Injects CSS dynamically, builds DOM, appends to `<body>`
+
+### Key behavior
+- Language selection screen first (DE / EN), saved to `sessionStorage`
+- History format sent to backend: `{ role: 'user'|'model', parts: [{ text: '...' }] }`
+- Max 8 history items (4 rounds), trimmed automatically
+- URLs in agent replies rendered as clickable `<a>` links (XSS-safe: escape then linkify)
+- **Mobile:** drawer opens full-screen (`top:0 left:0 right:0 bottom:0`), body scroll locked via `body.nbw-no-scroll` class + saved scroll position restore
+
+### Header buttons (left to right inside `.nbw-header-actions`)
+1. `nbw-book-btn` — Calendly link, always visible
+2. `nbw-lang-toggle` — shows current lang, click resets to language screen
+3. `nbw-close-btn` — closes drawer
+
+### Widget token
+Token in HTML: `3530a5f865dcb0cc6489f5999cb0bfcb` (public-facing, intentional)
+
+---
+
+## Backend (`backend/server.js`)
+
+### Endpoints
+| Method | Path | Auth | Description |
+|--------|------|------|-------------|
+| GET | `/health` | none | Railway health check |
+| POST | `/api/chat` | X-Widget-Token | Main chat endpoint |
+| GET | `/api/logs` | X-Widget-Token | Last 100 chat logs from Supabase |
+
+### Middleware stack (in order)
+1. `helmet()` — security headers
+2. CORS whitelist: `azhyshchev.de`, `www.azhyshchev.de` (+ localhost in dev)
+3. `rateLimiter` — 25 req/IP/day, 300 global/day (in-memory, resets on restart)
+4. `authenticateToken` — checks `X-Widget-Token` header
+5. `validateAndSanitizeInput` — validates message/lang/history/sessionId, strips HTML
+
+### AI call
+- API: OpenRouter (`https://openrouter.ai/api/v1/chat/completions`)
+- Model: env `OPENROUTER_MODEL` || `google/gemini-3.1-flash-lite`
+- `max_tokens: 300`, `temperature: 0.3`
+- Timeout: 12 seconds (AbortController)
+- History parts validated for structure but NOT for length (AI replies can exceed 500 chars)
+
+### Lead context lookup
+When user provides email in chat:
+1. Backend extracts email from message or history
+2. Queries Supabase `leads` table: `?email=eq.<email>`
+3. Injects `[LEAD SPECIFIC AUDIT CONTEXT]` into system prompt with company findings
+4. Agent presents findings naturally — does NOT mention pipeline names or database
+
+### Logging (non-blocking, background)
+- Telegram: sends each interaction to configured bot/chat
+- Supabase: inserts into `chat_logs` table (session_id, ip, lang, user_message, agent_reply, timestamp)
+- 90-day retention per Datenschutz
+
+### Dev/test cache
+- `NODE_ENV=development` or `test`: uses `gemini-cache.json` to avoid real API calls
+- Cache key: `lang:message.toLowerCase()`
+
+### Environment variables on Railway
+```
+OPENROUTER_API_KEY      required
+SECRET_WIDGET_TOKEN     required
+SUPABASE_URL            required
+SUPABASE_KEY            required
+TELEGRAM_BOT_TOKEN      optional
+TELEGRAM_CHAT_ID        optional
+CORS_ORIGIN             optional (comma-separated extra origins)
+OPENROUTER_MODEL        optional override
+PORT                    set by Railway automatically
+```
+
+---
+
+## Supabase tables
+
+| Table | Purpose |
+|-------|---------|
+| `chat_logs` | All widget conversations (session_id, ip, lang, messages, timestamp) |
+| `leads` | B2B outreach leads with audit data (email, company_name, gmaps_score, ai_use_case JSON) |
+
+---
+
+## Testing
+
+```bash
+cd backend
+node test-faq.js   # runs 21 live tests against production Railway API
+```
+
+Test categories: Normal FAQ, Objections, Off-topic/jailbreak, German language, Multi-turn history
+
+---
+
+## Calendly
+
+- URL: `https://calendly.com/azhyshchev/30min`
+- 30 min, Google Meet, Mon–Thu 10:00–16:00 Munich time
+- Linked from: contact page hero-actions + chat widget header button
+- Agent mentions it ~every 4 messages (not every reply)
+
+---
+
+## Legal / GDPR
+
+Datenschutzerklärung covers (as of Mai 2026):
+- Hosting / server logs
+- Google Analytics 4 (G-6FQTTX4FW0)
+- Chat widget conversation logging
+- B2B cold outreach (Art. 6(1)(f) DSGVO basis, opt-out by email reply, deletion on request)
+
+Cold email template already includes: data source disclosure, legal basis, opt-out instruction, Art. 17 deletion right.
+
+**When someone replies STOP:** manually delete from Supabase `leads` table.
