@@ -339,6 +339,13 @@ body.nbw-no-scroll {
   align-self: flex-start;
 }
 
+.nbw-msg a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  word-break: break-all;
+}
+
 .nbw-msg-error {
   background-color: var(--nbw-cream);
   border-color: #d9534f;

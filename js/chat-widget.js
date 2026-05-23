@@ -260,7 +260,16 @@
     const appendMessage = (role, text) => {
       const msg = document.createElement('div');
       msg.className = `nbw-msg nbw-msg-${role}`;
-      msg.textContent = text;
+      // Escape HTML first (XSS), then make URLs clickable
+      const escaped = text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+      msg.innerHTML = escaped.replace(
+        /(https?:\/\/[^\s<>"]+)/g,
+        '<a href="$1" target="_blank" rel="noreferrer noopener">$1</a>'
+      );
       messagesBox.appendChild(msg);
       scrollToBottom();
     };
