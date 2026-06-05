@@ -87,6 +87,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         document.getElementById('checkedAt').textContent = new Date(data.checked_at).toLocaleString();
+
+        // Show CTA block if score is not optimal
+        const ctaBlock = document.getElementById('ctaBlock');
+        if (data.score < 80) {
+            ctaBlock.classList.remove('hidden');
+        } else {
+            ctaBlock.classList.add('hidden');
+        }
+
         resultsSection.classList.remove('hidden');
         resultsSection.scrollIntoView({ behavior: 'smooth' });
     }
