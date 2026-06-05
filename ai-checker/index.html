@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Readiness Checker | Mikhail Azhyshchev</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="shell">
+        <main class="main-content">
+            <header class="hero-section">
+                <a href="../" style="text-decoration: none; color: inherit; display: inline-block; margin-bottom: 20px; font-weight: 800;">← Back to Home</a>
+                <h1 class="hero-title">AI Readiness Checker</h1>
+                <p class="hero-subtitle">
+                    Is your website visible to AI Agents? Most sites block ChatGPT and Claude without knowing it. 
+                    Perform a real-time 8-point audit to ensure your content is LLM-ready.
+                </p>
+
+                <div class="checker-input-group">
+                    <input type="url" id="urlInput" placeholder="https://yourwebsite.com" class="checker-input">
+                    <button id="analyzeBtn" class="checker-btn">Analyze</button>
+                </div>
+                <div id="errorMessage" class="error-message hidden"></div>
+            </header>
+
+            <section id="loadingSection" class="loading-section hidden">
+                <div class="spinner"></div>
+                <p style="font-weight: 800;">Auditing 8-point readiness... (5-10s)</p>
+            </section>
+
+            <section id="resultsSection" class="results-section hidden">
+                <div class="results-header">
+                    <div class="url-display">
+                        <div style="font-size: 0.8rem; font-weight: 800; opacity: 0.6;">ANALYZING</div>
+                        <span id="targetUrl" class="url-value"></span>
+                    </div>
+                    <div class="score-summary">
+                        <span id="scoreValue" class="score-num">--</span>
+                        <div id="verdictBadge" class="verdict-badge">--</div>
+                    </div>
+                </div>
+
+                <div class="progress-container">
+                    <div id="progressBar" class="progress-bar"></div>
+                </div>
+
+                <div id="breakdownGrid" class="breakdown-grid">
+                    <!-- Cards injected here -->
+                </div>
+                
+                <p style="margin-top: 40px; font-size: 0.8rem; font-weight: 700; opacity: 0.5; text-align: right;">
+                    Checked at: <span id="checkedAt"></span>
+                </p>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
