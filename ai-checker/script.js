@@ -6,8 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const errorMessage = document.getElementById('errorMessage');
     const breakdownGrid = document.getElementById('breakdownGrid');
     
-    // API Config - Using production Railway URL
+    // API Config
     const API_BASE_URL = 'https://azhyshchevde-production.up.railway.app'; 
+    // const API_BASE_URL = 'http://localhost:8000'; 
 
     analyzeBtn.addEventListener('click', async () => {
         const url = urlInput.value.trim();
