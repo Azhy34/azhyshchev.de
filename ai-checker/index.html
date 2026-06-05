@@ -9,57 +9,165 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../mobile.css">
 </head>
 <body>
     <div class="shell">
-        <main class="main-content">
-            <header class="hero-section">
-                <a href="../" style="text-decoration: none; color: inherit; display: inline-block; margin-bottom: 20px; font-weight: 800;">← Back to Home</a>
-                <h1 class="hero-title">AI Readiness Checker</h1>
-                <p class="hero-subtitle">
-                    Is your website visible to AI Agents? Most sites block ChatGPT and Claude without knowing it. 
-                    Perform a real-time 8-point audit to ensure your content is LLM-ready.
-                </p>
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <a class="brand" href="/">
+                <div class="brand-badge">&lt;/&gt;</div>
+                <span>AZHYSHCHEV</span>
+            </a>
 
-                <div class="checker-input-group">
-                    <input type="url" id="urlInput" placeholder="https://yourwebsite.com" class="checker-input">
-                    <button id="analyzeBtn" class="checker-btn">Analyze</button>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">&#9776;</button>
+            <nav class="nav">
+                <a class="nav-item" href="/">
+                    <span class="icon-box">H</span>
+                    <span>Home</span>
+                </a>
+                <a class="nav-item active" href="/ai-checker">
+                    <span class="icon-box">🤖</span>
+                    <span>AI Checker</span>
+                </a>
+                <a class="nav-item" href="/experience">
+                    <span class="icon-box">E</span>
+                    <span>Experience</span>
+                </a>
+                <a class="nav-item" href="/projects">
+                    <span class="icon-box">P</span>
+                    <span>Projects</span>
+                </a>
+                <a class="nav-item" href="/articles">
+                    <span class="icon-box">A</span>
+                    <span>Articles</span>
+                </a>
+                <a class="nav-item" href="/skills">
+                    <span class="icon-box">S</span>
+                    <span>Skills</span>
+                </a>
+                <a class="nav-item" href="/contact">
+                    <span class="icon-box">C</span>
+                    <span>Contact</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <a class="nav-item" href="../CV.pdf" download>
+                    <span class="icon-box">CV</span>
+                    <span>Download CV</span>
+                </a>
+                <a class="nav-item" href="mailto:azhyshchev@gmail.com">
+                    <span class="icon-box">@</span>
+                    <span>Email</span>
+                </a>
+                <div class="socials">
+                    <a class="social-link" href="https://www.linkedin.com/in/azhyshchev/" target="_blank" rel="noreferrer">in</a>
+                    <a class="social-link" href="https://github.com/Azhy34" target="_blank" rel="noreferrer">gh</a>
                 </div>
-                <div id="errorMessage" class="error-message hidden"></div>
-            </header>
+            </div>
+        </aside>
 
-            <section id="loadingSection" class="loading-section hidden">
-                <div class="spinner"></div>
-                <p style="font-weight: 800;">Auditing 8-point readiness... (5-10s)</p>
-            </section>
+        <!-- MAIN -->
+        <main class="main">
+            <div class="panel">
+                <header class="hero-section">
+                    <h1 class="hero-title">AI Readiness Checker</h1>
+                    <p class="hero-subtitle">
+                        Is your website visible to AI Agents? Most sites block ChatGPT and Claude without knowing it. 
+                        Perform a real-time 8-point audit to ensure your content is LLM-ready.
+                    </p>
 
-            <section id="resultsSection" class="results-section hidden">
-                <div class="results-header">
-                    <div class="url-display">
-                        <div style="font-size: 0.8rem; font-weight: 800; opacity: 0.6;">ANALYZING</div>
-                        <span id="targetUrl" class="url-value"></span>
+                    <div class="checker-input-group">
+                        <input type="url" id="urlInput" placeholder="https://yourwebsite.com" class="checker-input">
+                        <button id="analyzeBtn" class="checker-btn">Analyze</button>
                     </div>
-                    <div class="score-summary">
-                        <span id="scoreValue" class="score-num">--</span>
-                        <div id="verdictBadge" class="verdict-badge">--</div>
+                    <div id="errorMessage" class="error-message hidden"></div>
+                </header>
+
+                <section id="loadingSection" class="loading-section hidden">
+                    <div class="spinner"></div>
+                    <p style="font-weight: 800; text-align: center;">Auditing 8-point readiness... (5-10s)</p>
+                </section>
+
+                <section id="resultsSection" class="results-section hidden">
+                    <div class="results-header">
+                        <div class="url-display">
+                            <div style="font-size: 0.8rem; font-weight: 800; opacity: 0.6;">ANALYZING</div>
+                            <span id="targetUrl" class="url-value"></span>
+                        </div>
+                        <div class="score-summary">
+                            <span id="scoreValue" class="score-num">--</span>
+                            <div id="verdictBadge" class="verdict-badge">--</div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="progress-container">
-                    <div id="progressBar" class="progress-bar"></div>
-                </div>
+                    <div class="progress-container">
+                        <div id="progressBar" class="progress-bar"></div>
+                    </div>
 
-                <div id="breakdownGrid" class="breakdown-grid">
-                    <!-- Cards injected here -->
-                </div>
-                
-                <p style="margin-top: 40px; font-size: 0.8rem; font-weight: 700; opacity: 0.5; text-align: right;">
-                    Checked at: <span id="checkedAt"></span>
-                </p>
-            </section>
+                    <div id="breakdownGrid" class="breakdown-grid">
+                        <!-- Cards injected here -->
+                    </div>
+                    
+                    <p style="margin-top: 40px; font-size: 0.8rem; font-weight: 700; opacity: 0.5; text-align: right;">
+                        Checked at: <span id="checkedAt"></span>
+                    </p>
+                </section>
+            </div>
         </main>
     </div>
 
+    <!-- MOBILE BOTTOM NAV -->
+    <nav class="mobile-bottom-nav" id="mobileBottomNav">
+        <a class="mbn-item" href="/">
+            <span class="mbn-icon">&lt;/&gt;</span>
+            <span class="mbn-label">Home</span>
+        </a>
+        <a class="mbn-item active" href="/ai-checker">
+            <span class="mbn-icon">🤖</span>
+            <span class="mbn-label">AI Checker</span>
+        </a>
+        <a class="mbn-item" href="/experience">
+            <span class="mbn-icon">E</span>
+            <span class="mbn-label">Experience</span>
+        </a>
+        <a class="mbn-item" href="/projects">
+            <span class="mbn-icon">P</span>
+            <span class="mbn-label">Projects</span>
+        </a>
+        <a class="mbn-item" href="/articles">
+            <span class="mbn-icon">A</span>
+            <span class="mbn-label">Articles</span>
+        </a>
+        <a class="mbn-item" href="/contact">
+            <span class="mbn-icon">C</span>
+            <span class="mbn-label">Contact</span>
+        </a>
+    </nav>
+
     <script src="script.js"></script>
+    <script>
+        /* ── HAMBURGER (desktop fallback) + close on link click ── */
+        (function () {
+            var toggle = document.getElementById('navToggle');
+            var nav = document.querySelector('.nav');
+            var bottom = document.querySelector('.sidebar-bottom');
+            if (!toggle) return;
+            toggle.addEventListener('click', function () {
+                var open = nav.classList.toggle('open');
+                if (bottom) bottom.classList.toggle('open', open);
+                toggle.innerHTML = open ? '&#10005;' : '&#9776;';
+            });
+            /* Close nav when any nav link is clicked */
+            document.querySelectorAll('.nav .nav-item').forEach(function (link) {
+                link.addEventListener('click', function () {
+                    nav.classList.remove('open');
+                    if (bottom) bottom.classList.remove('open');
+                    toggle.innerHTML = '&#9776;';
+                });
+            });
+        })();
+    </script>
 </body>
 </html>
