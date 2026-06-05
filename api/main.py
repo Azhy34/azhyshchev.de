@@ -130,23 +130,39 @@ def audit_ai_readiness(url: str) -> dict:
     if not parsed.scheme: url = "https://" + url
     now = datetime.datetime.now(datetime.timezone.utc).isoformat()
     try:
-        r = requests.get(url, headers=_HEADERS, timeout=10)
-        r.raise_for_status()
-        html = r.text
-        elapsed_ms = r.elapsed.total_seconds() * 1000
-
+        # 1. Fetch HTML with better timeout and error handling
         try:
-            r_robots = requests.get(f"{url.rstrip('/')}/robots.txt", headers=_HEADERS, timeout=5)
+            r = requests.get(url, headers=_HEADERS, timeout=10, allow_redirects=True)
+            r.raise_for_status()
+            html = r.text
+            final_url = r.url # Handle redirects
+            elapsed_ms = r.elapsed.total_seconds() * 1000
+        except Exception as e:
+            return {"score": 0, "verdict": "Critical", "error": f"Could not reach website: {str(e)}", "url": url}
+
+        # 2. Fetch robots.txt
+        try:
+            robots_url = f"{final_url.rstrip('/')}/robots.txt"
+            r_robots = requests.get(robots_url, headers=_HEADERS, timeout=5)
             robots_txt = r_robots.text if r_robots.status_code == 200 else ""
         except Exception:
             robots_txt = ""
 
+        # 3. Extract main text safely
         main_text = ""
         try:
             soup = BeautifulSoup(html, 'html.parser')
-            for tag in soup(["script", "style", "noscript"]): tag.decompose()
-            main_node = soup.find('main') or soup.find('article') or soup.find('body')
-            if main_node: main_text = main_node.get_text(separator=' ', strip=True)
+            # Remove noise
+            for tag in soup(["script", "style", "noscript", "header", "footer", "nav"]): 
+                tag.decompose()
+            
+            # Try to find content nodes in order of preference
+            content_node = soup.find('main') or soup.find('article') or soup.find('div', class_=lambda x: x and ('content' in x.lower() or 'main' in x.lower())) or soup.find('body')
+            
+            if content_node:
+                main_text = content_node.get_text(separator=' ', strip=True)
+            else:
+                main_text = html # Fallback to raw html if body is missing (unlikely)
         except Exception:
             main_text = html
 
@@ -154,30 +170,33 @@ def audit_ai_readiness(url: str) -> dict:
             "agent_readable_content": _check_agent_readable_content(html),
             "server_side_rendering": _check_ssr(html),
             "ai_agent_access": _check_ai_bot_access(robots_txt),
-            "llms_txt": _check_llms_txt(url),
-            "markdown_availability": _check_markdown_availability(url),
+            "llms_txt": _check_llms_txt(final_url),
+            "markdown_availability": _check_markdown_availability(final_url),
             "token_economics": _check_token_economics(main_text),
             "performance": _check_performance(elapsed_ms),
-            "sitemap": _check_sitemap(url, robots_txt)
+            "sitemap": _check_sitemap(final_url, robots_txt)
         }
 
         breakdown = {}
         total_points = 0
-        for key, (pts, max_pts, detail, rec) in checks.items():
+        for key, result in checks.items():
+            pts, max_pts, detail, rec = result
             breakdown[key] = {"points": pts, "max": max_pts, "detail": detail, "recommendation": rec}
             total_points += pts
             
-        score = min(100, round(total_points / 1.1))
+        # Score calculation (normalized to 100)
+        max_possible = sum(c[1] for c in checks.values())
+        score = min(100, round((total_points / max_possible) * 100))
         
         return {
             "score": score,
             "verdict": "Optimal" if score >= 80 else "Needs Improvement" if score >= 55 else "Critical",
             "breakdown": breakdown,
-            "url": url,
+            "url": final_url,
             "checked_at": now
         }
     except Exception as e:
-        return {"score": 0, "verdict": "Error", "error": str(e), "url": url}
+        return {"score": 0, "verdict": "Critical", "error": f"Internal Error: {str(e)}", "url": url}
 
 @app.get("/api/analyze")
 async def analyze(url: str = Query(..., description="The URL of the website to analyze")):
