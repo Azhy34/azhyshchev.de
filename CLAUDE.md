@@ -7,13 +7,16 @@ Technical documentation for azhyshchev.de. Keep this file up to date when adding
 | Layer | Technology | Hosting | Deploy |
 |-------|-----------|---------|--------|
 | Frontend | Static HTML/CSS/JS | GitHub Pages | `git push` auto-deploys |
-| Backend | Node.js + Express | Railway | `git push` same repo, Railway watches it |
-| Database / Logs | Supabase (PostgreSQL) | Supabase cloud | — |
+| Chat backend | Node.js + Express | Railway (`azhyshchev.de` service) | `git push` same repo |
+| AI Checker API | Python + FastAPI | Railway (`ai-readiness-api` service) | `cd portfolio/api && railway up` |
+| AI Checker DB | PostgreSQL | Railway (Postgres service, project `jubilant-tenderness`) | auto-managed |
+| Chat logs | Supabase (PostgreSQL) | Supabase cloud | — |
 | AI model | OpenRouter API | — | model: `google/gemini-3.1-flash-lite` |
 | Email outreach | Resend API | — | used in ADS_Az pipeline (separate project) |
 | Scheduling | Calendly | calendly.com | `calendly.com/azhyshchev/30min` |
 
-**One `git push` deploys both frontend and backend.**
+**Frontend + chat backend:** one `git push` deploys both.
+**AI Checker API:** deploy separately via `cd portfolio/api && railway up` (must run from `api/` folder, not repo root).
 
 ---
 
@@ -36,11 +39,19 @@ portfolio/
 │   ├── chat-widget.js          # Chat widget (IIFE, vanilla JS)
 │   ├── chat-widget.css         # Widget styles (neobrutalist)
 │   └── nav.js                  # Mobile nav toggle
-└── backend/
-    ├── server.js               # Express API server
-    ├── package.json
-    ├── gemini-cache.json       # Dev/test response cache
-    └── test-faq.js             # Live FAQ test suite (node test-faq.js)
+├── ai-checker/                 # AI Readiness Checker page
+│   ├── index.html              # Checker UI (neobrutalist, sidebar nav)
+│   ├── style.css               # Page styles incl. .csr-warning badge
+│   └── script.js               # Fetch API, render results, CSR warning logic
+├── backend/
+│   ├── server.js               # Express API server (chat widget)
+│   ├── package.json
+│   ├── gemini-cache.json       # Dev/test response cache
+│   └── test-faq.js             # Live FAQ test suite (node test-faq.js)
+└── api/                        # AI Checker FastAPI backend
+    ├── main.py                 # FastAPI app — analysis logic + DB logging
+    ├── requirements.txt        # fastapi, uvicorn, requests, beautifulsoup4, psycopg2-binary
+    └── railway.json            # builder: NIXPACKS, startCommand: python main.py
 ```
 
 ---
@@ -158,6 +169,66 @@ node test-faq.js   # runs 21 live tests against production Railway API
 ```
 
 Test categories: Normal FAQ, Objections, Off-topic/jailbreak, German language, Multi-turn history
+
+---
+
+## AI Readiness Checker (`ai-checker/` + `api/`)
+
+Live at: `https://azhyshchev.de/ai-checker/`
+
+### What it does
+Analyzes any website URL for AI/LLM crawlability. Returns a score 0-100 across 8 metrics.
+
+### Scoring metrics (max 100)
+| Metric | Max | Notes |
+|--------|-----|-------|
+| Agent Readable Content | 20 | Word count in `<main>`/`<article>`/`<body>` |
+| Server Side Rendering | 10 | Body text > 500 chars = SSR detected |
+| AI Agent Access | 15 | Checks 8 bots in robots.txt (GPTBot, ClaudeBot, etc.) |
+| llms.txt | 15 | Checks `/llms.txt` and `/llms-full.txt` |
+| Markdown Availability | 15 | Accept-Header negotiation + `/index.md`, `/README.md` |
+| Token Economics | 15 | Estimates tokens as `len(text)/4` |
+| Performance | 10 | TTFB: <200ms=10, <500ms=7, <1000ms=4, else=0 |
+| Sitemap | 10 | robots.txt Sitemap: directive or `/sitemap.xml` |
+
+### CSR detection
+Sites using React/Vue/Angular without SSR are detected via empty body + `#root`/`#app`/`#__next`/`#__nuxt` markers.
+- `is_csr: true` returned in API response
+- Frontend shows yellow `.csr-warning` banner
+- Agent Readable Content and SSR cards show specific JS migration advice instead of generic errors
+
+### API endpoints
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/api/analyze?url=<url>` | Run full analysis, logs to DB |
+| GET | `/api/logs?limit=50` | View recent checks from DB |
+
+Base URL: `https://ai-readiness-api-production.up.railway.app`
+
+### Database (Railway PostgreSQL)
+Table `ai_checker_logs` — created automatically on startup via `CREATE TABLE IF NOT EXISTS`.
+
+| Column | Type | Notes |
+|--------|------|-------|
+| id | BIGSERIAL | PK |
+| url | TEXT | Final URL after redirects |
+| score | INT | 0-100 |
+| verdict | TEXT | Optimal / Needs Improvement / Critical |
+| breakdown | JSONB | Full per-metric breakdown |
+| ip | TEXT | From x-forwarded-for header |
+| user_agent | TEXT | Browser/client |
+| checked_at | TIMESTAMPTZ | UTC timestamp |
+
+### Deploy
+```bash
+cd portfolio/api
+railway up   # IMPORTANT: must run from api/ folder, not repo root
+```
+Railway project: `jubilant-tenderness`, service: `ai-readiness-api`
+Environment variable: `DATABASE_URL` — set as reference to the Postgres service in Railway Dashboard.
+
+### No LLM usage
+Analysis is pure Python — HTTP requests + BeautifulSoup parsing. Zero token cost.
 
 ---
 
