@@ -66,6 +66,17 @@ document.addEventListener('DOMContentLoaded', () => {
         progressBar.style.width = data.score + '%';
         progressBar.className = 'progress-bar ' + getBgClass(data.score);
 
+        // CSR warning badge
+        const existing = document.getElementById('csrWarning');
+        if (existing) existing.remove();
+        if (data.is_csr) {
+            const warning = document.createElement('div');
+            warning.id = 'csrWarning';
+            warning.className = 'csr-warning';
+            warning.textContent = '⚠ JavaScript-rendered site — AI agents cannot read JS-only content. Score reflects what crawlers actually see.';
+            document.getElementById('resultsSection').insertBefore(warning, breakdownGrid);
+        }
+
         // Grid
         breakdownGrid.innerHTML = '';
         const keys = Object.keys(data.breakdown);

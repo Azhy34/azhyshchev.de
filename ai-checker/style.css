@@ -280,6 +280,17 @@ body {
   gap: 20px;
 }
 
+.csr-warning {
+  border: 3px solid var(--black);
+  background: #fff3cd;
+  padding: 14px 18px;
+  box-shadow: 4px 4px 0 var(--black);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
 .check-card {
   border: 3px solid var(--black);
   background: var(--white);
