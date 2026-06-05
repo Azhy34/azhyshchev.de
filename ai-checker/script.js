@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const breakdownGrid = document.getElementById('breakdownGrid');
     
     // API Config
-    const API_BASE_URL = 'https://azhyshchevde-production.up.railway.app'; 
+    const API_BASE_URL = 'https://ai-readiness-api-production.up.railway.app'; 
     // const API_BASE_URL = 'http://localhost:8000'; 
 
     analyzeBtn.addEventListener('click', async () => {
