@@ -198,6 +198,9 @@ def audit_ai_readiness(url: str) -> dict:
     except Exception as e:
         return {"score": 0, "verdict": "Critical", "error": f"Internal Error: {str(e)}", "url": url}
 
+import os
+import uvicorn
+
 @app.get("/api/analyze")
 async def analyze(url: str = Query(..., description="The URL of the website to analyze")):
     result = audit_ai_readiness(url)
@@ -206,4 +209,5 @@ async def analyze(url: str = Query(..., description="The URL of the website to a
     return result
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
