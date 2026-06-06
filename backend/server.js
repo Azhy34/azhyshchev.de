@@ -377,7 +377,34 @@ async function logConversation(sessionId, clientIp, lang, message, reply) {
     });
   }
 
-  // 2. Supabase Logging
+  // 2. Email Notification via Resend
+  if (process.env.RESEND_API_KEY) {
+    fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        from: 'Portfolio Chat <onboarding@resend.dev>',
+        to: 'azhischev1@gmail.com',
+        subject: `New chat message [${lang.toUpperCase()}]`,
+        text: `New message on azhyshchev.de\n\nIP: ${clientIp}\nLanguage: ${lang}\nSession: ${sessionId || 'N/A'}\n\nUser: ${message}\n\nAgent: ${reply}`
+      })
+    })
+    .then(res => {
+      if (!res.ok) {
+        return res.text().then(errText => {
+          console.error(`Resend Email Error (status ${res.status}):`, errText);
+        });
+      }
+    })
+    .catch(err => {
+      console.error('Failed to send email via Resend:', err);
+    });
+  }
+
+  // 3. Supabase Logging
   if (process.env.SUPABASE_URL && process.env.SUPABASE_KEY) {
     const supabaseUrl = `${process.env.SUPABASE_URL}/rest/v1/chat_logs`;
     fetch(supabaseUrl, {
