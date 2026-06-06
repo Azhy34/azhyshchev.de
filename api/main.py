@@ -1,13 +1,63 @@
-from fastapi import FastAPI, Query, HTTPException
+from fastapi import FastAPI, Query, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 import urllib.robotparser
 import requests
 import datetime
+import os
+import json
+import psycopg2
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 import uvicorn
 
 app = FastAPI(title="AI Readiness Checker API")
+
+DATABASE_URL = os.environ.get("DATABASE_URL", "")
+
+def get_db():
+    return psycopg2.connect(DATABASE_URL)
+
+def init_db():
+    if not DATABASE_URL:
+        return
+    try:
+        conn = get_db()
+        cur = conn.cursor()
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS ai_checker_logs (
+                id          BIGSERIAL PRIMARY KEY,
+                url         TEXT NOT NULL,
+                score       INT,
+                verdict     TEXT,
+                breakdown   JSONB,
+                ip          TEXT,
+                user_agent  TEXT,
+                checked_at  TIMESTAMPTZ DEFAULT NOW()
+            )
+        """)
+        conn.commit()
+        cur.close()
+        conn.close()
+    except Exception as e:
+        print(f"DB init error: {e}")
+
+def log_check(result: dict, ip: str, user_agent: str):
+    if not DATABASE_URL:
+        return
+    try:
+        conn = get_db()
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO ai_checker_logs (url, score, verdict, breakdown, ip, user_agent) VALUES (%s, %s, %s, %s, %s, %s)",
+            (result["url"], result["score"], result["verdict"], json.dumps(result["breakdown"]), ip, user_agent)
+        )
+        conn.commit()
+        cur.close()
+        conn.close()
+    except Exception as e:
+        print(f"DB log error: {e}")
+
+init_db()
 
 # Enable CORS for the frontend
 app.add_middleware(
@@ -74,23 +124,40 @@ def _check_sitemap(base_url: str, robots_txt: str) -> tuple[int, int, str, str |
             pass
     return (0, 10, "No sitemap found", "Generate XML sitemap")
 
-def _check_ssr(html: str) -> tuple[int, int, str, str | None]:
+def _detect_csr(html: str) -> bool:
+    soup = BeautifulSoup(html, 'html.parser')
+    body = soup.find('body')
+    if not body:
+        return True
+    body_text = body.get_text(separator=' ', strip=True)
+    if len(body_text) > 300:
+        return False
+    csr_markers = [
+        soup.find('div', id='root'),
+        soup.find('div', id='app'),
+        soup.find('div', id='__next'),
+        soup.find('div', id='__nuxt'),
+    ]
+    return any(m is not None for m in csr_markers)
+
+def _check_ssr(html: str, is_csr: bool) -> tuple[int, int, str, str | None]:
+    if is_csr:
+        return (0, 10, "JavaScript-rendered site (CSR)", "Switch to SSR/SSG — AI agents can't execute JavaScript")
     soup = BeautifulSoup(html, 'html.parser')
     body = soup.find('body')
     if not body:
         return (0, 10, "Missing body tag", "Enable Server-Side Rendering (SSR)")
     if len(body.get_text(separator=' ', strip=True)) > 500:
         return (10, 10, "Good SSR/SSG detected", None)
-    if soup.find('div', id='root') and not soup.find('div', id='root').get_text(strip=True):
-        return (0, 10, "Client-Side Rendering (CSR) detected", "Switch to SSR for better AI indexing")
     return (0, 10, "Little visible HTML text", "Serve content directly in HTML")
 
-def _check_agent_readable_content(html: str) -> tuple[int, int, str, str | None]:
+def _check_agent_readable_content(html: str, is_csr: bool) -> tuple[int, int, str, str | None]:
+    if is_csr:
+        return (0, 20, "Content not accessible — JavaScript required", "Switch to Next.js/Nuxt SSR so AI crawlers can read your content")
     soup = BeautifulSoup(html, 'html.parser')
     main_node = soup.find('main') or soup.find('article') or soup.find('body')
     if not main_node:
         return (0, 20, "No readable content found", "Structure content using <main> or <article>")
-    
     word_count = len(main_node.get_text(separator=' ', strip=True).split())
     if word_count >= 2000: return (20, 20, f"{word_count} words", None)
     elif word_count >= 1000: return (15, 20, f"{word_count} words", "Expand content")
@@ -166,9 +233,10 @@ def audit_ai_readiness(url: str) -> dict:
         except Exception:
             main_text = html
 
+        is_csr = _detect_csr(html)
         checks = {
-            "agent_readable_content": _check_agent_readable_content(html),
-            "server_side_rendering": _check_ssr(html),
+            "agent_readable_content": _check_agent_readable_content(html, is_csr),
+            "server_side_rendering": _check_ssr(html, is_csr),
             "ai_agent_access": _check_ai_bot_access(robots_txt),
             "llms_txt": _check_llms_txt(final_url),
             "markdown_availability": _check_markdown_availability(final_url),
@@ -192,6 +260,7 @@ def audit_ai_readiness(url: str) -> dict:
             "score": score,
             "verdict": "Optimal" if score >= 80 else "Needs Improvement" if score >= 55 else "Critical",
             "breakdown": breakdown,
+            "is_csr": is_csr,
             "url": final_url,
             "checked_at": now
         }
@@ -202,11 +271,35 @@ import os
 import uvicorn
 
 @app.get("/api/analyze")
-async def analyze(url: str = Query(..., description="The URL of the website to analyze")):
+async def analyze(request: Request, url: str = Query(..., description="The URL of the website to analyze")):
     result = audit_ai_readiness(url)
     if "error" in result:
         raise HTTPException(status_code=400, detail=result["error"])
+    ip = request.headers.get("x-forwarded-for", request.client.host if request.client else "unknown")
+    user_agent = request.headers.get("user-agent", "")
+    log_check(result, ip, user_agent)
     return result
+
+@app.get("/api/logs")
+async def logs(limit: int = 50):
+    if not DATABASE_URL:
+        return []
+    try:
+        conn = get_db()
+        cur = conn.cursor()
+        cur.execute(
+            "SELECT id, url, score, verdict, ip, user_agent, checked_at FROM ai_checker_logs ORDER BY checked_at DESC LIMIT %s",
+            (limit,)
+        )
+        rows = cur.fetchall()
+        cur.close()
+        conn.close()
+        return [
+            {"id": r[0], "url": r[1], "score": r[2], "verdict": r[3], "ip": r[4], "user_agent": r[5], "checked_at": r[6]}
+            for r in rows
+        ]
+    except Exception as e:
+        return {"error": str(e)}
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
