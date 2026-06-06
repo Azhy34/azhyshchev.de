@@ -167,13 +167,12 @@
     banner.id = 'cc-banner';
     banner.innerHTML = [
       '<div class="cc-text">',
-      '  🍪 Wir verwenden Cookies, um den Website-Verkehr zu analysieren.',
-      '  Weitere Informationen in unserer <a href="/datenschutz/">Datenschutzerklärung</a>.',
+      '  🍪 Cookies für Analyse. <a href="/datenschutz/">Datenschutz</a>',
       '</div>',
       '<div class="cc-btns">',
       '  <button class="cc-btn cc-btn-settings" id="cc-settings-btn">Einstellungen</button>',
-      '  <button class="cc-btn cc-btn-decline" id="cc-decline-btn">Alle ablehnen</button>',
-      '  <button class="cc-btn cc-btn-accept" id="cc-accept-btn">Alle akzeptieren</button>',
+      '  <button class="cc-btn cc-btn-decline" id="cc-decline-btn">Ablehnen</button>',
+      '  <button class="cc-btn cc-btn-accept" id="cc-accept-btn">Akzeptieren</button>',
       '</div>',
     ].join('');
 
