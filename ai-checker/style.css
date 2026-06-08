@@ -568,10 +568,77 @@ body {
   opacity: 0.8;
 }
 
+/* SEO Article Section */
+.seo-article {
+  margin-top: 48px;
+  padding-top: 40px;
+  border-top: 3px solid var(--black);
+}
+
+.seo-label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  opacity: 0.5;
+  margin-bottom: 12px;
+}
+
+.seo-h2 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin: 0 0 20px;
+  line-height: 1.3;
+}
+
+.seo-h3 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin: 32px 0 12px;
+  border-left: 4px solid var(--black);
+  padding-left: 12px;
+}
+
+.seo-p {
+  font-size: 0.88rem;
+  font-weight: 500;
+  line-height: 1.8;
+  margin: 0 0 16px;
+  max-width: 720px;
+}
+
+/* FAQ */
+.seo-faq {
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 2px dashed var(--black);
+}
+
+.faq-item {
+  border: 3px solid var(--black);
+  background: var(--cream);
+  padding: 20px 24px;
+  margin-bottom: 16px;
+  box-shadow: 4px 4px 0 var(--black);
+}
+
+.faq-q {
+  font-size: 0.95rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.faq-a {
+  font-size: 0.83rem;
+  font-weight: 500;
+  line-height: 1.7;
+  opacity: 0.85;
+}
+
 @media (max-width: 768px) {
   .breakdown-grid { grid-template-columns: 1fr; }
   .hero-title { font-size: 2.5rem; }
   .shell { box-shadow: 8px 8px 0 var(--black); }
   .help-grid { grid-template-columns: 1fr; }
   .cta-actions { flex-direction: column; }
+  .seo-h2 { font-size: 1.3rem; }
 }
