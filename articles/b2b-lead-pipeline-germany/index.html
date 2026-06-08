@@ -58,6 +58,35 @@
             { "@type": "ListItem", "position": 3, "name": "B2B Lead Pipeline Germany" }
           ]
         }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How does automated B2B lead generation work in Germany?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The pipeline works in four steps: Apify scrapes Google Maps for businesses in your target category and location; each Impressum page is fetched to extract Geschäftsführer name, direct email, and phone; Gemini 2.5 Flash normalizes the data; everything exports as a CRM-ready CSV. One run produces 80-120 leads in 25 minutes for ~$5 in API costs."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the best way to acquire new customers (Kunden akquirieren) in Germany without paid ads?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Systematic outreach using publicly available Impressum data. German law requires every business to publish contact details including the Geschäftsführer name. Unlike paid ads, the cost per lead is under 5 cents. Unlike LinkedIn Sales Navigator, it gives you the decision-maker's direct email from the company's own website."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is using Google Maps and Impressum data for B2B lead generation legal in Germany?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Impressum data is publicly disclosed by legal obligation under §5 TMG. B2B cold email outreach is permitted under §7 UWG when there is a legitimate commercial interest. The pipeline targets only business email addresses, operates under GDPR Art. 6(1)(f) legitimate interest basis, and includes opt-out handling."
+            }
+          }
+        ]
       }
     ]
   }
@@ -164,7 +193,7 @@
         <div class="article-hero">
           <div class="article-type">Automation · B2B · Germany · Lead Generation</div>
           <h1 class="article-title">Automated B2B Lead Generation for Germany: Google Maps → Impressum → CRM in 25 Minutes</h1>
-          <p class="article-lead">Cold email is dead. But Germany has something better: every business is legally required to publish its Geschäftsführer name, address, and contact data in a public Impressum. I built a pipeline that turns this into a systematic lead source — 80–120 CRM-ready contacts per run, ~$5 total cost, 25 minutes end-to-end.</p>
+          <p class="article-lead">B2B lead generation in Germany works differently than anywhere else. Every business is legally required to publish its Geschäftsführer name, address, and contact data in a public Impressum — making cold outreach both legal and systematic. I built a pipeline that turns this into an automated lead source: Google Maps → Impressum → AI extraction → CRM-ready CSV. 80–120 qualified contacts per run, ~$5 total cost, 25 minutes end-to-end.</p>
           <div class="metrics-row">
             <div class="metric-box"><strong>80–120</strong><span>CRM-ready leads per pipeline run</span></div>
             <div class="metric-box"><strong>~$5</strong><span>Total pipeline cost per run</span></div>
@@ -275,7 +304,7 @@
             <div class="section-label">Use cases for German businesses</div>
             <h2 class="section-title">Who benefits from this pipeline</h2>
             <div class="prose">
-              <p>Any B2B business targeting local German companies can use this pipeline for systematic outreach. The most effective use cases:</p>
+              <p>Any B2B business that needs to acquire new customers (Kunden akquirieren) in the German market without cold calling or paid ads. If you sell to local German companies and want a systematic way to find new clients — this pipeline is for you. The most effective use cases:</p>
               <ul>
                 <li><strong>Service providers targeting local SMBs</strong> — marketing agencies, IT consultants, accounting firms, cleaning services targeting Handwerksbetriebe and Einzelhändler in a specific city or region.</li>
                 <li><strong>B2B product suppliers</strong> — companies selling equipment, materials, or software to specific industry verticals (e.g., restaurant equipment to Gaststätten, safety equipment to Bauunternehmen).</li>
@@ -300,6 +329,25 @@
               <span class="chip">Pandas</span>
               <span class="chip">VS Code</span>
               <span class="chip">Claude Code</span>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">FAQ</div>
+            <h2 class="section-title">Common questions about B2B lead generation in Germany</h2>
+            <div class="faq">
+              <div class="faq-item">
+                <div class="faq-q">How does automated B2B lead generation work in Germany?</div>
+                <div class="faq-a">The pipeline works in four steps. First, Apify scrapes Google Maps for businesses matching your target category and location. Second, each result's Impressum page is fetched to extract the Geschäftsführer name, direct email, and phone number. Third, Gemini 2.5 Flash normalizes and validates the extracted data. Fourth, everything is stored in Supabase and exported as a CRM-ready CSV. One pipeline run produces 80-120 qualified leads in 25 minutes for approximately $5 in API costs.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">What is the best way to acquire new customers (Kunden akquirieren) in Germany without paid ads?</div>
+                <div class="faq-a">The most effective approach for B2B customer acquisition in Germany is systematic outreach using publicly available Impressum data. German law requires every business to publish contact details including the Geschäftsführer name — making this a legal and reliable source for new client prospecting. Unlike paid ads, the cost per lead is under 5 cents. Unlike LinkedIn Sales Navigator, it gives you the decision-maker's direct email from the company's own website.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">Is using Google Maps and Impressum data for B2B lead generation legal in Germany?</div>
+                <div class="faq-a">Yes, with the right approach. Impressum data is publicly disclosed by legal obligation under §5 TMG — it is intended to be accessible. B2B cold email outreach is permitted under §7 UWG when there is a legitimate commercial interest. The pipeline targets only business email addresses (not personal), operates under GDPR Art. 6(1)(f) legitimate interest basis, and includes opt-out handling. It does not scrape personal data beyond what the business itself has made public.</div>
+              </div>
             </div>
           </div>
 
