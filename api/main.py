@@ -155,6 +155,8 @@ def _check_agent_readable_content(html: str, is_csr: bool) -> tuple[int, int, st
     if is_csr:
         return (0, 20, "Content not accessible — JavaScript required", "Switch to Next.js/Nuxt SSR so AI crawlers can read your content")
     soup = BeautifulSoup(html, 'html.parser')
+    for tag in soup(["script", "style", "noscript", "header", "footer", "nav"]):
+        tag.decompose()
     main_node = soup.find('main') or soup.find('article') or soup.find('body')
     if not main_node:
         return (0, 20, "No readable content found", "Structure content using <main> or <article>")
@@ -177,7 +179,7 @@ def _check_markdown_availability(base_url: str) -> tuple[int, int, str, str | No
                 return (15, 15, f"Markdown found at {path}", None)
     except Exception:
         pass
-    return (0, 15, "No Markdown version", "Offer a Markdown variant")
+    return (0, 15, "No Markdown endpoint (normal for most sites)", "Offer a Markdown variant of your content")
 
 def _check_performance(elapsed_ms: float) -> tuple[int, int, str, str | None]:
     if elapsed_ms < 200: return (10, 10, f"{int(elapsed_ms)}ms (Very fast)", None)
@@ -207,9 +209,11 @@ def audit_ai_readiness(url: str) -> dict:
         except Exception as e:
             return {"score": 0, "verdict": "Critical", "error": f"Could not reach website: {str(e)}", "url": url}
 
-        # 2. Fetch robots.txt
+        # 2. Fetch robots.txt (always from origin, not from a sub-path)
+        parsed_final = urlparse(final_url)
+        base_origin = f"{parsed_final.scheme}://{parsed_final.netloc}"
         try:
-            robots_url = f"{final_url.rstrip('/')}/robots.txt"
+            robots_url = f"{base_origin}/robots.txt"
             r_robots = requests.get(robots_url, headers=_HEADERS, timeout=5)
             robots_txt = r_robots.text if r_robots.status_code == 200 else ""
         except Exception:
@@ -238,11 +242,11 @@ def audit_ai_readiness(url: str) -> dict:
             "agent_readable_content": _check_agent_readable_content(html, is_csr),
             "server_side_rendering": _check_ssr(html, is_csr),
             "ai_agent_access": _check_ai_bot_access(robots_txt),
-            "llms_txt": _check_llms_txt(final_url),
-            "markdown_availability": _check_markdown_availability(final_url),
+            "llms_txt": _check_llms_txt(base_origin),
+            "markdown_availability": _check_markdown_availability(base_origin),
             "token_economics": _check_token_economics(main_text),
             "performance": _check_performance(elapsed_ms),
-            "sitemap": _check_sitemap(final_url, robots_txt)
+            "sitemap": _check_sitemap(base_origin, robots_txt)
         }
 
         breakdown = {}

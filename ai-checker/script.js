@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (err) {
             console.error('Fetch Error:', err);
             if (err.message.includes('Failed to fetch')) {
-                showError('Cannot connect to the analysis engine. Please ensure you have run "python main.py" in the portfolio/api folder.');
+                showError('Analysis service is temporarily unavailable. Please try again in a moment.');
             } else {
                 showError(err.message);
             }
@@ -120,10 +120,18 @@ document.addEventListener('DOMContentLoaded', () => {
         return card;
     }
 
+    const TITLES = {
+        agent_readable_content: 'Agent Readable Content',
+        server_side_rendering: 'Server-Side Rendering',
+        ai_agent_access: 'AI Bot Access',
+        llms_txt: 'llms.txt',
+        markdown_availability: 'Markdown Availability',
+        token_economics: 'Token Economics',
+        performance: 'Performance',
+        sitemap: 'Sitemap'
+    };
     function formatTitle(str) {
-        return str.split('_')
-            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(' ');
+        return TITLES[str] || str.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
     }
 
     function getScoreClass(score) {
