@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="/js/cookie-consent.js" defer></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="Why your website is invisible to ChatGPT, Claude and Perplexity — and how to fix it. A practical guide to AI search engine optimization (GEO), llms.txt, robots.txt, and SSR for business owners.">
+  <meta name="keywords" content="how to make website visible to ai, ai search engine optimization, generative engine optimization, GEO, website audit, llms.txt, chatgpt website visibility, how to optimize website for ai, ai seo, website not visible to chatgpt, ai crawler, answer engine optimization, AEO, llm visibility">
+  <meta name="author" content="Mikhail Azhyshchev">
+  <link rel="canonical" href="https://azhyshchev.de/articles/ai-visibility/">
+
+  <meta property="og:title" content="Why Your Website Is Invisible to ChatGPT, Claude and Perplexity — And How to Fix It">
+  <meta property="og:description" content="Most business websites score 0 in AI search. Here is why — and what to fix: SSR, llms.txt, robots.txt AI access, sitemap. Check your site free.">
+  <meta property="og:url" content="https://azhyshchev.de/articles/ai-visibility/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://azhyshchev.de/Azhyschev.JPG">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Website Invisible to ChatGPT? How to Fix AI Visibility | Mikhail Azhyshchev">
+  <meta name="twitter:description" content="AI crawlers skip most websites. Fix SSR, llms.txt, robots.txt and sitemap. Free AI readiness checker included.">
+
+  <title>Why Your Website Is Invisible to ChatGPT, Claude and Perplexity — And How to Fix It | Mikhail Azhyshchev</title>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://azhyshchev.de/articles/ai-visibility/#article",
+        "headline": "Why Your Website Is Invisible to ChatGPT, Claude and Perplexity — And How to Fix It",
+        "description": "A practical guide to AI search engine optimization (GEO). Why AI crawlers skip most business websites, what they check, and how to fix each issue: SSR, llms.txt, robots.txt AI access, sitemap, readable content.",
+        "author": { "@id": "https://azhyshchev.de/#person" },
+        "publisher": { "@id": "https://azhyshchev.de/#person" },
+        "datePublished": "2026-06-08",
+        "dateModified": "2026-06-08",
+        "inLanguage": "en",
+        "keywords": "ai search engine optimization, generative engine optimization, GEO, llms.txt, chatgpt website visibility, how to make website visible to ai, ai seo, website audit",
+        "url": "https://azhyshchev.de/articles/ai-visibility/",
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://azhyshchev.de/articles/ai-visibility/#webpage",
+        "url": "https://azhyshchev.de/articles/ai-visibility/",
+        "name": "Why Your Website Is Invisible to ChatGPT, Claude and Perplexity — And How to Fix It",
+        "description": "Practical guide to generative engine optimization (GEO): fix AI crawler access, SSR, llms.txt and sitemap issues.",
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" },
+        "author": { "@id": "https://azhyshchev.de/#person" },
+        "dateModified": "2026-06-08",
+        "inLanguage": "en",
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://azhyshchev.de/" },
+            { "@type": "ListItem", "position": 2, "name": "Articles", "item": "https://azhyshchev.de/articles" },
+            { "@type": "ListItem", "position": 3, "name": "AI Visibility Guide" }
+          ]
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Why is my website invisible to ChatGPT and other AI search engines?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Most likely your site uses client-side rendering (React, Vue, Angular). AI crawlers like GPTBot and ClaudeBot do not execute JavaScript. They fetch raw HTML and if your content is loaded by JS, they see an empty page. Other reasons: robots.txt blocks AI crawlers, no llms.txt file, missing sitemap, or very little readable text in the HTML."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is llms.txt and do I need it?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "llms.txt is a text file placed at yourdomain.com/llms.txt that tells AI language models what your site is about, what pages to index, and how to represent your business in AI-generated answers. It is not mandatory, but sites with llms.txt are more likely to be cited accurately by ChatGPT, Claude and Perplexity when users ask questions in your industry."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is generative engine optimization (GEO)?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Generative Engine Optimization (GEO) is the practice of making your website readable and citable by AI-powered search engines like ChatGPT, Perplexity, and Google AI Overviews. Unlike classic SEO which targets Google's ranking algorithm, GEO focuses on making content accessible to AI crawlers that cannot execute JavaScript, providing structured context via llms.txt, and ensuring your site appears in AI-generated answers."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does Google still matter if AI search is growing?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Google still drives the majority of search traffic. But the share of queries answered directly by AI (ChatGPT, Perplexity, Google AI Overviews) is growing fast. Businesses that optimize only for Google will increasingly miss users who search through AI interfaces. The fixes for AI visibility (SSR, structured content, llms.txt) also improve classic SEO — so there is no trade-off."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --sky: #61b5e8; --mint: #b9ddb7; --cream: #f8f0dc; --yellow: #f5c84b; --pink: #efb2d5; --blue: #d8ebff; --peach: #f7d4b1; --coral: #ff9a77; --rose: #ecb0c4; --black: #111111; --white: #ffffff; --accent: var(--sky); }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { min-height: 100vh; font-family: 'JetBrains Mono', monospace; color: var(--black); background: linear-gradient(120deg, var(--sky) 0 34%, var(--peach) 34% 55%, var(--coral) 55% 72%, var(--rose) 72% 100%); padding: 48px 24px; }
+    a { color: inherit; text-decoration: none; }
+    .shell { width: min(1320px, 100%); margin: 0 auto; border: 3px solid var(--black); box-shadow: 12px 12px 0 var(--black); background: var(--mint); display: grid; grid-template-columns: 250px 1fr; min-height: 820px; overflow: hidden; }
+    .sidebar { border-right: 3px solid var(--black); padding: 20px 18px; display: flex; flex-direction: column; gap: 22px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 8px; }
+    .brand-badge { width: 42px; height: 34px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 1rem; font-weight: 800; }
+    .nav { display: flex; flex-direction: column; gap: 8px; }
+    .nav-item { display: flex; align-items: center; gap: 12px; padding: 11px 12px; font-size: 0.9rem; font-weight: 700; border: 2px solid transparent; transition: transform 0.18s ease; }
+    .nav-item:hover { transform: translate(-2px, -2px); }
+    .nav-item.active { background: var(--black); color: var(--white); }
+    .icon-box { width: 24px; height: 24px; display: grid; place-items: center; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); font-size: 0.75rem; font-weight: 800; }
+    .nav-item.active .icon-box { background: var(--yellow); color: var(--black); }
+    .sidebar-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+    .socials { display: flex; gap: 10px; padding-top: 8px; }
+    .social-link { width: 42px; height: 42px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 0.8rem; font-weight: 800; transition: transform 0.18s ease; }
+    .social-link:hover { transform: translate(-2px, -2px); }
+    .main { background: var(--cream); padding: 22px; }
+    .panel { border: 2px solid var(--black); background: rgba(255,255,255,0.2); padding: 18px; display: flex; flex-direction: column; gap: 28px; }
+    .breadcrumb { font-size: 0.78rem; opacity: 0.6; display: flex; align-items: center; gap: 8px; }
+    .breadcrumb a:hover { opacity: 1; text-decoration: underline; }
+    .article-hero { border: 3px solid var(--black); background: var(--accent); box-shadow: 6px 6px 0 var(--black); padding: 28px 24px; }
+    .article-type { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; margin-bottom: 12px; }
+    .article-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.04em; margin-bottom: 16px; }
+    .article-lead { font-size: 0.95rem; line-height: 1.65; max-width: 72ch; }
+    .metrics-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+    .metric-box { border: 2px solid var(--black); background: rgba(255,255,255,0.75); padding: 14px 12px; }
+    .metric-box strong { display: block; font-size: 1.3rem; line-height: 1; margin-bottom: 6px; }
+    .metric-box span { font-size: 0.72rem; line-height: 1.4; opacity: 0.8; }
+    .article-body { display: flex; flex-direction: column; gap: 24px; }
+    .neo-card { border: 3px solid var(--black); background: var(--white); box-shadow: 6px 6px 0 var(--black); padding: 24px; }
+    .section-label { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.45; margin-bottom: 10px; }
+    .section-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.02em; }
+    .prose { display: flex; flex-direction: column; gap: 14px; }
+    .prose p { font-size: 0.88rem; line-height: 1.75; }
+    .prose h3 { font-size: 0.95rem; font-weight: 800; margin-top: 8px; letter-spacing: -0.02em; }
+    .prose ul { padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
+    .prose li { font-size: 0.88rem; line-height: 1.65; }
+    .prose code { background: var(--cream); border: 1px solid var(--black); padding: 1px 5px; font-size: 0.82rem; }
+    .arch-diagram { border: 2px solid var(--black); background: var(--cream); padding: 16px 20px; font-size: 0.82rem; line-height: 2.2; font-weight: 700; margin: 16px 0; }
+    .checklist { display: flex; flex-direction: column; gap: 12px; margin-top: 4px; }
+    .check-item { border: 2px solid var(--black); padding: 14px 16px; background: var(--cream); display: flex; gap: 14px; align-items: flex-start; }
+    .check-item .ci-icon { font-size: 1rem; flex-shrink: 0; margin-top: 2px; }
+    .check-item .ci-title { font-size: 0.88rem; font-weight: 800; margin-bottom: 4px; }
+    .check-item .ci-text { font-size: 0.8rem; line-height: 1.6; opacity: 0.8; }
+    .check-item .ci-fix { font-size: 0.78rem; font-weight: 700; margin-top: 8px; background: var(--mint); padding: 4px 8px; display: inline-block; border: 1px solid var(--black); }
+    .highlight-box { border: 3px solid var(--black); background: var(--yellow); box-shadow: 4px 4px 0 var(--black); padding: 18px 20px; }
+    .highlight-box h3 { font-size: 0.9rem; font-weight: 800; margin-bottom: 10px; }
+    .highlight-box p { font-size: 0.84rem; line-height: 1.65; }
+    .faq { display: flex; flex-direction: column; gap: 16px; }
+    .faq-item { border: 2px solid var(--black); background: var(--cream); padding: 18px 20px; }
+    .faq-q { font-size: 0.9rem; font-weight: 800; margin-bottom: 10px; }
+    .faq-a { font-size: 0.84rem; line-height: 1.7; opacity: 0.85; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .chip { padding: 6px 10px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); font-size: 0.72rem; font-weight: 700; }
+    .cta-strip { border: 3px solid var(--black); background: var(--black); color: var(--white); box-shadow: 6px 6px 0 rgba(0,0,0,0.3); padding: 22px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .cta-strip p { font-size: 0.9rem; line-height: 1.5; max-width: 58ch; }
+    .cta-strip strong { display: block; font-size: 1rem; margin-bottom: 4px; }
+    .cta-btn { padding: 12px 20px; border: 2px solid var(--white); background: var(--white); color: var(--black); font: inherit; font-weight: 700; cursor: pointer; white-space: nowrap; transition: transform 0.15s; display: inline-block; }
+    .cta-btn:hover { transform: translate(-2px,-2px); }
+    .cta-btn.yellow { background: var(--yellow); border-color: var(--yellow); }
+    .cta-btn.outline { background: transparent; color: var(--white); }
+    .back-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 2px solid var(--black); background: var(--white); box-shadow: 4px 4px 0 var(--black); font-size: 0.82rem; font-weight: 700; transition: transform 0.15s; align-self: flex-start; }
+    .back-link:hover { transform: translate(-2px,-2px); }
+    .checker-cta { border: 3px solid var(--black); background: var(--sky); box-shadow: 8px 8px 0 var(--black); padding: 28px 24px; text-align: center; }
+    .checker-cta h2 { font-size: 1.4rem; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.03em; }
+    .checker-cta p { font-size: 0.88rem; line-height: 1.6; max-width: 52ch; margin: 0 auto 20px; }
+    .checker-btn { display: inline-block; background: var(--black); color: var(--white); font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 1rem; padding: 14px 28px; border: 3px solid var(--black); box-shadow: 4px 4px 0 var(--yellow); text-decoration: none; transition: transform 0.1s, box-shadow 0.1s; }
+    .checker-btn:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--yellow); }
+    @media (max-width: 1100px) { .shell { grid-template-columns: 220px 1fr; } .metrics-row { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 820px) { body { padding: 10px 8px 72px; } .shell { grid-template-columns: 1fr; box-shadow: 6px 6px 0 var(--black); min-height: unset; } .sidebar { border-right: none; border-bottom: 3px solid var(--black); padding: 10px 14px; flex-direction: row; align-items: center; justify-content: space-between; } .brand { font-size: clamp(0.95rem,2.5vw,1.6rem); } .nav { display: none; } .sidebar-bottom { display: none; } .main { padding: 14px; } .two-col { grid-template-columns: 1fr; } }
+    @media (max-width: 520px) { .metrics-row { grid-template-columns: 1fr; } .article-title { font-size: 1.5rem; } }
+  </style>
+  <link rel="stylesheet" href="../../mobile.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="/"><div class="brand-badge">&lt;/&gt;</div><span>AZHYSHCHEV</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">&#9776;</button>
+      <nav class="nav">
+        <a class="nav-item" href="/"><span class="icon-box">H</span><span>Home</span></a>
+        <a class="nav-item" href="/ai-checker"><span class="icon-box">🤖</span><span>AI Checker</span></a>
+        <a class="nav-item" href="/experience"><span class="icon-box">E</span><span>Experience</span></a>
+        <a class="nav-item" href="/projects"><span class="icon-box">P</span><span>Projects</span></a>
+        <a class="nav-item active" href="/articles"><span class="icon-box">A</span><span>Articles</span></a>
+        <a class="nav-item" href="/skills"><span class="icon-box">S</span><span>Skills</span></a>
+        <a class="nav-item" href="/contact"><span class="icon-box">C</span><span>Contact</span></a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a class="nav-item" href="/CV.pdf" download><span class="icon-box">CV</span><span>Download CV</span></a>
+        <a class="nav-item" href="mailto:azhyshchev@gmail.com"><span class="icon-box">@</span><span>Email</span></a>
+        <div class="socials">
+          <a class="social-link" href="https://www.linkedin.com/in/azhyshchev/" target="_blank" rel="noreferrer">in</a>
+          <a class="social-link" href="https://github.com/Azhy34" target="_blank" rel="noreferrer">gh</a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="panel">
+
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Home</a><span>→</span>
+          <a href="/articles">Articles</a><span>→</span>
+          <span>AI Visibility Guide</span>
+        </nav>
+
+        <div class="article-hero">
+          <div class="article-type">GEO · AI SEO · Website Audit · Generative Engine Optimization</div>
+          <h1 class="article-title">Why Your Website Is Invisible to ChatGPT, Claude and Perplexity — And How to Fix It</h1>
+          <p class="article-lead">You invested in Google SEO. Your site ranks. But when a potential client asks ChatGPT "who provides [your service] in [your city]" — your business does not appear. This is not a coincidence. AI search engines use a completely different set of rules. Most business websites fail all of them.</p>
+          <div class="metrics-row">
+            <div class="metric-box"><strong>~97%</strong><span>of React/Vue/Angular sites are invisible to AI crawlers</span></div>
+            <div class="metric-box"><strong>5,400/mo</strong><span>searches for "llms.txt" — growing fast</span></div>
+            <div class="metric-box"><strong>8 checks</strong><span>AI readiness factors that determine your visibility</span></div>
+            <div class="metric-box"><strong>Free</strong><span>audit tool to test your site right now</span></div>
+          </div>
+        </div>
+
+        <div class="article-body">
+
+          <div class="neo-card">
+            <div class="section-label">The problem</div>
+            <h2 class="section-title">How AI search engines find your business</h2>
+            <div class="prose">
+              <p>When someone searches on Google, a bot crawls your page, reads the text, and adds it to an index. You optimize for that: keywords, backlinks, meta tags. You know this game.</p>
+              <p>AI search engines — ChatGPT, Claude, Perplexity — work differently. They send their own crawlers (GPTBot, ClaudeBot, PerplexityBot) to collect and train on web content. When a user asks "recommend a marketing agency in Munich," the model answers from what it has already read — not from a live search.</p>
+              <p>If your site was never readable to those crawlers, you simply do not exist in that answer. No matter how good your Google ranking is.</p>
+              <p>I audit websites for AI visibility. The pattern I see is consistent: businesses that rank well on Google often score close to zero on AI readiness. Not because the content is bad — but because the technical setup makes the content invisible.</p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <h3>The most common reason: your site runs on JavaScript</h3>
+            <p>React, Vue, Angular, Next.js without SSR — all of these render your page content inside the browser. Google can do that. GPTBot, ClaudeBot and PerplexityBot cannot. They send one HTTP request, receive an empty HTML shell with a &lt;div id="root"&gt;&lt;/div&gt;, and move on. A Vercel and MERJ analysis of 500M+ GPTBot requests found zero JavaScript execution. SEODiff's study of 1M domains found a 97% "ghost ratio" for pure client-side rendered sites.</p>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Why this happens</div>
+            <h2 class="section-title">What AI crawlers actually see on your site</h2>
+            <div class="prose">
+              <p>Here is a concrete example. A business runs a React-based website. Google visits, renders the JavaScript, reads the full page — product descriptions, service pages, team info. The site ranks well.</p>
+              <p>GPTBot visits the same site. It receives this:</p>
+            </div>
+            <div class="arch-diagram">
+              &lt;html&gt;<br>
+              &nbsp;&nbsp;&lt;head&gt;...&lt;/head&gt;<br>
+              &nbsp;&nbsp;&lt;body&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&lt;div id="root"&gt;&lt;/div&gt;<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&lt;script src="/static/js/main.abc123.js"&gt;&lt;/script&gt;<br>
+              &nbsp;&nbsp;&lt;/body&gt;<br>
+              &lt;/html&gt;
+            </div>
+            <div class="prose">
+              <p>Zero content. Zero context. The crawler records an empty page and moves on. Your business is not in the training data, not in the AI's memory of your industry, and not in the answers it generates.</p>
+              <p>JavaScript-rendered sites are the most common case — but not the only one. Even sites with server-side content can have other problems: robots.txt that blocks AI bots, no sitemap, no llms.txt, and content buried in inaccessible DOM structures.</p>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">The 5 factors that determine AI visibility</div>
+            <h2 class="section-title">What AI crawlers actually check on your site</h2>
+            <div class="checklist">
+
+              <div class="check-item">
+                <div class="ci-icon">01</div>
+                <div>
+                  <div class="ci-title">Server-Side Rendering (SSR)</div>
+                  <div class="ci-text">Is your content present in the raw HTML before any JavaScript runs? Sites using SSR (Next.js with SSR/SSG, Nuxt, WordPress, plain HTML) pass this check. Pure React/Vue/Angular apps without SSR fail.</div>
+                  <div class="ci-fix">Fix: migrate to Next.js SSR/SSG or Nuxt SSR. Or add a static prerender layer.</div>
+                </div>
+              </div>
+
+              <div class="check-item">
+                <div class="ci-icon">02</div>
+                <div>
+                  <div class="ci-title">AI Bot Access in robots.txt</div>
+                  <div class="ci-text">robots.txt controls which crawlers can access your site. Many sites block all bots with User-agent: * Disallow: /. This catches GPTBot, ClaudeBot and PerplexityBot along with spam crawlers. Others specifically block AI bots by name — sometimes set by a developer who did not realize this also blocked AI search indexing.</div>
+                  <div class="ci-fix">Fix: check /robots.txt and make sure GPTBot, ClaudeBot, PerplexityBot, Google-Extended are allowed.</div>
+                </div>
+              </div>
+
+              <div class="check-item">
+                <div class="ci-icon">03</div>
+                <div>
+                  <div class="ci-title">llms.txt — the AI context file</div>
+                  <div class="ci-text">llms.txt is a plain text file at /llms.txt that tells AI systems what your business does, which pages are most important, and how to represent you in answers. Think of it as a structured briefing for AI models. Sites with llms.txt are more likely to be cited accurately when users ask AI about your industry or service area.</div>
+                  <div class="ci-fix">Fix: create /llms.txt with your company description, key services, location, and links to important pages.</div>
+                </div>
+              </div>
+
+              <div class="check-item">
+                <div class="ci-icon">04</div>
+                <div>
+                  <div class="ci-title">XML Sitemap</div>
+                  <div class="ci-text">A sitemap tells crawlers which pages exist and when they were last updated. Without it, AI crawlers may miss important pages entirely — especially on larger sites or sites with complex navigation. Sitemaps are standard for Google SEO but often misconfigured or missing entirely on smaller business sites.</div>
+                  <div class="ci-fix">Fix: generate sitemap.xml and reference it in robots.txt with Sitemap: https://yourdomain.com/sitemap.xml</div>
+                </div>
+              </div>
+
+              <div class="check-item">
+                <div class="ci-icon">05</div>
+                <div>
+                  <div class="ci-title">Readable Content Volume</div>
+                  <div class="ci-text">AI crawlers need enough text to understand what your business does and what value it provides. Pages with only images, minimal text, or content hidden behind modals and tabs are difficult to process. The content needs to be in the HTML — not rendered by JavaScript, not inside SVGs, not inside canvas elements.</div>
+                  <div class="ci-fix">Fix: ensure every key service page has at least 300-500 words of plain, readable HTML text that describes what you do, who you serve, and where you operate.</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="neo-card">
+              <div class="section-label">AI bots that crawl your site</div>
+              <h2 class="section-title">Who is trying to read your site</h2>
+              <div class="prose">
+                <ul>
+                  <li>GPTBot — OpenAI (ChatGPT training data)</li>
+                  <li>ClaudeBot — Anthropic (Claude training data)</li>
+                  <li>PerplexityBot — Perplexity AI (live search)</li>
+                  <li>Google-Extended — Google (Gemini, AI Overviews)</li>
+                  <li>CCBot — Common Crawl (used by many AI models)</li>
+                  <li>anthropic-ai — Anthropic alternate crawler</li>
+                  <li>Bytespider — ByteDance AI</li>
+                  <li>Applebot-Extended — Apple AI features</li>
+                </ul>
+                <p>If your robots.txt blocks any of these — even accidentally — that AI system has no access to your content and will not cite your business.</p>
+              </div>
+            </div>
+
+            <div class="neo-card">
+              <div class="section-label">Real audit example</div>
+              <h2 class="section-title">What a typical business site scores</h2>
+              <div class="prose">
+                <p>A marketing agency in Germany. React-based site, good Google ranking, active blog. AI readiness audit result:</p>
+                <ul>
+                  <li>Agent Readable Content: 0/20 (JS-rendered, empty HTML)</li>
+                  <li>Server-Side Rendering: 0/10 (CSR detected)</li>
+                  <li>AI Bot Access: 8/15 (3 bots blocked in robots.txt)</li>
+                  <li>llms.txt: 0/15 (missing)</li>
+                  <li>Sitemap: 10/10 (present, correctly referenced)</li>
+                  <li>Performance: 7/10 (400ms TTFB)</li>
+                </ul>
+                <p>Total: 25/100. Critical. The client had no idea their site was invisible to AI search. Their Google traffic was fine — but AI-driven referrals were zero.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">What this means for your business</div>
+            <h2 class="section-title">The cost of AI invisibility</h2>
+            <div class="prose">
+              <p>Search behavior is shifting. A growing share of commercial queries now go through AI interfaces: ChatGPT, Perplexity, Google AI Overviews, Claude. Users ask "find me a freelance designer in Berlin" or "best accounting software for German SMBs" — and get a direct answer with named providers.</p>
+              <p>If your site is invisible to AI crawlers, you are not in those answers. Your competitors — the ones whose sites happen to be server-rendered, whose robots.txt happens to allow AI bots, whose llms.txt happens to exist — are being recommended instead.</p>
+              <p>This is not a future problem. It is happening now. And it compounds: the longer AI models go without seeing your content, the more thoroughly your competitors' positioning gets embedded in the models' understanding of your industry.</p>
+              <p>Generative Engine Optimization (GEO) is the practice of fixing this. It is not the same as classic SEO — though many of the fixes improve both. GEO focuses specifically on making your content readable and citable by AI systems.</p>
+            </div>
+          </div>
+
+          <!-- CTA: checker tool -->
+          <div class="checker-cta">
+            <h2>Check your site's AI visibility right now</h2>
+            <p>Free 8-point audit: AI crawler access, SSR detection, llms.txt, sitemap, content readability, token economics and more. Takes 10 seconds.</p>
+            <a class="checker-btn" href="/ai-checker/">Run free AI readiness audit →</a>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">How to fix it — practical steps</div>
+            <h2 class="section-title">Generative Engine Optimization checklist</h2>
+            <div class="prose">
+              <h3>If your site uses React, Vue or Angular without SSR</h3>
+              <p>This is the highest-priority fix. Migrate to server-side rendering. For React: Next.js with SSR or SSG (Static Site Generation). For Vue: Nuxt with SSR. For Angular: Angular Universal. If a full migration is not feasible immediately, add a prerendering layer (Prerender.io, Netlify Edge Functions) that serves static HTML to crawlers.</p>
+              <h3>Check and fix robots.txt</h3>
+              <p>Open yourdomain.com/robots.txt. Look for <code>User-agent: *</code> with <code>Disallow: /</code> — this blocks everything including AI bots. Look for explicit blocks: <code>User-agent: GPTBot</code> with <code>Disallow: /</code>. Remove any rules that block legitimate AI crawlers. If you want to allow all bots: <code>User-agent: *</code> followed by <code>Allow: /</code>.</p>
+              <h3>Create an llms.txt file</h3>
+              <p>Create a plain text file at /llms.txt. Include: your company name and one-sentence description, what services you offer, who you serve, where you operate (city, region, country), and links to your 5-10 most important pages. No special format required — plain readable text works. Some sites use Markdown formatting. The goal is to give AI systems a clear, concise briefing about your business.</p>
+              <h3>Add or fix your XML sitemap</h3>
+              <p>Most CMS platforms (WordPress, Webflow, Squarespace) generate sitemaps automatically. Check that yours exists at /sitemap.xml and is referenced in robots.txt. If you built a custom site, generate a sitemap with a tool like xml-sitemaps.com and host it at the root domain.</p>
+              <h3>Expand readable content</h3>
+              <p>Every key page (services, about, contact, location pages) should have substantial readable text in HTML — not just images and headers. Describe what you do, for whom, and why. This is good for classic SEO too — so there is no conflict with your existing optimization work.</p>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">FAQ</div>
+            <h2 class="section-title">Common questions about AI visibility</h2>
+            <div class="faq">
+              <div class="faq-item">
+                <div class="faq-q">Why is my website invisible to ChatGPT if it ranks well on Google?</div>
+                <div class="faq-a">Google can execute JavaScript when it crawls your site — GPTBot and ClaudeBot cannot. If your site uses client-side rendering (React, Vue, Angular without SSR), AI crawlers see an empty page even when Google sees full content. Additionally, your robots.txt may block AI crawlers that Google ignores, and AI systems have different indexing priorities than Google's ranking algorithm.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">What is llms.txt and do I need it?</div>
+                <div class="faq-a">llms.txt is a text file placed at yourdomain.com/llms.txt that tells AI models what your site is about, what pages matter, and how to represent your business in AI-generated answers. It is not mandatory — but sites with llms.txt are more likely to be cited accurately when users ask AI about your service category. It takes about 30 minutes to create and costs nothing to host.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">What is Generative Engine Optimization (GEO)?</div>
+                <div class="faq-a">Generative Engine Optimization (GEO) is the practice of making your website readable and citable by AI-powered search engines like ChatGPT, Perplexity, and Google AI Overviews. Unlike classic SEO which targets Google's ranking algorithm, GEO focuses on: making content accessible to AI crawlers that cannot execute JavaScript, providing structured context via llms.txt, and ensuring your site appears in AI-generated answers when users ask questions in your category.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">Does Google SEO still matter if AI search is growing?</div>
+                <div class="faq-a">Yes — Google still drives the majority of search traffic. But the share of queries answered directly by AI is growing fast. Businesses that optimize only for Google will increasingly miss users who search through AI interfaces. The good news: the fixes for AI visibility (SSR, structured content, llms.txt, sitemap) also improve classic SEO performance. There is no trade-off.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cta-strip">
+            <div>
+              <strong>Need help fixing your site's AI visibility?</strong>
+              <p>I audit and fix AI readiness issues for business websites: SSR setup, llms.txt, robots.txt, sitemap, content structure. Freelance AI SEO consultant based in Munich, working with German and international clients.</p>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a class="cta-btn yellow" href="https://calendly.com/azhyshchev/30min?utm_source=portfolio&utm_medium=website&utm_campaign=booking&utm_content=ai_visibility_article" target="_blank" rel="noreferrer">Book a free call</a>
+              <a class="cta-btn outline" href="mailto:azhyshchev@gmail.com">Send a message</a>
+            </div>
+          </div>
+
+          <a class="back-link" href="/articles">← Back to articles</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <nav class="mobile-bottom-nav" id="mobileBottomNav">
+    <a class="mbn-item" href="/"><span class="mbn-icon">&lt;/&gt;</span><span class="mbn-label">Home</span></a>
+    <a class="mbn-item" href="/ai-checker"><span class="mbn-icon">🤖</span><span class="mbn-label">AI Checker</span></a>
+    <a class="mbn-item" href="/experience"><span class="mbn-icon">E</span><span class="mbn-label">Experience</span></a>
+    <a class="mbn-item" href="/projects"><span class="mbn-icon">P</span><span class="mbn-label">Projects</span></a>
+    <a class="mbn-item active" href="/articles"><span class="mbn-icon">A</span><span class="mbn-label">Articles</span></a>
+    <a class="mbn-item" href="/contact"><span class="mbn-icon">C</span><span class="mbn-label">Contact</span></a>
+  </nav>
+  <script src="/js/nav.js"></script>
+  <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" data-api-url="https://azhyshchevde-production.up.railway.app/api/chat" defer></script>
+</body>
+</html>
