@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="/js/cookie-consent.js" defer></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛒</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="How we automated customer service for a Polish wallpaper e-commerce store using a LangGraph RAG agent. 1,200 SKUs, zero hallucinated prices, 24/7 sales coverage — no human agent needed.">
+  <meta name="keywords" content="ai sales assistant, rag chatbot ecommerce, chatbot ecommerce, kundenservice automatisieren, ai customer service automation, langchain rag agent, product recommendation chatbot, ecommerce chatbot, KI Kundenservice, Chatbot Onlineshop, Kundenservice automatisieren ecommerce, KI Verkaufsassistent, automatischer Kundendienst, pgvector ecommerce, hybrid rag">
+  <meta name="author" content="Mikhail Azhyshchev">
+  <link rel="canonical" href="https://azhyshchev.de/articles/rag-sales-agent-ecommerce/">
+
+  <meta property="og:title" content="How We Automated Customer Service for an E-commerce Store with a RAG Agent | Mikhail Azhyshchev">
+  <meta property="og:description" content="LangGraph RAG agent for a wallpaper store: 1,200 SKUs, zero hallucinated prices, 5 tools, hybrid SQL + pgvector. No human agent needed for pre-sales queries.">
+  <meta property="og:url" content="https://azhyshchev.de/articles/rag-sales-agent-ecommerce/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://azhyshchev.de/Azhyschev.JPG">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="E-commerce Customer Service Automated with RAG Agent | Mikhail Azhyshchev">
+  <meta name="twitter:description" content="How a LangGraph RAG agent handles pre-sales queries for 1,200 SKUs with zero hallucinations. Case study: da-vinchi.pl wallpaper store.">
+
+  <title>How We Automated Customer Service for an E-commerce Store with a RAG Agent | Mikhail Azhyshchev</title>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://azhyshchev.de/articles/rag-sales-agent-ecommerce/#article",
+        "headline": "How We Automated Customer Service for an E-commerce Store with a RAG Agent",
+        "description": "LangGraph ReAct agent with 5 tools, Hybrid RAG (SQL + pgvector), ETL pipelines and a web chat widget for a Polish wallpaper e-commerce store. 1,200 SKUs, zero hallucinated prices, 24/7 pre-sales coverage.",
+        "author": { "@id": "https://azhyshchev.de/#person" },
+        "publisher": { "@id": "https://azhyshchev.de/#person" },
+        "datePublished": "2026-06-08",
+        "dateModified": "2026-06-08",
+        "inLanguage": "en",
+        "keywords": "ai sales assistant, rag chatbot ecommerce, chatbot ecommerce, kundenservice automatisieren, langchain rag agent, hybrid rag, pgvector, KI Kundenservice, Chatbot Onlineshop, KI Verkaufsassistent",
+        "url": "https://azhyshchev.de/articles/rag-sales-agent-ecommerce/",
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://azhyshchev.de/articles/rag-sales-agent-ecommerce/#webpage",
+        "url": "https://azhyshchev.de/articles/rag-sales-agent-ecommerce/",
+        "name": "How We Automated Customer Service for an E-commerce Store with a RAG Agent",
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" },
+        "author": { "@id": "https://azhyshchev.de/#person" },
+        "dateModified": "2026-06-08",
+        "inLanguage": "en",
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://azhyshchev.de/" },
+            { "@type": "ListItem", "position": 2, "name": "Articles", "item": "https://azhyshchev.de/articles" },
+            { "@type": "ListItem", "position": 3, "name": "RAG Sales Agent E-commerce" }
+          ]
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How does a RAG chatbot handle product recommendations without hallucinating prices?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The key is splitting knowledge into two layers. Hard facts — SKU, exact price, stock status — are stored in SQL (PostgreSQL) and fetched directly. The agent never constructs a price from memory. Soft knowledge — style guides, room recommendations, FAQ — lives in a vector store (pgvector) for semantic search. The agent only presents prices it retrieved from SQL, making hallucination structurally impossible."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What queries can an AI sales assistant handle automatically?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A well-built RAG agent handles the full pre-sales conversation: semantic product search ('show me calm wallpapers for a bedroom'), exact SKU lookups with price and stock, installation and application questions, return policy and FAQ, and price calculations by wall dimensions. Post-purchase queries (order status, shipping) still need a human or a separate integration."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is Hybrid RAG and why is it better for e-commerce?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Hybrid RAG combines vector similarity search (for semantic queries like 'something minimalist for a kids room') with structured SQL retrieval (for hard facts like exact price, SKU, dimensions). Pure vector search hallucinates prices. Pure SQL misses semantic intent. The hybrid approach handles both correctly — and is the right architecture for any product catalog with both factual and descriptive attributes."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --sky: #61b5e8; --mint: #b9ddb7; --cream: #f8f0dc; --yellow: #f5c84b; --pink: #efb2d5; --blue: #d8ebff; --peach: #f7d4b1; --coral: #ff9a77; --rose: #ecb0c4; --black: #111111; --white: #ffffff; --accent: var(--mint); }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { min-height: 100vh; font-family: 'JetBrains Mono', monospace; color: var(--black); background: linear-gradient(120deg, var(--sky) 0 34%, var(--peach) 34% 55%, var(--coral) 55% 72%, var(--rose) 72% 100%); padding: 48px 24px; }
+    a { color: inherit; text-decoration: none; }
+    .shell { width: min(1320px, 100%); margin: 0 auto; border: 3px solid var(--black); box-shadow: 12px 12px 0 var(--black); background: var(--mint); display: grid; grid-template-columns: 250px 1fr; min-height: 820px; overflow: hidden; }
+    .sidebar { border-right: 3px solid var(--black); padding: 20px 18px; display: flex; flex-direction: column; gap: 22px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 8px; }
+    .brand-badge { width: 42px; height: 34px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 1rem; font-weight: 800; }
+    .nav { display: flex; flex-direction: column; gap: 8px; }
+    .nav-item { display: flex; align-items: center; gap: 12px; padding: 11px 12px; font-size: 0.9rem; font-weight: 700; border: 2px solid transparent; transition: transform 0.18s ease; }
+    .nav-item:hover { transform: translate(-2px, -2px); }
+    .nav-item.active { background: var(--black); color: var(--white); }
+    .icon-box { width: 24px; height: 24px; display: grid; place-items: center; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); font-size: 0.75rem; font-weight: 800; }
+    .nav-item.active .icon-box { background: var(--yellow); color: var(--black); }
+    .sidebar-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+    .socials { display: flex; gap: 10px; padding-top: 8px; }
+    .social-link { width: 42px; height: 42px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 0.8rem; font-weight: 800; transition: transform 0.18s ease; }
+    .social-link:hover { transform: translate(-2px, -2px); }
+    .main { background: var(--cream); padding: 22px; }
+    .panel { border: 2px solid var(--black); background: rgba(255,255,255,0.2); padding: 18px; display: flex; flex-direction: column; gap: 28px; }
+    .breadcrumb { font-size: 0.78rem; opacity: 0.6; display: flex; align-items: center; gap: 8px; }
+    .breadcrumb a:hover { opacity: 1; text-decoration: underline; }
+    .article-hero { border: 3px solid var(--black); background: var(--accent); box-shadow: 6px 6px 0 var(--black); padding: 28px 24px; }
+    .article-type { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; margin-bottom: 12px; }
+    .article-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.04em; margin-bottom: 16px; }
+    .article-lead { font-size: 0.95rem; line-height: 1.65; max-width: 72ch; }
+    .metrics-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+    .metric-box { border: 2px solid var(--black); background: rgba(255,255,255,0.75); padding: 14px 12px; }
+    .metric-box strong { display: block; font-size: 1.3rem; line-height: 1; margin-bottom: 6px; }
+    .metric-box span { font-size: 0.72rem; line-height: 1.4; opacity: 0.8; }
+    .article-body { display: flex; flex-direction: column; gap: 24px; }
+    .neo-card { border: 3px solid var(--black); background: var(--white); box-shadow: 6px 6px 0 var(--black); padding: 24px; }
+    .section-label { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.45; margin-bottom: 10px; }
+    .section-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.02em; }
+    .prose { display: flex; flex-direction: column; gap: 14px; }
+    .prose p { font-size: 0.88rem; line-height: 1.75; }
+    .prose h3 { font-size: 0.95rem; font-weight: 800; margin-top: 8px; letter-spacing: -0.02em; }
+    .prose ul { padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
+    .prose li { font-size: 0.88rem; line-height: 1.65; }
+    .prose code { background: var(--cream); border: 1px solid var(--black); padding: 1px 5px; font-size: 0.82rem; }
+    .arch-diagram { border: 2px solid var(--black); background: var(--cream); padding: 16px 20px; font-size: 0.82rem; line-height: 2.2; font-weight: 700; margin: 16px 0; }
+    .highlight-box { border: 3px solid var(--black); background: var(--yellow); box-shadow: 4px 4px 0 var(--black); padding: 18px 20px; }
+    .highlight-box h3 { font-size: 0.9rem; font-weight: 800; margin-bottom: 10px; }
+    .highlight-box p { font-size: 0.84rem; line-height: 1.65; }
+    .query-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-top: 12px; }
+    .query-card { border: 2px solid var(--black); padding: 12px; }
+    .query-card .qc-q { font-size: 0.72rem; font-weight: 800; margin-bottom: 6px; font-style: italic; }
+    .query-card .qc-a { font-size: 0.68rem; line-height: 1.5; opacity: 0.75; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .tool-list { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+    .tool-item { border: 2px solid var(--black); background: var(--cream); padding: 12px 14px; }
+    .tool-name { font-size: 0.82rem; font-weight: 800; margin-bottom: 4px; }
+    .tool-desc { font-size: 0.78rem; line-height: 1.55; opacity: 0.8; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .chip { padding: 6px 10px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); font-size: 0.72rem; font-weight: 700; }
+    .faq { display: flex; flex-direction: column; gap: 16px; }
+    .faq-item { border: 2px solid var(--black); background: var(--cream); padding: 18px 20px; }
+    .faq-q { font-size: 0.9rem; font-weight: 800; margin-bottom: 10px; }
+    .faq-a { font-size: 0.84rem; line-height: 1.7; opacity: 0.85; }
+    .cta-strip { border: 3px solid var(--black); background: var(--black); color: var(--white); box-shadow: 6px 6px 0 rgba(0,0,0,0.3); padding: 22px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .cta-strip p { font-size: 0.9rem; line-height: 1.5; max-width: 58ch; }
+    .cta-strip strong { display: block; font-size: 1rem; margin-bottom: 4px; }
+    .cta-btn { padding: 12px 20px; border: 2px solid var(--white); background: var(--white); color: var(--black); font: inherit; font-weight: 700; cursor: pointer; white-space: nowrap; transition: transform 0.15s; display: inline-block; }
+    .cta-btn:hover { transform: translate(-2px,-2px); }
+    .cta-btn.yellow { background: var(--yellow); border-color: var(--yellow); }
+    .cta-btn.outline { background: transparent; color: var(--white); }
+    .back-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 2px solid var(--black); background: var(--white); box-shadow: 4px 4px 0 var(--black); font-size: 0.82rem; font-weight: 700; transition: transform 0.15s; align-self: flex-start; }
+    .back-link:hover { transform: translate(-2px,-2px); }
+    @media (max-width: 1100px) { .shell { grid-template-columns: 220px 1fr; } .metrics-row { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 820px) { body { padding: 10px 8px 72px; } .shell { grid-template-columns: 1fr; box-shadow: 6px 6px 0 var(--black); min-height: unset; } .sidebar { border-right: none; border-bottom: 3px solid var(--black); padding: 10px 14px; flex-direction: row; align-items: center; justify-content: space-between; } .brand { font-size: clamp(0.95rem,2.5vw,1.6rem); } .nav { display: none; } .sidebar-bottom { display: none; } .main { padding: 14px; } .two-col { grid-template-columns: 1fr; } .query-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 520px) { .metrics-row { grid-template-columns: 1fr; } .article-title { font-size: 1.5rem; } }
+  </style>
+  <link rel="stylesheet" href="../../mobile.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="/"><div class="brand-badge">&lt;/&gt;</div><span>AZHYSHCHEV</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">&#9776;</button>
+      <nav class="nav">
+        <a class="nav-item" href="/"><span class="icon-box">H</span><span>Home</span></a>
+        <a class="nav-item" href="/ai-checker"><span class="icon-box">🤖</span><span>AI Checker</span></a>
+        <a class="nav-item" href="/experience"><span class="icon-box">E</span><span>Experience</span></a>
+        <a class="nav-item" href="/projects"><span class="icon-box">P</span><span>Projects</span></a>
+        <a class="nav-item active" href="/articles"><span class="icon-box">A</span><span>Articles</span></a>
+        <a class="nav-item" href="/skills"><span class="icon-box">S</span><span>Skills</span></a>
+        <a class="nav-item" href="/contact"><span class="icon-box">C</span><span>Contact</span></a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a class="nav-item" href="/CV.pdf" download><span class="icon-box">CV</span><span>Download CV</span></a>
+        <a class="nav-item" href="mailto:azhyshchev@gmail.com"><span class="icon-box">@</span><span>Email</span></a>
+        <div class="socials">
+          <a class="social-link" href="https://www.linkedin.com/in/azhyshchev/" target="_blank" rel="noreferrer">in</a>
+          <a class="social-link" href="https://github.com/Azhy34" target="_blank" rel="noreferrer">gh</a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="panel">
+
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Home</a><span>→</span>
+          <a href="/articles">Articles</a><span>→</span>
+          <span>RAG Sales Agent E-commerce</span>
+        </nav>
+
+        <div class="article-hero">
+          <div class="article-type">RAG · AI Agent · E-commerce · Customer Service Automation</div>
+          <h1 class="article-title">How We Automated Customer Service for an E-commerce Store — No Human Agent Needed</h1>
+          <p class="article-lead">A Polish wallpaper store had a problem every growing online shop knows: customer questions arrive faster than the team can answer them. "What wallpaper fits a 3x4m wall?" "Do you have something minimalist for a kids room?" "What glue do I need?" Instead of hiring more support staff, we built a RAG agent that handles the full pre-sales conversation — 24/7, with zero hallucinated prices.</p>
+          <div class="metrics-row">
+            <div class="metric-box"><strong>1,200+</strong><span>SKUs handled without hallucinated prices</span></div>
+            <div class="metric-box"><strong>5 tools</strong><span>LangGraph ReAct agent — semantic search, SQL lookup, price calc</span></div>
+            <div class="metric-box"><strong>24/7</strong><span>Pre-sales coverage, no human agent required</span></div>
+            <div class="metric-box"><strong>Zero</strong><span>Hallucinated prices or invented product links</span></div>
+          </div>
+        </div>
+
+        <div class="article-body">
+
+          <div class="neo-card">
+            <div class="section-label">The problem</div>
+            <h2 class="section-title">Why every growing e-commerce store hits the same wall</h2>
+            <div class="prose">
+              <p>Pre-sales support is the hidden bottleneck of online retail. Customers ask the same questions thousands of times: product dimensions, style compatibility, installation instructions, pricing for custom wall sizes. Each answer is simple. The volume is not.</p>
+              <p>Hiring more support staff scales the cost linearly with traffic. A generic chatbot gives generic answers and loses trust the moment it gets a price wrong. The real solution requires something that can handle both semantic questions ("something calm and modern for a bedroom") and hard factual lookups ("what is the exact price of SKU 000389 with 10% waste margin") — without confusing the two.</p>
+              <p>That is the problem Hybrid RAG solves. And it is the architecture we built for da-vinchi.pl.</p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <h3>The core architectural decision: two truth layers</h3>
+            <p>A plain LLM over documents hallucinates prices. A pure SQL bot misses semantic intent. Hybrid RAG splits knowledge into two layers: SQL for hard facts (price, SKU, stock), pgvector for soft knowledge (style, room guides, FAQ). The agent queries both — and never invents a number it did not retrieve from the database.</p>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">What the agent handles automatically</div>
+            <h2 class="section-title">The full pre-sales conversation — without staff</h2>
+            <div class="query-grid">
+              <div class="query-card" style="background: var(--yellow);">
+                <div class="qc-q">"Show me wallpapers for a kids room with flowers"</div>
+                <div class="qc-a">Semantic search across 1,200 SKUs — instant shortlist with exact prices, no manual filtering</div>
+              </div>
+              <div class="query-card" style="background: var(--mint);">
+                <div class="qc-q">"Price for SKU 000389, does it come in a set?"</div>
+                <div class="qc-a">Direct catalog lookup — precise specs from SQL, no estimating, no errors</div>
+              </div>
+              <div class="query-card" style="background: var(--blue);">
+                <div class="qc-q">"How do I hang it? What glue do I need?"</div>
+                <div class="qc-a">Knowledge base answers from company materials — installation guides served instantly</div>
+              </div>
+              <div class="query-card" style="background: var(--pink);">
+                <div class="qc-q">"My wall is 3.2m x 2.6m, how much will it cost?"</div>
+                <div class="qc-a">Price calculation with waste margin — exact total, no back-and-forth with staff</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Hybrid RAG architecture</div>
+            <h2 class="section-title">How the two-layer knowledge system works</h2>
+            <div class="prose">
+              <p>The fundamental architectural decision is to separate hard facts from soft knowledge and retrieve them through different paths.</p>
+            </div>
+            <div class="arch-diagram">
+              User query: "Something calm for a bedroom, around 120 PLN"<br>
+              &nbsp;&nbsp;↓<br>
+              LangGraph ReAct agent — decides which tools to call<br>
+              &nbsp;&nbsp;↓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+              pgvector (Supabase)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PostgreSQL (Supabase)<br>
+              semantic: "calm bedroom style"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SQL: price BETWEEN 100 AND 140<br>
+              → style guides, room matches&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ SKU, exact price, stock_status<br>
+              &nbsp;&nbsp;↓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓<br>
+              Agent merges results — product shortlist with real prices → reply
+            </div>
+            <div class="prose">
+              <p><strong>SQL layer (hard facts):</strong> SKU, final_price, stock_status, route, colors, room tags. The agent never constructs a URL or price from memory. Every number shown to the customer comes from a live database query.</p>
+              <p><strong>pgvector layer (soft knowledge):</strong> 142 semantic chunks across 5 types — FAQ, technical specs, style guides, room recommendations, sales scripts. Queries like "something for a Scandinavian interior" trigger vector similarity search, return the right style context, which then feeds into SQL filters.</p>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">LangGraph agent — 5 tools</div>
+            <h2 class="section-title">What each tool does and why it exists</h2>
+            <div class="tool-list">
+              <div class="tool-item">
+                <div class="tool-name">search_knowledge</div>
+                <div class="tool-desc">Semantic retrieval from pgvector — style mapping, room guides, FAQ, installation. Handles the "soft" questions that have no single correct SQL answer.</div>
+              </div>
+              <div class="tool-item">
+                <div class="tool-name">search_catalog</div>
+                <div class="tool-desc">Faceted SQL search with progressive fallback logic: relaxes filters step by step if initial results are too narrow. Prevents "no results" dead ends.</div>
+              </div>
+              <div class="tool-item">
+                <div class="tool-name">get_product_details</div>
+                <div class="tool-desc">Direct lookup by SKU, product_id, or URL slug. The primary anti-hallucination tool — called whenever the agent needs to confirm a price or specification before presenting it.</div>
+              </div>
+              <div class="tool-item">
+                <div class="tool-name">compare_styles</div>
+                <div class="tool-desc">Retrieves and compares two product styles side by side for a customer's specific use case. Handles "which is better for X" questions without generic answers.</div>
+              </div>
+              <div class="tool-item">
+                <div class="tool-name">calculate_wall_price</div>
+                <div class="tool-desc">Computes total cost by wall dimensions including standard waste margin. Replaces the most common back-and-forth between customers and support staff.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="neo-card">
+              <div class="section-label">ETL pipelines</div>
+              <h2 class="section-title">How the knowledge base is built</h2>
+              <div class="prose">
+                <p>Two independent pipelines feed the system:</p>
+                <p><strong>Catalog import:</strong> CSV from the store's backend → deduplication → out-of-stock filtering → 355 active SKUs in PostgreSQL. Re-runnable without duplicates.</p>
+                <p><strong>Knowledge base build:</strong> Structured markdown documents → 142 chunks across 5 semantic types. Chunking strategy varies by document: FAQ splits per question, room guides carry structured metadata, style mappings include color and category fields.</p>
+                <p>Both pipelines run independently and can be re-triggered when the product catalog or policies change.</p>
+              </div>
+            </div>
+
+            <div class="neo-card">
+              <div class="section-label">Key metrics</div>
+              <h2 class="section-title">What shipped</h2>
+              <div class="prose">
+                <ul>
+                  <li>355 active SKUs in structured SQL</li>
+                  <li>142 semantic knowledge chunks in pgvector</li>
+                  <li>5 agent tools covering the full pre-sales flow</li>
+                  <li>Zero hallucinated prices in production testing</li>
+                  <li>Full web chat widget embedded on the store</li>
+                  <li>LangSmith tracing for every agent run</li>
+                  <li>pytest buyer-scenario integration tests on CI</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">FAQ</div>
+            <h2 class="section-title">Common questions about AI customer service automation</h2>
+            <div class="faq">
+              <div class="faq-item">
+                <div class="faq-q">How does a RAG chatbot handle product recommendations without hallucinating prices?</div>
+                <div class="faq-a">The key is splitting knowledge into two layers. Hard facts — SKU, exact price, stock status — are stored in SQL and fetched directly. The agent never constructs a price from memory. Soft knowledge — style guides, room recommendations — lives in a vector store for semantic search. The agent only presents prices it retrieved from SQL, making hallucination structurally impossible.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">What queries can an AI sales assistant handle without human intervention?</div>
+                <div class="faq-a">A well-built RAG agent handles the full pre-sales conversation: semantic product search, exact SKU lookups with price and stock, installation and application questions, return policy and FAQ, and price calculations by wall dimensions. Post-purchase queries (order status, shipping) still need a human or a separate integration.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">What is Hybrid RAG and why is it better for e-commerce?</div>
+                <div class="faq-a">Hybrid RAG combines vector similarity search (for semantic queries) with structured SQL retrieval (for hard facts like price and SKU). Pure vector search hallucinates prices. Pure SQL misses semantic intent. The hybrid approach handles both — and is the right architecture for any product catalog with both factual and descriptive attributes.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Tech stack</div>
+            <h2 class="section-title">Tools used</h2>
+            <div class="chips">
+              <span class="chip">Python</span>
+              <span class="chip">LangGraph</span>
+              <span class="chip">FastAPI</span>
+              <span class="chip">Supabase</span>
+              <span class="chip">pgvector (HNSW)</span>
+              <span class="chip">Google Gemini</span>
+              <span class="chip">Sentence-Transformers</span>
+              <span class="chip">LangSmith</span>
+              <span class="chip">Docker</span>
+              <span class="chip">Railway</span>
+              <span class="chip">GitHub Actions</span>
+              <span class="chip">pytest</span>
+              <span class="chip">VS Code + Claude Code</span>
+            </div>
+          </div>
+
+          <div class="cta-strip">
+            <div>
+              <strong>Want to automate customer service for your online store?</strong>
+              <p>I build RAG-based sales agents for e-commerce: product catalog integration, semantic search, price calculations, FAQ handling. Works with any product catalog — wallpapers, furniture, electronics, B2B supplies. Based in Munich, working with clients across Europe.</p>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a class="cta-btn yellow" href="https://calendly.com/azhyshchev/30min?utm_source=portfolio&utm_medium=website&utm_campaign=booking&utm_content=rag_sales_agent_ecommerce" target="_blank" rel="noreferrer">Book a free call</a>
+              <a class="cta-btn outline" href="mailto:azhyshchev@gmail.com">Send a message</a>
+            </div>
+          </div>
+
+          <a class="back-link" href="/articles">← Back to articles</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <nav class="mobile-bottom-nav" id="mobileBottomNav">
+    <a class="mbn-item" href="/"><span class="mbn-icon">&lt;/&gt;</span><span class="mbn-label">Home</span></a>
+    <a class="mbn-item" href="/ai-checker"><span class="mbn-icon">🤖</span><span class="mbn-label">AI Checker</span></a>
+    <a class="mbn-item" href="/experience"><span class="mbn-icon">E</span><span class="mbn-label">Experience</span></a>
+    <a class="mbn-item" href="/projects"><span class="mbn-icon">P</span><span class="mbn-label">Projects</span></a>
+    <a class="mbn-item active" href="/articles"><span class="mbn-icon">A</span><span class="mbn-label">Articles</span></a>
+    <a class="mbn-item" href="/contact"><span class="mbn-icon">C</span><span class="mbn-label">Contact</span></a>
+  </nav>
+  <script src="/js/nav.js"></script>
+  <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" data-api-url="https://azhyshchevde-production.up.railway.app/api/chat" defer></script>
+  <script>
+    (function () {
+      document.querySelectorAll('a[href*="calendly"]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (window.gtag) gtag('event', 'book_call_click', { location: 'rag_sales_agent_ecommerce' });
+        });
+      });
+      document.querySelectorAll('a[href^="mailto:"]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (window.gtag) gtag('event', 'email_click', { location: 'rag_sales_agent_ecommerce' });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
