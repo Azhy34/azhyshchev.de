@@ -105,7 +105,7 @@
         <div class="nbw-header">
           <span class="nbw-title" id="nbw-header-title">FAQ Chat</span>
           <div class="nbw-header-actions">
-            <a class="nbw-book-btn" href="https://calendly.com/azhyshchev/30min" target="_blank" rel="noreferrer" aria-label="Book a call">
+            <a class="nbw-book-btn" href="https://calendly.com/azhyshchev/30min?utm_source=portfolio&utm_medium=chat_widget&utm_campaign=booking&utm_content=chat_header" target="_blank" rel="noreferrer" aria-label="Book a call">
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="0"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
               Book a call
             </a>
@@ -313,6 +313,9 @@
       // 1. Append user message to UI immediately
       appendMessage('user', sanitized);
       trackEvent('chat_message_sent', { language: currentLang });
+      if (/[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/.test(sanitized)) {
+        trackEvent('generate_lead', { method: 'chat_email' });
+      }
 
       // 2. Clear input area and reset heights & counters
       chatInput.value = '';
