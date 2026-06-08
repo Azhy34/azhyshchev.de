@@ -1212,6 +1212,7 @@
         document.body.style.overflow = 'hidden';
         var bn = document.getElementById('mobileBottomNav');
         if (bn) bn.style.display = 'none';
+        if (window.gtag) gtag('event', 'project_view', { project_name: card.dataset.modal });
       });
     });
 

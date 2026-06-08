@@ -17,6 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="../mobile.css">
+    <script src="../js/cookie-consent.js"></script>
 </head>
 <body>
     <div class="shell">
@@ -214,6 +215,21 @@
                     nav.classList.remove('open');
                     if (bottom) bottom.classList.remove('open');
                     toggle.innerHTML = '&#9776;';
+                });
+            });
+        })();
+
+        /* ── GA4 custom events ── */
+        (function () {
+            var analyzeBtn = document.getElementById('analyzeBtn');
+            if (analyzeBtn) {
+                analyzeBtn.addEventListener('click', function () {
+                    if (window.gtag) gtag('event', 'ai_checker_analyze');
+                });
+            }
+            document.querySelectorAll('a.cta-btn-primary[href*="calendly"]').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    if (window.gtag) gtag('event', 'book_call_click', { location: 'ai_checker' });
                 });
             });
         })();
