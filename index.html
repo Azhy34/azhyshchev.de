@@ -962,18 +962,18 @@
       </nav>
 
       <div class="sidebar-bottom">
-        <a class="nav-item" href="CV.pdf" download>
+        <a class="nav-item" href="CV.pdf" download onclick="gtag('event','cv_download',{location:'sidebar'})">
           <span class="icon-box">CV</span>
           <span>Download CV</span>
         </a>
-        <a class="nav-item" href="mailto:azhyshchev@gmail.com">
+        <a class="nav-item" href="mailto:azhyshchev@gmail.com" onclick="gtag('event','email_click',{location:'sidebar'})">
           <span class="icon-box">@</span>
           <span>Contact</span>
         </a>
 
         <div class="socials">
-          <a class="social-link" href="https://www.linkedin.com/in/azhyshchev/" target="_blank" rel="noreferrer">in</a>
-          <a class="social-link" href="https://github.com/Azhy34" target="_blank" rel="noreferrer">gh</a>
+          <a class="social-link" href="https://www.linkedin.com/in/azhyshchev/" target="_blank" rel="noreferrer" onclick="gtag('event','linkedin_click',{location:'sidebar'})">in</a>
+          <a class="social-link" href="https://github.com/Azhy34" target="_blank" rel="noreferrer" onclick="gtag('event','github_click',{location:'sidebar'})">gh</a>
         </div>
       </div>
     </aside>
@@ -1030,7 +1030,7 @@
 
               <div class="cta-row">
                 <a class="primary-btn" href="/projects">View projects</a>
-                <a class="secondary-btn" href="mailto:azhyshchev@gmail.com">Contact me</a>
+                <a class="secondary-btn" href="mailto:azhyshchev@gmail.com" onclick="gtag('event','email_click',{location:'hero'})">Contact me</a>
               </div>
             </div>
           </article>
@@ -1195,7 +1195,7 @@
       <div class="modal-footer">
         <a class="modal-btn" href="/projects">View projects</a>
         <a class="modal-btn light" href="/articles">Case studies</a>
-        <a class="modal-btn light" href="CV.pdf" download>Download CV</a>
+        <a class="modal-btn light" href="CV.pdf" download onclick="gtag('event','cv_download',{location:'project_modal'})">Download CV</a>
       </div>
     </div>
   </div>
@@ -1238,7 +1238,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <a class="modal-btn light" href="CV.pdf" download>Download CV</a>
+        <a class="modal-btn light" href="CV.pdf" download onclick="gtag('event','cv_download',{location:'project_modal'})">Download CV</a>
       </div>
     </div>
   </div>
@@ -1281,7 +1281,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <a class="modal-btn light" href="CV.pdf" download>Download CV</a>
+        <a class="modal-btn light" href="CV.pdf" download onclick="gtag('event','cv_download',{location:'project_modal'})">Download CV</a>
       </div>
     </div>
   </div>

@@ -199,11 +199,18 @@
       }
     };
 
+    const trackEvent = (name, params = {}) => {
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', name, params);
+      }
+    };
+
     const openDrawer = () => {
       launcher.style.display = 'none';
       launcher.setAttribute('aria-expanded', 'true');
       drawer.style.display = 'flex';
       drawer.classList.remove('closing');
+      trackEvent('chat_open');
       
       // Lock background scrolling on mobile
       if (window.innerWidth <= 480) {
@@ -278,6 +285,7 @@
       if (translations[lang]) {
         currentLang = lang;
         sessionStorage.setItem('portfolio_chat_lang', lang);
+        trackEvent('chat_language_selected', { language: lang });
         conversationHistory = [];
         messagesBox.innerHTML = '';
         
@@ -304,6 +312,7 @@
 
       // 1. Append user message to UI immediately
       appendMessage('user', sanitized);
+      trackEvent('chat_message_sent', { language: currentLang });
 
       // 2. Clear input area and reset heights & counters
       chatInput.value = '';
