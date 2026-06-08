@@ -1381,12 +1381,17 @@
       var bn = document.getElementById('mobileBottomNav'); if (bn) bn.style.display = '';
     }
 
-    // Click on card to open modal (but allow link clicks to navigate)
+    // Click on card: open modal OR navigate to article page
     document.querySelectorAll('.article-card').forEach(card => {
       card.addEventListener('click', (e) => {
         if (e.target.closest('a')) return;
         const modalId = card.getAttribute('data-modal');
-        if (modalId) openModal(modalId);
+        if (modalId) {
+          openModal(modalId);
+        } else {
+          const link = card.querySelector('a.read-link');
+          if (link) window.location.href = link.getAttribute('href');
+        }
       });
     });
 
