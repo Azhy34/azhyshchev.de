@@ -442,5 +442,30 @@
   </nav>
   <script src="/js/nav.js"></script>
   <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" data-api-url="https://azhyshchevde-production.up.railway.app/api/chat" defer></script>
+  <script>
+    (function () {
+      /* Run free AI audit button */
+      var checkerBtn = document.querySelector('a.checker-btn[href="/ai-checker/"]');
+      if (checkerBtn) {
+        checkerBtn.addEventListener('click', function () {
+          if (window.gtag) gtag('event', 'ai_checker_analyze', { location: 'ai_visibility_article' });
+        });
+      }
+
+      /* Book a call — Calendly */
+      document.querySelectorAll('a.cta-btn.yellow[href*="calendly"]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (window.gtag) gtag('event', 'book_call_click', { location: 'ai_visibility_article' });
+        });
+      });
+
+      /* Send a message — email */
+      document.querySelectorAll('a[href^="mailto:"]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (window.gtag) gtag('event', 'email_click', { location: 'ai_visibility_article' });
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
