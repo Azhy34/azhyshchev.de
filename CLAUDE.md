@@ -265,8 +265,16 @@ Analyzes any website URL for AI/LLM crawlability. Returns a score 0-100 across 8
 ### CSR detection
 Sites using React/Vue/Angular without SSR are detected via empty body + `#root`/`#app`/`#__next`/`#__nuxt` markers.
 - `is_csr: true` returned in API response
-- Frontend shows yellow `.csr-warning` banner
+- Frontend shows yellow `.csr-warning` banner above cards
 - Agent Readable Content and SSR cards show specific JS migration advice instead of generic errors
+- After the cards: `.csr-explainer` block (id=`csrExplainer`) appears — explains why AI crawlers can't read JS-rendered content, which bots are affected (GPTBot, ClaudeBot, PerplexityBot), which are not (Google-Extended/Gemini), and recommends SSR/SSG migration
+- Source cited in explainer: Vercel + MERJ analysis of 500M+ GPTBot requests (zero JS execution detected), SEODiff 1M-domain crawl (97% ghost ratio on pure CSR)
+
+### AI Bot Access — which bots are tracked
+8 bots checked in `_check_ai_bot_access`: GPTBot, ClaudeBot, PerplexityBot, Google-Extended, CCBot, Bytespider, anthropic-ai, Applebot-Extended
+
+### URL handling
+All checks (robots.txt, llms.txt, sitemap, markdown) use `base_origin` (`scheme://netloc`) — not `final_url` which may contain a sub-path after redirects.
 
 ### API endpoints
 | Method | Path | Description |
