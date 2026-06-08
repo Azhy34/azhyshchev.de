@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="/js/cookie-consent.js" defer></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎵</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="How I built an AI music SaaS for a Polish client in two weeks with zero domain expertise. Two-model lyrics pipeline, four music APIs tested, Suno V5.5 shipped. Real problems: SSRF, webhooks, duplicates.">
+  <meta name="keywords" content="ai music generator, ai song creator, text to song ai, songtext ai, ai music saas, personalized song ai, custom song generator, ai song text generator, ai generated music, song erstellen ki, ki musik generator, eigenes lied erstellen, ki lied generieren, lied als geschenk, personalisiertes lied ki, ki musik saas">
+  <meta name="author" content="Mikhail Azhyshchev">
+  <link rel="canonical" href="https://azhyshchev.de/articles/ai-music-saas/">
+
+  <meta property="og:title" content="AI Music SaaS in Two Weeks: hitdlaciebie.pl Case Study | Mikhail Azhyshchev">
+  <meta property="og:description" content="Built a full-stack AI music SaaS with zero domain expertise in two weeks. Two LLMs for lyrics, four music APIs tested, Suno V5.5 shipped. Real engineering problems documented.">
+  <meta property="og:url" content="https://azhyshchev.de/articles/ai-music-saas/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://azhyshchev.de/Azhyschev.JPG">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="AI Music SaaS in Two Weeks — hitdlaciebie.pl | Mikhail Azhyshchev">
+  <meta name="twitter:description" content="Full-stack AI music generator SaaS built in 2 weeks. Two-model lyrics pipeline, Suno V5.5, Shopify webhooks. Real case study.">
+
+  <title>AI Music SaaS in Two Weeks: Building hitdlaciebie.pl | Mikhail Azhyshchev</title>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://azhyshchev.de/articles/ai-music-saas/#article",
+        "headline": "AI Music SaaS in Two Weeks: How I Built hitdlaciebie.pl with Zero Domain Expertise",
+        "description": "Full-stack AI music SaaS case study: two-model lyrics pipeline (Gemini 2.5 Flash + Claude Sonnet), four music APIs tested, Suno V5.5 shipped. Real production problems: SSRF, duplicate webhooks, Shopify test mode.",
+        "author": { "@id": "https://azhyshchev.de/#person" },
+        "publisher": { "@id": "https://azhyshchev.de/#person" },
+        "datePublished": "2026-06-08",
+        "dateModified": "2026-06-08",
+        "inLanguage": "en",
+        "keywords": "ai music generator, ai song creator, text to song ai, songtext ai, ai music saas, custom song generator, song erstellen ki, ki musik generator, eigenes lied erstellen, ki lied generieren",
+        "url": "https://azhyshchev.de/articles/ai-music-saas/",
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://azhyshchev.de/articles/ai-music-saas/#webpage",
+        "url": "https://azhyshchev.de/articles/ai-music-saas/",
+        "name": "AI Music SaaS in Two Weeks: Building hitdlaciebie.pl",
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" },
+        "author": { "@id": "https://azhyshchev.de/#person" },
+        "dateModified": "2026-06-08",
+        "inLanguage": "en",
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://azhyshchev.de/" },
+            { "@type": "ListItem", "position": 2, "name": "Articles", "item": "https://azhyshchev.de/articles" },
+            { "@type": "ListItem", "position": 3, "name": "AI Music SaaS Case Study" }
+          ]
+        }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --sky: #61b5e8; --mint: #b9ddb7; --cream: #f8f0dc; --yellow: #f5c84b; --pink: #efb2d5; --blue: #d8ebff; --peach: #f7d4b1; --coral: #ff9a77; --rose: #ecb0c4; --black: #111111; --white: #ffffff; --accent: var(--coral); }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { min-height: 100vh; font-family: 'JetBrains Mono', monospace; color: var(--black); background: linear-gradient(120deg, var(--sky) 0 34%, var(--peach) 34% 55%, var(--coral) 55% 72%, var(--rose) 72% 100%); padding: 48px 24px; }
+    a { color: inherit; text-decoration: none; }
+    .shell { width: min(1320px, 100%); margin: 0 auto; border: 3px solid var(--black); box-shadow: 12px 12px 0 var(--black); background: var(--mint); display: grid; grid-template-columns: 250px 1fr; min-height: 820px; overflow: hidden; }
+    .sidebar { border-right: 3px solid var(--black); padding: 20px 18px; display: flex; flex-direction: column; gap: 22px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 8px; }
+    .brand-badge { width: 42px; height: 34px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 1rem; font-weight: 800; }
+    .nav { display: flex; flex-direction: column; gap: 8px; }
+    .nav-item { display: flex; align-items: center; gap: 12px; padding: 11px 12px; font-size: 0.9rem; font-weight: 700; border: 2px solid transparent; transition: transform 0.18s ease; }
+    .nav-item:hover { transform: translate(-2px, -2px); }
+    .nav-item.active { background: var(--black); color: var(--white); }
+    .icon-box { width: 24px; height: 24px; display: grid; place-items: center; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); font-size: 0.75rem; font-weight: 800; }
+    .nav-item.active .icon-box { background: var(--yellow); color: var(--black); }
+    .sidebar-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+    .socials { display: flex; gap: 10px; padding-top: 8px; }
+    .social-link { width: 42px; height: 42px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 0.8rem; font-weight: 800; transition: transform 0.18s ease; }
+    .social-link:hover { transform: translate(-2px, -2px); }
+    .main { background: var(--cream); padding: 22px; }
+    .panel { border: 2px solid var(--black); background: rgba(255,255,255,0.2); padding: 18px; display: flex; flex-direction: column; gap: 28px; }
+    .breadcrumb { font-size: 0.78rem; opacity: 0.6; display: flex; align-items: center; gap: 8px; }
+    .breadcrumb a:hover { opacity: 1; text-decoration: underline; }
+    .article-hero { border: 3px solid var(--black); background: var(--accent); box-shadow: 6px 6px 0 var(--black); padding: 28px 24px; }
+    .article-type { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; margin-bottom: 12px; }
+    .article-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.04em; margin-bottom: 16px; }
+    .article-lead { font-size: 0.95rem; line-height: 1.65; max-width: 72ch; }
+    .metrics-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+    .metric-box { border: 2px solid var(--black); background: rgba(255,255,255,0.75); padding: 14px 12px; }
+    .metric-box strong { display: block; font-size: 1.3rem; line-height: 1; margin-bottom: 6px; }
+    .metric-box span { font-size: 0.72rem; line-height: 1.4; opacity: 0.8; }
+    .article-body { display: flex; flex-direction: column; gap: 24px; }
+    .neo-card { border: 3px solid var(--black); background: var(--white); box-shadow: 6px 6px 0 var(--black); padding: 24px; }
+    .section-label { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.45; margin-bottom: 10px; }
+    .section-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.02em; }
+    .prose { display: flex; flex-direction: column; gap: 14px; }
+    .prose p { font-size: 0.88rem; line-height: 1.75; }
+    .prose h3 { font-size: 0.95rem; font-weight: 800; margin-top: 8px; letter-spacing: -0.02em; }
+    .prose ul { padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
+    .prose li { font-size: 0.88rem; line-height: 1.65; }
+    .prose code { background: var(--cream); border: 1px solid var(--black); padding: 1px 5px; font-size: 0.82rem; }
+    .arch-diagram { border: 2px solid var(--black); background: var(--cream); padding: 16px 20px; font-size: 0.82rem; line-height: 2.2; font-weight: 700; margin: 16px 0; }
+    .api-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.82rem; }
+    .api-table th { text-align: left; font-size: 0.68rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.5; padding: 6px 10px; border-bottom: 2px solid var(--black); }
+    .api-table td { padding: 10px; border-bottom: 1px solid rgba(17,17,17,0.12); vertical-align: top; line-height: 1.5; }
+    .api-table tr:last-child td { border-bottom: none; }
+    .api-table .winner { background: var(--mint); font-weight: 700; }
+    .problem-list { display: flex; flex-direction: column; gap: 16px; margin-top: 8px; }
+    .problem-item { border: 2px solid var(--black); padding: 16px 18px; background: var(--cream); }
+    .problem-num { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.45; margin-bottom: 6px; }
+    .problem-title { font-size: 0.9rem; font-weight: 800; margin-bottom: 8px; }
+    .problem-text { font-size: 0.83rem; line-height: 1.7; }
+    .problem-fix { font-size: 0.78rem; font-weight: 700; margin-top: 10px; background: var(--mint); padding: 4px 8px; display: inline-block; border: 1px solid var(--black); }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .chip { padding: 6px 10px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); font-size: 0.72rem; font-weight: 700; }
+    .highlight-box { border: 3px solid var(--black); background: var(--yellow); box-shadow: 4px 4px 0 var(--black); padding: 18px 20px; }
+    .highlight-box h3 { font-size: 0.9rem; font-weight: 800; margin-bottom: 10px; }
+    .highlight-box p { font-size: 0.84rem; line-height: 1.65; }
+    .cta-strip { border: 3px solid var(--black); background: var(--black); color: var(--white); box-shadow: 6px 6px 0 rgba(0,0,0,0.3); padding: 22px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .cta-strip p { font-size: 0.9rem; line-height: 1.5; max-width: 58ch; }
+    .cta-strip strong { display: block; font-size: 1rem; margin-bottom: 4px; }
+    .cta-btn { padding: 12px 20px; border: 2px solid var(--white); background: var(--white); color: var(--black); font: inherit; font-weight: 700; cursor: pointer; white-space: nowrap; transition: transform 0.15s; display: inline-block; }
+    .cta-btn:hover { transform: translate(-2px,-2px); }
+    .cta-btn.yellow { background: var(--yellow); border-color: var(--yellow); }
+    .cta-btn.outline { background: transparent; color: var(--white); }
+    .back-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 2px solid var(--black); background: var(--white); box-shadow: 4px 4px 0 var(--black); font-size: 0.82rem; font-weight: 700; transition: transform 0.15s; align-self: flex-start; }
+    .back-link:hover { transform: translate(-2px,-2px); }
+    @media (max-width: 1100px) { .shell { grid-template-columns: 220px 1fr; } .metrics-row { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 820px) { body { padding: 10px 8px 72px; } .shell { grid-template-columns: 1fr; box-shadow: 6px 6px 0 var(--black); min-height: unset; } .sidebar { border-right: none; border-bottom: 3px solid var(--black); padding: 10px 14px; flex-direction: row; align-items: center; justify-content: space-between; } .brand { font-size: clamp(0.95rem,2.5vw,1.6rem); } .nav { display: none; } .sidebar-bottom { display: none; } .main { padding: 14px; } .two-col { grid-template-columns: 1fr; } }
+    @media (max-width: 520px) { .metrics-row { grid-template-columns: 1fr; } .article-title { font-size: 1.5rem; } }
+  </style>
+  <link rel="stylesheet" href="../../mobile.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="/"><div class="brand-badge">&lt;/&gt;</div><span>AZHYSHCHEV</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">&#9776;</button>
+      <nav class="nav">
+        <a class="nav-item" href="/"><span class="icon-box">H</span><span>Home</span></a>
+        <a class="nav-item" href="/ai-checker"><span class="icon-box">🤖</span><span>AI Checker</span></a>
+        <a class="nav-item" href="/experience"><span class="icon-box">E</span><span>Experience</span></a>
+        <a class="nav-item" href="/projects"><span class="icon-box">P</span><span>Projects</span></a>
+        <a class="nav-item active" href="/articles"><span class="icon-box">A</span><span>Articles</span></a>
+        <a class="nav-item" href="/skills"><span class="icon-box">S</span><span>Skills</span></a>
+        <a class="nav-item" href="/contact"><span class="icon-box">C</span><span>Contact</span></a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a class="nav-item" href="/CV.pdf" download><span class="icon-box">CV</span><span>Download CV</span></a>
+        <a class="nav-item" href="mailto:azhyshchev@gmail.com"><span class="icon-box">@</span><span>Email</span></a>
+        <div class="socials">
+          <a class="social-link" href="https://www.linkedin.com/in/azhyshchev/" target="_blank" rel="noreferrer">in</a>
+          <a class="social-link" href="https://github.com/Azhy34" target="_blank" rel="noreferrer">gh</a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="panel">
+
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Home</a><span>→</span>
+          <a href="/articles">Articles</a><span>→</span>
+          <span>AI Music SaaS Case Study</span>
+        </nav>
+
+        <div class="article-hero">
+          <div class="article-type">Full-Stack · AI Music Generator · SaaS · Case Study</div>
+          <h1 class="article-title">AI Music SaaS in Two Weeks: Building hitdlaciebie.pl with Zero Domain Expertise</h1>
+          <p class="article-lead">A client needed a product that generates personalized AI songs in Polish — lyrics, vocals, full MP3 — ordered online, delivered to a personal cabinet. I had never worked with AI music generation before. Two weeks later the product was live. Here is everything that went wrong, everything that worked, and why I chose a two-model lyrics pipeline over a single LLM.</p>
+          <div class="metrics-row">
+            <div class="metric-box"><strong>2 weeks</strong><span>From first commit to live production</span></div>
+            <div class="metric-box"><strong>4 APIs</strong><span>Music generation APIs tested before shipping</span></div>
+            <div class="metric-box"><strong>2 LLMs</strong><span>In sequence for lyrics: Gemini Flash + Claude Sonnet</span></div>
+            <div class="metric-box"><strong>3 bugs</strong><span>Real production problems caught before launch</span></div>
+          </div>
+        </div>
+
+        <div class="article-body">
+
+          <div class="neo-card">
+            <div class="section-label">The brief</div>
+            <h2 class="section-title">What the client needed</h2>
+            <div class="prose">
+              <p>hitdlaciebie.pl ("a hit for you" in Polish) is a personalized music gift service. A user describes who the song is for, the occasion, the mood — and receives a full original song: custom lyrics, AI-generated vocals, MP3 ready to share.</p>
+              <p>The product had to work end-to-end without manual intervention: user pays via Shopify, lyrics are generated, music is produced, file lands in the user's personal cabinet. All in Polish, all automated.</p>
+              <p>The engineering challenge was not building a form. It was building a reliable pipeline where three external AI services (LLM for lyrics, music API, Shopify for billing) hand off to each other correctly under real-world conditions: webhooks that arrive twice, CDN links that expire, test mode that silently does nothing.</p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <h3>Why one LLM is not enough for AI song generation</h3>
+            <p>Single-model attempts failed in both directions. High temperature (creative mode): the lyrics were imaginative but structurally broken — wrong verse lengths, missing chorus markers, inconsistent rhyme scheme. Low temperature (structured mode): the lyrics were formatted correctly but flat and forgettable. The solution was a two-stage pipeline: creativity first, structure second.</p>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Lyrics pipeline</div>
+            <h2 class="section-title">Why two models instead of one</h2>
+            <div class="prose">
+              <p>Suno V5.5 — the AI music generator used in production — requires specific formatting: <code>[Verse]</code>, <code>[Chorus]</code>, <code>[Bridge]</code> tags with consistent line lengths and rhyme patterns. Feed it inconsistent lyrics and the output breaks structurally.</p>
+              <p>Getting both creativity and structure from a single LLM call required temperature tuning that pulled in opposite directions. The fix was to stop trying.</p>
+            </div>
+            <div class="arch-diagram">
+              User prompt (occasion, recipient, mood, style)<br>
+              &nbsp;&nbsp;↓<br>
+              Gemini 2.5 Flash — temperature 0.8<br>
+              &nbsp;&nbsp;↓ creative draft: vivid imagery, emotional language, raw ideas<br>
+              Claude Sonnet 4.6 — temperature 0.35<br>
+              &nbsp;&nbsp;↓ structural edit: enforces [Verse]/[Chorus] tags, rhyme scheme, line count<br>
+              Final lyrics → Suno V5.5 API → MP3
+            </div>
+            <div class="prose">
+              <p>Gemini 2.5 Flash at 0.8 handles the creative layer: it generates emotionally resonant raw content in Polish without worrying about format. Claude Sonnet at 0.35 handles the editorial layer: it takes the draft and enforces exactly the structure Suno expects.</p>
+              <p>Both calls go through OpenRouter, which means the same pipeline can swap models without changing the API integration. If a better Polish-language model appears, it slots in at stage one with a config change.</p>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Music API selection</div>
+            <h2 class="section-title">Tested four, shipped one</h2>
+            <div class="prose">
+              <p>Choosing the wrong music API at launch means rebuilding the pipeline later. I tested all four candidates before committing to production. The architecture is provider-agnostic — all four remain registered. Swapping the active provider is a config change, not a rewrite.</p>
+            </div>
+            <table class="api-table">
+              <thead>
+                <tr>
+                  <th>API</th>
+                  <th>Polish vocals</th>
+                  <th>Structure</th>
+                  <th>Reliability</th>
+                  <th>Decision</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>fal.ai / Minimax</td>
+                  <td>Weak — vowel-heavy words sounded synthesized</td>
+                  <td>Good</td>
+                  <td>Stable</td>
+                  <td>Rejected</td>
+                </tr>
+                <tr>
+                  <td>ElevenLabs Music</td>
+                  <td>Good timbre</td>
+                  <td>No verse/chorus awareness — treats all lyrics as one block</td>
+                  <td>Stable</td>
+                  <td>Rejected</td>
+                </tr>
+                <tr>
+                  <td>Udio</td>
+                  <td>Promising quality</td>
+                  <td>Good</td>
+                  <td>Silent failures during testing</td>
+                  <td>Rejected</td>
+                </tr>
+                <tr class="winner">
+                  <td>Suno V5.5</td>
+                  <td>Natural Polish phonetics</td>
+                  <td>Correct [Verse]/[Chorus] interpretation</td>
+                  <td>Consistent</td>
+                  <td>Shipped</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">What broke before launch</div>
+            <h2 class="section-title">Three real production problems</h2>
+            <div class="problem-list">
+
+              <div class="problem-item">
+                <div class="problem-num">Problem 01</div>
+                <div class="problem-title">Two days lost to a checkbox in Shopify admin</div>
+                <div class="problem-text">Token credits were not appearing after test purchases. I reviewed the entire webhook flow: HMAC verification, database writes, token allocation logic — everything was correct. The code had been working from day one. The actual issue: Shopify test mode requires manually clicking "Mark as paid" in the admin panel. Without it, the paid webhook never fires. The code worked. The environment did not behave like production.</div>
+                <div class="problem-fix">Lesson: always verify that test mode fires the same webhooks as production before building on top of it</div>
+              </div>
+
+              <div class="problem-item">
+                <div class="problem-num">Problem 02</div>
+                <div class="problem-title">SSRF vulnerability in the audio proxy</div>
+                <div class="problem-text">Suno CDN URLs expire within hours. To avoid broken links in user cabinets, I built a <code>/proxy-audio</code> route that re-serves audio from the CDN on demand. The first version accepted any URL as input — a classic Server-Side Request Forgery (SSRF) hole. Fixed with strict <code>URL.hostname</code> validation: only <code>*.suno.ai</code> over HTTPS allowed. This broke legacy <code>fal.ai</code> URLs already stored in the database — the allowlist was extended for backward compatibility.</div>
+                <div class="problem-fix">Fix: whitelist-only URL validation on any proxy endpoint. Never trust user-supplied URLs to internal fetch calls</div>
+              </div>
+
+              <div class="problem-item">
+                <div class="problem-num">Problem 03</div>
+                <div class="problem-title">Shopify fires the same webhook twice</div>
+                <div class="problem-text">Shopify's webhook delivery is not guaranteed to be exactly-once. Under network instability or timeout, the same <code>orders/paid</code> event can arrive twice. The result without protection: users get double the token credits, orders are processed twice, database records duplicate. Fixed with a unique constraint on <code>shopify_order_id</code> and <code>ON CONFLICT DO NOTHING</code> on insert. The pipeline became idempotent by design — re-running the same webhook has no effect after the first successful write.</div>
+                <div class="problem-fix">Fix: idempotent webhook handling via unique constraint on external ID. Assume any external event can arrive more than once</div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="neo-card">
+              <div class="section-label">Key metrics</div>
+              <h2 class="section-title">What shipped</h2>
+              <div class="prose">
+                <ul>
+                  <li>2 weeks from first commit to live product</li>
+                  <li>4 music generation APIs evaluated</li>
+                  <li>2 LLM models in sequence for lyrics</li>
+                  <li>3 real security and reliability issues caught pre-launch</li>
+                  <li>Full Shopify payments integration with HMAC verification</li>
+                  <li>Personal user cabinet with order history and audio playback</li>
+                  <li>Provider-agnostic music pipeline — swap API without rewrite</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="neo-card">
+              <div class="section-label">Architecture decisions</div>
+              <h2 class="section-title">What made it work</h2>
+              <div class="prose">
+                <ul>
+                  <li>Two-model lyrics pipeline: creativity and structure as separate concerns</li>
+                  <li>OpenRouter as LLM gateway: model-agnostic, one API key</li>
+                  <li>Idempotent webhook processing: unique constraint on Shopify order ID</li>
+                  <li>SSRF-safe audio proxy: hostname whitelist, HTTPS-only</li>
+                  <li>Status tracking on every order: no silent failures</li>
+                  <li>Provider-agnostic music API layer: all four registered, one active</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Tech stack</div>
+            <h2 class="section-title">Tools used</h2>
+            <div class="chips">
+              <span class="chip">Next.js 14</span>
+              <span class="chip">TypeScript</span>
+              <span class="chip">PostgreSQL</span>
+              <span class="chip">Suno V5.5</span>
+              <span class="chip">Gemini 2.5 Flash</span>
+              <span class="chip">Claude Sonnet 4.6</span>
+              <span class="chip">OpenRouter</span>
+              <span class="chip">Shopify</span>
+              <span class="chip">Resend</span>
+              <span class="chip">VPS Frankfurt</span>
+              <span class="chip">GitHub Actions CI/CD</span>
+              <span class="chip">VS Code + Claude Code</span>
+            </div>
+          </div>
+
+          <div class="cta-strip">
+            <div>
+              <strong>Need a custom AI product built fast?</strong>
+              <p>I build full-stack AI applications from scratch: music generators, content pipelines, automation tools, SaaS products. Two weeks from brief to live. Based in Munich, working with clients across Europe.</p>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a class="cta-btn yellow" href="https://calendly.com/azhyshchev/30min?utm_source=portfolio&utm_medium=website&utm_campaign=booking&utm_content=ai_music_saas_article" target="_blank" rel="noreferrer">Book a free call</a>
+              <a class="cta-btn outline" href="mailto:azhyshchev@gmail.com">Send a message</a>
+            </div>
+          </div>
+
+          <a class="back-link" href="/articles">← Back to articles</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <nav class="mobile-bottom-nav" id="mobileBottomNav">
+    <a class="mbn-item" href="/"><span class="mbn-icon">&lt;/&gt;</span><span class="mbn-label">Home</span></a>
+    <a class="mbn-item" href="/ai-checker"><span class="mbn-icon">🤖</span><span class="mbn-label">AI Checker</span></a>
+    <a class="mbn-item" href="/experience"><span class="mbn-icon">E</span><span class="mbn-label">Experience</span></a>
+    <a class="mbn-item" href="/projects"><span class="mbn-icon">P</span><span class="mbn-label">Projects</span></a>
+    <a class="mbn-item active" href="/articles"><span class="mbn-icon">A</span><span class="mbn-label">Articles</span></a>
+    <a class="mbn-item" href="/contact"><span class="mbn-icon">C</span><span class="mbn-label">Contact</span></a>
+  </nav>
+  <script src="/js/nav.js"></script>
+  <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" data-api-url="https://azhyshchevde-production.up.railway.app/api/chat" defer></script>
+  <script>
+    (function () {
+      document.querySelectorAll('a[href*="calendly"]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (window.gtag) gtag('event', 'book_call_click', { location: 'ai_music_saas_article' });
+        });
+      });
+      document.querySelectorAll('a[href^="mailto:"]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (window.gtag) gtag('event', 'email_click', { location: 'ai_music_saas_article' });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
