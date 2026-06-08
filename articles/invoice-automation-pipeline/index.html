@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="/js/cookie-consent.js" defer></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧾</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="How we eliminated a weekly manual routine: invoices from 5 suppliers now flow automatically from email to Google Drive and Supabase via a LLM pipeline. Zero hours per week, zero missed documents.">
+  <meta name="keywords" content="invoice automation, invoice extraction ai, automate invoices email, pdf invoice processing, llm invoice parsing, imap automation, gemini invoice, rechnungen automatisch verarbeiten, rechnungsverarbeitung automatisieren, KI Rechnungsverarbeitung, PDF Rechnung automatisierung, Rechnungen aus E-Mail automatisch, Buchhaltung automatisieren">
+  <meta name="author" content="Mikhail Azhyshchev">
+  <link rel="canonical" href="https://azhyshchev.de/articles/invoice-automation-pipeline/">
+
+  <meta property="og:title" content="Invoice Automation Pipeline: IMAP → PDF → Gemini → Drive + Supabase | Mikhail Azhyshchev">
+  <meta property="og:description" content="How we eliminated weekly manual invoice processing for a German appliance retailer. 5 suppliers, zero missed PDFs, GitHub Actions cron, $0 infrastructure cost.">
+  <meta property="og:url" content="https://azhyshchev.de/articles/invoice-automation-pipeline/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://azhyshchev.de/Azhyschev.JPG">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Invoice Automation Pipeline: IMAP → PDF → Gemini → Drive | Mikhail Azhyshchev">
+  <meta name="twitter:description" content="Automated invoice processing from email for 5 suppliers — Miele, Siemens, Liebherr, Bosch, Smeg. Zero manual hours per week.">
+
+  <title>Invoice Automation Pipeline: IMAP → PDF → Gemini → Drive + Supabase | Mikhail Azhyshchev</title>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://azhyshchev.de/articles/invoice-automation-pipeline/#article",
+        "headline": "Invoice Automation Pipeline: IMAP → PDF → Gemini → Drive + Supabase",
+        "description": "How we eliminated a weekly manual invoice processing routine using a two-layer LLM pipeline: IMAP email fetching, PDF parsing, Gemini 2.5 Flash extraction, Google Drive filing, Supabase logging — all on GitHub Actions cron.",
+        "author": { "@id": "https://azhyshchev.de/#person" },
+        "publisher": { "@id": "https://azhyshchev.de/#person" },
+        "datePublished": "2026-06-08",
+        "dateModified": "2026-06-08",
+        "inLanguage": "en",
+        "keywords": "invoice automation, invoice extraction ai, automate invoices email, pdf invoice processing, llm invoice parsing, imap automation, gemini invoice, rechnungen automatisch verarbeiten, rechnungsverarbeitung automatisieren, KI Rechnungsverarbeitung",
+        "url": "https://azhyshchev.de/articles/invoice-automation-pipeline/",
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://azhyshchev.de/articles/invoice-automation-pipeline/#webpage",
+        "url": "https://azhyshchev.de/articles/invoice-automation-pipeline/",
+        "name": "Invoice Automation Pipeline: IMAP → PDF → Gemini → Drive + Supabase",
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" },
+        "author": { "@id": "https://azhyshchev.de/#person" },
+        "dateModified": "2026-06-08",
+        "inLanguage": "en",
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://azhyshchev.de/" },
+            { "@type": "ListItem", "position": 2, "name": "Articles", "item": "https://azhyshchev.de/articles" },
+            { "@type": "ListItem", "position": 3, "name": "Invoice Automation Pipeline" }
+          ]
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How does AI extract data from PDF invoices?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A two-layer approach works best. First, a deterministic parser runs regex and keyword triggers to extract structured fields — supplier name, invoice number, date, total. Then Gemini 2.5 Flash verifies and normalises the output, handles edge cases, and fills fields the regex missed. This way, if the AI API is down, the baseline extraction still runs."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do you prevent duplicate invoice processing?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Two deduplication layers: at the attachment level using message ID plus file hash, and at the business level using supplier name plus invoice number. This handles re-forwarded emails, cron job restarts, and cases where the same PDF arrives twice in one message. Every attachment gets a processing_log record regardless of outcome — nothing is silently lost."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the infrastructure cost for an automated invoice pipeline?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "If you use GitHub Actions as the scheduler, the infrastructure cost is effectively $0. GitHub Actions provides 2,000 free minutes per month — more than enough for hourly invoice checks running a few seconds each. The only variable cost is AI API usage (Gemini 2.5 Flash tokens per PDF), which is minimal for standard business invoice volumes."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --sky: #61b5e8; --mint: #b9ddb7; --cream: #f8f0dc; --yellow: #f5c84b; --pink: #efb2d5; --blue: #d8ebff; --peach: #f7d4b1; --coral: #ff9a77; --rose: #ecb0c4; --black: #111111; --white: #ffffff; --accent: var(--mint); }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { min-height: 100vh; font-family: 'JetBrains Mono', monospace; color: var(--black); background: linear-gradient(120deg, var(--mint) 0 34%, var(--blue) 34% 60%, var(--peach) 60% 100%); padding: 48px 24px; }
+    a { color: inherit; text-decoration: none; }
+    .shell { width: min(1320px, 100%); margin: 0 auto; border: 3px solid var(--black); box-shadow: 12px 12px 0 var(--black); background: var(--mint); display: grid; grid-template-columns: 250px 1fr; min-height: 820px; overflow: hidden; }
+    .sidebar { border-right: 3px solid var(--black); padding: 20px 18px; display: flex; flex-direction: column; gap: 22px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 8px; }
+    .brand-badge { width: 42px; height: 34px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 1rem; font-weight: 800; }
+    .nav { display: flex; flex-direction: column; gap: 8px; }
+    .nav-item { display: flex; align-items: center; gap: 12px; padding: 11px 12px; font-size: 0.9rem; font-weight: 700; border: 2px solid transparent; transition: transform 0.18s ease; }
+    .nav-item:hover { transform: translate(-2px, -2px); }
+    .nav-item.active { background: var(--black); color: var(--white); }
+    .icon-box { width: 24px; height: 24px; display: grid; place-items: center; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); font-size: 0.75rem; font-weight: 800; }
+    .nav-item.active .icon-box { background: var(--yellow); color: var(--black); }
+    .sidebar-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+    .socials { display: flex; gap: 10px; padding-top: 8px; }
+    .social-link { width: 42px; height: 42px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 0.8rem; font-weight: 800; transition: transform 0.18s ease; }
+    .social-link:hover { transform: translate(-2px, -2px); }
+    .main { background: var(--cream); padding: 22px; }
+    .panel { border: 2px solid var(--black); background: rgba(255,255,255,0.2); padding: 18px; display: flex; flex-direction: column; gap: 28px; }
+    .breadcrumb { font-size: 0.78rem; opacity: 0.6; display: flex; align-items: center; gap: 8px; }
+    .breadcrumb a:hover { opacity: 1; text-decoration: underline; }
+    .article-hero { border: 3px solid var(--black); background: var(--accent); box-shadow: 6px 6px 0 var(--black); padding: 28px 24px; }
+    .article-type { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; margin-bottom: 12px; }
+    .article-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.04em; margin-bottom: 16px; }
+    .article-lead { font-size: 0.95rem; line-height: 1.65; max-width: 72ch; }
+    .metrics-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+    .metric-box { border: 2px solid var(--black); background: rgba(255,255,255,0.75); padding: 14px 12px; }
+    .metric-box strong { display: block; font-size: 1.3rem; line-height: 1; margin-bottom: 6px; }
+    .metric-box span { font-size: 0.72rem; line-height: 1.4; opacity: 0.8; }
+    .article-body { display: flex; flex-direction: column; gap: 24px; }
+    .neo-card { border: 3px solid var(--black); background: var(--white); box-shadow: 6px 6px 0 var(--black); padding: 24px; }
+    .section-label { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.45; margin-bottom: 10px; }
+    .section-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.02em; }
+    .prose { display: flex; flex-direction: column; gap: 14px; }
+    .prose p { font-size: 0.88rem; line-height: 1.75; }
+    .prose h3 { font-size: 0.95rem; font-weight: 800; margin-top: 8px; letter-spacing: -0.02em; }
+    .prose ul { padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
+    .prose li { font-size: 0.88rem; line-height: 1.65; }
+    .prose code { background: var(--cream); border: 1px solid var(--black); padding: 1px 5px; font-size: 0.82rem; }
+    .pipeline-diagram { border: 2px solid var(--black); background: var(--cream); padding: 18px 22px; font-size: 0.84rem; line-height: 2.4; font-weight: 700; margin: 16px 0; overflow-x: auto; }
+    .pipeline-step { display: inline-block; border: 2px solid var(--black); padding: 4px 10px; background: var(--white); box-shadow: 2px 2px 0 var(--black); }
+    .pipeline-arrow { opacity: 0.5; margin: 0 6px; }
+    .highlight-box { border: 3px solid var(--black); background: var(--yellow); box-shadow: 4px 4px 0 var(--black); padding: 18px 20px; }
+    .highlight-box h3 { font-size: 0.9rem; font-weight: 800; margin-bottom: 10px; }
+    .highlight-box p { font-size: 0.84rem; line-height: 1.65; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .layer-block { border: 2px solid var(--black); padding: 16px; margin-bottom: 14px; }
+    .layer-title { font-size: 0.82rem; font-weight: 800; margin-bottom: 8px; }
+    .layer-desc { font-size: 0.8rem; line-height: 1.6; opacity: 0.85; }
+    .dedup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+    .dedup-card { border: 2px solid var(--black); padding: 14px; background: var(--cream); }
+    .dedup-card strong { display: block; font-size: 0.82rem; margin-bottom: 6px; }
+    .dedup-card span { font-size: 0.76rem; line-height: 1.55; opacity: 0.8; }
+    .step-list { display: flex; flex-direction: column; gap: 12px; counter-reset: steps; }
+    .step-item { border: 2px solid var(--black); padding: 14px 16px; display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: start; }
+    .step-num { width: 36px; height: 36px; border: 2px solid var(--black); background: var(--yellow); display: grid; place-items: center; font-size: 0.9rem; font-weight: 800; box-shadow: 2px 2px 0 var(--black); }
+    .step-content strong { display: block; font-size: 0.84rem; font-weight: 800; margin-bottom: 4px; }
+    .step-content p { font-size: 0.78rem; line-height: 1.6; opacity: 0.85; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .chip { padding: 6px 10px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); font-size: 0.72rem; font-weight: 700; }
+    .faq { display: flex; flex-direction: column; gap: 16px; }
+    .faq-item { border: 2px solid var(--black); background: var(--cream); padding: 18px 20px; }
+    .faq-q { font-size: 0.9rem; font-weight: 800; margin-bottom: 10px; }
+    .faq-a { font-size: 0.84rem; line-height: 1.7; opacity: 0.85; }
+    .cta-strip { border: 3px solid var(--black); background: var(--black); color: var(--white); box-shadow: 6px 6px 0 rgba(0,0,0,0.3); padding: 22px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .cta-strip p { font-size: 0.9rem; line-height: 1.5; max-width: 58ch; }
+    .cta-strip strong { display: block; font-size: 1rem; margin-bottom: 4px; }
+    .cta-btn { padding: 12px 20px; border: 2px solid var(--white); background: var(--white); color: var(--black); font: inherit; font-weight: 700; cursor: pointer; white-space: nowrap; transition: transform 0.15s; display: inline-block; }
+    .cta-btn:hover { transform: translate(-2px,-2px); }
+    .cta-btn.yellow { background: var(--yellow); border-color: var(--yellow); }
+    .cta-btn.outline { background: transparent; color: var(--white); }
+    .back-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 2px solid var(--black); background: var(--white); box-shadow: 4px 4px 0 var(--black); font-size: 0.82rem; font-weight: 700; transition: transform 0.15s; align-self: flex-start; }
+    .back-link:hover { transform: translate(-2px,-2px); }
+    @media (max-width: 1100px) { .shell { grid-template-columns: 220px 1fr; } .metrics-row { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 820px) { body { padding: 10px 8px 72px; } .shell { grid-template-columns: 1fr; box-shadow: 6px 6px 0 var(--black); min-height: unset; } .sidebar { border-right: none; border-bottom: 3px solid var(--black); padding: 10px 14px; flex-direction: row; align-items: center; justify-content: space-between; } .brand { font-size: clamp(0.95rem,2.5vw,1.6rem); } .nav { display: none; } .sidebar-bottom { display: none; } .main { padding: 14px; } .two-col { grid-template-columns: 1fr; } .dedup-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 520px) { .metrics-row { grid-template-columns: 1fr; } .article-title { font-size: 1.5rem; } }
+  </style>
+  <link rel="stylesheet" href="../../mobile.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="/"><div class="brand-badge">&lt;/&gt;</div><span>AZHYSHCHEV</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">&#9776;</button>
+      <nav class="nav">
+        <a class="nav-item" href="/"><span class="icon-box">H</span><span>Home</span></a>
+        <a class="nav-item" href="/ai-checker"><span class="icon-box">🤖</span><span>AI Checker</span></a>
+        <a class="nav-item" href="/experience"><span class="icon-box">E</span><span>Experience</span></a>
+        <a class="nav-item" href="/projects"><span class="icon-box">P</span><span>Projects</span></a>
+        <a class="nav-item active" href="/articles"><span class="icon-box">A</span><span>Articles</span></a>
+        <a class="nav-item" href="/skills"><span class="icon-box">S</span><span>Skills</span></a>
+        <a class="nav-item" href="/contact"><span class="icon-box">C</span><span>Contact</span></a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a class="nav-item" href="/CV.pdf" download><span class="icon-box">CV</span><span>Download CV</span></a>
+        <a class="nav-item" href="mailto:azhyshchev@gmail.com"><span class="icon-box">@</span><span>Email</span></a>
+        <div class="socials">
+          <a class="social-link" href="https://www.linkedin.com/in/azhyshchev/" target="_blank" rel="noreferrer">in</a>
+          <a class="social-link" href="https://github.com/Azhy34" target="_blank" rel="noreferrer">gh</a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="panel">
+
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Home</a><span>→</span>
+          <a href="/articles">Articles</a><span>→</span>
+          <span>Invoice Automation Pipeline</span>
+        </nav>
+
+        <div class="article-hero">
+          <div class="article-type">Automation · LLM Pipeline · Document Processing</div>
+          <h1 class="article-title">Invoice Automation Pipeline: IMAP → PDF → Gemini → Drive + Supabase</h1>
+          <p class="article-lead">Invoices from 5 suppliers land in an email inbox every week — Miele, Siemens, Liebherr, Bosch, Smeg — all in different formats, different file names. Someone has to open the inbox, find the attachments, classify each document, extract the data, file it in the right folder, and enter it into accounting. Every single week. We built a pipeline that does all of this automatically. Zero manual hours. $0 infrastructure cost.</p>
+          <div class="metrics-row">
+            <div class="metric-box"><strong>0</strong><span>Manual hours per week — was several hours</span></div>
+            <div class="metric-box"><strong>5</strong><span>Suppliers handled: Miele, Siemens, Liebherr, Bosch, Smeg</span></div>
+            <div class="metric-box"><strong>$0</strong><span>Infrastructure cost — runs on GitHub Actions free tier</span></div>
+            <div class="metric-box"><strong>100%</strong><span>Automated filing and logging — nothing silently lost</span></div>
+          </div>
+        </div>
+
+        <div class="article-body">
+
+          <div class="neo-card">
+            <div class="section-label">The problem</div>
+            <h2 class="section-title">The weekly routine that quietly eats hours</h2>
+            <div class="prose">
+              <p>Invoice processing from email is invisible work. It does not feel like a problem because each individual action takes only minutes. But multiply those minutes across every supplier, every week, every month — and the numbers add up fast.</p>
+              <p>The specific pain here: five suppliers each send invoices in completely different formats. Different file naming conventions. Different field positions. Different PDF structures — some text-based, some scanned images. No two documents look the same. A human learns to handle this variation instinctively. A naive automation breaks on the first edge case.</p>
+              <p>The target outcome was clear: invoices arrive by email, get processed without any human involvement, land in the correct Google Drive folder with a standardised filename, and get logged to a database — with a Telegram notification for each successful run. If anything goes wrong, it should fail loudly, not silently.</p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <h3>The key design decision: AI for normalisation, not for retrieval</h3>
+            <p>Gemini 2.5 Flash is not the source of truth — the PDF is. A deterministic baseline parser runs first (regex, keyword triggers, field extraction). Gemini verifies and normalises on top. When the AI API is unavailable, the fallback still produces usable output. The LLM handles variation; the parser handles facts.</p>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">End-to-end pipeline</div>
+            <h2 class="section-title">How the pipeline flows</h2>
+            <div class="pipeline-diagram">
+              <span class="pipeline-step">GitHub Actions cron</span>
+              <span class="pipeline-arrow">→</span>
+              <span class="pipeline-step">IMAP fetch unseen emails</span>
+              <span class="pipeline-arrow">→</span>
+              <span class="pipeline-step">Attachment filter (PDF only)</span>
+              <br>
+              <span class="pipeline-arrow" style="margin-left:180px;">↓</span>
+              <br>
+              <span class="pipeline-step">Dedup check (message ID + hash)</span>
+              <span class="pipeline-arrow">→</span>
+              <span class="pipeline-step">pdf-parse → raw text</span>
+              <span class="pipeline-arrow">→</span>
+              <span class="pipeline-step">Baseline regex parser</span>
+              <br>
+              <span class="pipeline-arrow" style="margin-left:400px;">↓</span>
+              <br>
+              <span class="pipeline-step">Gemini 2.5 Flash verify + normalise</span>
+              <span class="pipeline-arrow">→</span>
+              <span class="pipeline-step">Google Drive upload</span>
+              <br>
+              <span class="pipeline-arrow" style="margin-left:320px;">↓</span>
+              <br>
+              <span class="pipeline-step">Supabase log</span>
+              <span class="pipeline-arrow">→</span>
+              <span class="pipeline-step">Telegram notification</span>
+            </div>
+            <div class="step-list">
+              <div class="step-item">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                  <strong>GitHub Actions cron trigger</strong>
+                  <p>Runs on a schedule — hourly or daily depending on invoice volume. No server needed. Free tier covers any normal business volume easily.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                  <strong>IMAP fetch and filter</strong>
+                  <p>Connects to the inbox, finds unseen messages, extracts PDF attachments only. Message IDs recorded immediately for deduplication.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                  <strong>Deduplication — two layers</strong>
+                  <p>Attachment-level: message ID + file hash. Business-level: supplier name + invoice number. Handles re-forwarded emails, cron restarts, and duplicate PDFs in one message.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                  <strong>PDF parsing + baseline extraction</strong>
+                  <p>pdf-parse extracts raw text. A deterministic parser runs regex and keyword triggers to pull structured fields: supplier, invoice number, date, total, VAT amount.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">5</div>
+                <div class="step-content">
+                  <strong>Gemini 2.5 Flash normalisation</strong>
+                  <p>The AI verifies baseline output, normalises date formats, fills gaps the regex missed, and handles supplier-specific formatting quirks. Runs only on fields the baseline could not confidently extract.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">6</div>
+                <div class="step-content">
+                  <strong>Google Drive filing</strong>
+                  <p>PDF uploaded to the correct supplier subfolder with a standardised filename: <code>YYYY-MM-DD_Supplier_InvoiceNumber.pdf</code>. Folder structure mirrors the client's existing accounting system.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">7</div>
+                <div class="step-content">
+                  <strong>Supabase log + Telegram alert</strong>
+                  <p>Every attachment gets a <code>processing_log</code> record — status, extracted fields, Drive file ID, timestamp. Nothing is silently lost. Telegram sends a summary after each run.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="neo-card">
+              <div class="section-label">Two-layer LLM design</div>
+              <h2 class="section-title">Why not just use Gemini for everything?</h2>
+              <div class="prose">
+                <p>Pure LLM extraction is unreliable for financial documents. The model can hallucinate amounts, misread currency symbols, and produce inconsistent date formats across runs.</p>
+                <p>The baseline parser handles what regex handles perfectly — supplier names in known positions, invoice numbers matching known patterns, totals in expected fields. It is fast, deterministic, and costs nothing.</p>
+                <p>Gemini handles what regex cannot — variations in field position across supplier formats, non-standard date strings, edge cases where the PDF structure differs from the template. It sees only the fields the baseline could not confidently extract.</p>
+                <p>The result: deterministic accuracy where possible, AI flexibility where needed — and the pipeline still works if the API is down.</p>
+              </div>
+            </div>
+
+            <div class="neo-card">
+              <div class="section-label">Deduplication</div>
+              <h2 class="section-title">Two layers — nothing processed twice</h2>
+              <div class="prose">
+                <p>Invoices arrive in unpredictable ways: re-forwarded from a colleague, the same PDF attached to two follow-up emails, the cron job restarting mid-run. Without proper deduplication, any of these scenarios causes double-processing or double-filing.</p>
+              </div>
+              <div class="dedup-grid">
+                <div class="dedup-card">
+                  <strong>Layer 1: Attachment-level</strong>
+                  <span>Message ID + SHA-256 hash of the PDF file. Catches re-sends of the exact same file before any processing begins.</span>
+                </div>
+                <div class="dedup-card">
+                  <strong>Layer 2: Business-level</strong>
+                  <span>Supplier name + invoice number. Catches the same invoice arriving as a different attachment (renamed, re-exported from accounting software).</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">What gets logged</div>
+            <h2 class="section-title">Nothing silently lost — full observability</h2>
+            <div class="prose">
+              <p>Every attachment gets a record in Supabase regardless of outcome — whether it processed successfully, was deduplicated, failed parsing, or hit an API error. The record includes: attachment filename, message ID, processing status, extracted fields, Drive file ID if uploaded, error message if failed, and timestamp.</p>
+              <p>This means the client can always audit what happened to any specific invoice. "Where did the Siemens invoice from March 12 go?" — answer is one SQL query away.</p>
+              <p>The Telegram notification sends a run summary after each cron execution: how many emails checked, how many attachments found, how many processed, how many skipped as duplicates, any errors. If the pipeline runs silently with zero activity for too long, that itself becomes a signal worth investigating.</p>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">FAQ</div>
+            <h2 class="section-title">Common questions about invoice automation</h2>
+            <div class="faq">
+              <div class="faq-item">
+                <div class="faq-q">How does AI extract data from PDF invoices?</div>
+                <div class="faq-a">A two-layer approach works best. First, a deterministic parser runs regex and keyword triggers to extract structured fields — supplier name, invoice number, date, total. Then Gemini 2.5 Flash verifies and normalises the output, handles edge cases, and fills fields the regex missed. This way, if the AI API is down, the baseline extraction still runs.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">How do you prevent duplicate invoice processing?</div>
+                <div class="faq-a">Two deduplication layers: at the attachment level using message ID plus file hash, and at the business level using supplier name plus invoice number. This handles re-forwarded emails, cron job restarts, and cases where the same PDF arrives twice in one message. Every attachment gets a processing log record regardless of outcome — nothing is silently lost.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">What is the infrastructure cost for an automated invoice pipeline?</div>
+                <div class="faq-a">If you use GitHub Actions as the scheduler, the infrastructure cost is effectively $0. GitHub Actions provides 2,000 free minutes per month — more than enough for hourly invoice checks running a few seconds each. The only variable cost is AI API usage (Gemini 2.5 Flash tokens per PDF), which is minimal for standard business invoice volumes.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Tech stack</div>
+            <h2 class="section-title">Tools used</h2>
+            <div class="chips">
+              <span class="chip">Node.js</span>
+              <span class="chip">TypeScript</span>
+              <span class="chip">IMAP</span>
+              <span class="chip">pdf-parse</span>
+              <span class="chip">Gemini 2.5 Flash</span>
+              <span class="chip">Google Drive API</span>
+              <span class="chip">Supabase</span>
+              <span class="chip">GitHub Actions</span>
+              <span class="chip">Telegram Bot API</span>
+              <span class="chip">VS Code + Claude Code</span>
+            </div>
+          </div>
+
+          <div class="cta-strip">
+            <div>
+              <strong>Have a manual document processing routine in your business?</strong>
+              <p>I build automation pipelines that eliminate recurring manual work: invoice processing, document classification, data extraction from email. Works with any document format — PDFs, Word files, scanned images. Based in Munich, working with clients across Europe.</p>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a class="cta-btn yellow" href="https://calendly.com/azhyshchev/30min?utm_source=portfolio&utm_medium=website&utm_campaign=booking&utm_content=invoice_automation_pipeline" target="_blank" rel="noreferrer">Book a free call</a>
+              <a class="cta-btn outline" href="mailto:azhyshchev@gmail.com">Send a message</a>
+            </div>
+          </div>
+
+          <a class="back-link" href="/articles">← Back to articles</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <nav class="mobile-bottom-nav" id="mobileBottomNav">
+    <a class="mbn-item" href="/"><span class="mbn-icon">&lt;/&gt;</span><span class="mbn-label">Home</span></a>
+    <a class="mbn-item" href="/ai-checker"><span class="mbn-icon">🤖</span><span class="mbn-label">AI Checker</span></a>
+    <a class="mbn-item" href="/experience"><span class="mbn-icon">E</span><span class="mbn-label">Experience</span></a>
+    <a class="mbn-item" href="/projects"><span class="mbn-icon">P</span><span class="mbn-label">Projects</span></a>
+    <a class="mbn-item active" href="/articles"><span class="mbn-icon">A</span><span class="mbn-label">Articles</span></a>
+    <a class="mbn-item" href="/contact"><span class="mbn-icon">C</span><span class="mbn-label">Contact</span></a>
+  </nav>
+  <script src="/js/nav.js"></script>
+  <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" data-api-url="https://azhyshchevde-production.up.railway.app/api/chat" defer></script>
+  <script>
+    (function () {
+      document.querySelectorAll('a[href*="calendly"]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (window.gtag) gtag('event', 'book_call_click', { location: 'invoice_automation_pipeline' });
+        });
+      });
+      document.querySelectorAll('a[href^="mailto:"]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (window.gtag) gtag('event', 'email_click', { location: 'invoice_automation_pipeline' });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
