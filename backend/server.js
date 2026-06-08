@@ -671,6 +671,104 @@ INSTRUCTIONS:
   }
 });
 
+// GA4 Analytics endpoint
+app.get('/api/analytics', authenticateToken, async (req, res) => {
+  try {
+    const crypto = require('crypto');
+    const https = require('https');
+
+    const clientEmail = process.env.GA4_CLIENT_EMAIL;
+    const privateKey = process.env.GA4_PRIVATE_KEY?.replace(/\\n/g, '\n');
+    const propertyId = '513620625';
+
+    if (!clientEmail || !privateKey) {
+      return res.status(503).json({ error: 'GA4 credentials not configured' });
+    }
+
+    // Create JWT for Google OAuth
+    const header = Buffer.from(JSON.stringify({ alg: 'RS256', typ: 'JWT' })).toString('base64url');
+    const now = Math.floor(Date.now() / 1000);
+    const payload = Buffer.from(JSON.stringify({
+      iss: clientEmail,
+      scope: 'https://www.googleapis.com/auth/analytics.readonly',
+      aud: 'https://oauth2.googleapis.com/token',
+      exp: now + 3600,
+      iat: now
+    })).toString('base64url');
+    const sign = crypto.createSign('RSA-SHA256');
+    sign.update(header + '.' + payload);
+    const jwt = header + '.' + payload + '.' + sign.sign(privateKey, 'base64url');
+
+    // Get access token
+    const tokenData = await new Promise((resolve, reject) => {
+      const postData = 'grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer&assertion=' + jwt;
+      const r = https.request({
+        hostname: 'oauth2.googleapis.com', path: '/token', method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Content-Length': postData.length }
+      }, res => { let d = ''; res.on('data', x => d += x); res.on('end', () => resolve(JSON.parse(d))); });
+      r.on('error', reject);
+      r.write(postData);
+      r.end();
+    });
+
+    if (tokenData.error) return res.status(403).json({ error: tokenData.error_description });
+
+    // Query GA4 Data API
+    const range = req.query.range || '7daysAgo';
+    const body = JSON.stringify({
+      dateRanges: [{ startDate: range, endDate: 'today' }],
+      metrics: [
+        { name: 'activeUsers' },
+        { name: 'sessions' },
+        { name: 'screenPageViews' },
+        { name: 'averageSessionDuration' },
+        { name: 'bounceRate' }
+      ],
+      dimensions: [{ name: 'pagePath' }],
+      orderBys: [{ metric: { metricName: 'screenPageViews' }, desc: true }],
+      limit: 10
+    });
+
+    const ga4Data = await new Promise((resolve, reject) => {
+      const r = https.request({
+        hostname: 'analyticsdata.googleapis.com',
+        path: `/v1beta/properties/${propertyId}:runReport`,
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + tokenData.access_token, 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) }
+      }, res => { let d = ''; res.on('data', x => d += x); res.on('end', () => resolve(JSON.parse(d))); });
+      r.on('error', reject);
+      r.write(body);
+      r.end();
+    });
+
+    // Also get top events
+    const eventsBody = JSON.stringify({
+      dateRanges: [{ startDate: range, endDate: 'today' }],
+      metrics: [{ name: 'eventCount' }],
+      dimensions: [{ name: 'eventName' }],
+      orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
+      limit: 20
+    });
+
+    const eventsData = await new Promise((resolve, reject) => {
+      const r = https.request({
+        hostname: 'analyticsdata.googleapis.com',
+        path: `/v1beta/properties/${propertyId}:runReport`,
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + tokenData.access_token, 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(eventsBody) }
+      }, res => { let d = ''; res.on('data', x => d += x); res.on('end', () => resolve(JSON.parse(d))); });
+      r.on('error', reject);
+      r.write(eventsBody);
+      r.end();
+    });
+
+    res.json({ pages: ga4Data, events: eventsData, range });
+  } catch (err) {
+    console.error('Analytics error:', err);
+    res.status(500).json({ error: 'Analytics query failed' });
+  }
+});
+
 // Start Express Server
 const server = app.listen(PORT, () => {
   console.log(`Server running in ${process.env.NODE_ENV || 'production'} mode on port ${PORT}`);
