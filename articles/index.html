@@ -594,7 +594,7 @@
         <div class="articles-grid" id="articlesGrid">
 
           <!-- Card: AI Visibility Guide -->
-          <div class="article-card" data-tags="ai-agents" data-modal="">
+          <div class="article-card" data-tags="ai-agents" data-modal="modal-ai-visibility">
             <div class="card-accent" style="background: var(--sky);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -618,7 +618,7 @@
           </div>
 
           <!-- Card 1: hitdlaciebie.pl AI Music SaaS -->
-          <div class="article-card" data-tags="full-stack" data-modal="">
+          <div class="article-card" data-tags="full-stack" data-modal="modal-hitdlaciebie">
             <div class="card-accent" style="background: var(--coral);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -1361,9 +1361,64 @@
         </div>
       </div>
       <div class="modal-footer">
-        <a class="action-btn dark" href="https://www.linkedin.com/feed/update/urn:li:activity:7455277852507332608/" target="_blank" rel="noreferrer">Read on LinkedIn ↗</a>
+        <a class="action-btn dark" href="/articles/ai-music-saas/">Read full article →</a>
+        <a class="action-btn" href="https://www.linkedin.com/feed/update/urn:li:activity:7455277852507332608/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
         <a class="action-btn" href="https://hitdlaciebie.pl" target="_blank" rel="noreferrer" style="background:var(--white);color:var(--black);">Visit site ↗</a>
         <button class="mini-btn" onclick="closeModal('modal-hitdlaciebie')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: AI Visibility Guide -->
+  <div class="modal-overlay" id="modal-ai-visibility" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-section-label">Guide · GEO · AI SEO · Website Audit</div>
+          <h2 class="modal-title">Why Your Website Is Invisible to ChatGPT, Claude and Perplexity</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-ai-visibility')">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="modal-section-label">The problem</div>
+          <div class="modal-text">
+            <p>You invested in Google SEO. Your site ranks. But when a potential client asks ChatGPT "who provides [your service] in [your city]" — your business does not appear. AI search engines use a completely different set of rules. Most business websites fail all of them.</p>
+            <p>AI crawlers like GPTBot, ClaudeBot and PerplexityBot do not execute JavaScript. They fetch raw HTML and move on. If your site runs on React, Vue or Angular without SSR, they see an empty page — no matter how good your Google ranking is. A Vercel + MERJ analysis of 500M+ GPTBot requests found zero JavaScript execution. 97% ghost ratio on pure CSR sites.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">5 factors AI crawlers check</div>
+          <div class="modal-text">
+            <p><strong>Server-Side Rendering</strong> — content must be in raw HTML before JS runs. React/Vue/Angular without SSR fail this instantly.</p>
+            <p><strong>AI Bot Access in robots.txt</strong> — GPTBot, ClaudeBot, PerplexityBot must be explicitly allowed. Many sites block them accidentally.</p>
+            <p><strong>llms.txt</strong> — a plain text file at /llms.txt that briefs AI models on what your business does and which pages matter.</p>
+            <p><strong>XML Sitemap</strong> — tells crawlers which pages exist. Without it, important pages get missed.</p>
+            <p><strong>Readable Content Volume</strong> — enough HTML text to understand what you do, for whom, and where.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Key insight</div>
+          <div class="modal-metrics">
+            <div class="modal-metric">
+              <span class="modal-metric-val">97%</span>
+              <span class="modal-metric-lbl">Ghost ratio on pure CSR sites</span>
+            </div>
+            <div class="modal-metric">
+              <span class="modal-metric-val">8</span>
+              <span class="modal-metric-lbl">AI readiness factors audited</span>
+            </div>
+            <div class="modal-metric">
+              <span class="modal-metric-val">Free</span>
+              <span class="modal-metric-lbl">Tool to check your site</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="action-btn dark" href="/articles/ai-visibility/">Read full article →</a>
+        <a class="action-btn" href="/ai-checker/" style="background:var(--white);color:var(--black);">Check your site free →</a>
+        <button class="mini-btn" onclick="closeModal('modal-ai-visibility')">Close</button>
       </div>
     </div>
   </div>
