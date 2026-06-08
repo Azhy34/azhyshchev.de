@@ -77,6 +77,14 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('resultsSection').insertBefore(warning, breakdownGrid);
         }
 
+        // CSR explainer block
+        const csrExplainer = document.getElementById('csrExplainer');
+        if (data.is_csr) {
+            csrExplainer.classList.remove('hidden');
+        } else {
+            csrExplainer.classList.add('hidden');
+        }
+
         // Grid
         breakdownGrid.innerHTML = '';
         const keys = Object.keys(data.breakdown);

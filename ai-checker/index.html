@@ -121,6 +121,28 @@
                         Checked at: <span id="checkedAt"></span>
                     </p>
 
+                    <div id="csrExplainer" class="csr-explainer hidden">
+                        <div class="csr-explainer-label">WHY YOUR SCORE IS LOW</div>
+                        <div class="csr-explainer-title">Your site is built with client-side rendering (React / Vue / Angular)</div>
+                        <div class="csr-explainer-text">
+                            AI crawlers like GPTBot, ClaudeBot and PerplexityBot do not execute JavaScript.
+                            They send one HTTP request, read the raw HTML, and move on.
+                            If your content is rendered by JavaScript in the browser, they see an empty page.
+                        </div>
+                        <ul class="csr-explainer-facts">
+                            <li>GPTBot (ChatGPT) - does not execute JS, sees empty HTML shell</li>
+                            <li>ClaudeBot (Anthropic) - does not execute JS, sees empty HTML shell</li>
+                            <li>PerplexityBot - does not execute JS, sees empty HTML shell</li>
+                            <li class="ok">Google-Extended (Gemini) - renders JS via Googlebot infrastructure</li>
+                            <li class="ok">Next.js SSR / Nuxt SSR / WordPress - content in initial HTML, fully visible</li>
+                        </ul>
+                        <div class="csr-explainer-text" style="margin-bottom:0;">
+                            Source: Vercel + MERJ analysis of 500M+ GPTBot requests - zero JavaScript execution detected.
+                            Pure CSR apps have a median 97% "ghost ratio" - almost all content invisible to AI.
+                            The fix: migrate to SSR (Next.js, Nuxt) or add server-side prerendering.
+                        </div>
+                    </div>
+
                     <div id="ctaBlock" class="cta-block hidden">
                         <div class="cta-label">NEED HELP FIXING THIS?</div>
                         <h2 class="cta-title">I can fix your AI visibility issues</h2>
