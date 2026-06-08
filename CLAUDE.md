@@ -53,6 +53,32 @@ Returns: top pages (views, sessions, users, bounce rate) + top events for given 
 
 To get analytics report: call the endpoint directly via Bash — no need to open GA4 UI.
 
+## GA4 Events implemented
+
+| Event | Trigger | Location |
+|-------|---------|---------|
+| `page_view` | auto (Enhanced Measurement) | all pages |
+| `scroll`, `file_download`, `outbound_click` | auto (Enhanced Measurement) | all pages |
+| `chat_open` | widget open | all pages |
+| `chat_language_selected` | language pick | widget |
+| `chat_message_sent` | message sent | widget |
+| `generate_lead` | email detected in chat | widget |
+| `book_call_click` | Calendly button click | contact, ai-checker, widget |
+| `project_view` | modal open | /projects |
+| `cv_download` | CV.pdf click | /experience, /skills, /cv |
+| `linkedin_click` | sidebar LinkedIn | /experience |
+| `ai_checker_analyze` | Analyze button | /ai-checker |
+
+**Key Events (конверсии) — пометить в GA4 UI:** `book_call_click`, `cv_download`, `generate_lead`
+
+**Custom Dimensions — зарегистрировать в GA4 Admin → Custom Definitions:**
+- `project_name` (event-scoped) — для `project_view`
+- `location` (event-scoped) — для `cv_download`, `book_call_click`
+
+**UTM на Calendly ссылках:** `utm_source=portfolio&utm_campaign=booking&utm_content=<contact|ai_checker|chat_header>`
+
+**Data Retention:** поставить 14 месяцев в GA4 Admin → Data Settings → Data Retention.
+
 ---
 
 ## File structure
