@@ -18,6 +18,41 @@ Technical documentation for azhyshchev.de. Keep this file up to date when adding
 **Frontend + chat backend:** one `git push` deploys both.
 **AI Checker API:** deploy separately via `cd portfolio/api && railway up` (must run from `api/` folder, not repo root).
 
+## Railway CLI
+
+Already authenticated as `azhischev1@gmail.com`. Use directly from terminal.
+
+**Chat backend service:**
+```bash
+railway link -p jubilant-tenderness -s 68396619-49be-430b-bcde-aaf1b116198d
+railway variables set KEY="value"
+railway variables list
+```
+
+**AI Checker API service:**
+```bash
+cd portfolio/api && railway up
+```
+
+**Projects:**
+| Project | Service | Purpose |
+|---------|---------|---------|
+| `jubilant-tenderness` | `azhyshchev.de` (ID: `68396619-49be-430b-bcde-aaf1b116198d`) | Chat backend |
+| `jubilant-tenderness` | `ai-readiness-api` | AI Checker FastAPI |
+| `jubilant-tenderness` | Postgres | AI Checker DB |
+
+## GA4 Analytics API
+
+Endpoint: `GET https://azhyshchevde-production.up.railway.app/api/analytics?range=7daysAgo`
+Auth: `X-Widget-Token: 3530a5f865dcb0cc6489f5999cb0bfcb`
+Returns: top pages (views, sessions, users, bounce rate) + top events for given date range.
+
+**Service account:** `ga4-reader@azhyshchev.iam.gserviceaccount.com` (Viewer on property 513620625)
+**Env vars on Railway:** `GA4_CLIENT_EMAIL`, `GA4_PRIVATE_KEY`
+**Property ID:** `513620625` (account `tappe-25b1a`, ID `375555359`)
+
+To get analytics report: call the endpoint directly via Bash — no need to open GA4 UI.
+
 ---
 
 ## File structure
@@ -152,12 +187,22 @@ PORT                    set by Railway automatically
 
 ---
 
-## Supabase tables
+## Databases
+
+### Supabase (cloud)
 
 | Table | Purpose |
 |-------|---------|
 | `chat_logs` | All widget conversations (session_id, ip, lang, messages, timestamp) |
 | `leads` | B2B outreach leads with audit data (email, company_name, gmaps_score, ai_use_case JSON) |
+
+### Railway PostgreSQL (project: jubilant-tenderness, local to Railway service)
+
+| Table | Purpose |
+|-------|---------|
+| `ai_checker_logs` | AI Readiness Checker results (url, score, verdict, breakdown JSONB, ip, checked_at) |
+
+Note: `ai_checker_logs` is NOT in Supabase — it lives in Railway Postgres, auto-created on API startup via `CREATE TABLE IF NOT EXISTS`.
 
 ---
 
