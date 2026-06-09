@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+<script src="/js/cookie-consent.js" defer></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧾</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="Rechnungen automatisch verarbeiten: E-Mail-Eingang, PDF-Extraktion, Gemini KI, Google Drive Ablage. Automatisierung Buchhaltung ohne manuelle Stunden. $0 Infrastrukturkosten.">
+  <meta name="keywords" content="automatisierung buchhaltung, rechnungen automatisch verarbeiten, rechnungen digitalisieren, rechnungseingang automatisieren, ki buchhaltung, rechnungsverarbeitung ki, pdf rechnung automatisch auslesen, eingangsrechnungen digitalisieren, e-mail automatisierung buchhaltung, gobd konforme buchfuhrung">
+  <meta name="author" content="Mikhail Azhyshchev">
+  <link rel="canonical" href="https://azhyshchev.de/de/artikel/rechnungsautomatisierung-pipeline/">
+  <link rel="alternate" hreflang="de" href="https://azhyshchev.de/de/artikel/rechnungsautomatisierung-pipeline/" />
+  <link rel="alternate" hreflang="en" href="https://azhyshchev.de/articles/invoice-automation-pipeline/" />
+  <link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/articles/invoice-automation-pipeline/" />
+
+  <meta property="og:title" content="Rechnungen automatisch verarbeiten: KI-Pipeline von E-Mail bis Datenbank | Mikhail Azhyshchev">
+  <meta property="og:description" content="Automatisierung Buchhaltung: IMAP-Abruf, PDF-Parsing, Gemini KI, Google Drive Ablage. 5 Lieferanten automatisiert, 0 manuelle Stunden, $0 Infrastrukturkosten.">
+  <meta property="og:url" content="https://azhyshchev.de/de/artikel/rechnungsautomatisierung-pipeline/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://azhyshchev.de/Azhyschev.JPG">
+  <meta property="og:locale" content="de_DE">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Rechnungen automatisch verarbeiten: KI-Pipeline in 5 Min. | Mikhail Azhyshchev">
+  <meta name="twitter:description" content="Automatisierung Buchhaltung: E-Mail → PDF → Gemini KI → Google Drive. 5 Lieferanten, 0 manuelle Stunden, $0 Infrastruktur.">
+
+  <title>Rechnungen automatisch verarbeiten: KI-Pipeline von E-Mail bis Datenbank | Mikhail Azhyshchev</title>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://azhyshchev.de/de/artikel/rechnungsautomatisierung-pipeline/#article",
+        "headline": "Rechnungen automatisch verarbeiten: KI-Pipeline von der E-Mail zur Datenbank",
+        "description": "Wie man Rechnungsverarbeitung aus E-Mails automatisiert: IMAP-Abruf, PDF-Extraktion, Gemini 2.5 Flash KI-Verifizierung, Google Drive Ablage, Supabase Logging. 0 manuelle Stunden, $0 Infrastrukturkosten.",
+        "author": { "@id": "https://azhyshchev.de/#person" },
+        "publisher": { "@id": "https://azhyshchev.de/#person" },
+        "datePublished": "2026-06-08",
+        "dateModified": "2026-06-09",
+        "inLanguage": "de",
+        "keywords": "automatisierung buchhaltung, rechnungen automatisch verarbeiten, rechnungen digitalisieren, rechnungseingang automatisieren, ki buchhaltung, rechnungsverarbeitung ki, pdf rechnung automatisch, eingangsrechnungen digitalisieren, gobd",
+        "url": "https://azhyshchev.de/de/artikel/rechnungsautomatisierung-pipeline/",
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://azhyshchev.de/de/artikel/rechnungsautomatisierung-pipeline/#webpage",
+        "url": "https://azhyshchev.de/de/artikel/rechnungsautomatisierung-pipeline/",
+        "name": "Rechnungen automatisch verarbeiten — Automatisierung Buchhaltung Pipeline",
+        "description": "KI-Pipeline zur automatischen Rechnungsverarbeitung: E-Mail-Eingang, PDF-Extraktion, Gemini KI, Google Drive Ablage, Supabase Logging. 0 manuelle Stunden.",
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" },
+        "author": { "@id": "https://azhyshchev.de/#person" },
+        "dateModified": "2026-06-09",
+        "inLanguage": "de",
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Start", "item": "https://azhyshchev.de/de/" },
+            { "@type": "ListItem", "position": 2, "name": "Artikel", "item": "https://azhyshchev.de/de/artikel/" },
+            { "@type": "ListItem", "position": 3, "name": "Rechnungsautomatisierung Pipeline" }
+          ]
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Wie extrahiert KI Daten aus PDF-Rechnungen?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ein zweistufiger Ansatz funktioniert am besten. Zuerst läuft ein deterministischer Parser mit Regex und Schlüsselwort-Triggern, um strukturierte Felder zu extrahieren: Lieferantenname, Rechnungsnummer, Datum, Gesamtbetrag. Dann verifiziert und normalisiert Gemini 2.5 Flash die Ausgabe, behandelt Sonderfälle und füllt fehlende Felder. So funktioniert die Grundextraktion auch dann noch, wenn die KI-API nicht verfügbar ist."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Wie verhindert man doppelte Rechnungsverarbeitung?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Zwei Deduplizierungsebenen: auf Anhangs-Ebene mit Nachrichten-ID plus Datei-Hash, und auf Geschäftsebene mit Lieferantenname plus Rechnungsnummer. Das deckt weitergeleitete E-Mails, Cron-Job-Neustarts und Fälle ab, in denen dieselbe PDF zweimal in einer Nachricht ankommt. Jeder Anhang erhält einen Verarbeitungseintrag in der Datenbank."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Was kostet eine automatisierte Rechnungspipeline?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Bei GitHub Actions als Scheduler sind die Infrastrukturkosten effektiv $0. GitHub Actions bietet 2.000 kostenlose Minuten pro Monat, mehr als genug für stündliche Rechnungsprüfungen. Die einzige variable Kosten sind KI-API-Nutzung (Gemini 2.5 Flash Tokens pro PDF), die bei normalem Geschäftsvolumen minimal sind."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --sky: #61b5e8; --mint: #b9ddb7; --cream: #f8f0dc; --yellow: #f5c84b; --pink: #efb2d5; --blue: #d8ebff; --peach: #f7d4b1; --coral: #ff9a77; --rose: #ecb0c4; --black: #111111; --white: #ffffff; --accent: var(--mint); }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { min-height: 100vh; font-family: 'JetBrains Mono', monospace; color: var(--black); background: linear-gradient(120deg, var(--mint) 0 34%, var(--blue) 34% 60%, var(--peach) 60% 100%); padding: 48px 24px; }
+    a { color: inherit; text-decoration: none; }
+    .shell { width: min(1320px, 100%); margin: 0 auto; border: 3px solid var(--black); box-shadow: 12px 12px 0 var(--black); background: var(--mint); display: grid; grid-template-columns: 250px 1fr; min-height: 820px; overflow: hidden; }
+    .sidebar { border-right: 3px solid var(--black); padding: 20px 18px; display: flex; flex-direction: column; gap: 22px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 8px; }
+    .brand-badge { width: 42px; height: 34px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 1rem; font-weight: 800; }
+    .nav { display: flex; flex-direction: column; gap: 8px; }
+    .nav-item { display: flex; align-items: center; gap: 12px; padding: 11px 12px; font-size: 0.9rem; font-weight: 700; border: 2px solid transparent; transition: transform 0.18s ease; }
+    .nav-item:hover { transform: translate(-2px, -2px); }
+    .nav-item.active { background: var(--black); color: var(--white); }
+    .icon-box { width: 24px; height: 24px; display: grid; place-items: center; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); font-size: 0.75rem; font-weight: 800; }
+    .nav-item.active .icon-box { background: var(--yellow); color: var(--black); }
+    .sidebar-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+    .socials { display: flex; gap: 10px; padding-top: 8px; }
+    .social-link { width: 42px; height: 42px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 0.8rem; font-weight: 800; transition: transform 0.18s ease; }
+    .social-link:hover { transform: translate(-2px, -2px); }
+    .main { background: var(--cream); padding: 22px; }
+    .panel { border: 2px solid var(--black); background: rgba(255,255,255,0.2); padding: 18px; display: flex; flex-direction: column; gap: 28px; }
+    .breadcrumb { font-size: 0.78rem; opacity: 0.6; display: flex; align-items: center; gap: 8px; }
+    .breadcrumb a:hover { opacity: 1; text-decoration: underline; }
+    .article-hero { border: 3px solid var(--black); background: var(--accent); box-shadow: 6px 6px 0 var(--black); padding: 28px 24px; }
+    .article-type { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; margin-bottom: 12px; }
+    .article-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.04em; margin-bottom: 16px; }
+    .article-lead { font-size: 0.95rem; line-height: 1.65; max-width: 72ch; }
+    .metrics-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+    .metric-box { border: 2px solid var(--black); background: rgba(255,255,255,0.75); padding: 14px 12px; }
+    .metric-box strong { display: block; font-size: 1.3rem; line-height: 1; margin-bottom: 6px; }
+    .metric-box span { font-size: 0.72rem; line-height: 1.4; opacity: 0.8; }
+    .article-body { display: flex; flex-direction: column; gap: 24px; }
+    .neo-card { border: 3px solid var(--black); background: var(--white); box-shadow: 6px 6px 0 var(--black); padding: 24px; }
+    .section-label { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.45; margin-bottom: 10px; }
+    .section-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.02em; }
+    .prose { display: flex; flex-direction: column; gap: 14px; }
+    .prose p { font-size: 0.88rem; line-height: 1.75; }
+    .prose h3 { font-size: 0.95rem; font-weight: 800; margin-top: 8px; letter-spacing: -0.02em; }
+    .prose ul { padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
+    .prose li { font-size: 0.88rem; line-height: 1.65; }
+    .prose code { background: var(--cream); border: 1px solid var(--black); padding: 1px 5px; font-size: 0.82rem; }
+    .pipeline-diagram { border: 2px solid var(--black); background: var(--cream); padding: 18px 22px; font-size: 0.84rem; line-height: 2.4; font-weight: 700; margin: 16px 0; overflow-x: auto; }
+    .pipeline-step { display: inline-block; border: 2px solid var(--black); padding: 4px 10px; background: var(--white); box-shadow: 2px 2px 0 var(--black); }
+    .pipeline-arrow { opacity: 0.5; margin: 0 6px; }
+    .highlight-box { border: 3px solid var(--black); background: var(--yellow); box-shadow: 4px 4px 0 var(--black); padding: 18px 20px; }
+    .highlight-box h3 { font-size: 0.9rem; font-weight: 800; margin-bottom: 10px; }
+    .highlight-box p { font-size: 0.84rem; line-height: 1.65; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .layer-block { border: 2px solid var(--black); padding: 16px; margin-bottom: 14px; }
+    .layer-title { font-size: 0.82rem; font-weight: 800; margin-bottom: 8px; }
+    .layer-desc { font-size: 0.8rem; line-height: 1.6; opacity: 0.85; }
+    .dedup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+    .dedup-card { border: 2px solid var(--black); padding: 14px; background: var(--cream); }
+    .dedup-card strong { display: block; font-size: 0.82rem; margin-bottom: 6px; }
+    .dedup-card span { font-size: 0.76rem; line-height: 1.55; opacity: 0.8; }
+    .step-list { display: flex; flex-direction: column; gap: 12px; counter-reset: steps; }
+    .step-item { border: 2px solid var(--black); padding: 14px 16px; display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: start; }
+    .step-num { width: 36px; height: 36px; border: 2px solid var(--black); background: var(--yellow); display: grid; place-items: center; font-size: 0.9rem; font-weight: 800; box-shadow: 2px 2px 0 var(--black); }
+    .step-content strong { display: block; font-size: 0.84rem; font-weight: 800; margin-bottom: 4px; }
+    .step-content p { font-size: 0.78rem; line-height: 1.6; opacity: 0.85; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .chip { padding: 6px 10px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); font-size: 0.72rem; font-weight: 700; }
+    .faq { display: flex; flex-direction: column; gap: 16px; }
+    .faq-item { border: 2px solid var(--black); background: var(--cream); padding: 18px 20px; }
+    .faq-q { font-size: 0.9rem; font-weight: 800; margin-bottom: 10px; }
+    .faq-a { font-size: 0.84rem; line-height: 1.7; opacity: 0.85; }
+    .cta-strip { border: 3px solid var(--black); background: var(--black); color: var(--white); box-shadow: 6px 6px 0 rgba(0,0,0,0.3); padding: 22px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .cta-strip p { font-size: 0.9rem; line-height: 1.5; max-width: 58ch; }
+    .cta-strip strong { display: block; font-size: 1rem; margin-bottom: 4px; }
+    .cta-btn { padding: 12px 20px; border: 2px solid var(--white); background: var(--white); color: var(--black); font: inherit; font-weight: 700; cursor: pointer; white-space: nowrap; transition: transform 0.15s; display: inline-block; }
+    .cta-btn:hover { transform: translate(-2px,-2px); }
+    .cta-btn.yellow { background: var(--yellow); border-color: var(--yellow); }
+    .cta-btn.outline { background: transparent; color: var(--white); }
+    .back-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 2px solid var(--black); background: var(--white); box-shadow: 4px 4px 0 var(--black); font-size: 0.82rem; font-weight: 700; transition: transform 0.15s; align-self: flex-start; }
+    .back-link:hover { transform: translate(-2px,-2px); }
+    @media (max-width: 1100px) { .shell { grid-template-columns: 220px 1fr; } .metrics-row { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 820px) { body { padding: 10px 8px 72px; } .shell { grid-template-columns: 1fr; box-shadow: 6px 6px 0 var(--black); min-height: unset; } .sidebar { border-right: none; border-bottom: 3px solid var(--black); padding: 10px 14px; flex-direction: row; align-items: center; justify-content: space-between; } .brand { font-size: clamp(0.95rem,2.5vw,1.6rem); } .nav { display: none; } .sidebar-bottom { display: none; } .main { padding: 14px; } .two-col { grid-template-columns: 1fr; } .dedup-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 520px) { .metrics-row { grid-template-columns: 1fr; } .article-title { font-size: 1.5rem; } }
+  </style>
+  <link rel="stylesheet" href="/mobile.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="/de/"><div class="brand-badge">&lt;/&gt;</div><span>AZHYSHCHEV</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Navigation umschalten">&#9776;</button>
+      <nav class="nav">
+        <a class="nav-item" href="/de/"><span class="icon-box">H</span><span>Start</span></a>
+        <a class="nav-item" href="/ai-checker/"><span class="icon-box">🤖</span><span>KI-Checker</span></a>
+        <a class="nav-item" href="/de/erfahrung/"><span class="icon-box">E</span><span>Erfahrung</span></a>
+        <a class="nav-item" href="/de/projekte/"><span class="icon-box">P</span><span>Projekte</span></a>
+        <a class="nav-item active" href="/articles/"><span class="icon-box">A</span><span>Artikel</span></a>
+        <a class="nav-item" href="/de/fahigkeiten/"><span class="icon-box">S</span><span>Fähigkeiten</span></a>
+        <a class="nav-item" href="/de/kontakt/"><span class="icon-box">C</span><span>Kontakt</span></a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a class="nav-item" href="/CV.pdf" download><span class="icon-box">CV</span><span>CV herunterladen</span></a>
+        <a class="nav-item" href="mailto:azhyshchev@gmail.com"><span class="icon-box">@</span><span>E-Mail</span></a>
+        <div class="socials">
+          <a class="social-link" href="https://www.linkedin.com/in/azhyshchev/" target="_blank" rel="noreferrer">in</a>
+          <a class="social-link" href="https://github.com/Azhy34" target="_blank" rel="noreferrer">gh</a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="panel">
+
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/de/">Start</a><span>→</span>
+          <a href="/articles/">Artikel</a><span>→</span>
+          <span>Rechnungsautomatisierung Pipeline</span>
+        </nav>
+
+        <div class="article-hero">
+          <div class="article-type">Automatisierung · KI-Pipeline · Dokumentenverarbeitung</div>
+          <h1 class="article-title">Rechnungen automatisch verarbeiten: E-Mail → Google Drive → Datenbank in 5 Minuten</h1>
+          <p class="article-lead">Rechnungen von 5 Lieferanten landen jede Woche im E-Mail-Postfach: Miele, Siemens, Liebherr, Bosch, Smeg. Alle in unterschiedlichen Formaten, verschiedenen Dateinamen. Jemand muss das Postfach öffnen, die Anhänge finden, jedes Dokument klassifizieren, Daten extrahieren, im richtigen Ordner ablegen und in die Buchhaltung eintragen. Jede Woche neu. Diese Pipeline erledigt das vollautomatisch. Null manuelle Stunden. $0 Infrastrukturkosten.</p>
+          <div class="metrics-row">
+            <div class="metric-box"><strong>0</strong><span>Manuelle Stunden pro Woche, vorher mehrere Stunden</span></div>
+            <div class="metric-box"><strong>5</strong><span>Lieferanten automatisiert: Miele, Siemens, Liebherr, Bosch, Smeg</span></div>
+            <div class="metric-box"><strong>$0</strong><span>Infrastrukturkosten, läuft auf GitHub Actions Free Tier</span></div>
+            <div class="metric-box"><strong>100%</strong><span>Automatische Ablage und Protokollierung, nichts geht verloren</span></div>
+          </div>
+        </div>
+
+        <div class="article-body">
+
+          <div class="neo-card">
+            <div class="section-label">Das Problem</div>
+            <h2 class="section-title">Die wöchentliche Routine, die still Stunden frisst</h2>
+            <div class="prose">
+              <p>Die manuelle Rechnungsverarbeitung aus E-Mails ist unsichtbare Arbeit. Sie fühlt sich nicht wie ein Problem an, weil jede einzelne Aktion nur Minuten dauert. Aber multipliziere diese Minuten mit jedem Lieferanten, jeder Woche, jedem Monat, und die Zahlen summieren sich schnell.</p>
+              <p>Das konkrete Problem hier: fünf Lieferanten senden Rechnungen in völlig unterschiedlichen Formaten. Verschiedene Dateibenennungskonventionen. Verschiedene Feldpositionen. Unterschiedliche PDF-Strukturen, einige textbasiert, andere gescannte Bilder. Keine zwei Dokumente sehen gleich aus. Ein Mensch lernt intuitiv mit dieser Varianz umzugehen. Eine naive Automatisierung bricht beim ersten Sonderfall zusammen.</p>
+              <p>Das Zielresultat war klar: Rechnungen kommen per E-Mail an, werden ohne jegliche menschliche Beteiligung verarbeitet, landen im richtigen Google Drive-Ordner mit einheitlichem Dateinamen, werden in einer Datenbank protokolliert, und für jeden erfolgreichen Durchlauf gibt es eine Telegram-Benachrichtigung.</p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <h3>Die zentrale Designentscheidung: KI zur Normalisierung, nicht zur Extraktion</h3>
+            <p>Gemini 2.5 Flash ist nicht die Quelle der Wahrheit, die PDF ist es. Ein deterministischer Basis-Parser läuft zuerst (Regex, Schlüsselwort-Trigger, Feldextraktion). Gemini verifiziert und normalisiert darüber. Wenn die KI-API nicht verfügbar ist, liefert der Fallback trotzdem verwertbare Ausgabe. Das LLM behandelt Varianz, der Parser behandelt Fakten.</p>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">End-to-End Pipeline</div>
+            <h2 class="section-title">Wie die Pipeline funktioniert</h2>
+            <div class="pipeline-diagram">
+              <span class="pipeline-step">GitHub Actions Cron</span>
+              <span class="pipeline-arrow">→</span>
+              <span class="pipeline-step">IMAP: neue E-Mails abrufen</span>
+              <span class="pipeline-arrow">→</span>
+              <span class="pipeline-step">Anhang-Filter (nur PDF)</span>
+              <br>
+              <span class="pipeline-arrow" style="margin-left:180px;">↓</span>
+              <br>
+              <span class="pipeline-step">Deduplizierung (Nachrichten-ID + Hash)</span>
+              <span class="pipeline-arrow">→</span>
+              <span class="pipeline-step">pdf-parse → Rohtext</span>
+              <span class="pipeline-arrow">→</span>
+              <span class="pipeline-step">Basis-Regex-Parser</span>
+              <br>
+              <span class="pipeline-arrow" style="margin-left:400px;">↓</span>
+              <br>
+              <span class="pipeline-step">Gemini 2.5 Flash: Verifizierung + Normalisierung</span>
+              <span class="pipeline-arrow">→</span>
+              <span class="pipeline-step">Google Drive Upload</span>
+              <br>
+              <span class="pipeline-arrow" style="margin-left:320px;">↓</span>
+              <br>
+              <span class="pipeline-step">Supabase Protokoll</span>
+              <span class="pipeline-arrow">→</span>
+              <span class="pipeline-step">Telegram Benachrichtigung</span>
+            </div>
+            <div class="step-list">
+              <div class="step-item">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                  <strong>GitHub Actions Cron-Trigger</strong>
+                  <p>Läuft nach Zeitplan, stündlich oder täglich je nach Rechnungsvolumen. Kein Server nötig. Das Free Tier deckt jedes normale Geschäftsvolumen problemlos ab.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                  <strong>IMAP-Abruf und -Filter</strong>
+                  <p>Verbindet sich mit dem Postfach, findet ungesehene Nachrichten, extrahiert nur PDF-Anhänge. Nachrichten-IDs werden sofort für die Deduplizierung erfasst.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                  <strong>Deduplizierung, zwei Ebenen</strong>
+                  <p>Anhangsebene: Nachrichten-ID + Datei-Hash. Geschäftsebene: Lieferantenname + Rechnungsnummer. Deckt weitergeleitete E-Mails, Cron-Neustarts und doppelte PDFs in einer Nachricht ab.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                  <strong>PDF-Parsing und Basis-Extraktion</strong>
+                  <p>pdf-parse extrahiert Rohtext. Ein deterministischer Parser führt Regex und Schlüsselwort-Trigger aus, um strukturierte Felder zu extrahieren: Lieferant, Rechnungsnummer, Datum, Gesamtbetrag, MwSt-Betrag.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">5</div>
+                <div class="step-content">
+                  <strong>Gemini 2.5 Flash Normalisierung</strong>
+                  <p>Die KI verifiziert die Basis-Ausgabe, normalisiert Datumsformate, füllt Lücken, die Regex nicht konnte, und behandelt lieferantenspezifische Formatierungsbesonderheiten. Läuft nur auf Feldern, die der Basis-Parser nicht zuverlässig extrahieren konnte.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">6</div>
+                <div class="step-content">
+                  <strong>Google Drive Ablage</strong>
+                  <p>PDF wird in den richtigen Lieferanten-Unterordner mit einheitlichem Dateinamen hochgeladen: <code>JJJJ-MM-TT_Lieferant_Rechnungsnummer.pdf</code>. Ordnerstruktur spiegelt das bestehende Buchhaltungssystem des Kunden wider.</p>
+                </div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">7</div>
+                <div class="step-content">
+                  <strong>Supabase Protokoll + Telegram-Alert</strong>
+                  <p>Jeder Anhang erhält einen <code>processing_log</code>-Eintrag, egal ob erfolgreich, dedupliziert, Parsing-Fehler oder API-Fehler. Nichts geht still verloren. Telegram sendet nach jedem Durchlauf eine Zusammenfassung.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="neo-card">
+              <div class="section-label">Zweischichtiges KI-Design</div>
+              <h2 class="section-title">Warum nicht einfach Gemini für alles nutzen?</h2>
+              <div class="prose">
+                <p>Reine KI-Extraktion ist für Finanzdokumente unzuverlässig. Das Modell kann Beträge halluzinieren, Währungssymbole falsch lesen und über Durchläufe inkonsistente Datumsformate produzieren.</p>
+                <p>Der Basis-Parser behandelt, was Regex perfekt kann: Lieferantennamen an bekannten Positionen, Rechnungsnummern mit bekannten Mustern, Gesamtbeträge in erwarteten Feldern. Er ist schnell, deterministisch und kostet nichts.</p>
+                <p>Gemini behandelt, was Regex nicht kann: Variationen in Feldpositionen über Lieferantenformate hinweg, nicht-standardisierte Datumsstrings, Sonderfälle wo die PDF-Struktur vom Muster abweicht. Es sieht nur die Felder, die der Basis-Parser nicht zuverlässig extrahieren konnte.</p>
+                <p>Das Ergebnis: deterministische Genauigkeit wo möglich, KI-Flexibilität wo nötig, und die Pipeline funktioniert auch wenn die API ausfällt.</p>
+              </div>
+            </div>
+
+            <div class="neo-card">
+              <div class="section-label">Deduplizierung</div>
+              <h2 class="section-title">Zwei Ebenen, nichts wird doppelt verarbeitet</h2>
+              <div class="prose">
+                <p>Rechnungen kommen auf unvorhersehbare Weise an: weitergeleitet von einem Kollegen, dieselbe PDF an zwei Follow-up-E-Mails angehängt, der Cron-Job startet mitten im Durchlauf neu. Ohne ordentliche Deduplizierung verursacht jedes dieser Szenarien Doppelverarbeitung.</p>
+              </div>
+              <div class="dedup-grid">
+                <div class="dedup-card">
+                  <strong>Ebene 1: Anhangsebene</strong>
+                  <span>Nachrichten-ID + SHA-256-Hash der PDF-Datei. Fängt erneute Zusendungen derselben Datei ab, bevor jede Verarbeitung beginnt.</span>
+                </div>
+                <div class="dedup-card">
+                  <strong>Ebene 2: Geschäftsebene</strong>
+                  <span>Lieferantenname + Rechnungsnummer. Fängt dieselbe Rechnung als anderen Anhang ab (umbenannt, neu aus Buchhaltungssoftware exportiert).</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Was protokolliert wird</div>
+            <h2 class="section-title">Nichts geht still verloren, vollständige Nachvollziehbarkeit</h2>
+            <div class="prose">
+              <p>Jeder Anhang erhält einen Eintrag in Supabase, unabhängig vom Ergebnis: ob erfolgreich verarbeitet, dedupliziert, Parsing fehlgeschlagen oder API-Fehler. Der Eintrag enthält: Anhang-Dateiname, Nachrichten-ID, Verarbeitungsstatus, extrahierte Felder, Drive-Datei-ID falls hochgeladen, Fehlermeldung falls fehlgeschlagen, und Zeitstempel.</p>
+              <p>Der Kunde kann jederzeit nachverfolgen, was mit einer bestimmten Rechnung passiert ist. "Wo ist die Siemens-Rechnung vom 12. März?" — die Antwort ist eine SQL-Abfrage entfernt.</p>
+              <p>Die Telegram-Benachrichtigung sendet nach jeder Cron-Ausführung eine Zusammenfassung: wie viele E-Mails geprüft, wie viele Anhänge gefunden, wie viele verarbeitet, wie viele als Duplikat übersprungen, eventuelle Fehler. GoBD-konform: vollständige Protokollierung ohne stille Fehler.</p>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">FAQ</div>
+            <h2 class="section-title">Häufige Fragen zur Rechnungsautomatisierung</h2>
+            <div class="faq">
+              <div class="faq-item">
+                <div class="faq-q">Wie extrahiert KI Daten aus PDF-Rechnungen?</div>
+                <div class="faq-a">Ein zweistufiger Ansatz funktioniert am besten. Zuerst läuft ein deterministischer Parser mit Regex und Schlüsselwort-Triggern, um strukturierte Felder zu extrahieren: Lieferantenname, Rechnungsnummer, Datum, Gesamtbetrag. Dann verifiziert und normalisiert Gemini 2.5 Flash die Ausgabe, behandelt Sonderfälle und füllt fehlende Felder. So funktioniert die Grundextraktion auch dann noch, wenn die KI-API nicht verfügbar ist.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">Wie verhindert man doppelte Rechnungsverarbeitung?</div>
+                <div class="faq-a">Zwei Deduplizierungsebenen: auf Anhangsebene mit Nachrichten-ID plus Datei-Hash, und auf Geschäftsebene mit Lieferantenname plus Rechnungsnummer. Das deckt weitergeleitete E-Mails, Cron-Job-Neustarts und Fälle ab, in denen dieselbe PDF zweimal in einer Nachricht ankommt. Jeder Anhang erhält unabhängig vom Ergebnis einen Verarbeitungseintrag, nichts geht still verloren.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">Was kostet eine automatisierte Rechnungspipeline?</div>
+                <div class="faq-a">Bei GitHub Actions als Scheduler sind die Infrastrukturkosten effektiv $0. GitHub Actions bietet 2.000 kostenlose Minuten pro Monat, mehr als genug für stündliche Rechnungsprüfungen, die jeweils nur wenige Sekunden laufen. Die einzige variable Kosten sind die KI-API-Nutzung (Gemini 2.5 Flash Tokens pro PDF), die bei normalem Geschäftsvolumen minimal sind.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Tech Stack</div>
+            <h2 class="section-title">Verwendete Technologien</h2>
+            <div class="chips">
+              <span class="chip">Node.js</span>
+              <span class="chip">TypeScript</span>
+              <span class="chip">IMAP</span>
+              <span class="chip">pdf-parse</span>
+              <span class="chip">Gemini 2.5 Flash</span>
+              <span class="chip">Google Drive API</span>
+              <span class="chip">Supabase</span>
+              <span class="chip">GitHub Actions</span>
+              <span class="chip">Telegram Bot API</span>
+              <span class="chip">VS Code + Claude Code</span>
+            </div>
+          </div>
+
+          <div class="cta-strip">
+            <div>
+              <strong>Haben Sie wiederkehrende manuelle Dokumentenverarbeitung in Ihrem Unternehmen?</strong>
+              <p>Ich baue Automatisierungspipelines, die wiederkehrende manuelle Arbeit eliminieren: Rechnungsverarbeitung, Dokumentenklassifikation, Datenextraktion aus E-Mails. Funktioniert mit jedem Dokumentformat: PDFs, Word-Dateien, gescannte Bilder. Standort München, Projekte in ganz Europa.</p>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a class="cta-btn yellow" href="https://calendly.com/azhyshchev/30min?utm_source=portfolio&utm_medium=website&utm_campaign=booking&utm_content=rechnungsautomatisierung_de" target="_blank" rel="noreferrer">Kostenloses Gespräch buchen</a>
+              <a class="cta-btn outline" href="mailto:azhyshchev@gmail.com">Nachricht schicken</a>
+            </div>
+          </div>
+
+          <a class="back-link" href="/articles/">← Zurück zu den Artikeln</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <nav class="mobile-bottom-nav" id="mobileBottomNav">
+    <a class="mbn-item" href="/de/"><span class="mbn-icon">&lt;/&gt;</span><span class="mbn-label">Start</span></a>
+    <a class="mbn-item" href="/ai-checker/"><span class="mbn-icon">🤖</span><span class="mbn-label">KI-Checker</span></a>
+    <a class="mbn-item" href="/de/erfahrung/"><span class="mbn-icon">E</span><span class="mbn-label">Erfahrung</span></a>
+    <a class="mbn-item" href="/de/projekte/"><span class="mbn-icon">P</span><span class="mbn-label">Projekte</span></a>
+    <a class="mbn-item active" href="/articles/"><span class="mbn-icon">A</span><span class="mbn-label">Artikel</span></a>
+    <a class="mbn-item" href="/de/kontakt/"><span class="mbn-icon">C</span><span class="mbn-label">Kontakt</span></a>
+  </nav>
+  <script src="/js/nav.js"></script>
+  <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" data-api-url="https://azhyshchevde-production.up.railway.app/api/chat" defer></script>
+  <script>
+    (function () {
+      document.querySelectorAll('a[href*="calendly"]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (window.gtag) gtag('event', 'book_call_click', { location: 'rechnungsautomatisierung_de' });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
