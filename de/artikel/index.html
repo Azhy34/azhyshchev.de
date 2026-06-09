@@ -81,6 +81,7 @@
       --blue: #d8ebff;
       --peach: #f7d4b1;
       --coral: #ff9a77;
+      --rose: #ecb0c4;
       --black: #111111;
       --white: #ffffff;
     }
@@ -89,7 +90,7 @@
 
     body {
       font-family: "JetBrains Mono", monospace;
-      background: var(--cream);
+      background: linear-gradient(120deg, var(--sky) 0 34%, var(--peach) 34% 55%, var(--coral) 55% 72%, var(--rose) 72% 100%);
       color: var(--black);
       min-height: 100vh;
       padding: 32px 24px;
@@ -105,7 +106,7 @@
       box-shadow: 12px 12px 0 var(--black);
       display: grid;
       grid-template-columns: 200px 1fr;
-      background: var(--white);
+      background: var(--mint);
     }
 
     .sidebar {
@@ -234,6 +235,7 @@
       background: var(--white);
       display: flex;
       flex-direction: column;
+      cursor: pointer;
       transition: transform 0.15s, box-shadow 0.15s;
     }
 
@@ -468,7 +470,7 @@
         <div class="articles-grid">
 
           <!-- Card: KI-Sichtbarkeit -->
-          <div class="article-card">
+          <div class="article-card" onclick="window.location.href='/de/artikel/ki-sichtbarkeit-website/'">
             <div class="card-accent" style="background: var(--sky);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -492,7 +494,7 @@
           </div>
 
           <!-- Card: KI Musik SaaS -->
-          <div class="article-card">
+          <div class="article-card" onclick="window.location.href='/de/artikel/ki-musik-saas/'">
             <div class="card-accent" style="background: var(--coral);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -516,7 +518,7 @@
           </div>
 
           <!-- Card: RAG Kundenservice E-Commerce -->
-          <div class="article-card">
+          <div class="article-card" onclick="window.location.href='/de/artikel/rag-kundenservice-ecommerce/'">
             <div class="card-accent" style="background: var(--mint);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -541,7 +543,7 @@
           </div>
 
           <!-- Card: Rechnungsautomatisierung -->
-          <div class="article-card">
+          <div class="article-card" onclick="window.location.href='/de/artikel/rechnungsautomatisierung-pipeline/'">
             <div class="card-accent" style="background: var(--mint);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -565,7 +567,7 @@
           </div>
 
           <!-- Card: KI Bildkomposition -->
-          <div class="article-card">
+          <div class="article-card" onclick="window.location.href='/de/artikel/ki-bildkomposition/'">
             <div class="card-accent" style="background: var(--pink);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -589,7 +591,7 @@
           </div>
 
           <!-- Card: Hybrid RAG Verkaufsassistent -->
-          <div class="article-card">
+          <div class="article-card" onclick="window.location.href='/de/artikel/hybrid-rag-verkaufsassistent/'">
             <div class="card-accent" style="background: var(--yellow);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -613,7 +615,7 @@
           </div>
 
           <!-- Card: Tapeten KI Automatisierung -->
-          <div class="article-card">
+          <div class="article-card" onclick="window.location.href='/de/artikel/tapeten-ki-automatisierung/'">
             <div class="card-accent" style="background: var(--peach);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -637,7 +639,7 @@
           </div>
 
           <!-- Card: B2B Lead Pipeline Deutschland -->
-          <div class="article-card">
+          <div class="article-card" onclick="window.location.href='/de/artikel/b2b-lead-pipeline-deutschland/'">
             <div class="card-accent" style="background: var(--yellow);"></div>
             <div class="card-body">
               <div class="card-meta">
