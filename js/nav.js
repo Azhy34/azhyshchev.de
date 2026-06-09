@@ -14,8 +14,12 @@ var langMap = {
   '/de/kontakt/': '/contact/'
 };
 
+function normalizePath(p) {
+  return p === '/' ? p : (p.endsWith('/') ? p : p + '/');
+}
+
 function switchLang() {
-  var alt = langMap[window.location.pathname];
+  var alt = langMap[normalizePath(window.location.pathname)];
   if (alt) {
     try { localStorage.setItem('lang', alt.startsWith('/de/') ? 'de' : 'en'); } catch(e) {}
     window.location.href = alt;
@@ -23,7 +27,7 @@ function switchLang() {
 }
 
 (function () {
-  var path = window.location.pathname;
+  var path = normalizePath(window.location.pathname);
   var isDE = path.startsWith('/de');
   if (!langMap[path]) return;
 
@@ -67,9 +71,10 @@ function switchLang() {
   var path = window.location.pathname;
   document.querySelectorAll('.mbn-item').forEach(function (el) {
     var href = el.getAttribute('href');
-    if (href === '/' && (path === '/' || path === '/index.html')) {
+    var isRoot = href === '/' || href === '/de/';
+    if (isRoot && (path === href || path === href + 'index.html')) {
       el.classList.add('active');
-    } else if (href !== '/' && path.startsWith(href)) {
+    } else if (!isRoot && path.startsWith(href)) {
       el.classList.add('active');
     }
   });
