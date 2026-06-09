@@ -189,6 +189,19 @@
   </url>
 
   <url>
+    <loc>https://azhyshchev.de/articles/ai-visibility/</loc>
+    <lastmod>2026-06-08</lastmod>
+    <priority>0.85</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://azhyshchev.de/articles/ai-music-saas/</loc>
+    <lastmod>2026-06-08</lastmod>
+    <priority>0.85</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <url>
     <loc>https://azhyshchev.de/ai-checker/</loc>
     <lastmod>2026-06-08</lastmod>
     <priority>0.9</priority>

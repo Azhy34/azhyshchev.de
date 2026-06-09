@@ -35,11 +35,23 @@ function switchLang() {
 (function () {
   var path = normalizePath(window.location.pathname);
   var isDE = path.startsWith('/de');
+
+  /* Auto-redirect if user chose DE and this page has a DE version */
+  var savedLang = null;
+  try { savedLang = localStorage.getItem('lang'); } catch(e) {}
+  if (savedLang === 'de' && !isDE) {
+    var deAlt = langMap[path];
+    if (deAlt && deAlt.startsWith('/de')) {
+      window.location.replace(deAlt);
+      return;
+    }
+  }
+
   if (!langMap[path]) return;
 
   /* Inject button CSS once */
   var style = document.createElement('style');
-  style.textContent = '.lang-btn{font-family:"JetBrains Mono",monospace;font-weight:800;font-size:0.75rem;background:var(--cream,#f8f0dc);color:var(--black,#111);border:2px solid var(--black,#111);box-shadow:3px 3px 0 var(--black,#111);padding:6px 12px;cursor:pointer;width:100%;text-align:left;margin-top:4px;}.lang-btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--black,#111);}.lang-btn .lang-current{font-weight:900;}';
+  style.textContent = '.lang-btn{font-family:"JetBrains Mono",monospace;font-weight:800;font-size:0.75rem;background:var(--cream,#f8f0dc);color:var(--black,#111);border:2px solid var(--black,#111);box-shadow:3px 3px 0 var(--black,#111);padding:6px 12px;cursor:pointer;width:100%;text-align:left;margin-top:4px;}.lang-btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--black,#111);}.lang-btn .lang-current{font-weight:900;background:var(--yellow,#f5c84b);padding:1px 5px;border-radius:0;}.lang-btn .lang-alt{font-weight:700;opacity:0.55;}';
   document.head.appendChild(style);
 
   var sidebarBottom = document.querySelector('.sidebar-bottom');
