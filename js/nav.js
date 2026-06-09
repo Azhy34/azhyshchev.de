@@ -23,7 +23,9 @@ var langMap = {
   '/articles/rag-sales-agent-ecommerce/': '/de/artikel/rag-kundenservice-ecommerce/',
   '/de/artikel/rag-kundenservice-ecommerce/': '/articles/rag-sales-agent-ecommerce/',
   '/articles/ai-image-composer/': '/de/artikel/ki-bildkomposition/',
-  '/de/artikel/ki-bildkomposition/': '/articles/ai-image-composer/'
+  '/de/artikel/ki-bildkomposition/': '/articles/ai-image-composer/',
+  '/articles/ai-visibility/': '/de/artikel/ki-sichtbarkeit-website/',
+  '/de/artikel/ki-sichtbarkeit-website/': '/articles/ai-visibility/'
 };
 
 function normalizePath(p) {
