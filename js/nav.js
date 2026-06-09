@@ -27,7 +27,9 @@ var langMap = {
   '/articles/ai-visibility/': '/de/artikel/ki-sichtbarkeit-website/',
   '/de/artikel/ki-sichtbarkeit-website/': '/articles/ai-visibility/',
   '/articles/ai-music-saas/': '/de/artikel/ki-musik-saas/',
-  '/de/artikel/ki-musik-saas/': '/articles/ai-music-saas/'
+  '/de/artikel/ki-musik-saas/': '/articles/ai-music-saas/',
+  '/articles/': '/de/artikel/',
+  '/de/artikel/': '/articles/'
 };
 
 function normalizePath(p) {

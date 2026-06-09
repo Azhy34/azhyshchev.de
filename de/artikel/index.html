@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+<script src="/js/cookie-consent.js" defer></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Technische Fallstudien zu RAG-Architektur, LLM-Pipelines und Geschäftsprozessautomatisierung. Echte Systeme, echte Ergebnisse.">
+  <meta name="keywords" content="ki automatisierung, ki fallstudie, rag agent, ki pipeline, prozessautomatisierung, langchain, python, typescript, workflow automatisierung, münchen, germany, llm integration, supabase, fastapi">
+  <meta name="author" content="Mikhail Azhyshchev">
+  <link rel="canonical" href="https://azhyshchev.de/de/artikel/">
+  <link rel="alternate" hreflang="de" href="https://azhyshchev.de/de/artikel/" />
+  <link rel="alternate" hreflang="en" href="https://azhyshchev.de/articles/" />
+  <link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/articles/" />
+  <meta property="og:title" content="Fallstudien — KI-Automatisierungstechnik | Mikhail Azhyshchev">
+  <meta property="og:description" content="Technische Fallstudien zu RAG-Architektur, LLM-Pipelines und Geschäftsprozessautomatisierung. Echte Systeme, echte Ergebnisse.">
+  <meta property="og:url" content="https://azhyshchev.de/de/artikel/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://azhyshchev.de/Azhyschev.JPG">
+  <meta property="og:locale" content="de_DE">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Fallstudien — KI-Automatisierungstechnik | Mikhail Azhyshchev">
+  <meta name="twitter:description" content="Technische Fallstudien zu RAG-Architektur, LLM-Pipelines und Geschäftsprozessautomatisierung. Echte Systeme, echte Ergebnisse.">
+
+  <title>Fallstudien — KI-Automatisierungstechnik | Mikhail Azhyshchev</title>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": "https://azhyshchev.de/de/artikel/#webpage",
+        "url": "https://azhyshchev.de/de/artikel/",
+        "name": "Fallstudien — KI-Automatisierungstechnik | Mikhail Azhyshchev",
+        "description": "Technische Fallstudien zu RAG-Architektur, LLM-Pipelines, Rechnungsautomatisierung und Geschäftsprozessautomatisierung. Echte Produktivsysteme mit messbarem Geschäftseffekt. Von Mikhail Azhyshchev, München.",
+        "inLanguage": "de",
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" },
+        "author": { "@id": "https://azhyshchev.de/#person" },
+        "dateModified": "2026-06-09",
+        "about": [
+          {
+            "@type": "Thing",
+            "name": "RAG-Agent-Architektur",
+            "description": "Retrieval-Augmented Generation Pipelines für geschäftliche Anwendungsfälle in Deutschland"
+          },
+          {
+            "@type": "Thing",
+            "name": "Geschäftsprozessautomatisierung",
+            "description": "KI-gestützte Automatisierung manueller Abläufe in deutschen Unternehmen."
+          },
+          {
+            "@type": "Thing",
+            "name": "LLM-Pipeline-Entwicklung",
+            "description": "Produktions-LLM-Pipelines mit Kostenoptimierung und messbaren Ergebnissen"
+          },
+          {
+            "@type": "Thing",
+            "name": "Rechnungsautomatisierung",
+            "description": "Automatisierte Dokumentenverarbeitung und Buchhaltungsintegration."
+          },
+          {
+            "@type": "Thing",
+            "name": "B2B-Leadgenerierung",
+            "description": "KI-gestützte B2B-Akquise und Pipeline-Automatisierung für den deutschen Markt."
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sky: #61b5e8;
+      --mint: #b9ddb7;
+      --cream: #f8f0dc;
+      --yellow: #f5c84b;
+      --pink: #efb2d5;
+      --blue: #d8ebff;
+      --peach: #f7d4b1;
+      --coral: #ff9a77;
+      --black: #111111;
+      --white: #ffffff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "JetBrains Mono", monospace;
+      background: var(--cream);
+      color: var(--black);
+      min-height: 100vh;
+      padding: 32px 24px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── LAYOUT ── */
+    .shell {
+      max-width: 1180px;
+      margin: 0 auto;
+      border: 3px solid var(--black);
+      box-shadow: 12px 12px 0 var(--black);
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      background: var(--white);
+    }
+
+    .sidebar {
+      border-right: 3px solid var(--black);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .brand-badge {
+      width: 36px; height: 36px;
+      border: 2px solid var(--black);
+      background: var(--black);
+      color: var(--yellow);
+      display: grid; place-items: center;
+      font-weight: 800; font-size: 0.8rem;
+    }
+
+    .nav { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+
+    .nav-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 10px;
+      border: 2px solid transparent;
+      font-weight: 700; font-size: 0.78rem;
+      transition: background 0.15s;
+    }
+
+    .nav-item:hover, .nav-item.active {
+      background: var(--black);
+      color: var(--cream);
+      border-color: var(--black);
+    }
+
+    .icon-box {
+      width: 24px; height: 24px;
+      border: 2px solid currentColor;
+      display: grid; place-items: center;
+      font-size: 0.72rem; font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .nav-toggle {
+      display: none;
+      position: absolute; top: 20px; right: 16px;
+      width: 36px; height: 36px;
+      border: 2px solid var(--black);
+      background: var(--cream);
+      font-size: 1.1rem; cursor: pointer;
+      font-family: inherit; font-weight: 800;
+    }
+
+    .sidebar-bottom {
+      margin-top: auto;
+      display: flex; flex-direction: column; gap: 4px;
+      padding-top: 16px;
+      border-top: 2px solid var(--black);
+    }
+
+    .socials {
+      display: flex; gap: 8px; margin-top: 6px;
+    }
+
+    .social-link {
+      width: 30px; height: 30px;
+      border: 2px solid var(--black);
+      display: grid; place-items: center;
+      font-size: 0.72rem; font-weight: 800;
+      background: var(--white);
+      box-shadow: 2px 2px 0 var(--black);
+    }
+
+    .social-link:hover { background: var(--yellow); }
+
+    /* ── MAIN ── */
+    .main { padding: 28px 28px 40px; }
+
+    .panel { display: flex; flex-direction: column; gap: 28px; }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .page-title {
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+    }
+
+    .section-lead {
+      font-size: 0.83rem;
+      line-height: 1.65;
+      opacity: 0.68;
+      margin-top: 8px;
+      max-width: 600px;
+    }
+
+    /* ── ARTICLES GRID ── */
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .article-card {
+      border: 3px solid var(--black);
+      box-shadow: 6px 6px 0 var(--black);
+      background: var(--white);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .article-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 8px 8px 0 var(--black);
+    }
+
+    .card-accent {
+      height: 6px;
+    }
+
+    .card-body {
+      padding: 18px 18px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-type {
+      font-size: 0.68rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      opacity: 0.55;
+    }
+
+    .card-readtime {
+      font-size: 0.68rem; font-weight: 700;
+      opacity: 0.45;
+    }
+
+    .card-title {
+      font-size: 1.05rem; font-weight: 800;
+      line-height: 1.25; letter-spacing: -0.02em;
+    }
+
+    .card-excerpt {
+      font-size: 0.8rem; line-height: 1.6;
+      opacity: 0.72; flex: 1;
+    }
+
+    .card-tags {
+      display: flex; flex-wrap: wrap; gap: 6px;
+    }
+
+    .tag {
+      padding: 3px 9px;
+      border: 1.5px solid var(--black);
+      font-size: 0.68rem; font-weight: 700;
+    }
+
+    .card-footer {
+      padding: 12px 18px;
+      border-top: 2px solid var(--black);
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 10px;
+    }
+
+    .metric-pill {
+      font-size: 0.75rem; font-weight: 800;
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    .metric-pill span {
+      padding: 3px 8px;
+      border: 2px solid var(--black);
+      background: var(--yellow);
+      font-weight: 800;
+    }
+
+    .read-link {
+      font-size: 0.78rem; font-weight: 800;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      display: inline-flex; align-items: center; gap: 4px;
+      white-space: nowrap;
+    }
+
+    /* ── INSIGHT CALLOUT ── */
+    .insight-strip {
+      border: 3px solid var(--black);
+      background: var(--yellow);
+      box-shadow: 6px 6px 0 var(--black);
+      padding: 18px 22px;
+      display: flex; align-items: flex-start; gap: 18px;
+    }
+
+    .insight-icon {
+      font-size: 2rem; flex-shrink: 0;
+      line-height: 1;
+    }
+
+    .insight-strip h2 {
+      font-size: 1rem; font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .insight-strip p {
+      font-size: 0.85rem; line-height: 1.6;
+    }
+
+    /* ── CTA ── */
+    .cta-strip {
+      border: 3px solid var(--black);
+      background: var(--black);
+      color: var(--cream);
+      box-shadow: 6px 6px 0 var(--black);
+      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .cta-strip h2 {
+      font-size: 1.1rem; font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .cta-strip p {
+      font-size: 0.82rem; line-height: 1.6;
+      opacity: 0.75;
+    }
+
+    .cta-btn {
+      border: 2px solid var(--yellow);
+      background: var(--yellow);
+      color: var(--black);
+      box-shadow: 4px 4px 0 rgba(255,255,255,0.3);
+      padding: 12px 22px;
+      font: inherit; font-weight: 800; font-size: 0.85rem;
+      cursor: pointer;
+      white-space: nowrap;
+      display: inline-block;
+      transition: transform 0.15s;
+    }
+
+    .cta-btn:hover { transform: translate(-1px, -1px); }
+
+    @media (min-width: 900px) {
+      .shell { grid-template-columns: 220px 1fr; }
+    }
+
+    @media (max-width: 820px) {
+      body { padding: 20px 12px; }
+      .shell { grid-template-columns: 1fr; box-shadow: 8px 8px 0 var(--black); }
+      .sidebar { border-right: none; border-bottom: 3px solid var(--black); }
+      .main { padding: 14px; }
+      .topbar { flex-direction: column; align-items: flex-start; }
+      .articles-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <link rel="stylesheet" href="/mobile.css">
+</head>
+<body>
+  <div class="shell">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <a class="brand" href="/de/">
+        <div class="brand-badge">&lt;/&gt;</div>
+        <span>AZHYSHCHEV</span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Navigation umschalten">&#9776;</button>
+      <nav class="nav">
+        <a class="nav-item" href="/de/">
+          <span class="icon-box">H</span>
+          <span>Start</span>
+        </a>
+        <a class="nav-item" href="/ai-checker/">
+          <span class="icon-box">🤖</span>
+          <span>KI-Checker</span>
+        </a>
+        <a class="nav-item" href="/de/erfahrung/">
+          <span class="icon-box">E</span>
+          <span>Erfahrung</span>
+        </a>
+        <a class="nav-item" href="/de/projekte/">
+          <span class="icon-box">P</span>
+          <span>Projekte</span>
+        </a>
+        <a class="nav-item active" href="/de/artikel/">
+          <span class="icon-box">A</span>
+          <span>Artikel</span>
+        </a>
+        <a class="nav-item" href="/de/fahigkeiten/">
+          <span class="icon-box">S</span>
+          <span>Fähigkeiten</span>
+        </a>
+        <a class="nav-item" href="/de/kontakt/">
+          <span class="icon-box">C</span>
+          <span>Kontakt</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <a class="nav-item" href="/CV.pdf" download onclick="gtag('event','cv_download',{location:'sidebar'})">
+          <span class="icon-box">CV</span>
+          <span>CV herunterladen</span>
+        </a>
+        <a class="nav-item" href="mailto:azhyshchev@gmail.com" onclick="gtag('event','email_click',{location:'sidebar'})">
+          <span class="icon-box">@</span>
+          <span>Kontakt</span>
+        </a>
+        <div class="socials">
+          <a class="social-link" href="https://www.linkedin.com/in/azhyshchev/" target="_blank" rel="noreferrer" onclick="gtag('event','linkedin_click',{location:'sidebar'})">in</a>
+          <a class="social-link" href="https://github.com/Azhy34" target="_blank" rel="noreferrer" onclick="gtag('event','github_click',{location:'sidebar'})">gh</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+      <div class="panel">
+
+        <!-- Topbar -->
+        <div class="topbar">
+          <div>
+            <h1 class="page-title">Fallstudien &amp; Einblicke</h1>
+            <p class="section-lead">Technische Aufschlüsselung realer Projekte — Architekturentscheidungen, Engineering-Kompromisse und Geschäftswirkung.</p>
+          </div>
+        </div>
+
+        <!-- Article grid -->
+        <div class="articles-grid">
+
+          <!-- Card: KI-Sichtbarkeit -->
+          <div class="article-card">
+            <div class="card-accent" style="background: var(--sky);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">GEO · KI SEO · Website-Analyse</span>
+                <span class="card-readtime">8 Min Lesezeit</span>
+              </div>
+              <h2 class="card-title">Warum Ihre Website für ChatGPT, Claude und Perplexity unsichtbar ist</h2>
+              <p class="card-excerpt">Sie ranken bei Google, aber KI-Suchmaschinen ignorieren Ihre Seite vollständig. Der Grund: KI-Crawler können kein JavaScript ausführen. Ein praxisnaher Leitfaden zur Generative Engine Optimization (GEO): SSR, llms.txt, robots.txt, Sitemap.</p>
+              <div class="card-tags">
+                <span class="tag">GEO</span>
+                <span class="tag">KI SEO</span>
+                <span class="tag">llms.txt</span>
+                <span class="tag">SSR</span>
+                <span class="tag">Website-Audit</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Kernaussage: <span>97 % der React-Sites unsichtbar fur KI</span></div>
+              <a class="read-link" href="/de/artikel/ki-sichtbarkeit-website/">Artikel lesen →</a>
+            </div>
+          </div>
+
+          <!-- Card: KI Musik SaaS -->
+          <div class="article-card">
+            <div class="card-accent" style="background: var(--coral);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">Full-Stack · KI Musik · SaaS</span>
+                <span class="card-readtime">5 Min Lesezeit</span>
+              </div>
+              <h2 class="card-title">KI-Musik-SaaS: Personalisierte Songs auf Polnisch — hitdlaciebie.pl</h2>
+              <p class="card-excerpt">Ein vollständiges KI-Musik-SaaS für einen Kunden in zwei Wochen entwickelt — ohne Vorerfahrung in KI-Musikgenerierung. Zweistufige Text-Pipeline (Gemini 2.5 Flash + Claude Sonnet 4.6), vier Musik-APIs getestet, Suno V5.5 deployed.</p>
+              <div class="card-tags">
+                <span class="tag">Next.js 14</span>
+                <span class="tag">TypeScript</span>
+                <span class="tag">Suno V5.5</span>
+                <span class="tag">Shopify</span>
+                <span class="tag">PostgreSQL</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Ergebnis: <span>2 Wochen · kein Vorwissen · live</span></div>
+              <a class="read-link" href="/de/artikel/ki-musik-saas/">Artikel lesen →</a>
+            </div>
+          </div>
+
+          <!-- Card: RAG Kundenservice E-Commerce -->
+          <div class="article-card">
+            <div class="card-accent" style="background: var(--mint);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">RAG · KI-Agent · E-Commerce</span>
+                <span class="card-readtime">7 Min Lesezeit</span>
+              </div>
+              <h2 class="card-title">KI-Verkaufsassistent für E-Commerce: da-vinchi.pl</h2>
+              <p class="card-excerpt">Ein vollständiger KI-Verkaufsassistent für einen polnischen Tapetenhändler. LangGraph ReAct-Agent mit 5 Tools, Hybrid RAG (SQL + pgvector), ETL-Pipelines und Käufer-Szenario-Tests — produktionsreif, kein Demo.</p>
+              <div class="card-tags">
+                <span class="tag">Python</span>
+                <span class="tag">LangGraph</span>
+                <span class="tag">FastAPI</span>
+                <span class="tag">Supabase</span>
+                <span class="tag">pgvector</span>
+                <span class="tag">LangSmith</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Ergebnis: <span>1.200+ SKU · null halluzinierte Preise</span></div>
+              <a class="read-link" href="/de/artikel/rag-kundenservice-ecommerce/">Artikel lesen →</a>
+            </div>
+          </div>
+
+          <!-- Card: Rechnungsautomatisierung -->
+          <div class="article-card">
+            <div class="card-accent" style="background: var(--mint);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">Automatisierung · LLM-Pipeline</span>
+                <span class="card-readtime">6 Min Lesezeit</span>
+              </div>
+              <h2 class="card-title">Rechnungsautomatisierung: IMAP → PDF → Gemini → Drive + Supabase</h2>
+              <p class="card-excerpt">Rechnungen von mehreren Lieferanten kommen als PDF per E-Mail in unterschiedlichen Formaten. Manuelle Routine: suchen, klassifizieren, extrahieren, ablegen, verbuchen. Jetzt läuft es automatisch — vollständig, von Anfang bis Ende.</p>
+              <div class="card-tags">
+                <span class="tag">TypeScript</span>
+                <span class="tag">Gemini 2.5 Flash</span>
+                <span class="tag">GitHub Actions</span>
+                <span class="tag">Supabase</span>
+                <span class="tag">Google Drive</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Ergebnis: <span>Wochenroutine → null</span></div>
+              <a class="read-link" href="/de/artikel/rechnungsautomatisierung-pipeline/">Artikel lesen →</a>
+            </div>
+          </div>
+
+          <!-- Card: KI Bildkomposition -->
+          <div class="article-card">
+            <div class="card-accent" style="background: var(--pink);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">Full-Stack · Multimodal KI</span>
+                <span class="card-readtime">4 Min Lesezeit</span>
+              </div>
+              <h2 class="card-title">KI-Bildkomposition: Identitätsersatz in 30 Sekunden</h2>
+              <p class="card-excerpt">Ein polnisches Kreativstudio verlor Stunden durch Trial-and-Error-Prompting für personalisierte KI-Gemälde. Ich baute eine Produktions-Web-App an einem Tag mit React 19 und Gemini, die daraus einen 30-Sekunden-Workflow macht.</p>
+              <div class="card-tags">
+                <span class="tag">React 19</span>
+                <span class="tag">TypeScript</span>
+                <span class="tag">Gemini</span>
+                <span class="tag">Canvas API</span>
+                <span class="tag">Railway</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Ergebnis: <span>1 Tag Build · Stunden → 30 Sek. pro Bild</span></div>
+              <a class="read-link" href="/de/artikel/ki-bildkomposition/">Artikel lesen →</a>
+            </div>
+          </div>
+
+          <!-- Card: Hybrid RAG Verkaufsassistent -->
+          <div class="article-card">
+            <div class="card-accent" style="background: var(--yellow);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">RAG · KI-Architektur</span>
+                <span class="card-readtime">5 Min Lesezeit</span>
+              </div>
+              <h2 class="card-title">Hybrid-RAG-Verkaufsassistent: Supabase + Gemini File Search</h2>
+              <p class="card-excerpt">Ein 57-MB-PDF-Katalog mit 55.000+ Tokens. Ich entwickelte einen Hybrid-RAG-Telegram-Agenten, der Supabase pgvector für harte Daten mit Gemini File Search für semantischen Kontext kombiniert — Antworten in Millisekunden, nahezu null API-Kosten.</p>
+              <div class="card-tags">
+                <span class="tag">Hybrid RAG</span>
+                <span class="tag">Supabase</span>
+                <span class="tag">pgvector</span>
+                <span class="tag">Telegram</span>
+                <span class="tag">Gemini</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Ergebnis: <span>~90 % API-Kosten gespart</span></div>
+              <a class="read-link" href="/de/artikel/hybrid-rag-verkaufsassistent/">Artikel lesen →</a>
+            </div>
+          </div>
+
+          <!-- Card: Tapeten KI Automatisierung -->
+          <div class="article-card">
+            <div class="card-accent" style="background: var(--peach);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">Automatisierung · KI Bild · Retail</span>
+                <span class="card-readtime">5 Min Lesezeit</span>
+              </div>
+              <h2 class="card-title">Tapeten-Visualisierung per KI: Photoshop wird ersetzt</h2>
+              <p class="card-excerpt">Automatisierung des manuellen Photoshop-Workflows für einen Tapetenhändler: geometrische Transformation vs. KI-Generierung — die Architekturentscheidung, die zählt. Was für Tapetenhändler, Küchenstudios und Möbelhäuser funktioniert.</p>
+              <div class="card-tags">
+                <span class="tag">Python</span>
+                <span class="tag">FastAPI</span>
+                <span class="tag">Gemini</span>
+                <span class="tag">React</span>
+                <span class="tag">Supabase</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Ergebnis: <span>Manuelle Routine → vollautomatisch</span></div>
+              <a class="read-link" href="/de/artikel/tapeten-ki-automatisierung/">Artikel lesen →</a>
+            </div>
+          </div>
+
+          <!-- Card: B2B Lead Pipeline Deutschland -->
+          <div class="article-card">
+            <div class="card-accent" style="background: var(--yellow);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">Automatisierung · B2B · Leadgenerierung</span>
+                <span class="card-readtime">6 Min Lesezeit</span>
+              </div>
+              <h2 class="card-title">B2B-Leadgenerierung Deutschland: 107 Firmen, 4,80 $, 22 Minuten</h2>
+              <p class="card-excerpt">Automatisierte B2B-Leadgenerierungs-Pipeline für den deutschen Markt: Google Maps → Impressum-Scraping → Gemini-Anreicherung → Supabase → CSV. 107 Firmen, 54 E-Mails, §7 UWG-konform — alles in 22 Minuten für unter 5 $.</p>
+              <div class="card-tags">
+                <span class="tag">Python</span>
+                <span class="tag">Apify</span>
+                <span class="tag">Tavily</span>
+                <span class="tag">Gemini</span>
+                <span class="tag">Supabase</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Ergebnis: <span>107 Leads · 4,80 $ · 22 Min.</span></div>
+              <a class="read-link" href="/de/artikel/b2b-lead-pipeline-deutschland/">Artikel lesen →</a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Insight callout -->
+        <div class="insight-strip">
+          <div class="insight-icon">&#128161;</div>
+          <div>
+            <h2>Der rote Faden durch alle Projekte</h2>
+            <p>Das eigentliche Engineering steckt nicht im LLM-Aufruf. Es steckt in dem, was ihn umgibt: kontrollierte Dateneingabe, deterministische Fallbacks, idempotente Pipelines und strukturierter Speicher. Diese Kombination trennt Produktionsautomatisierung von Demos.</p>
+          </div>
+        </div>
+
+        <!-- CTA strip -->
+        <div class="cta-strip">
+          <div>
+            <h2>Ähnliches Projekt geplant?</h2>
+            <p>Ich baue KI-Automatisierungssysteme für deutsche Unternehmen — RAG-Agenten, LLM-Pipelines, API-Integrationen. Gespräch buchen und konkreten Use Case besprechen.</p>
+          </div>
+          <a class="cta-btn" href="https://calendly.com/azhyshchev/30min?utm_source=portfolio&utm_campaign=booking&utm_content=artikel_hub_de" target="_blank" rel="noreferrer" onclick="if(typeof gtag==='function')gtag('event','book_call_click',{location:'artikel_hub_de'});">Gespräch buchen →</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- MOBILE BOTTOM NAV -->
+  <nav class="mobile-bottom-nav" id="mobileBottomNav">
+    <a class="mbn-item" href="/de/">
+      <span class="mbn-icon">&lt;/&gt;</span>
+      <span class="mbn-label">Start</span>
+    </a>
+    <a class="mbn-item" href="/ai-checker/">
+      <span class="mbn-icon">🤖</span>
+      <span class="mbn-label">KI-Check</span>
+    </a>
+    <a class="mbn-item" href="/de/erfahrung/">
+      <span class="mbn-icon">E</span>
+      <span class="mbn-label">Erfahrung</span>
+    </a>
+    <a class="mbn-item" href="/de/projekte/">
+      <span class="mbn-icon">P</span>
+      <span class="mbn-label">Projekte</span>
+    </a>
+    <a class="mbn-item" href="/de/artikel/">
+      <span class="mbn-icon">A</span>
+      <span class="mbn-label">Artikel</span>
+    </a>
+    <a class="mbn-item" href="/de/kontakt/">
+      <span class="mbn-icon">K</span>
+      <span class="mbn-label">Kontakt</span>
+    </a>
+  </nav>
+  <div style="padding: 18px 12px 92px; text-align: center; font-size: 0.92rem; line-height: 1.8;">
+    <a href="/impressum">Impressum</a>
+    <span style="padding: 0 10px;">·</span>
+    <a href="/datenschutz">Datenschutzerklärung</a>
+    <span style="padding: 0 10px;">·</span>
+    <a href="/agb">AGB</a>
+    <span style="padding: 0 10px;">·</span>
+    <a href="/datenschutz#cookie-settings">Cookie-Einstellungen</a>
+  </div>
+  <script src="/js/nav.js"></script>
+  <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" data-api-url="https://azhyshchevde-production.up.railway.app/api/chat" defer></script>
+</body>
+</html>
