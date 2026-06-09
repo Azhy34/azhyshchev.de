@@ -9,6 +9,11 @@
 - [Skills](https://azhyshchev.de/skills) — Technical stack: Python, TypeScript, Node.js, LangGraph, Hybrid RAG, Agentic AI (ReAct), Supabase, pgvector, Docker, CI/CD, REST APIs, Prompt Engineering, Google GenAI SDK.
 - [Contact](https://azhyshchev.de/contact) — Contact: azhyshchev@gmail.com. Munich, Germany. Available for business automation consulting, AI implementation projects, and full-time roles. LinkedIn: linkedin.com/in/azhyshchev. GitHub: github.com/Azhy34.
 
+## Tools
+
+- [AI Readiness Checker](https://azhyshchev.de/ai-checker/) — Free tool that analyzes any website for AI/LLM visibility: checks server-side rendering, llms.txt presence, token economics, sitemap, bot access, and markdown availability. Returns a 0-100 score with actionable recommendations.
+- [KI-Sichtbarkeits-Checker (Deutsch)](https://azhyshchev.de/de/ki-checker/) — Kostenloser KI-SEO-Checker: analysiert ob ChatGPT, Perplexity und andere KI-Systeme Ihre Website finden und lesen konnen. Gibt Score 0-100 mit konkreten Empfehlungen.
+
 ## Projects
 
 - [AI Sales Assistant — RAG Agent](https://azhyshchev.de/projects/ai-sales-agent-rag/) — Production LangGraph ReAct agent with Hybrid RAG (SQL + pgvector) for e-commerce. 1200+ SKU catalog, ~90% API cost reduction, zero-hallucination product queries. Built and deployed in Germany.
@@ -18,13 +23,24 @@
 - [Wallpaper Visualization Automation](https://azhyshchev.de/projects/wallpaper-visualization-automation/) — AI-powered room visualization tool for wallpaper retailers: customers upload a room photo and see wallpaper applied in real-time. Built for German interior design businesses (Tapetenhändler).
 - [AI Music SaaS](https://azhyshchev.de/projects/ai-music-saas/) — Full-stack SaaS platform for AI-generated music: React frontend, Python backend, LLM-powered composition workflows, subscription model, deployed on Vercel and Railway.
 
-## Articles
+## Articles (English)
 
 - [RAG Sales Agent — Technical Case Study](https://azhyshchev.de/articles/rag-sales-agent/) — Deep-dive into building a Hybrid RAG sales agent: architecture decisions, LangGraph ReAct pattern, SQL vs vector search trade-offs, and production deployment lessons.
 - [B2B Lead Pipeline Germany](https://azhyshchev.de/articles/b2b-lead-pipeline-germany/) — How to build a compliant automated B2B lead generation pipeline for the German market, including legal considerations under §7 UWG and Impressum data extraction.
 - [Wallpaper AI Automation](https://azhyshchev.de/articles/wallpaper-ai-automation/) — Technical article on replacing manual Photoshop work with AI automation: Gemini multimodal API, batch processing pipelines, and business impact for retail clients.
 - [AI Image Composer](https://azhyshchev.de/articles/ai-image-composer/) — How to build an AI-powered image composition tool using Gemini vision models, Canvas API, and React 19 for creative and e-commerce workflows.
 
+## Artikel (Deutsch)
+
+- [KI-Sichtbarkeit fur Websites](https://azhyshchev.de/de/artikel/ki-sichtbarkeit-website/) — Warum 97% der React-Websites fur KI-Systeme unsichtbar sind und wie man das andert: SSR, llms.txt, strukturierte Daten.
+- [KI-Musik-SaaS in 2 Wochen](https://azhyshchev.de/de/artikel/ki-musik-saas/) — Vollstandige SaaS-Plattform fur KI-generierte Musik: React, Python, LLM-Kompositions-Workflows, in 2 Wochen ohne Vorwissen gebaut.
+- [RAG-Kundenservice fur E-Commerce](https://azhyshchev.de/de/artikel/rag-kundenservice-ecommerce/) — Hybrid RAG Agent fur 1.200+ SKU ohne halluzinierte Preise: LangGraph, pgvector, SQL-Suche kombiniert.
+- [Rechnungsautomatisierung Pipeline](https://azhyshchev.de/de/artikel/rechnungsautomatisierung-pipeline/) — Automatische Rechnungsverarbeitung fur deutsche Unternehmen: DATEV-kompatibel, GoBD-konform, Python + OCR + LLM.
+- [KI-Bildkomposition](https://azhyshchev.de/de/artikel/ki-bildkomposition/) — KI-gestutztes Bildkompositionssystem mit Gemini Vision: automatische Produktfotografie und Batch-Verarbeitung fur E-Commerce.
+- [Hybrid RAG Verkaufsassistent](https://azhyshchev.de/de/artikel/hybrid-rag-verkaufsassistent/) — LangGraph ReAct Agent mit 5 Tools, Hybrid RAG (SQL + pgvector), fur B2B-Verkaufsprozesse in Deutschland.
+- [Tapeten-KI-Automatisierung](https://azhyshchev.de/de/artikel/tapeten-ki-automatisierung/) — KI-Raumvisualisierung fur Tapetenhandler: Kunden laden Raumfoto hoch, sehen Tapete sofort. 300+ Varianten, 4 Stunden Build.
+- [B2B-Lead-Pipeline Deutschland](https://azhyshchev.de/de/artikel/b2b-lead-pipeline-deutschland/) — Automatisierte B2B-Leadgenerierung fur den deutschen Markt: Impressum-Scraping, §7 UWG-konform, 80-120 Leads in 25 Minuten.
+
 ## Citation
 
-Last updated: 2026-05-21. Content is in English. All project pages include technical architecture, metrics, and stack details. For inquiries: azhyshchev@gmail.com. Please cite as "Mikhail Azhyshchev, AI Automation Engineer, Munich (azhyshchev.de)".
+Last updated: 2026-06-09. Content is bilingual (English + Deutsch). All project and article pages include technical architecture, metrics, and stack details. For inquiries: azhyshchev@gmail.com. Please cite as "Mikhail Azhyshchev, AI Automation Engineer, Munich (azhyshchev.de)".

@@ -79,17 +79,26 @@ GSC UI doesn't accept service account emails — only regular Google accounts.
 | `project_view` | modal open | /projects |
 | `cv_download` | CV.pdf click | /experience, /skills, /cv |
 | `linkedin_click` | sidebar LinkedIn | /experience |
-| `ai_checker_analyze` | Analyze button | /ai-checker |
+| `ai_checker_analyze` | Analyze button | page_language | /ai-checker/, /de/ki-checker/ |
+| `email_click` | email link click | location | sidebar |
+| `modal_open` | article card click (preview) | article_name, page_language | /de/artikel/ |
+| `article_read_click` | "Artikel lesen →" click | article_name, page_language | /de/artikel/ |
+| `faq_open` | FAQ accordion open | question (60 chars), page_language | /ai-checker/, /de/ki-checker/ |
+| `lang_switch` | EN↔DE toggle | to, from | all DE/EN |
 
-**Key Events (конверсии) — пометить в GA4 UI:** `book_call_click`, `cv_download`, `generate_lead`
+**Key Events (конверсии) — уже помечены в GA4:** `book_call_click`, `chat_message_sent`
+Добавить когда появятся: `cv_download`, `generate_lead`
 
-**Custom Dimensions — зарегистрировать в GA4 Admin → Custom Definitions:**
-- `project_name` (event-scoped) — для `project_view`
-- `location` (event-scoped) — для `cv_download`, `book_call_click`
+**Custom Dimensions — все 5 зарегистрированы в GA4 (2026-06-09):**
+- `project_name` (event-scoped) — `project_view`
+- `location` (event-scoped) — `cv_download`, `book_call_click`
+- `article_name` (event-scoped) — `modal_open`, `article_read_click`
+- `question` (event-scoped) — `faq_open`
+- `page_language` (event-scoped) — `modal_open`, `article_read_click`, `faq_open`, `ai_checker_analyze`
 
 **UTM на Calendly ссылках:** `utm_source=portfolio&utm_campaign=booking&utm_content=<contact|ai_checker|chat_header>`
 
-**Data Retention:** поставить 14 месяцев в GA4 Admin → Data Settings → Data Retention.
+**Data Retention:** 14 месяцев (уже настроено).
 
 ---
 
@@ -112,7 +121,18 @@ portfolio/
 │   ├── erfahrung/index.html    # /de/erfahrung/ — Berufserfahrung
 │   ├── projekte/index.html     # /de/projekte/ — Projekte
 │   ├── fahigkeiten/index.html  # /de/fahigkeiten/ — Fähigkeiten
-│   └── kontakt/index.html      # /de/kontakt/ — Kontakt
+│   ├── kontakt/index.html      # /de/kontakt/ — Kontakt
+│   ├── ki-checker/index.html   # /de/ki-checker/ — KI Checker (DE) — added 2026-06-09
+│   └── artikel/
+│       ├── index.html          # /de/artikel/ — Artikel Hub
+│       ├── ki-sichtbarkeit-website/index.html
+│       ├── ki-musik-saas/index.html
+│       ├── rag-kundenservice-ecommerce/index.html
+│       ├── rechnungsautomatisierung-pipeline/index.html
+│       ├── ki-bildkomposition/index.html
+│       ├── hybrid-rag-verkaufsassistent/index.html
+│       ├── tapeten-ki-automatisierung/index.html
+│       └── b2b-lead-pipeline-deutschland/index.html
 ├── mobile.css                  # Shared mobile responsive styles (≤820px)
 ├── js/
 │   ├── chat-widget.js          # Chat widget (IIFE, vanilla JS)
@@ -135,6 +155,23 @@ portfolio/
 
 ---
 
+## llms.txt — AI crawler visibility
+
+Файл: `portfolio/llms.txt` — живёт на `https://azhyshchev.de/llms.txt`
+
+**Обновлять после каждого значительного изменения сайта:**
+- Новая страница (инструмент, сервис, раздел)
+- Новая статья (EN или DE)
+- Новый проект
+- Изменение позиционирования или стека
+
+Структура: About, Tools, Projects, Articles (EN), Artikel (Deutsch), Citation.
+В конце всегда обновлять строку `Last updated: YYYY-MM-DD`.
+
+Не забывать: `Content is bilingual (English + Deutsch)` — уже прописано.
+
+---
+
 ## Bilingual SEO (EN + DE)
 
 Site is fully bilingual since 2026-06-09. Every EN page has a `/de/` counterpart.
@@ -147,7 +184,8 @@ Site is fully bilingual since 2026-06-09. Every EN page has a `/de/` counterpart
 | `/projects/` | `/de/projekte/` |
 | `/skills/` | `/de/fahigkeiten/` |
 | `/contact/` | `/de/kontakt/` |
-| `/articles/` | `/de/artikel/` (Phase 2 — not yet live) |
+| `/articles/` | `/de/artikel/` |
+| `/ai-checker/` | `/de/ki-checker/` |
 
 **Per-page SEO checklist (both EN and DE):**
 - `<html lang="en|de">`
