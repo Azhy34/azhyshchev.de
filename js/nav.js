@@ -29,7 +29,9 @@ var langMap = {
   '/articles/ai-music-saas/': '/de/artikel/ki-musik-saas/',
   '/de/artikel/ki-musik-saas/': '/articles/ai-music-saas/',
   '/articles/': '/de/artikel/',
-  '/de/artikel/': '/articles/'
+  '/de/artikel/': '/articles/',
+  '/projects/b2b-lead-generation-germany/': '/de/projekte/b2b-lead-generierung-deutschland/',
+  '/de/projekte/b2b-lead-generierung-deutschland/': '/projects/b2b-lead-generation-germany/'
 };
 
 function normalizePath(p) {
