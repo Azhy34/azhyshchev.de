@@ -25,7 +25,9 @@ var langMap = {
   '/articles/ai-image-composer/': '/de/artikel/ki-bildkomposition/',
   '/de/artikel/ki-bildkomposition/': '/articles/ai-image-composer/',
   '/articles/ai-visibility/': '/de/artikel/ki-sichtbarkeit-website/',
-  '/de/artikel/ki-sichtbarkeit-website/': '/articles/ai-visibility/'
+  '/de/artikel/ki-sichtbarkeit-website/': '/articles/ai-visibility/',
+  '/articles/ai-music-saas/': '/de/artikel/ki-musik-saas/',
+  '/de/artikel/ki-musik-saas/': '/articles/ai-music-saas/'
 };
 
 function normalizePath(p) {
