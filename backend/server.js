@@ -830,6 +830,36 @@ app.get('/api/gsc', authenticateToken, async (req, res) => {
   }
 });
 
+// Bing Webmaster Tools endpoint
+app.get('/api/bing', authenticateToken, async (req, res) => {
+  try {
+    const apiKey = process.env.BING_API_KEY;
+    if (!apiKey) {
+      return res.status(503).json({ error: 'Bing API key not configured' });
+    }
+
+    const siteUrl = encodeURIComponent('https://azhyshchev.de/');
+
+    const [trafficRes, keywordsRes] = await Promise.all([
+      fetch(`https://ssl.bing.com/webmaster/api.svc/json/GetRankAndTrafficStats?siteUrl=${siteUrl}&apikey=${apiKey}`),
+      fetch(`https://ssl.bing.com/webmaster/api.svc/json/GetKeywordStats?siteUrl=${siteUrl}&apikey=${apiKey}`)
+    ]);
+
+    const [traffic, keywords] = await Promise.all([
+      trafficRes.json(),
+      keywordsRes.json()
+    ]);
+
+    res.json({
+      pages: traffic?.d || [],
+      queries: keywords?.d || []
+    });
+  } catch (err) {
+    console.error('Bing API error:', err);
+    res.status(500).json({ error: 'Bing API query failed' });
+  }
+});
+
 // Start Express Server
 const server = app.listen(PORT, () => {
   console.log(`Server running in ${process.env.NODE_ENV || 'production'} mode on port ${PORT}`);
