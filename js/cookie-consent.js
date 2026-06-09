@@ -1,4 +1,5 @@
 (function () {
+  if (localStorage.getItem('ga_disabled') === '1') return;
   var GA_ID = 'G-6FQTTX4FW0';
   var STORAGE_KEY = 'cookie_consent';
 
