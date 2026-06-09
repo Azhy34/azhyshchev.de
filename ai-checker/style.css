@@ -624,7 +624,24 @@ body {
 .faq-q {
   font-size: 0.95rem;
   font-weight: 800;
-  margin-bottom: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  user-select: none;
+}
+
+.faq-q::after {
+  content: '+';
+  font-size: 1.4rem;
+  font-weight: 900;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.faq-item.open .faq-q::after {
+  content: '\2212';
 }
 
 .faq-a {
@@ -632,6 +649,15 @@ body {
   font-weight: 500;
   line-height: 1.7;
   opacity: 0.85;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding-top 0.2s ease;
+  padding-top: 0;
+}
+
+.faq-item.open .faq-a {
+  max-height: 800px;
+  padding-top: 14px;
 }
 
 @media (max-width: 768px) {

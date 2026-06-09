@@ -158,4 +158,17 @@ document.addEventListener('DOMContentLoaded', () => {
         errorMessage.textContent = msg;
         errorMessage.classList.remove('hidden');
     }
+
+    document.querySelectorAll('.faq-q').forEach(function(q) {
+        q.addEventListener('click', function() {
+            var item = q.closest('.faq-item');
+            var isOpen = item.classList.toggle('open');
+            if (isOpen && typeof gtag === 'function') {
+                gtag('event', 'faq_open', {
+                    question: q.textContent.trim().substring(0, 60),
+                    page_language: document.documentElement.lang || 'en'
+                });
+            }
+        });
+    });
 });
