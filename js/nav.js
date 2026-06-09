@@ -22,6 +22,10 @@ function switchLang() {
   var alt = langMap[normalizePath(window.location.pathname)];
   if (alt) {
     try { localStorage.setItem('lang', alt.startsWith('/de/') ? 'de' : 'en'); } catch(e) {}
+    var toLang = alt.startsWith('/de/') ? 'de' : 'en';
+    if (typeof gtag === 'function') {
+      gtag('event', 'lang_switch', { to: toLang, from: toLang === 'de' ? 'en' : 'de' });
+    }
     window.location.href = alt;
   }
 }
