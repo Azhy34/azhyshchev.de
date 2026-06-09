@@ -766,7 +766,7 @@
   </div>
   <!-- ── MODALS ── -->
 
-  <!-- Modal: KI-Sichtbarkeit -->
+  <!-- Modal: KI-Sichtbarkeit (← modal-ai-visibility EN) -->
   <div class="modal-overlay" id="modal-ki-sichtbarkeit" role="dialog" aria-modal="true">
     <div class="modal">
       <div class="modal-header">
@@ -780,34 +780,32 @@
         <div>
           <div class="modal-section-label">Das Problem</div>
           <div class="modal-text">
-            <p>Sie ranken bei Google, aber KI-Suchmaschinen ignorieren Ihre Website vollstandig. Der Grund: KI-Crawler wie GPTBot und ClaudeBot konnen kein JavaScript ausfuhren. Eine Analyse von 1 Mio. Domains zeigt — 97 % der React-Sites sind fur KI unsichtbar.</p>
+            <p>Sie haben in Google-SEO investiert. Ihre Website rankt. Aber wenn ein potenzieller Kunde ChatGPT fragt "Wer bietet [Ihre Dienstleistung] in [Ihrer Stadt] an?" — erscheint Ihr Unternehmen nicht. KI-Suchmaschinen folgen vollig anderen Regeln. Die meisten Geschaftswebsites scheitern an allen davon.</p>
+            <p>KI-Crawler wie GPTBot, ClaudeBot und PerplexityBot fuhren kein JavaScript aus. Sie laden rohes HTML und ziehen weiter. Wenn Ihre Website auf React, Vue oder Angular ohne SSR lauft, sehen sie eine leere Seite — unabhangig davon, wie gut Ihr Google-Ranking ist. Eine Vercel + MERJ-Analyse von 500 Mio.+ GPTBot-Anfragen ergab: null JavaScript-Ausfuhrung. 97 % Ghost-Ratio auf reinen CSR-Sites.</p>
           </div>
         </div>
         <div>
-          <div class="modal-section-label">Losung: Generative Engine Optimization (GEO)</div>
+          <div class="modal-section-label">5 Faktoren, die KI-Crawler prufen</div>
           <div class="modal-text">
-            <p><strong>SSR/SSG:</strong> Inhalte mussen beim Seitenladen als HTML vorhanden sein — kein clientseitiges Rendering.</p>
-            <p><strong>llms.txt:</strong> Eine maschinenlesbare Zusammenfassung Ihrer Inhalte fur KI-Agenten.</p>
-            <p><strong>robots.txt:</strong> GPTBot, ClaudeBot, PerplexityBot explizit erlauben.</p>
-            <p><strong>Strukturierte Daten:</strong> Schema.org FAQPage und WebPage fur bessere KI-Erfassung.</p>
+            <p><strong>Server-Side Rendering</strong> — Inhalte mussen im rohen HTML vorhanden sein, bevor JS lauft. React/Vue/Angular ohne SSR scheitern sofort.</p>
+            <p><strong>KI-Bot-Zugriff in robots.txt</strong> — GPTBot, ClaudeBot, PerplexityBot mussen explizit erlaubt sein. Viele Sites blockieren sie versehentlich.</p>
+            <p><strong>llms.txt</strong> — Eine Klartextdatei unter /llms.txt, die KI-Modellen erklart, was Ihr Unternehmen tut und welche Seiten wichtig sind.</p>
+            <p><strong>XML-Sitemap</strong> — Teilt Crawlern mit, welche Seiten existieren. Ohne sie werden wichtige Seiten ubersehen.</p>
+            <p><strong>Lesbares Inhaltsvolumen</strong> — Genug HTML-Text, damit Crawler verstehen, was Sie tun, fur wen und wo.</p>
           </div>
         </div>
         <div>
-          <div class="modal-section-label">Kernergebnis</div>
+          <div class="modal-section-label">Kernergebnisse</div>
           <div class="modal-metrics">
-            <div class="modal-metric"><span class="modal-metric-val">97 %</span><span class="modal-metric-lbl">React-Sites KI-unsichtbar</span></div>
-            <div class="modal-metric"><span class="modal-metric-val">0</span><span class="modal-metric-lbl">JS-Ausfuhrung durch GPTBot</span></div>
-          </div>
-        </div>
-        <div>
-          <div class="modal-section-label">Tech-Stack</div>
-          <div class="modal-stack">
-            <span class="stack-chip">GEO</span><span class="stack-chip">SSR</span><span class="stack-chip">llms.txt</span><span class="stack-chip">Schema.org</span><span class="stack-chip">robots.txt</span>
+            <div class="modal-metric"><span class="modal-metric-val">97 %</span><span class="modal-metric-lbl">Ghost-Ratio auf reinen CSR-Sites</span></div>
+            <div class="modal-metric"><span class="modal-metric-val">8</span><span class="modal-metric-lbl">KI-Bereitschafts-Faktoren gepruft</span></div>
+            <div class="modal-metric"><span class="modal-metric-val">Kostenlos</span><span class="modal-metric-lbl">Tool zur Site-Prufung</span></div>
           </div>
         </div>
       </div>
       <div class="modal-footer">
         <a class="action-btn dark" href="/de/artikel/ki-sichtbarkeit-website/">Artikel lesen →</a>
+        <a class="action-btn" href="/ai-checker/" style="background:var(--white);color:var(--black);">Site kostenlos prufen →</a>
         <button class="mini-btn" onclick="closeModal('modal-ki-sichtbarkeit')">Schliessen</button>
       </div>
     </div>
@@ -825,33 +823,49 @@
       </div>
       <div class="modal-body">
         <div>
-          <div class="modal-section-label">Aufgabe</div>
           <div class="modal-text">
-            <p>Ein vollstandiges KI-Musik-SaaS fur personalisierte Songs auf Polnisch — in zwei Wochen, ohne Vorerfahrung in KI-Musikgenerierung. Vier Musik-APIs getestet, Suno V5.5 als Sieger deployed.</p>
+            <p>Full-Stack-KI-Musik-SaaS fur einen Kunden in zwei Wochen gebaut — ohne Vorerfahrung in KI-Musikgenerierung. hitdlaciebie.pl generiert personalisierte Songs auf Polnisch: Nutzer beschreibt den Anlass und fur wen der Song ist, KI schreibt Lyrics und singt einen vollstandigen Track, die MP3 landet im personlichen Kabinett.</p>
+          </div>
+        </div>
+        <div class="modal-metrics">
+          <div class="modal-metric"><span class="modal-metric-val">2 Wochen</span><span class="modal-metric-lbl">Idee bis Produktion</span></div>
+          <div class="modal-metric"><span class="modal-metric-val">4 APIs</span><span class="modal-metric-lbl">Getestet vor dem Launch</span></div>
+          <div class="modal-metric"><span class="modal-metric-val">2 LLMs</span><span class="modal-metric-lbl">In Sequenz fur Lyrics</span></div>
+        </div>
+        <div>
+          <h3 style="font-size:1rem;font-weight:800;margin-bottom:10px;letter-spacing:-0.02em;">Lyrics-Pipeline — warum zwei Modelle statt einem</h3>
+          <div class="modal-text">
+            <p>Die Generierung nutzt eine Zwei-Modell-Kette via OpenRouter. <strong>Gemini 2.5 Flash</strong> (Temperatur 0,8) erstellt einen rohen kreativen Entwurf — fantasievoll, aber strukturell inkonsistent. <strong>Claude Sonnet 4.6</strong> (Temperatur 0,35) poliert den Entwurf — setzt Reimschema durch, formatiert [Verse][Chorus]-Tags, die Suno benotigt.</p>
+            <p>Einzelmodell-Versuche scheiterten in beide Richtungen: hohe Temperatur brach die Struktur, niedrige Temperatur totete die Kreativitat.</p>
           </div>
         </div>
         <div>
-          <div class="modal-section-label">Text-Pipeline</div>
+          <h3 style="font-size:1rem;font-weight:800;margin-bottom:10px;letter-spacing:-0.02em;">Musik-API-Auswahl — vier getestet, eine deployed</h3>
           <div class="modal-text">
-            <p><strong>Zweistufig:</strong> Gemini 2.5 Flash generiert Lyrics aus Nutzerdaten → Claude Sonnet 4.6 verfeinert Stil und Emotionalitat. Shopify Checkout fur Zahlungen, PostgreSQL fur Auftragsverwaltung.</p>
+            <p><strong>fal.ai / Minimax</strong> — schnelle Queue, aber polnische Phonetik war schwach. Vocals klangen synthetisch bei vokalreichen Wortern.</p>
+            <p><strong>ElevenLabs Music</strong> — guter Timbre, aber kein Vers/Refrain-Struktur-Bewusstsein. Behandelte den gesamten Lyric als einen Block.</p>
+            <p><strong>Udio</strong> — vielversprechende Qualitat, instabile API wahrend der Tests. Requests schlugen stillschweigend fehl.</p>
+            <p><strong>Suno V5.5</strong> — naturliche polnische Vocals, korrekte Struktur aus Lyrics-Tags, konsistente Generierung. In Produktion deployed. Alle vier bleiben als registrierte Provider — Architektur ist provider-agnostisch.</p>
           </div>
         </div>
         <div>
-          <div class="modal-section-label">Ergebnis</div>
-          <div class="modal-metrics">
-            <div class="modal-metric"><span class="modal-metric-val">2 Wo.</span><span class="modal-metric-lbl">Build bis Live</span></div>
-            <div class="modal-metric"><span class="modal-metric-val">4</span><span class="modal-metric-lbl">APIs getestet</span></div>
+          <h3 style="font-size:1rem;font-weight:800;margin-bottom:10px;letter-spacing:-0.02em;">Was unterwegs schief lief</h3>
+          <div class="modal-text">
+            <p><strong>Problem 1 — zwei Tage fur eine UI-Checkbox verloren.</strong> Token-Guthaben erschien nach Testkaufen nicht. Den gesamten Webhook-Flow gepruft: HMAC-Verifizierung, DB-Writes, Token-Logik — alles korrekt. Das eigentliche Problem: Shopify-Testmodus erfordert manuelles Klicken auf "Als bezahlt markieren" im Admin. Der Code funktionierte von Tag eins.</p>
+            <p><strong>Problem 2 — SSRF im Audio-Proxy.</strong> Suno-CDN-URLs laufen ab, also baute ich eine proxy-audio-Route. Ubersehen, dass sie beliebige URLs akzeptierte. Behoben mit strenger <code>URL.hostname</code>-Validierung — nur *.suno.ai uber HTTPS. Legacy-fal.ai-URLs in der DB brachen nach dem Fix — Allowlist fur Ruckwartskompatibilitat erweitert.</p>
+            <p><strong>Problem 3 — doppelte Webhook-Lieferung.</strong> Shopify kann dasselbe Event zweimal auslosen. Behoben mit Unique-Constraint auf <code>shopify_order_id</code> + ON CONFLICT DO NOTHING. Idempotent by Design.</p>
           </div>
         </div>
         <div>
           <div class="modal-section-label">Tech-Stack</div>
           <div class="modal-stack">
-            <span class="stack-chip">Next.js 14</span><span class="stack-chip">TypeScript</span><span class="stack-chip">Suno V5.5</span><span class="stack-chip">Gemini 2.5 Flash</span><span class="stack-chip">Shopify</span><span class="stack-chip">PostgreSQL</span>
+            <span class="stack-chip">Next.js 14</span><span class="stack-chip">TypeScript</span><span class="stack-chip">PostgreSQL</span><span class="stack-chip">Suno V5.5</span><span class="stack-chip">Gemini 2.5 Flash</span><span class="stack-chip">Claude Sonnet 4.6</span><span class="stack-chip">OpenRouter</span><span class="stack-chip">Shopify</span><span class="stack-chip">Resend</span><span class="stack-chip">VPS Frankfurt</span><span class="stack-chip">GitHub Actions CI/CD</span>
           </div>
         </div>
       </div>
       <div class="modal-footer">
         <a class="action-btn dark" href="/de/artikel/ki-musik-saas/">Artikel lesen →</a>
+        <a class="action-btn" href="https://hitdlaciebie.pl" target="_blank" rel="noreferrer" style="background:var(--white);color:var(--black);">Site besuchen ↗</a>
         <button class="mini-btn" onclick="closeModal('modal-ki-musik')">Schliessen</button>
       </div>
     </div>
@@ -869,28 +883,63 @@
       </div>
       <div class="modal-body">
         <div>
-          <div class="modal-section-label">Das System</div>
+          <div class="modal-section-label">Das Problem</div>
           <div class="modal-text">
-            <p>LangGraph ReAct-Agent mit 5 Tools fur einen polnischen Tapetenhandler. 1.200+ SKUs in Hybrid RAG (SQL fur harte Daten + pgvector fur semantische Suche). Keine halluzinierten Preise — das Modell erfindet nie einen Preis.</p>
+            <p>Ein polnischer Tapeten-E-Commerce-Shop brauchte einen Verkaufsassistenten, der echte Kauferanfragen bearbeiten kann — Stilempfehlungen, Preisberechnungen, FAQ, direkte SKU-Lookups — ohne Preise zu halluzinieren oder Produktlinks zu erfinden. Ein einfaches LLM uber Dokumenten ware zu ungenau bei Fakten und zu blind fur Semantik gewesen.</p>
           </div>
         </div>
         <div>
-          <div class="modal-section-label">Architektur</div>
-          <div class="modal-text">
-            <p><strong>Hybrid RAG:</strong> Supabase PostgreSQL fur exakte Preise/Lagerstand + pgvector fur semantische Produktsuche. ETL-Pipeline fur Datensynchronisation. LangSmith fur Produktions-Tracing und Qualitätssicherung.</p>
+          <div class="modal-section-label">Was der Agent abdeckt — ohne Verkaufsteam</div>
+          <p style="font-size:0.8rem;line-height:1.6;margin-bottom:12px;opacity:0.7;">Von semantischer Produktsuche bis zu Richtlinien-Lookups deckt der Agent das gesamte Pre-Sales-Gesprach ab — 24/7, ohne manuellen Eingriff.</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;">
+            <div style="border:2px solid var(--black);background:var(--yellow);box-shadow:3px 3px 0 var(--black);padding:12px;">
+              <div style="font-size:0.72rem;font-weight:800;margin-bottom:6px;">"Tapeten fur Kinderzimmer mit Blumen"</div>
+              <div style="font-size:0.68rem;line-height:1.5;opacity:0.75;">Semantische Suche uber 1.200 SKUs — sofortige Shortlist mit Preisen, kein manuelles Filtern</div>
+            </div>
+            <div style="border:2px solid var(--black);background:var(--mint);box-shadow:3px 3px 0 var(--black);padding:12px;">
+              <div style="font-size:0.72rem;font-weight:800;margin-bottom:6px;">"Preis fur SKU 000389, gibt es als Set?"</div>
+              <div style="font-size:0.68rem;line-height:1.5;opacity:0.75;">Exakter Katalog-Lookup — prazise Specs, kein Schatzen, keine Fehler</div>
+            </div>
+            <div style="border:2px solid var(--black);background:var(--blue);box-shadow:3px 3px 0 var(--black);padding:12px;">
+              <div style="font-size:0.72rem;font-weight:800;margin-bottom:6px;">"Wie klebe ich sie? Welcher Kleber?"</div>
+              <div style="font-size:0.68rem;line-height:1.5;opacity:0.75;">Wissensbasis-Antworten aus Firmenmaterialien — Montageleitfaden sofort geliefert</div>
+            </div>
+            <div style="border:2px solid var(--black);background:var(--pink);box-shadow:3px 3px 0 var(--black);padding:12px;">
+              <div style="font-size:0.72rem;font-weight:800;margin-bottom:6px;">"Wie sind Ihre Ruckgabebedingungen?"</div>
+              <div style="font-size:0.68rem;line-height:1.5;opacity:0.75;">FAQ-Abruf mit verifizierten Firmeninfos — keine erfundenen Richtlinien</div>
+            </div>
           </div>
         </div>
         <div>
-          <div class="modal-section-label">Ergebnis</div>
+          <div class="modal-section-label">Hybrid-RAG-Architektur</div>
+          <div class="modal-text">
+            <p>Die zentrale Architekturentscheidung: Wissen in zwei Wahrheitsschichten aufteilen.</p>
+            <p><strong>SQL (Supabase PostgreSQL):</strong> Harte Fakten — SKU, final_price, Lagerstand, Route, Farben, Raume. Der Agent konstruiert nie eine URL oder einen Preis aus dem Gedachtnis. Alles kommt aus strukturierten Daten.</p>
+            <p><strong>pgvector (semantische KB):</strong> Weiches Wissen — Stilguides, Raumempfehlungen, FAQ, Installation, Verkaufsprozess. Anfragen wie "etwas Ruhiges fur ein Schlafzimmer" werden erst semantisch verstanden, dann in SQL-Filter ubersetzt.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">LangGraph-Agent — 5 Tools</div>
+          <div class="modal-text">
+            <p><strong>search_knowledge</strong> — semantischer Abruf aus pgvector (Stil-Mapping, Raumguides, FAQ)</p>
+            <p><strong>search_catalog</strong> — facettierte SQL-Suche mit Fallback-Logik (lockert Filter progressiv bei zu wenig Ergebnissen)</p>
+            <p><strong>get_product_details</strong> — direkter Lookup nach SKU, product_id oder URL-Slug — das Haupt-Anti-Halluzinations-Tool</p>
+            <p><strong>compare_styles</strong> — vergleicht zwei Stile fur den spezifischen Bedarf des Nutzers via Retrieval</p>
+            <p><strong>calculate_wall_price</strong> — berechnet Gesamtkosten nach Wandflache inkl. Verschnittzugabe</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Kernergebnisse</div>
           <div class="modal-metrics">
-            <div class="modal-metric"><span class="modal-metric-val">1.200+</span><span class="modal-metric-lbl">SKUs indiziert</span></div>
-            <div class="modal-metric"><span class="modal-metric-val">0</span><span class="modal-metric-lbl">halluzinierte Preise</span></div>
+            <div class="modal-metric"><span class="modal-metric-val">355</span><span class="modal-metric-lbl">Aktive SKUs</span></div>
+            <div class="modal-metric"><span class="modal-metric-val">142</span><span class="modal-metric-lbl">Wissens-Chunks</span></div>
+            <div class="modal-metric"><span class="modal-metric-val">Zero</span><span class="modal-metric-lbl">Halluzinierte Preise</span></div>
           </div>
         </div>
         <div>
           <div class="modal-section-label">Tech-Stack</div>
           <div class="modal-stack">
-            <span class="stack-chip">Python</span><span class="stack-chip">LangGraph</span><span class="stack-chip">FastAPI</span><span class="stack-chip">Supabase</span><span class="stack-chip">pgvector</span><span class="stack-chip">LangSmith</span>
+            <span class="stack-chip">Python</span><span class="stack-chip">LangGraph</span><span class="stack-chip">FastAPI</span><span class="stack-chip">Supabase</span><span class="stack-chip">pgvector (HNSW)</span><span class="stack-chip">Google Gemini</span><span class="stack-chip">Sentence-Transformers</span><span class="stack-chip">LangSmith</span><span class="stack-chip">Docker</span><span class="stack-chip">Railway</span><span class="stack-chip">GitHub Actions</span><span class="stack-chip">pytest</span>
           </div>
         </div>
       </div>
@@ -915,27 +964,29 @@
         <div>
           <div class="modal-section-label">Das Problem</div>
           <div class="modal-text">
-            <p>Rechnungen von Miele, Siemens, Liebherr kommen als PDF per E-Mail in verschiedenen Formaten. Manuelle Routine: suchen, klassifizieren, extrahieren, ablegen, verbuchen. Jede Woche.</p>
+            <p>Rechnungsverarbeitung per E-Mail frisst still und leise Stunden jeden Monat. Eingehende Rechnungen kommen als PDFs von mehreren Lieferanten — Miele, Siemens, Liebherr, Bosch, Smeg — in verschiedenen Formaten, verschiedenen Dateinamen. Jemand muss das Postfach offnen, Anhange finden, das Dokument klassifizieren, Daten extrahieren, es im richtigen Ordner ablegen und in die Buchhaltung eintragen. Jede Woche.</p>
           </div>
         </div>
         <div>
           <div class="modal-section-label">Architektur</div>
           <div class="modal-text">
-            <p><strong>Zweischichtig:</strong> Deterministischer Baseline-Parser (Regex) lauft zuerst. Gemini 2.5 Flash verifiziert und normalisiert. Bei API-Ausfall funktioniert der Fallback.</p>
-            <p><strong>Zweistufige Deduplizierung:</strong> Attachment-Ebene (Message-ID + Hash) + Geschaftsebene (Lieferant + Rechnungsnummer). Kein Datensatz geht verloren.</p>
+            <p><strong>Zweischichtiges LLM-Design:</strong> Gemini ist nicht die einzige Wahrheitsquelle. Ein deterministischer Baseline-Parser (Regex, Keyword-Trigger, Feldextraktion) lauft zuerst. Gemini 2.5 Flash verifiziert und normalisiert daruber. Wenn die API ausfalt — funktioniert der Fallback.</p>
+            <p><strong>Zweistufige Deduplizierung:</strong> Attachment-Ebene (Message-ID + Hash) und Geschaftsebene (Lieferant + Rechnungsnummer). Behandelt weitergeleitete E-Mails, Cron-Neustarts und doppelte PDFs in einer Nachricht.</p>
+            <p><strong>Statusmodell:</strong> Jeder Anhang erhalt einen processing_log-Eintrag unabhangig vom Ergebnis. Nichts geht stillschweigend verloren.</p>
           </div>
         </div>
         <div>
-          <div class="modal-section-label">Ergebnis</div>
+          <div class="modal-section-label">Kernergebnisse</div>
           <div class="modal-metrics">
-            <div class="modal-metric"><span class="modal-metric-val">0</span><span class="modal-metric-lbl">manuelle Stunden/Woche</span></div>
-            <div class="modal-metric"><span class="modal-metric-val">100 %</span><span class="modal-metric-lbl">automatisch verarbeitet</span></div>
+            <div class="modal-metric"><span class="modal-metric-val">0</span><span class="modal-metric-lbl">Manuelle Stunden / Woche</span></div>
+            <div class="modal-metric"><span class="modal-metric-val">100 %</span><span class="modal-metric-lbl">Automatische Ablage</span></div>
+            <div class="modal-metric"><span class="modal-metric-val">0 $</span><span class="modal-metric-lbl">Infrastrukturkosten (GitHub Actions)</span></div>
           </div>
         </div>
         <div>
           <div class="modal-section-label">Tech-Stack</div>
           <div class="modal-stack">
-            <span class="stack-chip">TypeScript</span><span class="stack-chip">Gemini 2.5 Flash</span><span class="stack-chip">GitHub Actions</span><span class="stack-chip">Supabase</span><span class="stack-chip">Google Drive</span>
+            <span class="stack-chip">Node.js</span><span class="stack-chip">TypeScript</span><span class="stack-chip">IMAP</span><span class="stack-chip">pdf-parse</span><span class="stack-chip">Gemini 2.5 Flash</span><span class="stack-chip">Google Drive API</span><span class="stack-chip">Supabase</span><span class="stack-chip">GitHub Actions</span><span class="stack-chip">Telegram Bot API</span>
           </div>
         </div>
       </div>
@@ -960,26 +1011,28 @@
         <div>
           <div class="modal-section-label">Das Problem</div>
           <div class="modal-text">
-            <p>Ein polnisches Kreativstudio verlor Stunden durch Trial-and-Error-Prompting fur personalisierte KI-Gemalde. Das Ziel: eine Person aus einem Foto in einen Kunstwerk-Stil ubertragen — schnell und reproduzierbar.</p>
+            <p>Ein Kreativstudio in Polen baut personalisierte KI-Gemalde — Kundengesichter in kunstlerische Szenen eingebettet. Unglaubliches Produkt. Nicht skalierbarer Workflow. Das Team verbrannte Stunden mit Trial-and-Error-Prompting fur jede einzelne Bestellung. Der Flaschenhals blockierte das Wachstum.</p>
           </div>
         </div>
         <div>
-          <div class="modal-section-label">Losung</div>
+          <div class="modal-section-label">Engineering-Highlights</div>
           <div class="modal-text">
-            <p>Produktions-Web-App in einem Tag mit React 19 und Gemini: Upload Foto + Stil-Auswahl → KI ersetzt die Identitat → 30-Sekunden-Workflow. Canvas API fur Echtzeit-Vorschau, keine Backend-Latenz.</p>
+            <p><strong>Client-seitige Komprimierung:</strong> iPhone-Uploads waren 15 MB+. API-Timeouts zerstorten das Erlebnis. Ich implementierte Bild-Skalierung und -Komprimierung direkt im Browser uber die Canvas API — bevor irgendetwas in die Cloud gesendet wird.</p>
+            <p><strong>Identitatsersatz mit Stilerhalt:</strong> Das Modell muss Gesichter ersetzen, ohne den kunstlerischen Stil der Szene zu verlieren. Fortgeschrittenes Prompt-Engineering deckt Beleuchtung, Texturanalyse (Ol vs. 3D) und Anatomie ab — um das Uncanny Valley zu vermeiden.</p>
+            <p><strong>Multi-Office-Abrechnung:</strong> Das Studio betreibt zwei Standorte (Polen / Ukraine) mit separaten Budgets. Client-seitige API-Key-Injektion stellt sicher, dass jedes Buro sein eigenes Abrechnungskontingent verwendet — kein geteiltes Konto.</p>
           </div>
         </div>
         <div>
-          <div class="modal-section-label">Ergebnis</div>
+          <div class="modal-section-label">Kernergebnisse</div>
           <div class="modal-metrics">
-            <div class="modal-metric"><span class="modal-metric-val">1 Tag</span><span class="modal-metric-lbl">Build bis Deploy</span></div>
-            <div class="modal-metric"><span class="modal-metric-val">30 Sek.</span><span class="modal-metric-lbl">statt Stunden</span></div>
+            <div class="modal-metric"><span class="modal-metric-val">1 Tag</span><span class="modal-metric-lbl">Von Idee bis Produktions-Deploy</span></div>
+            <div class="modal-metric"><span class="modal-metric-val">30 Sek.</span><span class="modal-metric-lbl">Pro Kunstwerk (vorher: Stunden)</span></div>
           </div>
         </div>
         <div>
           <div class="modal-section-label">Tech-Stack</div>
           <div class="modal-stack">
-            <span class="stack-chip">React 19</span><span class="stack-chip">TypeScript</span><span class="stack-chip">Gemini</span><span class="stack-chip">Canvas API</span><span class="stack-chip">Railway</span>
+            <span class="stack-chip">React 19</span><span class="stack-chip">TypeScript</span><span class="stack-chip">Vite</span><span class="stack-chip">Gemini (image-preview)</span><span class="stack-chip">Canvas API</span><span class="stack-chip">Tailwind CSS</span><span class="stack-chip">Railway</span>
           </div>
         </div>
       </div>
@@ -1002,29 +1055,43 @@
       </div>
       <div class="modal-body">
         <div>
-          <div class="modal-section-label">Das Problem</div>
+          <div class="modal-section-label">Herausforderung: Kosten vs. Latenz</div>
           <div class="modal-text">
-            <p>Ein 57-MB-PDF-Katalog mit 55.000+ Tokens. Gemini File Search im Hot-Cache kostet ~45 $/Monat und hat hohe Latenz. Das Modell mit rohem Kontext zu befuttern funktioniert nicht fur Produktion.</p>
+            <p>Ein statischer 57-MB-PDF-Produktkatalog — 55.000+ Tokens. Die Nutzung von Google Gemini File Search fur seine nativen multimodalen Fahigkeiten traf die "Hot Cache"-Preisstufe (~45 $/Monat) und verursachte hohe Latenz. Geld in das Problem zu werfen war keine Losung.</p>
           </div>
         </div>
         <div>
-          <div class="modal-section-label">Hybrid-RAG-Architektur</div>
+          <div class="modal-section-label">Optimierung</div>
           <div class="modal-text">
-            <p><strong>Supabase (pgvector):</strong> Harte Daten — SKU, exakte Preise, Lagerstand. Das Modell erfindet nie einen Preis.</p>
-            <p><strong>Gemini File Search:</strong> Semantischer Kontext — "Was hilft bei Gelenkschmerzen?" aus dem PDF-Text.</p>
+            <p><strong>Modell-Pivot:</strong> Modelle benchmarked und auf gemini-2.5-flash umgestellt. Ergebnis: Sub-Sekunden-Antwortzeiten und minimale API-Kosten — teures server-seitiges Caching vollstandig eliminiert.</p>
           </div>
         </div>
         <div>
-          <div class="modal-section-label">Ergebnis</div>
+          <div class="modal-section-label">Hybrid-RAG-Architektur — der technische Kern</div>
+          <div class="modal-text">
+            <p>Um Halluzinationen zu verhindern und Genauigkeit sicherzustellen, wird der Datenabruf in zwei Schichten aufgeteilt:</p>
+            <p><strong>Supabase (PostgreSQL + pgvector):</strong> Speichert die "Harten Daten" — SKU, exakte Preise, Lagerstand, Bild-URLs. Fur prazise Kartengenerierung verwendet. Der Bot erfindet nie einen Preis.</p>
+            <p><strong>Gemini File Search:</strong> Behandelt den "Weichen Kontext". Anfragen wie "Was ist gut bei Gelenkschmerzen?" oder "Wie wende ich das an?" rufen semantische Antworten aus dem unstrukturierten PDF-Text ab.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">KI-Asset-Pipeline</div>
+          <div class="modal-text">
+            <p>Niedrig auflosende PDF-Ausschnitte waren fur ein Verkaufserlebnis unbrauchbar. Eine automatisierte Pipeline gebaut, bei der Gemini 3 Pro Vision Produktbilder hochskaliert und on-the-fly in studioqualitative Assets regeneriert.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Kernergebnisse</div>
           <div class="modal-metrics">
-            <div class="modal-metric"><span class="modal-metric-val">~90 %</span><span class="modal-metric-lbl">API-Kosten gespart</span></div>
+            <div class="modal-metric"><span class="modal-metric-val">~90 %</span><span class="modal-metric-lbl">API-Kostenreduzierung</span></div>
+            <div class="modal-metric"><span class="modal-metric-val">57→5 MB</span><span class="modal-metric-lbl">Katalog komprimiert</span></div>
             <div class="modal-metric"><span class="modal-metric-val">&lt;1s</span><span class="modal-metric-lbl">Antwortzeit</span></div>
           </div>
         </div>
         <div>
           <div class="modal-section-label">Tech-Stack</div>
           <div class="modal-stack">
-            <span class="stack-chip">Hybrid RAG</span><span class="stack-chip">Supabase</span><span class="stack-chip">pgvector</span><span class="stack-chip">Gemini</span><span class="stack-chip">Telegram</span>
+            <span class="stack-chip">Node.js</span><span class="stack-chip">TypeScript</span><span class="stack-chip">gemini-2.5-flash</span><span class="stack-chip">Gemini File Search</span><span class="stack-chip">Supabase</span><span class="stack-chip">pgvector</span><span class="stack-chip">grammY</span><span class="stack-chip">React (Admin)</span><span class="stack-chip">Vercel</span>
           </div>
         </div>
       </div>
@@ -1049,26 +1116,36 @@
         <div>
           <div class="modal-section-label">Das Problem</div>
           <div class="modal-text">
-            <p>Ein Tapetenhandler verlor Stunden pro Woche mit manuellem Photoshop-Workflow: Tapetenmuster auf Raumfotos anwenden, jede Variante einzeln rendern. 300+ Varianten fur eine Kollektion.</p>
+            <p>Ein polnischer Tapetenhandler mit 90.500+ monatlichen Suchanfragen brauchte eine skalierbare Losung fur sein Kernproblem: Kunden konnen sich nicht vorstellen, wie eine Tapete in ihrem Raum aussieht. Der bisherige Workflow — manuell in Photoshop rendern, Variante fur Variante — kostete Stunden pro Woche und liess sich nicht auf eine ganze Kollektion skalieren.</p>
           </div>
         </div>
         <div>
-          <div class="modal-section-label">Architekturentscheidung</div>
+          <div class="modal-section-label">Die zentrale Architekturentscheidung</div>
           <div class="modal-text">
-            <p><strong>Geometrische Transformation vs. KI-Generierung:</strong> Fur Tapeten gewinnt geometrische Transformation — prazise, deterministisch, keine Artefakte. KI-Generierung fur kreative Raumstimmung. Die richtige Wahl hangt vom Anwendungsfall ab.</p>
+            <p>Geometrische Transformation vs. KI-Generierung — das ist die Frage, die den gesamten Systemdesign bestimmt.</p>
+            <p><strong>Geometrische Transformation:</strong> Perspektivische Homografie bildet das Tapetenmuster exakt auf die Wandflache ab. Prazise, deterministisch, keine Artefakte, perfekte Farbwiedergabe. Ideal fur Produktvisualisierung, wo Genauigkeit zahlt.</p>
+            <p><strong>KI-Generierung (Gemini):</strong> Erzeugt realistische Raumstimmung mit natiurlichem Licht und Schattenwurf. Besser fur kreative Inspiration, nicht fur exakte Produktdarstellung.</p>
+            <p>Fur Tapeten gewinnt geometrische Transformation. Fur Kuchenstudios, Moblierung und kreative Visualisierung ist KI die bessere Wahl. Die richtige Entscheidung hangt vom Anwendungsfall ab — dieser Artikel erklart, wann was einzusetzen ist.</p>
           </div>
         </div>
         <div>
-          <div class="modal-section-label">Ergebnis</div>
+          <div class="modal-section-label">Was gebaut wurde</div>
+          <div class="modal-text">
+            <p>Eine Produktions-Web-App mit React-Frontend und FastAPI-Backend: Raumfoto hochladen → Wand-Eckpunkte per Mausklick definieren → Tapetenmuster auswahlen → KI rendert das Ergebnis in Echtzeit. Batch-Modus verarbeitet 300+ Varianten automatisch. Ergebnisse in Supabase gespeichert, sofort auf der Produktseite eingebunden.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Kernergebnisse</div>
           <div class="modal-metrics">
             <div class="modal-metric"><span class="modal-metric-val">300+</span><span class="modal-metric-lbl">Varianten automatisch</span></div>
-            <div class="modal-metric"><span class="modal-metric-val">4 Std.</span><span class="modal-metric-lbl">Build-Zeit</span></div>
+            <div class="modal-metric"><span class="modal-metric-val">4 Std.</span><span class="modal-metric-lbl">Build bis erster Deploy</span></div>
+            <div class="modal-metric"><span class="modal-metric-val">90.500</span><span class="modal-metric-lbl">Suchanfragen / Monat</span></div>
           </div>
         </div>
         <div>
           <div class="modal-section-label">Tech-Stack</div>
           <div class="modal-stack">
-            <span class="stack-chip">Python</span><span class="stack-chip">FastAPI</span><span class="stack-chip">Gemini</span><span class="stack-chip">React</span><span class="stack-chip">Supabase</span>
+            <span class="stack-chip">Python</span><span class="stack-chip">FastAPI</span><span class="stack-chip">OpenCV</span><span class="stack-chip">Gemini</span><span class="stack-chip">React</span><span class="stack-chip">TypeScript</span><span class="stack-chip">Supabase</span><span class="stack-chip">Railway</span>
           </div>
         </div>
       </div>
@@ -1091,29 +1168,40 @@
       </div>
       <div class="modal-body">
         <div>
-          <div class="modal-section-label">Pipeline</div>
+          <div class="modal-section-label">Das Problem</div>
           <div class="modal-text">
-            <p>Google Maps-Suche → Impressum-Scraping → Gemini KI-Anreicherung → Supabase → CSV. Alles fur den deutschen Markt: Impressum enthalt Geschaftsfuhrername, E-Mail, Telefon, Steuernummer — gesetzlich verpflichtend.</p>
+            <p>B2B-Akquise in Deutschland ist zeitintensiv: Zielunternehmen finden, Kontaktdaten recherchieren, Entscheider identifizieren — fur 50 qualifizierte Leads konnen 3-5 Stunden manueller Arbeit entstehen. Das Besondere am deutschen Markt: jede Unternehmenswebsite ist gesetzlich verpflichtet, ein Impressum mit Geschaftsfuhrername, E-Mail, Telefon und Handelsregisternummer zu veroffentlichen. Das schafft eine einzigartige Moglichkeit zur Automatisierung.</p>
           </div>
         </div>
         <div>
-          <div class="modal-section-label">Compliance</div>
+          <div class="modal-section-label">Die Pipeline: 5 Schritte, vollautomatisch</div>
           <div class="modal-text">
-            <p>Ausschliesslich offentlich zugangliche Impressum-Daten. B2B-Kaltakquise nach §7 UWG mit Opt-out-Mechanismus. Fur Handwerker, Agenturen, IT-Dienstleister — jede Branche auf Google Maps erreichbar.</p>
+            <p><strong>Schritt 1 — Google Maps via Apify:</strong> Suchbegriff + Stadt eingeben (z.B. "Kuchenstudio Munchen") → Apify liefert Firmenliste mit Name, Adresse, Kategorie, Website, Bewertungen.</p>
+            <p><strong>Schritt 2 — Impressum-Seite finden:</strong> Tavily + Exa suchen fur jede Website nach der Impressum-URL. Doppelte Suchschicht verbessert die Abdeckung gegenuber Single-Source-Scraping.</p>
+            <p><strong>Schritt 3 — Gemini KI extrahiert Kontaktfelder:</strong> Aus unstrukturiertem Impressum-Text werden strukturierte Felder extrahiert: Geschaftsfuhrername, E-Mail, Telefon, Steuernummer, Handelsregisternummer.</p>
+            <p><strong>Schritt 4 — Bereinigung und Deduplizierung:</strong> Pandas normalisiert Felder, entfernt Duplikate, pruft E-Mail-Format. Ergebnis: saubere, CRM-fertige Datensatze.</p>
+            <p><strong>Schritt 5 — Export:</strong> Upsert in Supabase (fur Folgeautomatisierung) + CSV-Export fur direkten CRM-Import (HubSpot, Salesforce, Pipedrive).</p>
           </div>
         </div>
         <div>
-          <div class="modal-section-label">Ergebnis</div>
+          <div class="modal-section-label">§7 UWG Compliance</div>
+          <div class="modal-text">
+            <p>Die Pipeline verwendet ausschliesslich Daten, die Unternehmen gesetzlich veroffentlichen mussen. B2B-Kaltakquise ist nach §7 UWG zulassig, wenn ein berechtigtes Geschaftsinteresse besteht und ein Opt-out-Mechanismus vorhanden ist. Jede ausgehende E-Mail enthalt Datenschutzhinweis und Abmeldelink.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Kernergebnisse</div>
           <div class="modal-metrics">
             <div class="modal-metric"><span class="modal-metric-val">107</span><span class="modal-metric-lbl">CRM-fertige Leads</span></div>
-            <div class="modal-metric"><span class="modal-metric-val">4,80 $</span><span class="modal-metric-lbl">Gesamtkosten</span></div>
-            <div class="modal-metric"><span class="modal-metric-val">22 Min.</span><span class="modal-metric-lbl">Ende-zu-Ende</span></div>
+            <div class="modal-metric"><span class="modal-metric-val">54</span><span class="modal-metric-lbl">E-Mail-Adressen extrahiert</span></div>
+            <div class="modal-metric"><span class="modal-metric-val">4,80 $</span><span class="modal-metric-lbl">Gesamtkosten fur API-Aufrufe</span></div>
+            <div class="modal-metric"><span class="modal-metric-val">22 Min.</span><span class="modal-metric-lbl">Ende-zu-Ende-Laufzeit</span></div>
           </div>
         </div>
         <div>
           <div class="modal-section-label">Tech-Stack</div>
           <div class="modal-stack">
-            <span class="stack-chip">Python</span><span class="stack-chip">Apify</span><span class="stack-chip">Tavily</span><span class="stack-chip">Gemini</span><span class="stack-chip">Supabase</span>
+            <span class="stack-chip">Python</span><span class="stack-chip">Apify</span><span class="stack-chip">Tavily</span><span class="stack-chip">Exa</span><span class="stack-chip">Gemini KI</span><span class="stack-chip">Pandas</span><span class="stack-chip">Supabase</span>
           </div>
         </div>
       </div>
