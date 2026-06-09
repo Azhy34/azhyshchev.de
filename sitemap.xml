@@ -141,9 +141,21 @@
   <!-- Article pages -->
   <url>
     <loc>https://azhyshchev.de/articles/rag-sales-agent/</loc>
-    <lastmod>2026-05-15</lastmod>
+    <lastmod>2026-06-09</lastmod>
     <priority>0.85</priority>
     <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="en" href="https://azhyshchev.de/articles/rag-sales-agent/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://azhyshchev.de/de/artikel/hybrid-rag-verkaufsassistent/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/articles/rag-sales-agent/"/>
+  </url>
+  <url>
+    <loc>https://azhyshchev.de/de/artikel/hybrid-rag-verkaufsassistent/</loc>
+    <lastmod>2026-06-09</lastmod>
+    <priority>0.82</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="de" href="https://azhyshchev.de/de/artikel/hybrid-rag-verkaufsassistent/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://azhyshchev.de/articles/rag-sales-agent/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/articles/rag-sales-agent/"/>
   </url>
   <url>
     <loc>https://azhyshchev.de/articles/b2b-lead-pipeline-germany/</loc>

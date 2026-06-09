@@ -17,7 +17,9 @@ var langMap = {
   '/articles/invoice-automation-pipeline/': '/de/artikel/rechnungsautomatisierung-pipeline/',
   '/de/artikel/rechnungsautomatisierung-pipeline/': '/articles/invoice-automation-pipeline/',
   '/articles/wallpaper-ai-automation/': '/de/artikel/tapeten-ki-automatisierung/',
-  '/de/artikel/tapeten-ki-automatisierung/': '/articles/wallpaper-ai-automation/'
+  '/de/artikel/tapeten-ki-automatisierung/': '/articles/wallpaper-ai-automation/',
+  '/articles/rag-sales-agent/': '/de/artikel/hybrid-rag-verkaufsassistent/',
+  '/de/artikel/hybrid-rag-verkaufsassistent/': '/articles/rag-sales-agent/'
 };
 
 function normalizePath(p) {
