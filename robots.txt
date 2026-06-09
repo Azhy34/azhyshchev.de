@@ -5,7 +5,7 @@ Allow: /
 User-agent: GPTBot
 Allow: /
 
-User-agent: Claude-Web
+User-agent: ClaudeBot
 Allow: /
 
 User-agent: anthropic-ai
@@ -18,4 +18,3 @@ User-agent: Googlebot
 Allow: /
 
 Sitemap: https://azhyshchev.de/sitemap.xml
-LLMs: https://azhyshchev.de/llms.txt
