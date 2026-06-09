@@ -19,7 +19,9 @@ var langMap = {
   '/articles/wallpaper-ai-automation/': '/de/artikel/tapeten-ki-automatisierung/',
   '/de/artikel/tapeten-ki-automatisierung/': '/articles/wallpaper-ai-automation/',
   '/articles/rag-sales-agent/': '/de/artikel/hybrid-rag-verkaufsassistent/',
-  '/de/artikel/hybrid-rag-verkaufsassistent/': '/articles/rag-sales-agent/'
+  '/de/artikel/hybrid-rag-verkaufsassistent/': '/articles/rag-sales-agent/',
+  '/articles/rag-sales-agent-ecommerce/': '/de/artikel/rag-kundenservice-ecommerce/',
+  '/de/artikel/rag-kundenservice-ecommerce/': '/articles/rag-sales-agent-ecommerce/'
 };
 
 function normalizePath(p) {
