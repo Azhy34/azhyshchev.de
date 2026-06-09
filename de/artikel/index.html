@@ -93,73 +93,69 @@
       background: linear-gradient(120deg, var(--sky) 0 34%, var(--peach) 34% 55%, var(--coral) 55% 72%, var(--rose) 72% 100%);
       color: var(--black);
       min-height: 100vh;
-      padding: 32px 24px;
+      padding: 48px 24px;
     }
 
     a { color: inherit; text-decoration: none; }
 
-    /* ── LAYOUT ── */
     .shell {
-      max-width: 1180px;
+      width: min(1320px, 100%);
       margin: 0 auto;
       border: 3px solid var(--black);
       box-shadow: 12px 12px 0 var(--black);
-      display: grid;
-      grid-template-columns: 200px 1fr;
       background: var(--mint);
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      min-height: 820px;
+      overflow: hidden;
     }
 
     .sidebar {
       border-right: 3px solid var(--black);
-      padding: 24px 16px;
+      padding: 20px 18px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      position: relative;
+      gap: 22px;
     }
 
     .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 800;
-      font-size: 0.9rem;
-      letter-spacing: -0.02em;
-      margin-bottom: 8px;
+      display: flex; align-items: center; gap: 12px;
+      font-size: 1.6rem; font-weight: 800;
+      letter-spacing: -0.04em; margin-bottom: 8px;
     }
 
     .brand-badge {
-      width: 36px; height: 36px;
+      width: 42px; height: 34px;
       border: 2px solid var(--black);
-      background: var(--black);
-      color: var(--yellow);
+      background: var(--white);
+      box-shadow: 3px 3px 0 var(--black);
       display: grid; place-items: center;
-      font-weight: 800; font-size: 0.8rem;
+      font-size: 1rem; font-weight: 800;
     }
 
-    .nav { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+    .nav { display: flex; flex-direction: column; gap: 8px; }
 
     .nav-item {
-      display: flex; align-items: center; gap: 10px;
-      padding: 8px 10px;
+      display: flex; align-items: center; gap: 12px;
+      padding: 11px 12px;
+      font-size: 0.9rem; font-weight: 700;
       border: 2px solid transparent;
-      font-weight: 700; font-size: 0.78rem;
-      transition: background 0.15s;
+      transition: transform 0.18s ease;
     }
 
-    .nav-item:hover, .nav-item.active {
-      background: var(--black);
-      color: var(--cream);
-      border-color: var(--black);
-    }
+    .nav-item:hover { transform: translate(-2px, -2px); }
+    .nav-item.active { background: var(--black); color: var(--white); }
 
     .icon-box {
       width: 24px; height: 24px;
-      border: 2px solid currentColor;
       display: grid; place-items: center;
-      font-size: 0.72rem; font-weight: 800;
-      flex-shrink: 0;
+      border: 2px solid var(--black);
+      background: var(--white);
+      box-shadow: 3px 3px 0 var(--black);
+      font-size: 0.75rem; font-weight: 800;
     }
+
+    .nav-item.active .icon-box { background: var(--yellow); color: var(--black); }
 
     .nav-toggle {
       display: none;
@@ -171,32 +167,25 @@
       font-family: inherit; font-weight: 800;
     }
 
-    .sidebar-bottom {
-      margin-top: auto;
-      display: flex; flex-direction: column; gap: 4px;
-      padding-top: 16px;
-      border-top: 2px solid var(--black);
-    }
+    .sidebar-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
 
-    .socials {
-      display: flex; gap: 8px; margin-top: 6px;
-    }
+    .socials { display: flex; gap: 10px; padding-top: 8px; }
 
     .social-link {
-      width: 30px; height: 30px;
+      width: 42px; height: 42px;
       border: 2px solid var(--black);
-      display: grid; place-items: center;
-      font-size: 0.72rem; font-weight: 800;
       background: var(--white);
-      box-shadow: 2px 2px 0 var(--black);
+      box-shadow: 3px 3px 0 var(--black);
+      display: grid; place-items: center;
+      font-size: 0.8rem; font-weight: 800;
+      transition: transform 0.18s ease;
     }
 
-    .social-link:hover { background: var(--yellow); }
+    .social-link:hover { transform: translate(-2px, -2px); }
 
-    /* ── MAIN ── */
-    .main { padding: 28px 28px 40px; }
+    .main { background: var(--cream); padding: 22px; }
 
-    .panel { display: flex; flex-direction: column; gap: 28px; }
+    .panel { border: 2px solid var(--black); background: rgba(255,255,255,0.2); padding: 18px; display: flex; flex-direction: column; gap: 28px; }
 
     /* ── TOPBAR ── */
     .topbar {
@@ -382,14 +371,67 @@
 
     .cta-btn:hover { transform: translate(-1px, -1px); }
 
-    @media (min-width: 900px) {
-      .shell { grid-template-columns: 220px 1fr; }
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(17,17,17,0.6);
+      z-index: 200;
+      padding: 32px 16px;
+      overflow-y: auto;
     }
+    .modal-overlay.open { display: block; }
+    .modal {
+      width: min(860px, 100%);
+      margin: 0 auto;
+      border: 3px solid var(--black);
+      box-shadow: 12px 12px 0 var(--black);
+      background: var(--cream);
+      display: flex; flex-direction: column;
+    }
+    .modal-header {
+      border-bottom: 3px solid var(--black);
+      padding: 18px 22px;
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 16px;
+    }
+    .modal-close {
+      width: 38px; height: 38px; flex-shrink: 0;
+      border: 2px solid var(--black);
+      background: var(--white);
+      box-shadow: 3px 3px 0 var(--black);
+      display: grid; place-items: center;
+      font-size: 1.2rem; font-weight: 800;
+      cursor: pointer; font-family: inherit;
+    }
+    .modal-close:hover { background: var(--yellow); }
+    .modal-title { font-size: 1.5rem; font-weight: 800; line-height: 1.2; letter-spacing: -0.03em; }
+    .modal-body { padding: 24px 22px; display: flex; flex-direction: column; gap: 20px; }
+    .modal-section-label { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.45; margin-bottom: 6px; }
+    .modal-text { font-size: 0.88rem; line-height: 1.7; }
+    .modal-text p { margin-bottom: 12px; }
+    .modal-text p:last-child { margin-bottom: 0; }
+    .modal-stack { display: flex; flex-wrap: wrap; gap: 8px; }
+    .stack-chip { padding: 5px 12px; border: 2px solid var(--black); background: var(--mint); font-size: 0.75rem; font-weight: 700; }
+    .modal-metrics { display: flex; flex-wrap: wrap; gap: 12px; }
+    .modal-metric { border: 2px solid var(--black); background: var(--yellow); box-shadow: 4px 4px 0 var(--black); padding: 10px 14px; }
+    .modal-metric-val { font-size: 1.3rem; font-weight: 800; display: block; line-height: 1; }
+    .modal-metric-lbl { font-size: 0.68rem; font-weight: 700; opacity: 0.6; margin-top: 3px; display: block; }
+    .modal-footer { border-top: 3px solid var(--black); padding: 14px 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+    .action-btn { border: 2px solid var(--black); background: var(--white); box-shadow: 4px 4px 0 var(--black); padding: 10px 16px; font: inherit; font-weight: 700; font-size: 0.82rem; cursor: pointer; display: inline-block; transition: transform 0.15s; }
+    .action-btn:hover { transform: translate(-2px,-2px); }
+    .action-btn.dark { background: var(--black); color: var(--white); }
+    .mini-btn { border: 2px solid var(--black); background: transparent; padding: 8px 14px; font: inherit; font-size: 0.8rem; font-weight: 700; cursor: pointer; }
+
+    @media (max-width: 1100px) { .shell { grid-template-columns: 220px 1fr; } }
 
     @media (max-width: 820px) {
-      body { padding: 20px 12px; }
-      .shell { grid-template-columns: 1fr; box-shadow: 8px 8px 0 var(--black); }
-      .sidebar { border-right: none; border-bottom: 3px solid var(--black); }
+      body { padding: 10px 8px 72px; }
+      .shell { grid-template-columns: 1fr; box-shadow: 6px 6px 0 var(--black); min-height: unset; }
+      .sidebar { border-right: none; border-bottom: 3px solid var(--black); padding: 10px 14px; flex-direction: row; align-items: center; justify-content: space-between; }
+      .brand { font-size: clamp(0.95rem, 2.5vw, 1.6rem); }
+      .nav { display: none; }
+      .sidebar-bottom { display: none; }
       .main { padding: 14px; }
       .topbar { flex-direction: column; align-items: flex-start; }
       .articles-grid { grid-template-columns: 1fr; }
@@ -470,7 +512,7 @@
         <div class="articles-grid">
 
           <!-- Card: KI-Sichtbarkeit -->
-          <div class="article-card" onclick="window.location.href='/de/artikel/ki-sichtbarkeit-website/'">
+          <div class="article-card" data-modal="modal-ki-sichtbarkeit">
             <div class="card-accent" style="background: var(--sky);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -494,7 +536,7 @@
           </div>
 
           <!-- Card: KI Musik SaaS -->
-          <div class="article-card" onclick="window.location.href='/de/artikel/ki-musik-saas/'">
+          <div class="article-card" data-modal="modal-ki-musik">
             <div class="card-accent" style="background: var(--coral);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -518,7 +560,7 @@
           </div>
 
           <!-- Card: RAG Kundenservice E-Commerce -->
-          <div class="article-card" onclick="window.location.href='/de/artikel/rag-kundenservice-ecommerce/'">
+          <div class="article-card" data-modal="modal-rag-ecommerce">
             <div class="card-accent" style="background: var(--mint);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -543,7 +585,7 @@
           </div>
 
           <!-- Card: Rechnungsautomatisierung -->
-          <div class="article-card" onclick="window.location.href='/de/artikel/rechnungsautomatisierung-pipeline/'">
+          <div class="article-card" data-modal="modal-rechnung">
             <div class="card-accent" style="background: var(--mint);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -567,7 +609,7 @@
           </div>
 
           <!-- Card: KI Bildkomposition -->
-          <div class="article-card" onclick="window.location.href='/de/artikel/ki-bildkomposition/'">
+          <div class="article-card" data-modal="modal-ki-bild">
             <div class="card-accent" style="background: var(--pink);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -591,7 +633,7 @@
           </div>
 
           <!-- Card: Hybrid RAG Verkaufsassistent -->
-          <div class="article-card" onclick="window.location.href='/de/artikel/hybrid-rag-verkaufsassistent/'">
+          <div class="article-card" data-modal="modal-hybrid-rag">
             <div class="card-accent" style="background: var(--yellow);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -615,7 +657,7 @@
           </div>
 
           <!-- Card: Tapeten KI Automatisierung -->
-          <div class="article-card" onclick="window.location.href='/de/artikel/tapeten-ki-automatisierung/'">
+          <div class="article-card" data-modal="modal-tapeten">
             <div class="card-accent" style="background: var(--peach);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -639,7 +681,7 @@
           </div>
 
           <!-- Card: B2B Lead Pipeline Deutschland -->
-          <div class="article-card" onclick="window.location.href='/de/artikel/b2b-lead-pipeline-deutschland/'">
+          <div class="article-card" data-modal="modal-b2b">
             <div class="card-accent" style="background: var(--yellow);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -722,6 +764,406 @@
     <span style="padding: 0 10px;">·</span>
     <a href="/datenschutz#cookie-settings">Cookie-Einstellungen</a>
   </div>
+  <!-- ── MODALS ── -->
+
+  <!-- Modal: KI-Sichtbarkeit -->
+  <div class="modal-overlay" id="modal-ki-sichtbarkeit" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-section-label">Fallstudie · GEO · KI SEO · Website-Analyse</div>
+          <h2 class="modal-title">Warum Ihre Website fur ChatGPT und Claude unsichtbar ist</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-ki-sichtbarkeit')">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="modal-section-label">Das Problem</div>
+          <div class="modal-text">
+            <p>Sie ranken bei Google, aber KI-Suchmaschinen ignorieren Ihre Website vollstandig. Der Grund: KI-Crawler wie GPTBot und ClaudeBot konnen kein JavaScript ausfuhren. Eine Analyse von 1 Mio. Domains zeigt — 97 % der React-Sites sind fur KI unsichtbar.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Losung: Generative Engine Optimization (GEO)</div>
+          <div class="modal-text">
+            <p><strong>SSR/SSG:</strong> Inhalte mussen beim Seitenladen als HTML vorhanden sein — kein clientseitiges Rendering.</p>
+            <p><strong>llms.txt:</strong> Eine maschinenlesbare Zusammenfassung Ihrer Inhalte fur KI-Agenten.</p>
+            <p><strong>robots.txt:</strong> GPTBot, ClaudeBot, PerplexityBot explizit erlauben.</p>
+            <p><strong>Strukturierte Daten:</strong> Schema.org FAQPage und WebPage fur bessere KI-Erfassung.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Kernergebnis</div>
+          <div class="modal-metrics">
+            <div class="modal-metric"><span class="modal-metric-val">97 %</span><span class="modal-metric-lbl">React-Sites KI-unsichtbar</span></div>
+            <div class="modal-metric"><span class="modal-metric-val">0</span><span class="modal-metric-lbl">JS-Ausfuhrung durch GPTBot</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Tech-Stack</div>
+          <div class="modal-stack">
+            <span class="stack-chip">GEO</span><span class="stack-chip">SSR</span><span class="stack-chip">llms.txt</span><span class="stack-chip">Schema.org</span><span class="stack-chip">robots.txt</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="action-btn dark" href="/de/artikel/ki-sichtbarkeit-website/">Artikel lesen →</a>
+        <button class="mini-btn" onclick="closeModal('modal-ki-sichtbarkeit')">Schliessen</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: KI Musik SaaS -->
+  <div class="modal-overlay" id="modal-ki-musik" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-section-label">Fallstudie · Full-Stack · KI Musik · SaaS</div>
+          <h2 class="modal-title">KI-Musik-SaaS in 2 Wochen: hitdlaciebie.pl</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-ki-musik')">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="modal-section-label">Aufgabe</div>
+          <div class="modal-text">
+            <p>Ein vollstandiges KI-Musik-SaaS fur personalisierte Songs auf Polnisch — in zwei Wochen, ohne Vorerfahrung in KI-Musikgenerierung. Vier Musik-APIs getestet, Suno V5.5 als Sieger deployed.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Text-Pipeline</div>
+          <div class="modal-text">
+            <p><strong>Zweistufig:</strong> Gemini 2.5 Flash generiert Lyrics aus Nutzerdaten → Claude Sonnet 4.6 verfeinert Stil und Emotionalitat. Shopify Checkout fur Zahlungen, PostgreSQL fur Auftragsverwaltung.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Ergebnis</div>
+          <div class="modal-metrics">
+            <div class="modal-metric"><span class="modal-metric-val">2 Wo.</span><span class="modal-metric-lbl">Build bis Live</span></div>
+            <div class="modal-metric"><span class="modal-metric-val">4</span><span class="modal-metric-lbl">APIs getestet</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Tech-Stack</div>
+          <div class="modal-stack">
+            <span class="stack-chip">Next.js 14</span><span class="stack-chip">TypeScript</span><span class="stack-chip">Suno V5.5</span><span class="stack-chip">Gemini 2.5 Flash</span><span class="stack-chip">Shopify</span><span class="stack-chip">PostgreSQL</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="action-btn dark" href="/de/artikel/ki-musik-saas/">Artikel lesen →</a>
+        <button class="mini-btn" onclick="closeModal('modal-ki-musik')">Schliessen</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: RAG E-Commerce -->
+  <div class="modal-overlay" id="modal-rag-ecommerce" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-section-label">Fallstudie · RAG · KI-Agent · E-Commerce</div>
+          <h2 class="modal-title">KI-Verkaufsassistent fur E-Commerce: da-vinchi.pl</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-rag-ecommerce')">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="modal-section-label">Das System</div>
+          <div class="modal-text">
+            <p>LangGraph ReAct-Agent mit 5 Tools fur einen polnischen Tapetenhandler. 1.200+ SKUs in Hybrid RAG (SQL fur harte Daten + pgvector fur semantische Suche). Keine halluzinierten Preise — das Modell erfindet nie einen Preis.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Architektur</div>
+          <div class="modal-text">
+            <p><strong>Hybrid RAG:</strong> Supabase PostgreSQL fur exakte Preise/Lagerstand + pgvector fur semantische Produktsuche. ETL-Pipeline fur Datensynchronisation. LangSmith fur Produktions-Tracing und Qualitätssicherung.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Ergebnis</div>
+          <div class="modal-metrics">
+            <div class="modal-metric"><span class="modal-metric-val">1.200+</span><span class="modal-metric-lbl">SKUs indiziert</span></div>
+            <div class="modal-metric"><span class="modal-metric-val">0</span><span class="modal-metric-lbl">halluzinierte Preise</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Tech-Stack</div>
+          <div class="modal-stack">
+            <span class="stack-chip">Python</span><span class="stack-chip">LangGraph</span><span class="stack-chip">FastAPI</span><span class="stack-chip">Supabase</span><span class="stack-chip">pgvector</span><span class="stack-chip">LangSmith</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="action-btn dark" href="/de/artikel/rag-kundenservice-ecommerce/">Artikel lesen →</a>
+        <button class="mini-btn" onclick="closeModal('modal-rag-ecommerce')">Schliessen</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Rechnungsautomatisierung -->
+  <div class="modal-overlay" id="modal-rechnung" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-section-label">Fallstudie · Automatisierung · LLM-Pipeline</div>
+          <h2 class="modal-title">Rechnungsautomatisierung: IMAP → PDF → Gemini → Drive</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-rechnung')">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="modal-section-label">Das Problem</div>
+          <div class="modal-text">
+            <p>Rechnungen von Miele, Siemens, Liebherr kommen als PDF per E-Mail in verschiedenen Formaten. Manuelle Routine: suchen, klassifizieren, extrahieren, ablegen, verbuchen. Jede Woche.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Architektur</div>
+          <div class="modal-text">
+            <p><strong>Zweischichtig:</strong> Deterministischer Baseline-Parser (Regex) lauft zuerst. Gemini 2.5 Flash verifiziert und normalisiert. Bei API-Ausfall funktioniert der Fallback.</p>
+            <p><strong>Zweistufige Deduplizierung:</strong> Attachment-Ebene (Message-ID + Hash) + Geschaftsebene (Lieferant + Rechnungsnummer). Kein Datensatz geht verloren.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Ergebnis</div>
+          <div class="modal-metrics">
+            <div class="modal-metric"><span class="modal-metric-val">0</span><span class="modal-metric-lbl">manuelle Stunden/Woche</span></div>
+            <div class="modal-metric"><span class="modal-metric-val">100 %</span><span class="modal-metric-lbl">automatisch verarbeitet</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Tech-Stack</div>
+          <div class="modal-stack">
+            <span class="stack-chip">TypeScript</span><span class="stack-chip">Gemini 2.5 Flash</span><span class="stack-chip">GitHub Actions</span><span class="stack-chip">Supabase</span><span class="stack-chip">Google Drive</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="action-btn dark" href="/de/artikel/rechnungsautomatisierung-pipeline/">Artikel lesen →</a>
+        <button class="mini-btn" onclick="closeModal('modal-rechnung')">Schliessen</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: KI Bildkomposition -->
+  <div class="modal-overlay" id="modal-ki-bild" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-section-label">Fallstudie · Full-Stack · Multimodal KI</div>
+          <h2 class="modal-title">KI-Bildkomposition: Identitatsersatz in 30 Sekunden</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-ki-bild')">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="modal-section-label">Das Problem</div>
+          <div class="modal-text">
+            <p>Ein polnisches Kreativstudio verlor Stunden durch Trial-and-Error-Prompting fur personalisierte KI-Gemalde. Das Ziel: eine Person aus einem Foto in einen Kunstwerk-Stil ubertragen — schnell und reproduzierbar.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Losung</div>
+          <div class="modal-text">
+            <p>Produktions-Web-App in einem Tag mit React 19 und Gemini: Upload Foto + Stil-Auswahl → KI ersetzt die Identitat → 30-Sekunden-Workflow. Canvas API fur Echtzeit-Vorschau, keine Backend-Latenz.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Ergebnis</div>
+          <div class="modal-metrics">
+            <div class="modal-metric"><span class="modal-metric-val">1 Tag</span><span class="modal-metric-lbl">Build bis Deploy</span></div>
+            <div class="modal-metric"><span class="modal-metric-val">30 Sek.</span><span class="modal-metric-lbl">statt Stunden</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Tech-Stack</div>
+          <div class="modal-stack">
+            <span class="stack-chip">React 19</span><span class="stack-chip">TypeScript</span><span class="stack-chip">Gemini</span><span class="stack-chip">Canvas API</span><span class="stack-chip">Railway</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="action-btn dark" href="/de/artikel/ki-bildkomposition/">Artikel lesen →</a>
+        <button class="mini-btn" onclick="closeModal('modal-ki-bild')">Schliessen</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Hybrid RAG Verkaufsassistent -->
+  <div class="modal-overlay" id="modal-hybrid-rag" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-section-label">Fallstudie · RAG · KI-Architektur</div>
+          <h2 class="modal-title">Hybrid-RAG-Verkaufsassistent: Supabase + Gemini File Search</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-hybrid-rag')">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="modal-section-label">Das Problem</div>
+          <div class="modal-text">
+            <p>Ein 57-MB-PDF-Katalog mit 55.000+ Tokens. Gemini File Search im Hot-Cache kostet ~45 $/Monat und hat hohe Latenz. Das Modell mit rohem Kontext zu befuttern funktioniert nicht fur Produktion.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Hybrid-RAG-Architektur</div>
+          <div class="modal-text">
+            <p><strong>Supabase (pgvector):</strong> Harte Daten — SKU, exakte Preise, Lagerstand. Das Modell erfindet nie einen Preis.</p>
+            <p><strong>Gemini File Search:</strong> Semantischer Kontext — "Was hilft bei Gelenkschmerzen?" aus dem PDF-Text.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Ergebnis</div>
+          <div class="modal-metrics">
+            <div class="modal-metric"><span class="modal-metric-val">~90 %</span><span class="modal-metric-lbl">API-Kosten gespart</span></div>
+            <div class="modal-metric"><span class="modal-metric-val">&lt;1s</span><span class="modal-metric-lbl">Antwortzeit</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Tech-Stack</div>
+          <div class="modal-stack">
+            <span class="stack-chip">Hybrid RAG</span><span class="stack-chip">Supabase</span><span class="stack-chip">pgvector</span><span class="stack-chip">Gemini</span><span class="stack-chip">Telegram</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="action-btn dark" href="/de/artikel/hybrid-rag-verkaufsassistent/">Artikel lesen →</a>
+        <button class="mini-btn" onclick="closeModal('modal-hybrid-rag')">Schliessen</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Tapeten KI Automatisierung -->
+  <div class="modal-overlay" id="modal-tapeten" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-section-label">Fallstudie · Automatisierung · KI Bild · Retail</div>
+          <h2 class="modal-title">Tapeten-Visualisierung per KI: Photoshop wird ersetzt</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-tapeten')">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="modal-section-label">Das Problem</div>
+          <div class="modal-text">
+            <p>Ein Tapetenhandler verlor Stunden pro Woche mit manuellem Photoshop-Workflow: Tapetenmuster auf Raumfotos anwenden, jede Variante einzeln rendern. 300+ Varianten fur eine Kollektion.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Architekturentscheidung</div>
+          <div class="modal-text">
+            <p><strong>Geometrische Transformation vs. KI-Generierung:</strong> Fur Tapeten gewinnt geometrische Transformation — prazise, deterministisch, keine Artefakte. KI-Generierung fur kreative Raumstimmung. Die richtige Wahl hangt vom Anwendungsfall ab.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Ergebnis</div>
+          <div class="modal-metrics">
+            <div class="modal-metric"><span class="modal-metric-val">300+</span><span class="modal-metric-lbl">Varianten automatisch</span></div>
+            <div class="modal-metric"><span class="modal-metric-val">4 Std.</span><span class="modal-metric-lbl">Build-Zeit</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Tech-Stack</div>
+          <div class="modal-stack">
+            <span class="stack-chip">Python</span><span class="stack-chip">FastAPI</span><span class="stack-chip">Gemini</span><span class="stack-chip">React</span><span class="stack-chip">Supabase</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="action-btn dark" href="/de/artikel/tapeten-ki-automatisierung/">Artikel lesen →</a>
+        <button class="mini-btn" onclick="closeModal('modal-tapeten')">Schliessen</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: B2B Lead Pipeline -->
+  <div class="modal-overlay" id="modal-b2b" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-section-label">Fallstudie · Automatisierung · B2B · Leadgenerierung</div>
+          <h2 class="modal-title">B2B-Leadgenerierung Deutschland: 107 Firmen, 4,80 $, 22 Minuten</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-b2b')">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="modal-section-label">Pipeline</div>
+          <div class="modal-text">
+            <p>Google Maps-Suche → Impressum-Scraping → Gemini KI-Anreicherung → Supabase → CSV. Alles fur den deutschen Markt: Impressum enthalt Geschaftsfuhrername, E-Mail, Telefon, Steuernummer — gesetzlich verpflichtend.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Compliance</div>
+          <div class="modal-text">
+            <p>Ausschliesslich offentlich zugangliche Impressum-Daten. B2B-Kaltakquise nach §7 UWG mit Opt-out-Mechanismus. Fur Handwerker, Agenturen, IT-Dienstleister — jede Branche auf Google Maps erreichbar.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Ergebnis</div>
+          <div class="modal-metrics">
+            <div class="modal-metric"><span class="modal-metric-val">107</span><span class="modal-metric-lbl">CRM-fertige Leads</span></div>
+            <div class="modal-metric"><span class="modal-metric-val">4,80 $</span><span class="modal-metric-lbl">Gesamtkosten</span></div>
+            <div class="modal-metric"><span class="modal-metric-val">22 Min.</span><span class="modal-metric-lbl">Ende-zu-Ende</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Tech-Stack</div>
+          <div class="modal-stack">
+            <span class="stack-chip">Python</span><span class="stack-chip">Apify</span><span class="stack-chip">Tavily</span><span class="stack-chip">Gemini</span><span class="stack-chip">Supabase</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="action-btn dark" href="/de/artikel/b2b-lead-pipeline-deutschland/">Artikel lesen →</a>
+        <button class="mini-btn" onclick="closeModal('modal-b2b')">Schliessen</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openModal(id) {
+      document.getElementById(id).classList.add('open');
+      document.body.style.overflow = 'hidden';
+      var bn = document.getElementById('mobileBottomNav');
+      if (bn) bn.style.display = 'none';
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('open');
+      document.body.style.overflow = '';
+      var bn = document.getElementById('mobileBottomNav');
+      if (bn) bn.style.display = '';
+    }
+    document.querySelectorAll('.article-card').forEach(function(card) {
+      card.addEventListener('click', function(e) {
+        if (e.target.closest('a')) return;
+        var modalId = card.getAttribute('data-modal');
+        if (modalId) openModal(modalId);
+      });
+    });
+    document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
+      overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) {
+          overlay.classList.remove('open');
+          document.body.style.overflow = '';
+          var bn = document.getElementById('mobileBottomNav');
+          if (bn) bn.style.display = '';
+        }
+      });
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.open').forEach(function(m) {
+          m.classList.remove('open');
+        });
+        document.body.style.overflow = '';
+      }
+    });
+  </script>
+
   <script src="/js/nav.js"></script>
   <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" data-api-url="https://azhyshchevde-production.up.railway.app/api/chat" defer></script>
 </body>

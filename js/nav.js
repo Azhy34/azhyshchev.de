@@ -31,7 +31,9 @@ var langMap = {
   '/articles/': '/de/artikel/',
   '/de/artikel/': '/articles/',
   '/projects/b2b-lead-generation-germany/': '/de/projekte/b2b-lead-generierung-deutschland/',
-  '/de/projekte/b2b-lead-generierung-deutschland/': '/projects/b2b-lead-generation-germany/'
+  '/de/projekte/b2b-lead-generierung-deutschland/': '/projects/b2b-lead-generation-germany/',
+  '/projects/invoice-automation-germany/': '/de/projekte/rechnungsautomatisierung-deutschland/',
+  '/de/projekte/rechnungsautomatisierung-deutschland/': '/projects/invoice-automation-germany/'
 };
 
 function normalizePath(p) {
