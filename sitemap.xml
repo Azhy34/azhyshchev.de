@@ -165,9 +165,21 @@
   </url>
   <url>
     <loc>https://azhyshchev.de/articles/wallpaper-ai-automation/</loc>
-    <lastmod>2026-05-15</lastmod>
+    <lastmod>2026-06-09</lastmod>
     <priority>0.85</priority>
     <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="en" href="https://azhyshchev.de/articles/wallpaper-ai-automation/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://azhyshchev.de/de/artikel/tapeten-ki-automatisierung/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/articles/wallpaper-ai-automation/"/>
+  </url>
+  <url>
+    <loc>https://azhyshchev.de/de/artikel/tapeten-ki-automatisierung/</loc>
+    <lastmod>2026-06-09</lastmod>
+    <priority>0.82</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="de" href="https://azhyshchev.de/de/artikel/tapeten-ki-automatisierung/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://azhyshchev.de/articles/wallpaper-ai-automation/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/articles/wallpaper-ai-automation/"/>
   </url>
   <url>
     <loc>https://azhyshchev.de/articles/ai-image-composer/</loc>

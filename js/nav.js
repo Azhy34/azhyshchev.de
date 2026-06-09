@@ -15,7 +15,9 @@ var langMap = {
   '/articles/b2b-lead-pipeline-germany/': '/de/artikel/b2b-lead-pipeline-deutschland/',
   '/de/artikel/b2b-lead-pipeline-deutschland/': '/articles/b2b-lead-pipeline-germany/',
   '/articles/invoice-automation-pipeline/': '/de/artikel/rechnungsautomatisierung-pipeline/',
-  '/de/artikel/rechnungsautomatisierung-pipeline/': '/articles/invoice-automation-pipeline/'
+  '/de/artikel/rechnungsautomatisierung-pipeline/': '/articles/invoice-automation-pipeline/',
+  '/articles/wallpaper-ai-automation/': '/de/artikel/tapeten-ki-automatisierung/',
+  '/de/artikel/tapeten-ki-automatisierung/': '/articles/wallpaper-ai-automation/'
 };
 
 function normalizePath(p) {
