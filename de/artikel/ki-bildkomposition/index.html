@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <script src="/js/cookie-consent.js" defer></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="KI Bilder erstellen automatisiert: Wie ein kreatives Studio Stunden an manuellem AI-Prompting auf 30 Sekunden pro Kunstwerk reduziert hat. React 19 + Gemini Multimodal, Canvas API, 1-Tages-Build. Praxisbericht.">
+  <meta name="keywords" content="ki bilder erstellen, ai bild generator, ki bildbearbeitung, produktbilder automatisieren, ki bildgenerator, bilder automatisch erstellen, gemini multimodal, react ki app, kreative automatisierung, ki foto erstellen">
+  <meta name="author" content="Mikhail Azhyshchev">
+  <link rel="canonical" href="https://azhyshchev.de/de/artikel/ki-bildkomposition/">
+  <link rel="alternate" hreflang="de" href="https://azhyshchev.de/de/artikel/ki-bildkomposition/" />
+  <link rel="alternate" hreflang="en" href="https://azhyshchev.de/articles/ai-image-composer/" />
+  <link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/articles/ai-image-composer/" />
+
+  <meta property="og:title" content="KI Bilder erstellen automatisiert: 1-Tages-Build mit React + Gemini | Mikhail Azhyshchev">
+  <meta property="og:description" content="KI Bilder erstellen ohne manuelles Prompting: Wie ein kreatives Studio mit React 19 + Gemini Multimodal einen 1-Tages-Build auf Produktion gebracht hat. Stunden Arbeit auf 30 Sekunden reduziert.">
+  <meta property="og:url" content="https://azhyshchev.de/de/artikel/ki-bildkomposition/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://azhyshchev.de/Azhyschev.JPG">
+  <meta property="og:locale" content="de_DE">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="KI Bilder erstellen automatisiert: React + Gemini in 1 Tag | Mikhail Azhyshchev">
+  <meta name="twitter:description" content="KI-Bildgenerator fur kreative Studios: Identity Replacement, Canvas API, mobil-first. Stunden an Prompting auf 30 Sekunden. 85% Teamadoption ab Tag 1.">
+
+  <title>KI Bilder erstellen automatisiert: React 19 + Gemini Multimodal — 1-Tages-Build | Mikhail Azhyshchev</title>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://azhyshchev.de/de/artikel/ki-bildkomposition/#article",
+        "headline": "KI Bilder erstellen automatisiert: React 19 + Gemini Multimodal — 1-Tages-Build",
+        "description": "Praxisbericht: KI-Bildgenerator fur kreatives Studio ersetzt stundenlange manuelle Prompting-Arbeit durch einen 30-Sekunden-Workflow. React 19, Gemini Multimodal, Canvas API. In einem Arbeitstag gebaut, 85% Teamadoption.",
+        "author": { "@id": "https://azhyshchev.de/#person" },
+        "publisher": { "@id": "https://azhyshchev.de/#person" },
+        "datePublished": "2025-11-01",
+        "dateModified": "2026-06-09",
+        "inLanguage": "de",
+        "keywords": "ki bilder erstellen, ai bild generator, ki bildbearbeitung, kreative automatisierung, gemini multimodal, react 19, canvas api, identity replacement, produktbilder automatisieren",
+        "url": "https://azhyshchev.de/de/artikel/ki-bildkomposition/",
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://azhyshchev.de/de/artikel/ki-bildkomposition/#webpage",
+        "url": "https://azhyshchev.de/de/artikel/ki-bildkomposition/",
+        "name": "KI Bilder erstellen automatisiert: 1-Tages-Build mit React + Gemini",
+        "description": "KI Bildgenerator fur kreative Unternehmen: Gemini Multimodal, Canvas API, Identity Replacement. Stunden manuelle Arbeit auf 30 Sekunden reduziert.",
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" },
+        "author": { "@id": "https://azhyshchev.de/#person" },
+        "dateModified": "2026-06-09",
+        "inLanguage": "de",
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Start", "item": "https://azhyshchev.de/de/" },
+            { "@type": "ListItem", "position": 2, "name": "Artikel", "item": "https://azhyshchev.de/articles/" },
+            { "@type": "ListItem", "position": 3, "name": "KI Bilder erstellen automatisiert" }
+          ]
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Wie kann man KI Bilder erstellen automatisieren fur ein Unternehmen?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Der Schlussel ist, die Prompting-Expertise in ein UI einzukodieren. Statt jeden Mitarbeiter zu trainieren, wie er AI-Bilder erstellt, baut man ein Werkzeug, das die richtigen Prompts automatisch generiert. Der Nutzer gibt nur die Eingangsdaten (Foto, Stil) ein — das System ubernimmt die Prompt-Konstruktion. React + Gemini Multimodal ist ein bewahrter Stack fur solche Produktionstools."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Welche Branchen konnen von einem automatisierten KI-Bildgenerator profitieren?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Uberall wo wiederkehrende Bildaufgaben manuell mit KI-Tools erledigt werden: E-Commerce (Produktfotos automatisieren, Hintergrunde ersetzen), Marketingagenturen (Werbemittel aus Brand-Guidelines generieren), Kreativstudios (personalisierte Kunstwerke im Scale), Immobilien (virtuelle Mobblierung), Druck- und Personalisierungsunternehmen. Das Muster ist gleich: manuelle KI-Arbeit in ein Ein-Klick-Tool verwandeln."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Was ist der Unterschied zwischen einem KI-Bildgenerator und einem KI-Automatisierungstool fur Bilder?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ein KI-Bildgenerator (Midjourney, DALL-E, Gemini) braucht menschliche Prompting-Expertise bei jeder Nutzung. Ein KI-Automatisierungstool ist eine individuell gebaute Anwendung, die diese Expertise einmalig einprogrammiert und dann jedem Teammitglied zuganglich macht — ohne dass sie wissen mussen, wie man promptet. Das ist der Unterschied zwischen einem Werkzeug und einer Produktionspipeline."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --sky: #61b5e8; --mint: #b9ddb7; --cream: #f8f0dc; --yellow: #f5c84b; --pink: #efb2d5; --blue: #d8ebff; --peach: #f7d4b1; --coral: #ff9a77; --rose: #ecb0c4; --black: #111111; --white: #ffffff; --accent: var(--pink); }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { min-height: 100vh; font-family: 'JetBrains Mono', monospace; color: var(--black); background: linear-gradient(120deg, var(--sky) 0 34%, var(--peach) 34% 55%, var(--coral) 55% 72%, var(--rose) 72% 100%); padding: 48px 24px; }
+    a { color: inherit; text-decoration: none; }
+    .shell { width: min(1320px, 100%); margin: 0 auto; border: 3px solid var(--black); box-shadow: 12px 12px 0 var(--black); background: var(--mint); display: grid; grid-template-columns: 250px 1fr; min-height: 820px; overflow: hidden; }
+    .sidebar { border-right: 3px solid var(--black); padding: 20px 18px; display: flex; flex-direction: column; gap: 22px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 8px; }
+    .brand-badge { width: 42px; height: 34px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 1rem; font-weight: 800; }
+    .nav { display: flex; flex-direction: column; gap: 8px; }
+    .nav-item { display: flex; align-items: center; gap: 12px; padding: 11px 12px; font-size: 0.9rem; font-weight: 700; border: 2px solid transparent; transition: transform 0.18s ease; }
+    .nav-item:hover { transform: translate(-2px, -2px); }
+    .nav-item.active { background: var(--black); color: var(--white); }
+    .icon-box { width: 24px; height: 24px; display: grid; place-items: center; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); font-size: 0.75rem; font-weight: 800; }
+    .nav-item.active .icon-box { background: var(--yellow); color: var(--black); }
+    .sidebar-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+    .socials { display: flex; gap: 10px; padding-top: 8px; }
+    .social-link { width: 42px; height: 42px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 0.8rem; font-weight: 800; transition: transform 0.18s ease; }
+    .social-link:hover { transform: translate(-2px, -2px); }
+    .main { background: var(--cream); padding: 22px; }
+    .panel { border: 2px solid var(--black); background: rgba(255,255,255,0.2); padding: 18px; display: flex; flex-direction: column; gap: 28px; }
+    .breadcrumb { font-size: 0.78rem; opacity: 0.6; display: flex; align-items: center; gap: 8px; }
+    .breadcrumb a:hover { opacity: 1; text-decoration: underline; }
+    .article-hero { border: 3px solid var(--black); background: var(--accent); box-shadow: 6px 6px 0 var(--black); padding: 28px 24px; }
+    .article-type { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; margin-bottom: 12px; }
+    .article-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.04em; margin-bottom: 16px; }
+    .article-lead { font-size: 0.95rem; line-height: 1.65; max-width: 72ch; }
+    .metrics-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+    .metric-box { border: 2px solid var(--black); background: rgba(255,255,255,0.75); padding: 14px 12px; }
+    .metric-box strong { display: block; font-size: 1.3rem; line-height: 1; margin-bottom: 6px; }
+    .metric-box span { font-size: 0.72rem; line-height: 1.4; opacity: 0.8; }
+    .article-body { display: flex; flex-direction: column; gap: 24px; }
+    .neo-card { border: 3px solid var(--black); background: var(--white); box-shadow: 6px 6px 0 var(--black); padding: 24px; }
+    .section-label { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.45; margin-bottom: 10px; }
+    .section-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.02em; }
+    .prose { display: flex; flex-direction: column; gap: 14px; }
+    .prose p { font-size: 0.88rem; line-height: 1.75; }
+    .prose h3 { font-size: 0.95rem; font-weight: 800; margin-top: 8px; letter-spacing: -0.02em; }
+    .prose ul { padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
+    .prose li { font-size: 0.88rem; line-height: 1.65; }
+    .prose code { background: var(--cream); border: 1px solid var(--black); padding: 1px 5px; font-size: 0.82rem; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .chip { padding: 6px 10px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); font-size: 0.72rem; font-weight: 700; }
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .tl-item { display: flex; gap: 16px; }
+    .tl-dot { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+    .tl-circle { width: 12px; height: 12px; border: 2px solid var(--black); background: var(--black); flex-shrink: 0; margin-top: 4px; }
+    .tl-line { width: 2px; background: var(--black); flex: 1; min-height: 20px; }
+    .tl-item:last-child .tl-line { display: none; }
+    .tl-content { padding-bottom: 18px; }
+    .tl-time { font-size: 0.68rem; font-weight: 800; opacity: 0.5; margin-bottom: 4px; }
+    .tl-text { font-size: 0.86rem; line-height: 1.6; }
+    .faq { display: flex; flex-direction: column; gap: 16px; }
+    .faq-item { border: 2px solid var(--black); background: var(--cream); padding: 18px 20px; }
+    .faq-q { font-size: 0.9rem; font-weight: 800; margin-bottom: 10px; }
+    .faq-a { font-size: 0.84rem; line-height: 1.7; opacity: 0.85; }
+    .cta-strip { border: 3px solid var(--black); background: var(--black); color: var(--white); box-shadow: 6px 6px 0 rgba(0,0,0,0.3); padding: 22px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .cta-strip p { font-size: 0.9rem; line-height: 1.5; max-width: 58ch; }
+    .cta-strip strong { display: block; font-size: 1rem; margin-bottom: 4px; }
+    .cta-btn { padding: 12px 20px; border: 2px solid var(--white); background: var(--white); color: var(--black); font: inherit; font-weight: 700; cursor: pointer; white-space: nowrap; transition: transform 0.15s; display: inline-block; }
+    .cta-btn:hover { transform: translate(-2px,-2px); }
+    .cta-btn.outline { background: transparent; color: var(--white); }
+    .back-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 2px solid var(--black); background: var(--white); box-shadow: 4px 4px 0 var(--black); font-size: 0.82rem; font-weight: 700; transition: transform 0.15s; align-self: flex-start; }
+    .back-link:hover { transform: translate(-2px,-2px); }
+    @media (max-width: 1100px) { .shell { grid-template-columns: 220px 1fr; } .metrics-row { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 820px) { body { padding: 10px 8px 72px; } .shell { grid-template-columns: 1fr; box-shadow: 6px 6px 0 var(--black); min-height: unset; } .sidebar { border-right: none; border-bottom: 3px solid var(--black); padding: 10px 14px; flex-direction: row; align-items: center; justify-content: space-between; } .brand { font-size: clamp(0.95rem,2.5vw,1.6rem); } .nav { display: none; } .sidebar-bottom { display: none; } .main { padding: 14px; } .two-col { grid-template-columns: 1fr; } }
+    @media (max-width: 520px) { .metrics-row { grid-template-columns: 1fr; } .article-title { font-size: 1.5rem; } }
+  </style>
+  <link rel="stylesheet" href="/mobile.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="/de/"><div class="brand-badge">&lt;/&gt;</div><span>AZHYSHCHEV</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Navigation umschalten">&#9776;</button>
+      <nav class="nav">
+        <a class="nav-item" href="/de/"><span class="icon-box">H</span><span>Start</span></a>
+        <a class="nav-item" href="/ai-checker/"><span class="icon-box">🤖</span><span>KI-Checker</span></a>
+        <a class="nav-item" href="/de/erfahrung/"><span class="icon-box">E</span><span>Erfahrung</span></a>
+        <a class="nav-item" href="/de/projekte/"><span class="icon-box">P</span><span>Projekte</span></a>
+        <a class="nav-item active" href="/articles/"><span class="icon-box">A</span><span>Artikel</span></a>
+        <a class="nav-item" href="/de/fahigkeiten/"><span class="icon-box">S</span><span>Fahigkeiten</span></a>
+        <a class="nav-item" href="/de/kontakt/"><span class="icon-box">C</span><span>Kontakt</span></a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a class="nav-item" href="/CV.pdf" download><span class="icon-box">CV</span><span>CV herunterladen</span></a>
+        <a class="nav-item" href="mailto:azhyshchev@gmail.com"><span class="icon-box">@</span><span>E-Mail</span></a>
+        <div class="socials">
+          <a class="social-link" href="https://www.linkedin.com/in/azhyshchev/" target="_blank" rel="noreferrer">in</a>
+          <a class="social-link" href="https://github.com/Azhy34" target="_blank" rel="noreferrer">gh</a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="panel">
+
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/de/">Start</a><span>→</span>
+          <a href="/articles/">Artikel</a><span>→</span>
+          <span>KI Bilder erstellen automatisiert</span>
+        </nav>
+
+        <div class="article-hero">
+          <div class="article-type">Full-Stack · Multimodal KI · 1-Tages-Build · Produktion</div>
+          <h1 class="article-title">KI Bilder erstellen automatisiert: React 19 + Gemini Multimodal — in einem Arbeitstag</h1>
+          <p class="article-lead">Ein polnisches Kreativstudio erstellt personalisierte KI-Gemalde: Kundengesichter werden in kunstlerische Szenen eingeblendet. Der Engpass war stundenlanges Trial-and-Error-Prompting pro Auftrag. Ich habe in einem Arbeitstag eine Produktions-Web-App gebaut, die diesen Prozess auf 30 Sekunden pro Kunstwerk reduziert. Hier ist der vollstandige technische Bericht: was funktioniert hat, was nicht, und warum Mobile-First den Unterschied gemacht hat.</p>
+          <div class="metrics-row">
+            <div class="metric-box"><strong>1 Tag</strong><span>Von der Idee zur Produktionsbereitstellung — ein vollstandiger Arbeitstag</span></div>
+            <div class="metric-box"><strong>30 Sek.</strong><span>Pro Kunstwerk — fruher Stunden an manuellem Prompting</span></div>
+            <div class="metric-box"><strong>85-90%</strong><span>Taglich genutzt — ab dem ersten Tag nach Auslieferung</span></div>
+            <div class="metric-box"><strong>Mobil-First</strong><span>Fur Smartphones beim Kundentermin optimiert, nicht fur Desktop-Demos</span></div>
+          </div>
+        </div>
+
+        <div class="article-body">
+
+          <div class="neo-card">
+            <div class="section-label">Das Problem</div>
+            <h2 class="section-title">Stunden manuelles KI-Prompting pro Kunstwerk</h2>
+            <div class="prose">
+              <p>Das Produkt des Studios: personalisierte KI-Gemalde, bei denen das Gesicht des Kunden in eine kunstlerische Szene eingeblendet wird — Olgemalde-Stil, 3D-Render-Stil, Fantasy-Illustration. Jedes Kunstwerk erfordert "Identity Replacement" — das Kundenphoto wird in eine vorgefertigte kunstlerische Komposition integriert, wobei Stil, Beleuchtung und Bildaufbau der Szene erhalten bleiben.</p>
+              <p>Vor dem Tool war der Workflow: Kundenfoto in ein KI-Bildtool laden, manuell einen detaillierten Prompt zur Identity Replacement formulieren, 3-5 Variationen generieren, die beste auswahlen, bei schlechter Ahnlichkeit eine weitere Prompting-Runde durchfuhren — bis das Ergebnis kundentauglich war. An einem guten Tag: 30-45 Minuten pro Kunstwerk. An einem schlechten: uber 2 Stunden.</p>
+              <p>Das Studio hatte eine wachsende Auftragswarteschlange und einen Engpass: eine Person, die wusste, wie KI-Bildtools korrekt geprompted werden. Fehlte diese Person, stapelten sich die Auftrage. Das Team konnte nicht skalieren, ohne diese Einzelpunkt-Abhangigkeit zu beseitigen.</p>
+              <h3>Warum der bestehende Workflow schwer zu automatisieren war</h3>
+              <p>Die technische Kernherausforderung ist "Identity Replacement mit Style Transfer" — Gesichtsgeometrie und Ahnlichkeit des Kunden erhalten, wahrend der kunstlerische Stil der Szene auf das gesamte Bild angewendet wird. Zu viel Style Transfer: Identitat geht verloren. Zu wenig: ein deplatziertes realistisches Gesicht in einem impressionistischen Gemalde.</p>
+              <p>Generische KI-Bildtools losen das durch manuelles Prompting, da sie fur kreative Exploration gebaut sind, nicht fur wiederholbare Produktion. Die Losung musste die richtige Prompting-Strategie in ein UI einbetten, damit jedes Teammitglied konsistente Ergebnisse erzielen kann — ohne Prompting-Expertise.</p>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Der 1-Tages-Build</div>
+            <h2 class="section-title">Von der Anforderung zur Produktion — der zeitliche Ablauf</h2>
+            <div class="timeline">
+              <div class="tl-item">
+                <div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div>
+                <div class="tl-content">
+                  <div class="tl-time">Morgen — Recherche (2h)</div>
+                  <div class="tl-text">Geminis <code>gemini-2.0-flash-exp-image-generation</code> in Google AI Studio getestet. Fokus auf Identity Replacement mit Style Transfer uber 3 Kunststile: Olgemalde, 3D-Render, Fantasy-Illustration. Die Prompt-Struktur, die konsistente Ergebnisse liefert, wurde gefunden — bevor eine einzige Zeile Code geschrieben wurde.</div>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div>
+                <div class="tl-content">
+                  <div class="tl-time">Spaeter Vormittag — Architektur (1h)</div>
+                  <div class="tl-text">Stack-Entscheidung: React 19 fur das UI (schnell, komponentenbasiert, gute Mobilunterstutzung), Canvas API fur clientseitige Vorverarbeitung, Node.js-Backend fur API-Aufrufe, Railway fur das Deployment. Kein Overengineering — das Einfachste, das in Produktion funktioniert.</div>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div>
+                <div class="tl-content">
+                  <div class="tl-time">Nachmittag — Build (4h)</div>
+                  <div class="tl-text">Frontend: Foto-Upload-UI, Stilvorlagen-Auswahl, Ergebnisanzeige, Download-Button. Backend: Bildvorverarbeitungs-Endpoint, Gemini-API-Aufruf mit dem kalibrierten Prompt, Fehlerbehandlung. Canvas API-Kompression fur iPhone-Fotos (15MB+ Originale mussten unter 2MB fur API-Timeouts gebracht werden).</div>
+                </div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-dot"><div class="tl-circle"></div><div class="tl-line"></div></div>
+                <div class="tl-content">
+                  <div class="tl-time">Abend — Deployment und Ubergabe (1h)</div>
+                  <div class="tl-text">Railway-Deployment mit Umgebungsvariablen-Konfiguration. Mit 5 echten Kundenfotos uber 3 Stile getestet. Mit einer 10-minutigen Walkthrough an den Kunden ubergeben. Am nachsten Morgen war das Tool bereits im Teameinsatz.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="neo-card">
+              <div class="section-label">Technische Details</div>
+              <h2 class="section-title">Unter der Haube</h2>
+              <div class="prose">
+                <h3>Canvas API Vorverarbeitung</h3>
+                <p>iPhone-Fotos sind 12-15MB. Roh an die Gemini API senden fuhrt bei langsamen Mobilverbindungen zu Timeouts. Canvas API skaliert und komprimiert clientseitig vor dem Upload: <code>canvas.toBlob(callback, 'image/jpeg', 0.85)</code> mit Zieldimensionen maximal 2048px. Ergebnis: 200-800KB, unter 200ms auf jedem Smartphone, kein sichtbarer Qualitatsverlust bei der Kunstwerk-Generierung.</p>
+                <h3>Prompt Engineering fur Identity Replacement</h3>
+                <p>Der System-Prompt ist das zentrale IP des Tools. Er instruiert Gemini: Gesichtsgeometrie und charakteristische Merkmale des Motivs erhalten, kunstlerischen Stil nur auf Hintergrund und Nicht-Gesicht-Elemente anwenden, Beleuchtungsrichtung der Szene auf das Gesicht beibehalten, "Uncanny Valley" durch kein Ubererweichen der Hauttexturen vermeiden. Der Prompt wurde uber ~30 Testgenerierungen mit verschiedenen Gesichtstypen und Kunststilen kalibriert.</p>
+                <h3>Multi-Office API-Key-Injektion</h3>
+                <p>Das Studio betreibt zwei Buros (Polen/Ukraine) mit getrennter Abrechnung. Jedes Buro authentifiziert sich mit seinem eigenen API-Key im localStorage. Das Backend empfangt den Key pro Anfrage und verwendet ihn fur den Gemini-Call. Einfach, ohne Audit-Aufwand, null Infrastrukturkosten fur die Kostenstellen-Zuweisung.</p>
+              </div>
+            </div>
+
+            <div class="neo-card">
+              <div class="section-label">Was es zum Erfolg gemacht hat</div>
+              <h2 class="section-title">Mobil-First durch Sachzwang</h2>
+              <div class="prose">
+                <p>Das Team des Studios arbeitet beim Kundentermin mit Smartphones — Stiloptionen zeigen und Kundenfotos in Echtzeit aufnehmen. Eine Desktop-first-Web-App ware nicht genutzt worden.</p>
+                <p>Mobil-First-Entscheidungen, die den Unterschied machten:</p>
+                <ul>
+                  <li>Einspaltiges Layout mit grossen Tap-Targets — keine kleinen Buttons</li>
+                  <li>Kamera-Input via <code>&lt;input type="file" accept="image/*" capture="user"&gt;</code> — offnet direkt die Kamera auf Mobilgeraten</li>
+                  <li>Ladezustand mit Animation — Generierung dauert 8-15 Sekunden; Nutzer brauchen Feedback</li>
+                  <li>Ergebnis wird automatisch heruntergeladen oder vollbild angezeigt fur einfaches Teilen in Kundenchats</li>
+                  <li>Kein Login erforderlich — jedes Teammitglied kann es ohne Account-Setup nutzen</li>
+                </ul>
+                <h3>Das "naturlichsprachliche Korrekturen"-Feature</h3>
+                <p>Gemini verarbeitet Folgeanweisungen naturlich: "Hintergrund von Wald auf Stadtpanorama andern", "Stil malerischer gestalten", "Beleuchtung wie Sonnenuntergang anpassen". Nutzer konnen Anderungen uber ein Textfeld unter dem Ergebnis anfordern. Das ersetzte die Notwendigkeit eines komplexen Vorlagenmanagement-Systems.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Ergebnisse und Lektionen</div>
+            <h2 class="section-title">Was nach dem Deployment passierte</h2>
+            <div class="prose">
+              <p>Das Tool ging am Tag nach dem Build live. Ergebnisse aus dem ersten Monat:</p>
+              <ul>
+                <li>85-90% des Teams nutzt es fur Standardauftrage — die restlichen 10-15% sind komplexe Anfragen, die individuelle Prompts erfordern</li>
+                <li>Auftragsbearbeitungszeit: Stunden auf 30 Sekunden pro Kunstwerk fur Standardanfragen</li>
+                <li>Single-Point-of-Failure beseitigt — jedes Teammitglied kann Auftrage bearbeiten</li>
+                <li>Kundenzufriedenheit verbessert — schnellere Lieferzeiten, mehr Stiloptionen beim Kundentermin</li>
+              </ul>
+              <h3>Was ich mit mehr Zeit anders gemacht hatte</h3>
+              <p>Mit einem 1-Wochen-Build-Fenster statt 1 Tag hatte ich hinzugefugt: Auftragsverlauf und Ergebnisspeicherung (aktuell werden Ergebnisse manuell heruntergeladen und verwaltet), Batch-Verarbeitung fur mehrere Stilvariation in einer Anfrage, und ein Admin-Panel fur die Verwaltung von Stilvorlagen. Die aktuelle Version deckt 90% der Anwendungsfalle ohne diese ab — aber das sind die naturlichen nachsten Verbesserungen.</p>
+              <h3>Wann 1 Tag der richtige Umfang ist</h3>
+              <p>Nicht jede Automatisierung muss ein vollstandiges Produkt sein. Der Engpass des Studios war spezifisch, gut verstanden und wiederholbar. Ein fokussiertes 1-Tages-Tool, das ein Problem gut lost, ist oft wertvoller als ein 2-Wochen-Projekt mit Funktionen, die niemand nutzt. Der Test: Konnen Zielnutzer es ohne Schulung bedienen? Wenn ja, shipp es.</p>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Fur Ihr Unternehmen</div>
+            <h2 class="section-title">Wo dieses Muster anwendbar ist</h2>
+            <div class="prose">
+              <p>Das AI Image Composer-Muster — "wiederholendes KI-Prompting in ein Ein-Klick-Tool automatisieren" — ist uberall anwendbar, wo ein Unternehmen folgendes hat:</p>
+              <ul>
+                <li>Eine wiederkehrende visuelle Aufgabe, die aktuell manuell mit KI-Tools erledigt wird (Midjourney, DALL-E, Stable Diffusion, Gemini)</li>
+                <li>Nicht-technische Mitarbeiter, die konsistente Ergebnisse ohne Prompting-Expertise erzielen mussen</li>
+                <li>Ein Produktionsvolumen, das manuelles Prompting nicht skaliert</li>
+              </ul>
+              <p>Relevante Beispiele fur deutsche Unternehmen:</p>
+              <ul>
+                <li>E-Commerce Produktfotografie — automatischer Hintergrundaustausch und Szenengeneration fur Produktfotos (Produktbilder automatisieren)</li>
+                <li>Marketingagenturen — Werbemittelgeneration aus Brand-Guidelines und Kundenmaterialien nach Vorlage</li>
+                <li>Immobilien — automatische Fotooptimierung und virtuelle Mobblierung von Immobilienfotos</li>
+                <li>Druck- und Personalisierungsunternehmen — personalisierte Gruszkarten, Einladungen, Zertifikate in Scale</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">FAQ</div>
+            <h2 class="section-title">Haufige Fragen zur KI-Bild-Automatisierung</h2>
+            <div class="faq">
+              <div class="faq-item">
+                <div class="faq-q">Wie kann man KI Bilder erstellen fur ein Unternehmen automatisieren?</div>
+                <div class="faq-a">Der Schlussel ist, die Prompting-Expertise in ein UI einzukodieren. Statt jeden Mitarbeiter zu trainieren, wie er KI-Bilder erstellt, baut man ein Werkzeug, das die richtigen Prompts automatisch generiert. Der Nutzer gibt nur Eingangsdaten (Foto, Stil) ein — das System ubernimmt die Prompt-Konstruktion. React + Gemini Multimodal ist ein bewahrter Stack fur solche Produktionstools.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">Welche Branchen konnen von einem KI-Bildgenerator fur Unternehmen profitieren?</div>
+                <div class="faq-a">Uberall wo wiederkehrende Bildaufgaben manuell mit KI-Tools erledigt werden: E-Commerce (Produktfotos automatisieren, Hintergunde ersetzen), Marketingagenturen (Werbemittel aus Brand-Guidelines), Kreativstudios (personalisierte Kunstwerke im Scale), Immobilien (virtuelle Mobblierung), Druck- und Personalisierungsunternehmen. Das Muster ist gleich: manuelle KI-Arbeit in ein Ein-Klick-Tool verwandeln.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">Was ist der Unterschied zwischen einem KI-Bildgenerator und einem Automatisierungstool fur KI-Bilder?</div>
+                <div class="faq-a">Ein KI-Bildgenerator (Midjourney, DALL-E, Gemini) braucht menschliche Prompting-Expertise bei jeder Nutzung. Ein Automatisierungstool ist eine individuell gebaute Anwendung, die diese Expertise einmalig einprogrammiert und dann jedem Teammitglied zuganglich macht — ohne dass sie wissen mussen, wie man promptet. Das ist der Unterschied zwischen einem Werkzeug und einer Produktionspipeline.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Tech Stack</div>
+            <h2 class="section-title">Eingesetzte Technologien</h2>
+            <div class="chips">
+              <span class="chip">React 19</span>
+              <span class="chip">TypeScript</span>
+              <span class="chip">Gemini AI</span>
+              <span class="chip">Canvas API</span>
+              <span class="chip">Node.js</span>
+              <span class="chip">Railway</span>
+              <span class="chip">VS Code</span>
+              <span class="chip">Claude Code</span>
+            </div>
+          </div>
+
+          <div class="cta-strip">
+            <div>
+              <strong>Haben Sie wiederkehrende visuelle Workflows in Ihrem Betrieb?</strong>
+              <p>Ich baue KI-Automatisierungstools, die manuelle Workflows in Ein-Klick-Tools fur Ihr Team verwandeln. Kreative Automatisierung, Produktfotografie, visuelle Content-Pipelines. Standort Munchen, Kunden in ganz Europa.</p>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a class="cta-btn" href="mailto:azhyshchev@gmail.com" onclick="if(typeof gtag==='function')gtag('event','book_call_click',{location:'ki_bildkomposition_de'});">Kontakt aufnehmen</a>
+              <a class="cta-btn outline" href="/de/projekte/">Zur Projektubersicht</a>
+            </div>
+          </div>
+
+          <a class="back-link" href="/articles/">← Zuruck zu den Artikeln</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <nav class="mobile-bottom-nav" id="mobileBottomNav">
+    <a class="mbn-item" href="/de/"><span class="mbn-icon">&lt;/&gt;</span><span class="mbn-label">Start</span></a>
+    <a class="mbn-item" href="/ai-checker/"><span class="mbn-icon">🤖</span><span class="mbn-label">KI-Checker</span></a>
+    <a class="mbn-item" href="/de/erfahrung/"><span class="mbn-icon">E</span><span class="mbn-label">Erfahrung</span></a>
+    <a class="mbn-item" href="/de/projekte/"><span class="mbn-icon">P</span><span class="mbn-label">Projekte</span></a>
+    <a class="mbn-item active" href="/articles/"><span class="mbn-icon">A</span><span class="mbn-label">Artikel</span></a>
+    <a class="mbn-item" href="/de/kontakt/"><span class="mbn-icon">C</span><span class="mbn-label">Kontakt</span></a>
+  </nav>
+  <script src="/js/nav.js"></script>
+  <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" data-api-url="https://azhyshchevde-production.up.railway.app/api/chat" defer></script>
+</body>
+</html>

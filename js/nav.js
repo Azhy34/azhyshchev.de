@@ -21,7 +21,9 @@ var langMap = {
   '/articles/rag-sales-agent/': '/de/artikel/hybrid-rag-verkaufsassistent/',
   '/de/artikel/hybrid-rag-verkaufsassistent/': '/articles/rag-sales-agent/',
   '/articles/rag-sales-agent-ecommerce/': '/de/artikel/rag-kundenservice-ecommerce/',
-  '/de/artikel/rag-kundenservice-ecommerce/': '/articles/rag-sales-agent-ecommerce/'
+  '/de/artikel/rag-kundenservice-ecommerce/': '/articles/rag-sales-agent-ecommerce/',
+  '/articles/ai-image-composer/': '/de/artikel/ki-bildkomposition/',
+  '/de/artikel/ki-bildkomposition/': '/articles/ai-image-composer/'
 };
 
 function normalizePath(p) {
