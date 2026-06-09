@@ -47,11 +47,23 @@ Endpoint: `GET https://azhyshchevde-production.up.railway.app/api/analytics?rang
 Auth: `X-Widget-Token: 3530a5f865dcb0cc6489f5999cb0bfcb`
 Returns: top pages (views, sessions, users, bounce rate) + top events for given date range.
 
-**Service account:** `ga4-reader@azhyshchev.iam.gserviceaccount.com` (Viewer on property 513620625)
+**Service account:** `ga4-reader@azhyshchev.iam.gserviceaccount.com` (Viewer on GA4 + Restricted on GSC)
 **Env vars on Railway:** `GA4_CLIENT_EMAIL`, `GA4_PRIVATE_KEY`
 **Property ID:** `513620625` (account `tappe-25b1a`, ID `375555359`)
 
 To get analytics report: call the endpoint directly via Bash — no need to open GA4 UI.
+
+## GSC Search Console API
+
+Endpoint: `GET https://azhyshchevde-production.up.railway.app/api/gsc?days=90`
+Auth: `X-Widget-Token: 3530a5f865dcb0cc6489f5999cb0bfcb`
+Returns: top queries (clicks, impressions, ctr, position) + top pages for given days range.
+
+**Auth method:** OAuth2 refresh token (user account Azhischev1@gmail.com owns the GSC property).
+GSC UI doesn't accept service account emails — only regular Google accounts.
+**Env vars on Railway:** `GSC_CLIENT_ID`, `GSC_CLIENT_SECRET`, `GSC_REFRESH_TOKEN`
+**Site property:** `sc-domain:azhyshchev.de`
+**Endpoint:** `GET /api/gsc` in `portfolio/backend/server.js`
 
 ## GA4 Events implemented
 
@@ -95,11 +107,17 @@ portfolio/
 ├── impressum/index.html        # Legal
 ├── datenschutz/index.html      # GDPR — covers GA4, chat widget, B2B outreach
 ├── agb/index.html              # Terms
+├── de/                         # German version (hreflang="de") — added 2026-06-09
+│   ├── index.html              # /de/ — Startseite
+│   ├── erfahrung/index.html    # /de/erfahrung/ — Berufserfahrung
+│   ├── projekte/index.html     # /de/projekte/ — Projekte
+│   ├── fahigkeiten/index.html  # /de/fahigkeiten/ — Fähigkeiten
+│   └── kontakt/index.html      # /de/kontakt/ — Kontakt
 ├── mobile.css                  # Shared mobile responsive styles (≤820px)
 ├── js/
 │   ├── chat-widget.js          # Chat widget (IIFE, vanilla JS)
 │   ├── chat-widget.css         # Widget styles (neobrutalist)
-│   └── nav.js                  # Mobile nav toggle
+│   └── nav.js                  # Mobile nav toggle + switchLang() for EN↔DE
 ├── ai-checker/                 # AI Readiness Checker page
 │   ├── index.html              # Checker UI (neobrutalist, sidebar nav)
 │   ├── style.css               # Page styles incl. .csr-warning badge
@@ -114,6 +132,39 @@ portfolio/
     ├── requirements.txt        # fastapi, uvicorn, requests, beautifulsoup4, psycopg2-binary
     └── railway.json            # builder: NIXPACKS, startCommand: python main.py
 ```
+
+---
+
+## Bilingual SEO (EN + DE)
+
+Site is fully bilingual since 2026-06-09. Every EN page has a `/de/` counterpart.
+
+**URL mapping:**
+| EN | DE |
+|----|----|
+| `/` | `/de/` |
+| `/experience/` | `/de/erfahrung/` |
+| `/projects/` | `/de/projekte/` |
+| `/skills/` | `/de/fahigkeiten/` |
+| `/contact/` | `/de/kontakt/` |
+| `/articles/` | `/de/artikel/` (Phase 2 — not yet live) |
+
+**Per-page SEO checklist (both EN and DE):**
+- `<html lang="en|de">`
+- `<link rel="canonical">` pointing to self
+- Three `<link rel="alternate" hreflang="en|de|x-default">` tags (bidirectional)
+- `<meta property="og:locale" content="en_US|de_DE">` — DE pages use `de_DE`
+- Schema.org `inLanguage: "de"` on all DE pages
+- sitemap.xml: every URL listed with `<xhtml:link>` hreflang pairs
+
+**When adding new content:**
+1. Create EN page/article as usual
+2. Add both EN and DE hreflang tags to the EN page head
+3. Update sitemap.xml with the EN URL + xhtml:link pairs (pointing to future DE URL)
+4. Create DE version (or add to Фаза 2 backlog)
+5. DE article URL pattern: `/de/artikel/<slug>/`
+
+**Language switcher:** `js/nav.js` exports `switchLang()` via `langMap` object. To add a new page to the switcher, add both directions to `langMap`.
 
 ---
 
