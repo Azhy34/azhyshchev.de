@@ -1218,6 +1218,9 @@
       document.body.style.overflow = 'hidden';
       var bn = document.getElementById('mobileBottomNav');
       if (bn) bn.style.display = 'none';
+      if (typeof gtag === 'function') {
+        gtag('event', 'modal_open', { article_name: id, page_language: 'de' });
+      }
     }
     function closeModal(id) {
       document.getElementById(id).classList.remove('open');
@@ -1249,6 +1252,14 @@
         });
         document.body.style.overflow = '';
       }
+    });
+    document.querySelectorAll('a[href*="/de/artikel/"]').forEach(function(link) {
+      link.addEventListener('click', function() {
+        var slug = (link.getAttribute('href') || '').replace(/^\/de\/artikel\//, '').replace(/\/$/, '');
+        if (typeof gtag === 'function') {
+          gtag('event', 'article_read_click', { article_name: slug, page_language: 'de' });
+        }
+      });
     });
   </script>
 
