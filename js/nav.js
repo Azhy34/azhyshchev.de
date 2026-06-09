@@ -11,7 +11,9 @@ var langMap = {
   '/de/erfahrung/': '/experience/',
   '/de/projekte/': '/projects/',
   '/de/fahigkeiten/': '/skills/',
-  '/de/kontakt/': '/contact/'
+  '/de/kontakt/': '/contact/',
+  '/articles/b2b-lead-pipeline-germany/': '/de/artikel/b2b-lead-pipeline-deutschland/',
+  '/de/artikel/b2b-lead-pipeline-deutschland/': '/articles/b2b-lead-pipeline-germany/'
 };
 
 function normalizePath(p) {
