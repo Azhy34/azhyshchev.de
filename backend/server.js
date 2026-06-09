@@ -836,7 +836,7 @@ app.get('/api/gsc', authenticateToken, async (req, res) => {
       queryGsc({ startDate, endDate, dimensions: ['page'], rowLimit: 15, dataState: 'all' })
     ]);
 
-    res.json({ queries: queriesData.rows || [], pages: pagesData.rows || [], startDate, endDate });
+    res.json({ queries: queriesData.rows || [], pages: pagesData.rows || [], startDate, endDate, _debug: { queriesRaw: queriesData, pagesRaw: pagesData } });
   } catch (err) {
     console.error('GSC error:', err);
     res.status(500).json({ error: 'GSC query failed' });
