@@ -282,6 +282,26 @@ a.brand {
   .metrics-row {
     grid-template-columns: repeat(2, 1fr) !important;
   }
+
+  /* ── PROJECTS PAGE ── */
+  .card-body {
+    padding: 12px !important;
+    gap: 8px !important;
+  }
+
+  .card-footer {
+    padding: 8px 12px !important;
+  }
+
+  .modal-footer {
+    flex-direction: column !important;
+  }
+
+  .modal-btn {
+    width: 100% !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
 }
 
 /* ════════════════════════════════
