@@ -85,6 +85,19 @@ function switchLang() {
   btn.setAttribute('aria-label', 'Switch language');
   btn.innerHTML = '<span class="lang-current">' + (isDE ? 'DE' : 'EN') + '</span> / <span class="lang-alt">' + (isDE ? 'EN' : 'DE') + '</span>';
   sidebarBottom.appendChild(btn);
+
+  var mobileNav = document.getElementById('mobileBottomNav');
+  if (mobileNav) {
+    var mobileStyle = document.createElement('style');
+    mobileStyle.textContent = '.mobile-lang-btn{font-family:"JetBrains Mono",monospace;font-weight:900;font-size:0.7rem;background:var(--black,#111);color:var(--white,#fff);border:2px solid var(--black,#111);padding:4px 10px;cursor:pointer;border-radius:0;letter-spacing:0.02em;}.mobile-lang-btn:hover{opacity:0.8;}';
+    document.head.appendChild(mobileStyle);
+    var mobileBtn = document.createElement('button');
+    mobileBtn.className = 'mobile-lang-btn';
+    mobileBtn.setAttribute('onclick', 'switchLang()');
+    mobileBtn.setAttribute('aria-label', 'Switch language');
+    mobileBtn.textContent = isDE ? 'EN' : 'DE';
+    mobileNav.appendChild(mobileBtn);
+  }
 })();
 
 (function () {
