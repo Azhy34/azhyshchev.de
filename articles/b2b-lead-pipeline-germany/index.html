@@ -160,6 +160,38 @@
     @media (max-width: 520px) { .metrics-row { grid-template-columns: 1fr; } .article-title { font-size: 1.5rem; } }
   </style>
   <link rel="stylesheet" href="../../mobile.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How does automated B2B lead generation work in Germany?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The pipeline works in four steps. First, Apify scrapes Google Maps for businesses matching your target category and location. Second, each result's Impressum page is fetched to extract the Geschaeftsfuehrer name, direct email, and phone number. Third, Gemini 2.5 Flash normalizes and validates the extracted data. Fourth, everything is stored in Supabase and exported as a CRM-ready CSV. One pipeline run produces 80-120 qualified leads in 25 minutes for approximately $5 in API costs."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the best way to acquire new customers in Germany without paid ads?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The most effective approach for B2B customer acquisition in Germany is systematic outreach using publicly available Impressum data. German law requires every business to publish contact details including the decision-maker name, making this a legal and reliable source for new client prospecting. Unlike paid ads, the cost per lead is under 5 cents. Unlike LinkedIn Sales Navigator, it gives you the decision-maker's direct email from the company's own website."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is using Google Maps and Impressum data for B2B lead generation legal in Germany?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, with the right approach. Impressum data is publicly disclosed by legal obligation under paragraph 5 TMG and is intended to be accessible. B2B cold email outreach is permitted under paragraph 7 UWG when there is a legitimate commercial interest. The pipeline targets only business email addresses (not personal), operates under GDPR Art. 6(1)(f) legitimate interest basis, and includes opt-out handling."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <div class="shell">
