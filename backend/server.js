@@ -840,19 +840,22 @@ app.get('/api/bing', authenticateToken, async (req, res) => {
 
     const siteUrl = encodeURIComponent('https://azhyshchev.de/');
 
-    const [trafficRes, keywordsRes] = await Promise.all([
+    const [trafficRes, keywordsRes, issuesRes] = await Promise.all([
       fetch(`https://ssl.bing.com/webmaster/api.svc/json/GetRankAndTrafficStats?siteUrl=${siteUrl}&apikey=${apiKey}`),
-      fetch(`https://ssl.bing.com/webmaster/api.svc/json/GetKeywordStats?siteUrl=${siteUrl}&apikey=${apiKey}`)
+      fetch(`https://ssl.bing.com/webmaster/api.svc/json/GetKeywordStats?siteUrl=${siteUrl}&apikey=${apiKey}`),
+      fetch(`https://ssl.bing.com/webmaster/api.svc/json/GetCrawlIssues?siteUrl=${siteUrl}&apikey=${apiKey}`)
     ]);
 
-    const [traffic, keywords] = await Promise.all([
+    const [traffic, keywords, issues] = await Promise.all([
       trafficRes.json(),
-      keywordsRes.json()
+      keywordsRes.json(),
+      issuesRes.json()
     ]);
 
     res.json({
       pages: traffic?.d || [],
-      queries: keywords?.d || []
+      queries: keywords?.d || [],
+      issues: issues?.d || []
     });
   } catch (err) {
     console.error('Bing API error:', err);
