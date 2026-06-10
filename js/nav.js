@@ -85,19 +85,54 @@ function switchLang() {
   btn.setAttribute('aria-label', 'Switch language');
   btn.innerHTML = '<span class="lang-current">' + (isDE ? 'DE' : 'EN') + '</span> / <span class="lang-alt">' + (isDE ? 'EN' : 'DE') + '</span>';
   sidebarBottom.appendChild(btn);
+})();
 
-  var mobileNav = document.getElementById('mobileBottomNav');
-  if (mobileNav) {
-    var mobileStyle = document.createElement('style');
-    mobileStyle.textContent = '.mobile-lang-btn{font-family:"JetBrains Mono",monospace;font-weight:900;font-size:0.7rem;background:var(--black,#111);color:var(--white,#fff);border:2px solid var(--black,#111);padding:4px 10px;cursor:pointer;border-radius:0;letter-spacing:0.02em;}.mobile-lang-btn:hover{opacity:0.8;}';
-    document.head.appendChild(mobileStyle);
-    var mobileBtn = document.createElement('button');
-    mobileBtn.className = 'mobile-lang-btn';
-    mobileBtn.setAttribute('onclick', 'switchLang()');
-    mobileBtn.setAttribute('aria-label', 'Switch language');
-    mobileBtn.textContent = isDE ? 'EN' : 'DE';
-    mobileNav.appendChild(mobileBtn);
-  }
+(function () {
+  /* Language suggestion banner — shown once to DE-browser users on EN pages */
+  var browserLang = (navigator.language || '').toLowerCase();
+  if (!browserLang.startsWith('de')) return;
+
+  var path = normalizePath(window.location.pathname);
+  if (path.startsWith('/de')) return;
+
+  var deAlt = langMap[path];
+  if (!deAlt || !deAlt.startsWith('/de')) return;
+
+  try {
+    if (localStorage.getItem('lang') || localStorage.getItem('lang_banner_dismissed')) return;
+  } catch(e) {}
+
+  var banner = document.createElement('div');
+  banner.id = 'lang-suggest';
+  banner.style.cssText = 'position:fixed;bottom:70px;left:12px;right:12px;z-index:9999;background:#f5c84b;color:#111;font-family:"JetBrains Mono",monospace;font-size:0.78rem;font-weight:700;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;border:2px solid #111;box-shadow:4px 4px 0 #111;';
+
+  var msg = document.createElement('span');
+  msg.textContent = 'Diese Seite ist auch auf Deutsch verfügbar.';
+  msg.style.cssText = 'flex:1;line-height:1.4;';
+
+  var switchBtn = document.createElement('button');
+  switchBtn.textContent = 'Auf Deutsch →';
+  switchBtn.style.cssText = 'background:#111;color:#f5c84b;border:none;font-family:"JetBrains Mono",monospace;font-weight:800;font-size:0.78rem;padding:6px 12px;cursor:pointer;white-space:nowrap;flex-shrink:0;';
+  switchBtn.onclick = function() {
+    try { localStorage.setItem('lang', 'de'); } catch(e) {}
+    if (typeof gtag === 'function') gtag('event', 'lang_switch', { to: 'de', from: 'en', method: 'banner' });
+    window.location.href = deAlt;
+  };
+
+  var closeBtn = document.createElement('button');
+  closeBtn.innerHTML = '&#10005;';
+  closeBtn.setAttribute('aria-label', 'Schlie\xdfen');
+  closeBtn.style.cssText = 'background:none;border:none;font-size:1.1rem;cursor:pointer;color:#111;font-weight:900;padding:0;line-height:1;flex-shrink:0;';
+  closeBtn.onclick = function() {
+    try { localStorage.setItem('lang_banner_dismissed', '1'); } catch(e) {}
+    banner.remove();
+  };
+
+  banner.appendChild(msg);
+  banner.appendChild(switchBtn);
+  banner.appendChild(closeBtn);
+
+  document.body.appendChild(banner);
 })();
 
 (function () {
