@@ -111,6 +111,8 @@ portfolio/
 ├── projects/index.html         # Projects gallery (cards + modals)
 ├── skills/index.html           # Skills overview
 ├── articles/index.html         # LinkedIn articles
+│   ├── ai-visibility/index.html    # AI Visibility guide
+│   └── automated-keyword-research/index.html # Keyword extractor guide
 ├── cv/index.html               # CV page
 ├── contact/index.html          # Contact — has Calendly "Book a call" button
 ├── impressum/index.html        # Legal

@@ -25,6 +25,7 @@
 
 ## Articles (English)
 
+- [Automated Keyword Research](https://azhyshchev.de/articles/automated-keyword-research/) — How to build a free keyword search volume extractor using Google Ads API and Python, with guides on OAuth2, test tokens, and AI agent integration.
 - [RAG Sales Agent — Technical Case Study](https://azhyshchev.de/articles/rag-sales-agent/) — Deep-dive into building a Hybrid RAG sales agent: architecture decisions, LangGraph ReAct pattern, SQL vs vector search trade-offs, and production deployment lessons.
 - [B2B Lead Pipeline Germany](https://azhyshchev.de/articles/b2b-lead-pipeline-germany/) — How to build a compliant automated B2B lead generation pipeline for the German market, including legal considerations under §7 UWG and Impressum data extraction.
 - [Wallpaper AI Automation](https://azhyshchev.de/articles/wallpaper-ai-automation/) — Technical article on replacing manual Photoshop work with AI automation: Gemini multimodal API, batch processing pipelines, and business impact for retail clients.
@@ -38,9 +39,9 @@
 - [Rechnungsautomatisierung Pipeline](https://azhyshchev.de/de/artikel/rechnungsautomatisierung-pipeline/) — Automatische Rechnungsverarbeitung fur deutsche Unternehmen: DATEV-kompatibel, GoBD-konform, Python + OCR + LLM.
 - [KI-Bildkomposition](https://azhyshchev.de/de/artikel/ki-bildkomposition/) — KI-gestutztes Bildkompositionssystem mit Gemini Vision: automatische Produktfotografie und Batch-Verarbeitung fur E-Commerce.
 - [Hybrid RAG Verkaufsassistent](https://azhyshchev.de/de/artikel/hybrid-rag-verkaufsassistent/) — LangGraph ReAct Agent mit 5 Tools, Hybrid RAG (SQL + pgvector), fur B2B-Verkaufsprozesse in Deutschland.
-- [Tapeten-KI-Automatisierung](https://azhyshchev.de/de/artikel/tapeten-ki-automatisierung/) — KI-Raumvisualisierung fur Tapetenhandler: Kunden laden Raumfoto hoch, sehen Tapete sofort. 300+ Varianten, 4 Stunden Build.
+- [Tapeten-KI-Automatisierung](https://azhyshchev.de/de/artikel/tapeten-ki-automatisierung/) — KI-Raumvisualisierung fur Tapetenhandler: Kunden laden Raumfoto hoch, sehen Tapete sofort. 300+ Varianten, 4 часов Build.
 - [B2B-Lead-Pipeline Deutschland](https://azhyshchev.de/de/artikel/b2b-lead-pipeline-deutschland/) — Automatisierte B2B-Leadgenerierung fur den deutschen Markt: Impressum-Scraping, §7 UWG-konform, 80-120 Leads in 25 Minuten.
 
 ## Citation
 
-Last updated: 2026-06-09. Content is bilingual (English + Deutsch). All project and article pages include technical architecture, metrics, and stack details. For inquiries: azhyshchev@gmail.com. Please cite as "Mikhail Azhyshchev, AI Automation Engineer, Munich (azhyshchev.de)".
+Last updated: 2026-06-12. Content is bilingual (English + Deutsch). All project and article pages include technical architecture, metrics, and stack details. For inquiries: azhyshchev@gmail.com. Please cite as "Mikhail Azhyshchev, AI Automation Engineer, Munich (azhyshchev.de)".

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="/js/cookie-consent.js" defer></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📊</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="How to automate keyword research and extract search volumes directly from Google Ads API for free. Step-by-step guide to setting up a test token and running a Python CLI tool.">
+  <meta name="keywords" content="automated keyword research, python for seo, seo automation, keyword research tool, free keyword planner, google ads api keyword extractor, keyword volume api, keyword planner tutorial, how to automate keyword research, content marketing automation">
+  <meta name="author" content="Mikhail Azhyshchev">
+  <link rel="canonical" href="https://azhyshchev.de/articles/automated-keyword-research/">
+  <link rel="alternate" hreflang="en" href="https://azhyshchev.de/articles/automated-keyword-research/" />
+  <link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/articles/automated-keyword-research/" />
+
+  <meta property="og:title" content="How to Automate Keyword Research for Free Using Google Ads API | Mikhail Azhyshchev">
+  <meta property="og:description" content="Stop paying $150/mo for SEO tools. Extract Google's search volumes directly using a free Python script and Google Ads API.">
+  <meta property="og:url" content="https://azhyshchev.de/articles/automated-keyword-research/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://azhyshchev.de/Azhyschev.JPG">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Automated Keyword Research: Free Google Ads API Script | Mikhail Azhyshchev">
+  <meta name="twitter:description" content="Bypass the slow Google Ads UI. Extract search volume data using a lightweight Python script. Complete setup guide.">
+
+  <title>How to Automate Keyword Research for Free Using Google Ads API</title>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://azhyshchev.de/articles/automated-keyword-research/#article",
+        "headline": "How to Automate Keyword Research for Free Using Google Ads API",
+        "description": "A detailed technical guide to automating keyword research and search volume extraction using a Python script, OAuth2, and the official Google Ads API without active ad spend.",
+        "author": { "@id": "https://azhyshchev.de/#person" },
+        "publisher": { "@id": "https://azhyshchev.de/#person" },
+        "datePublished": "2026-06-12",
+        "dateModified": "2026-06-12",
+        "inLanguage": "en",
+        "keywords": "automated keyword research, python for seo, seo automation, keyword research tool, google ads api keyword extractor, keyword volume api",
+        "url": "https://azhyshchev.de/articles/automated-keyword-research/",
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://azhyshchev.de/articles/automated-keyword-research/#webpage",
+        "url": "https://azhyshchev.de/articles/automated-keyword-research/",
+        "name": "How to Automate Keyword Research for Free Using Google Ads API",
+        "description": "Guide and open-source script for automated keyword research using the official Google Ads API.",
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" },
+        "author": { "@id": "https://azhyshchev.de/#person" },
+        "dateModified": "2026-06-12",
+        "inLanguage": "en",
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://azhyshchev.de/" },
+            { "@type": "ListItem", "position": 2, "name": "Articles", "item": "https://azhyshchev.de/articles" },
+            { "@type": "ListItem", "position": 3, "name": "Automated Keyword Research" }
+          ]
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Do I need a paid Google Ads account to query keyword volumes?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. You can create a Google Ads Manager Account and request a Developer Token for free. By default, you receive a Test Access token immediately, which allows you to query search volumes without setting up billing or running ad campaigns."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why does the API return broad ranges like 1K-10K instead of exact numbers?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Google restricts exact monthly search volume data (e.g., 4400 or 1900) to Google Ads accounts with active or historical ad campaigns that spend money. If your account has zero spend, the API returns ranges (e.g., 100-1K, 1K-10K). These ranges are still highly effective for comparing keyword popularity."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why does my OAuth refresh token expire every 7 days?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "If your refresh token expires weekly, it is because your Google Cloud Console project is in 'Testing' mode. To make access permanent for personal use, go to Google Cloud Console > APIs & Services > OAuth consent screen, and click 'Publish App' to transition the app to 'In Production' status."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does Google search volume help with AI search visibility (GEO)?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "People phrase search queries similarly whether typing into Google or prompting ChatGPT/Perplexity. Knowing the terms with real search volume helps you optimize your semantic headings (H1-H6). When AI engines perform live web crawls to generate answers, your page matches their semantic search patterns perfectly."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --sky: #61b5e8; --mint: #b9ddb7; --cream: #f8f0dc; --yellow: #f5c84b; --pink: #efb2d5; --blue: #d8ebff; --peach: #f7d4b1; --coral: #ff9a77; --rose: #ecb0c4; --black: #111111; --white: #ffffff; --accent: var(--sky); }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { min-height: 100vh; font-family: 'JetBrains Mono', monospace; color: var(--black); background: linear-gradient(120deg, var(--sky) 0 34%, var(--peach) 34% 55%, var(--coral) 55% 72%, var(--rose) 72% 100%); padding: 48px 24px; }
+    a { color: inherit; text-decoration: none; }
+    .shell { width: min(1320px, 100%); margin: 0 auto; border: 3px solid var(--black); box-shadow: 12px 12px 0 var(--black); background: var(--mint); display: grid; grid-template-columns: 250px 1fr; min-height: 820px; overflow: hidden; }
+    .sidebar { border-right: 3px solid var(--black); padding: 20px 18px; display: flex; flex-direction: column; gap: 22px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 8px; }
+    .brand-badge { width: 42px; height: 34px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 1rem; font-weight: 800; }
+    .nav { display: flex; flex-direction: column; gap: 8px; }
+    .nav-item { display: flex; align-items: center; gap: 12px; padding: 11px 12px; font-size: 0.9rem; font-weight: 700; border: 2px solid transparent; transition: transform 0.18s ease; }
+    .nav-item:hover { transform: translate(-2px, -2px); }
+    .nav-item.active { background: var(--black); color: var(--white); }
+    .icon-box { width: 24px; height: 24px; display: grid; place-items: center; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); font-size: 0.75rem; font-weight: 800; }
+    .nav-item.active .icon-box { background: var(--yellow); color: var(--black); }
+    .sidebar-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+    .socials { display: flex; gap: 10px; padding-top: 8px; }
+    .social-link { width: 42px; height: 42px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 0.8rem; font-weight: 800; transition: transform 0.18s ease; }
+    .social-link:hover { transform: translate(-2px, -2px); }
+    .main { background: var(--cream); padding: 22px; }
+    .panel { border: 2px solid var(--black); background: rgba(255,255,255,0.2); padding: 18px; display: flex; flex-direction: column; gap: 28px; }
+    .breadcrumb { font-size: 0.78rem; opacity: 0.6; display: flex; align-items: center; gap: 8px; }
+    .breadcrumb a:hover { opacity: 1; text-decoration: underline; }
+    .article-hero { border: 3px solid var(--black); background: var(--accent); box-shadow: 6px 6px 0 var(--black); padding: 28px 24px; }
+    .article-type { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; margin-bottom: 12px; }
+    .article-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.04em; margin-bottom: 16px; }
+    .article-lead { font-size: 0.95rem; line-height: 1.65; max-width: 72ch; }
+    .metrics-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+    .metric-box { border: 2px solid var(--black); background: rgba(255,255,255,0.75); padding: 14px 12px; }
+    .metric-box strong { display: block; font-size: 1.3rem; line-height: 1; margin-bottom: 6px; }
+    .metric-box span { font-size: 0.72rem; line-height: 1.4; opacity: 0.8; }
+    .article-body { display: flex; flex-direction: column; gap: 24px; }
+    .neo-card { border: 3px solid var(--black); background: var(--white); box-shadow: 6px 6px 0 var(--black); padding: 24px; }
+    .section-label { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.45; margin-bottom: 10px; }
+    .section-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.02em; }
+    .prose { display: flex; flex-direction: column; gap: 14px; }
+    .prose p { font-size: 0.88rem; line-height: 1.75; }
+    .prose h3 { font-size: 0.95rem; font-weight: 800; margin-top: 8px; letter-spacing: -0.02em; }
+    .prose ul { padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
+    .prose li { font-size: 0.88rem; line-height: 1.65; }
+    .prose code { background: var(--cream); border: 1px solid var(--black); padding: 1px 5px; font-size: 0.82rem; }
+    .arch-diagram { border: 2px solid var(--black); background: var(--cream); padding: 16px 20px; font-size: 0.82rem; line-height: 2.2; font-weight: 700; margin: 16px 0; }
+    .checklist { display: flex; flex-direction: column; gap: 12px; margin-top: 4px; }
+    .check-item { border: 2px solid var(--black); padding: 14px 16px; background: var(--cream); display: flex; gap: 14px; align-items: flex-start; }
+    .check-item .ci-icon { font-size: 1rem; flex-shrink: 0; margin-top: 2px; }
+    .check-item .ci-title { font-size: 0.88rem; font-weight: 800; margin-bottom: 4px; }
+    .check-item .ci-text { font-size: 0.8rem; line-height: 1.6; opacity: 0.8; }
+    .check-item .ci-fix { font-size: 0.78rem; font-weight: 700; margin-top: 8px; background: var(--mint); padding: 4px 8px; display: inline-block; border: 1px solid var(--black); }
+    .highlight-box { border: 3px solid var(--black); background: var(--yellow); box-shadow: 4px 4px 0 var(--black); padding: 18px 20px; }
+    .highlight-box h3 { font-size: 0.9rem; font-weight: 800; margin-bottom: 10px; }
+    .highlight-box p { font-size: 0.84rem; line-height: 1.65; }
+    .faq { display: flex; flex-direction: column; gap: 16px; }
+    .faq-item { border: 2px solid var(--black); background: var(--cream); padding: 18px 20px; }
+    .faq-q { font-size: 0.9rem; font-weight: 800; cursor: pointer; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; user-select: none; }
+    .faq-q::after { content: "+"; font-size: 1.4rem; font-weight: 900; flex-shrink: 0; }
+    .faq-item.open .faq-q::after { content: "-"; }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding-top 0.2s ease; padding-top: 0; font-size: 0.84rem; line-height: 1.7; opacity: 0.85; }
+    .faq-item.open .faq-a { max-height: 800px; padding-top: 14px; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .chip { padding: 6px 10px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); font-size: 0.72rem; font-weight: 700; }
+    .cta-strip { border: 3px solid var(--black); background: var(--black); color: var(--white); box-shadow: 6px 6px 0 rgba(0,0,0,0.3); padding: 22px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .cta-strip p { font-size: 0.9rem; line-height: 1.5; max-width: 58ch; }
+    .cta-strip strong { display: block; font-size: 1rem; margin-bottom: 4px; }
+    .cta-btn { padding: 12px 20px; border: 2px solid var(--white); background: var(--white); color: var(--black); font: inherit; font-weight: 700; cursor: pointer; white-space: nowrap; transition: transform 0.15s; display: inline-block; }
+    .cta-btn:hover { transform: translate(-2px,-2px); }
+    .cta-btn.yellow { background: var(--yellow); border-color: var(--yellow); }
+    .cta-btn.outline { background: transparent; color: var(--white); }
+    .back-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 2px solid var(--black); background: var(--white); box-shadow: 4px 4px 0 var(--black); font-size: 0.82rem; font-weight: 700; transition: transform 0.15s; align-self: flex-start; }
+    .back-link:hover { transform: translate(-2px,-2px); }
+    .checker-cta { border: 3px solid var(--black); background: var(--sky); box-shadow: 8px 8px 0 var(--black); padding: 28px 24px; text-align: center; }
+    .checker-cta h2 { font-size: 1.4rem; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.03em; }
+    .checker-cta p { font-size: 0.88rem; line-height: 1.6; max-width: 52ch; margin: 0 auto 20px; }
+    .checker-btn { display: inline-block; background: var(--black); color: var(--white); font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 1rem; padding: 14px 28px; border: 3px solid var(--black); box-shadow: 4px 4px 0 var(--yellow); text-decoration: none; transition: transform 0.1s, box-shadow 0.1s; }
+    .checker-btn:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--yellow); }
+    @media (max-width: 1100px) { .shell { grid-template-columns: 220px 1fr; } .metrics-row { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 820px) { body { padding: 10px 8px 72px; } .shell { grid-template-columns: 1fr; box-shadow: 6px 6px 0 var(--black); min-height: unset; } .sidebar { border-right: none; border-bottom: 3px solid var(--black); padding: 10px 14px; flex-direction: row; align-items: center; justify-content: space-between; } .brand { font-size: clamp(0.95rem,2.5vw,1.6rem); } .nav { display: none; } .sidebar-bottom { display: none; } .main { padding: 14px; } .two-col { grid-template-columns: 1fr; } }
+    @media (max-width: 520px) { .metrics-row { grid-template-columns: 1fr; } .article-title { font-size: 1.5rem; } }
+  </style>
+  <link rel="stylesheet" href="../../mobile.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="/"><div class="brand-badge">&lt;/&gt;</div><span>AZHYSHCHEV</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">&#9776;</button>
+      <nav class="nav">
+        <a class="nav-item" href="/"><span class="icon-box">H</span><span>Home</span></a>
+        <a class="nav-item" href="/ai-checker"><span class="icon-box">🤖</span><span>AI Checker</span></a>
+        <a class="nav-item" href="/experience"><span class="icon-box">E</span><span>Experience</span></a>
+        <a class="nav-item" href="/projects"><span class="icon-box">P</span><span>Projects</span></a>
+        <a class="nav-item active" href="/articles"><span class="icon-box">A</span><span>Articles</span></a>
+        <a class="nav-item" href="/skills"><span class="icon-box">S</span><span>Skills</span></a>
+        <a class="nav-item" href="/contact"><span class="icon-box">C</span><span>Contact</span></a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a class="nav-item" href="/CV.pdf" download><span class="icon-box">CV</span><span>Download CV</span></a>
+        <a class="nav-item" href="mailto:azhyshchev@gmail.com"><span class="icon-box">@</span><span>Email</span></a>
+        <div class="socials">
+          <a class="social-link" href="https://www.linkedin.com/in/azhyshchev/" target="_blank" rel="noreferrer">in</a>
+          <a class="social-link" href="https://github.com/Azhy34" target="_blank" rel="noreferrer">gh</a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="panel">
+
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Home</a><span>→</span>
+          <a href="/articles">Articles</a><span>→</span>
+          <span>Automated Keyword Research</span>
+        </nav>
+
+        <div class="article-hero">
+          <div class="article-type">SEO Automation · Python · Google Ads API · Content Strategy</div>
+          <h1 class="article-title">How to Automate Keyword Research for Free Using Google Ads API</h1>
+          <p class="article-lead">Stop paying $150/month for SEO tools just to check search volumes. Query Google's official keyword database directly using a lightweight, open-source Python CLI tool with a free developer account.</p>
+          <div class="metrics-row">
+            <div class="metric-box"><strong>$0/mo</strong><span>Subscription Cost to check volume</span></div>
+            <div class="metric-box"><strong>&lt; 5s</strong><span>Execution speed in terminal</span></div>
+            <div class="metric-box"><strong>100% Free</strong><span>Test developer token access</span></div>
+            <div class="metric-box"><strong>1 Command</strong><span>No browser UI click steps needed</span></div>
+          </div>
+        </div>
+
+        <div class="article-body">
+
+          <div class="neo-card">
+            <div class="section-label">The Problem</div>
+            <h2 class="section-title">The $1,800/Year SEO Tool Tax</h2>
+            <div class="prose">
+              <p>Almost every content marketer, developer, or business owner writing articles buys a subscription to Ahrefs, Semrush, or Moz. The primary reason? They want to find search volume trends. They want to know if writing about <code>seo automation</code> is worth their time compared to <code>keyword research tool</code>.</p>
+              <p>This adds up to $100–$200 per month. But the irony is that these tools don't own search volume data—they fetch, scrape, or estimate it from Google's own databases. Google is the source of truth, and Google offers it for free via the Google Ads Keyword Planner.</p>
+              <p>But accessing it manually is painful. The Google Ads Web UI is notoriously slow. You have to log in, navigate through five different sub-menus, type terms one by one, wait for page reloads, and close pop-ups urging you to launch a paid ad campaign. It wastes time and kills productivity.</p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <h3>Direct API Access: The Developer's Shortcut</h3>
+            <p>You can bypass the slow web interface entirely. By querying Google's database directly through the Google Ads API, you can extract exact monthly search volumes and competition metrics using a simple terminal command. And you can do it without active ad campaigns or billing setup.</p>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">The Solution</div>
+            <h2 class="section-title">Google Ads API Keyword Planner Script</h2>
+            <div class="prose">
+              <p>I built and open-sourced a lightweight Python boilerplate script that interfaces directly with Google Ads API. It loads credentials safely from a local configuration, connects to Google's <code>KeywordPlanIdeaService</code>, and outputs sorted results in your terminal in under 5 seconds.</p>
+              <p>Here is what the script output looks like in practice:</p>
+            </div>
+            <div class="arch-diagram">
+              Fetching keyword ideas for: ['seo automation', 'keyword research tool']...<br><br>
+              ================================================================================<br>
+              Keyword                                  | Avg Monthly Searches | Competition    <br>
+              ================================================================================<br>
+              keyword planner google                   | 390                  | MEDIUM         <br>
+              keyword analyse tool                     | 260                  | MEDIUM         <br>
+              seo automation                           | 110                  | MEDIUM         <br>
+              keyword research tool                    | 110                  | MEDIUM         <br>
+              ================================================================================
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="neo-card">
+              <div class="section-label">Standard Flow</div>
+              <h2 class="section-title">The Bloated Web UI</h2>
+              <div class="prose">
+                <ul>
+                  <li>Open slow Google Ads manager dashboard</li>
+                  <li>Click Tools > Keyword Planner (45-second load)</li>
+                  <li>Type seeds, click get results</li>
+                  <li>Close popups to input credit card info</li>
+                  <li>Manually export CSV file, import to sheets</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="neo-card">
+              <div class="section-label">Automated Flow</div>
+              <h2 class="section-title">The Terminal Script</h2>
+              <div class="prose">
+                <ul>
+                  <li>Type seeds inside python script file</li>
+                  <li>Run: <code>python google_ads_keywords.py</code></li>
+                  <li>Get a formatted table in 4 seconds</li>
+                  <li>Data is ready to be piped to files or other APIs</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">AI Integration</div>
+            <h2 class="section-title">Automating Content Generation via Agent Skills</h2>
+            <div class="prose">
+              <p>Having a command-line script is great, but the real power comes from integration. Because this script runs on standard Python code, it can be defined as an <b>Agent Skill</b> for custom AI workflows (like n8n, LangChain, or Cursor/Claude Code assistants).</p>
+              <p>Before drafting any article on your site, your AI agent can run the script programmatically to analyze keywords, identify terms with search traffic, and automatically structure your page headers (H1 to H6) to match real-world queries. This removes guesswork entirely and guarantees that your content targets active intent.</p>
+              <p>Structuring your headers correctly is not just good for Google Search ranking—it is also a key factor for visibility in conversational AI answers. If search bots cannot parse your page hierarchy, your content won't get cited. You can read more about this in my detailed <a href="https://azhyshchev.de/articles/ai-visibility/?utm_source=portfolio&utm_medium=internal&utm_campaign=keyword_extractor_article&utm_content=ai_visibility_link">AI Visibility Guide</a>.</p>
+            </div>
+          </div>
+
+          <!-- Mid-Article CTA Card -->
+          <div class="highlight-box" style="background: var(--mint); margin: 20px 0;">
+            <h3>Want to integrate this keyword automation into your own CRM or AI workflows?</h3>
+            <p>I help businesses build custom content pipelines, connect APIs, and set up automated search volume tracking. Let’s map out your automation goals.</p>
+            <a class="cta-btn" href="https://calendly.com/azhyshchev/30min?utm_source=portfolio&utm_medium=website&utm_campaign=booking&utm_content=mid_article_keyword_extractor" style="margin-top: 12px; display: inline-block; background: var(--black); color: var(--white);" target="_blank" rel="noreferrer">Book a free 30-min strategy call →</a>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Installation & Run</div>
+            <h2 class="section-title">How to Set it Up</h2>
+            <div class="prose">
+              <p>Setting up the Google Ads API client library is completely free and requires zero active ad budget, but the Google developer console has a few authentication requirements (like generating a developer token, creating OAuth credentials, and preventing the 7-day token expiration issue).</p>
+              <p>I have written a comprehensive, step-by-step setup guide covering every stage of the setup in the repository's documentation.</p>
+              <p>👉 Read the full setup walkthrough on the <a href="https://github.com/Azhy34/google-ads-keyword-extractor?utm_source=portfolio&utm_medium=referral&utm_campaign=keyword_extractor_article&utm_content=github_repo_link" target="_blank" rel="noreferrer">google-ads-keyword-extractor GitHub page</a>.</p>
+            </div>
+          </div>
+
+          <div class="checker-cta">
+            <h2>Get the Open Source Keyword Extractor Code</h2>
+            <p>Clone the script template, access the step-by-step setup guides, and start pulling search volumes locally in seconds.</p>
+            <a class="checker-btn" href="https://github.com/Azhy34/google-ads-keyword-extractor?utm_source=portfolio&utm_medium=referral&utm_campaign=keyword_extractor_article&utm_content=github_repo_btn" target="_blank" rel="noreferrer">Clone on GitHub →</a>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">FAQ</div>
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq">
+              <div class="faq-item">
+                <div class="faq-q">Do I need to pay or add a credit card to get a developer token?</div>
+                <div class="faq-a">No. Requesting a Developer Token in the Google Ads API Center is completely free. The Test Access token is granted instantly without requiring any billing setup or active credit cards.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">Why does the script return broad ranges (like 1K-10K) instead of exact volume?</div>
+                <div class="faq-a">Google restricts exact search volumes (e.g. 4400) to Google Ads accounts with active ad spend. If your account has zero ad spend, the API returns ranges (e.g., 100-1K, 1K-10K). These ranges are still highly effective for comparing keyword priorities. If you use a customer ID with active/historical spend, you will get exact numbers.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">Why does my OAuth refresh token expire every 7 days?</div>
+                <div class="faq-a">If your token expires weekly, it is because your Google Cloud Console project's OAuth screen is in "Testing" mode. Go to Cloud Console > APIs & Services > OAuth consent screen and click "Publish App". This moves the app to "In Production" status, preventing token expiration for personal use.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">How does Google search volume help with AI search visibility (GEO)?</div>
+                <div class="faq-a">People phrase queries similarly whether typing into Google or prompting ChatGPT/Perplexity. Knowing the terms with real search volume helps you optimize your semantic headings (H1-H6). When AI engines perform live web crawls to generate answers, your page matches their semantic search patterns perfectly.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cta-strip">
+            <div>
+              <strong>Need help automating your marketing or SEO workflows?</strong>
+              <p>I build custom, code-first AI automations (RAG agents, backend integrations, and technical SEO/GEO setups). Munich-based developer working with international clients.</p>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a class="cta-btn yellow" href="https://calendly.com/azhyshchev/30min?utm_source=portfolio&utm_medium=website&utm_campaign=booking&utm_content=automated_keyword_research" target="_blank" rel="noreferrer">Book a free call</a>
+              <a class="cta-btn outline" href="mailto:azhyshchev@gmail.com">Send a message</a>
+            </div>
+          </div>
+
+          <a class="back-link" href="/articles">← Back to articles</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <nav class="mobile-bottom-nav" id="mobileBottomNav">
+    <a class="mbn-item" href="/"><span class="mbn-icon">&lt;/&gt;</span><span class="mbn-label">Home</span></a>
+    <a class="mbn-item" href="/ai-checker"><span class="mbn-icon">🤖</span><span class="mbn-label">AI Checker</span></a>
+    <a class="mbn-item" href="/experience"><span class="mbn-icon">E</span><span class="mbn-label">Experience</span></a>
+    <a class="mbn-item" href="/projects"><span class="mbn-icon">P</span><span class="mbn-label">Projects</span></a>
+    <a class="mbn-item active" href="/articles"><span class="mbn-icon">A</span><span class="mbn-label">Articles</span></a>
+    <a class="mbn-item" href="/contact"><span class="mbn-icon">C</span><span class="mbn-label">Contact</span></a>
+  </nav>
+  <script src="/js/nav.js"></script>
+  <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" data-api-url="https://azhyshchevde-production.up.railway.app/api/chat" defer></script>
+  <script>
+    (function () {
+      /* Book a call — Calendly */
+      document.querySelectorAll('a.cta-btn.yellow[href*="calendly"]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (window.gtag) gtag('event', 'book_call_click', { location: 'automated_keyword_research' });
+        });
+      });
+
+      /* Send a message — email */
+      document.querySelectorAll('a[href^="mailto:"]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (window.gtag) gtag('event', 'email_click', { location: 'automated_keyword_research' });
+        });
+      });
+    })();
+  </script>
+  <script>
+  document.querySelectorAll(".faq-q").forEach(function(q) {
+    q.addEventListener("click", function() {
+      var item = q.closest(".faq-item");
+      var isOpen = item.classList.toggle("open");
+      if (isOpen && typeof gtag === "function") {
+        gtag("event", "faq_open", { question: q.textContent.trim().substring(0, 60), page_language: "en" });
+      }
+    });
+  });
+  </script>
+</body>
+</html>
