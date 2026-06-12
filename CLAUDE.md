@@ -422,3 +422,13 @@ Datenschutzerklärung covers (as of Mai 2026):
 Cold email template already includes: data source disclosure, legal basis, opt-out instruction, Art. 17 deletion right.
 
 **When someone replies STOP:** manually delete from Supabase `leads` table.
+
+---
+
+## AI-Checker (lead magnet) — parity contract
+
+`api/main.py` (deployed on Railway, serves https://azhyshchev.de/ai-checker/) MUST stay in **numeric parity** with the cold-email pipeline audit `ADS_Azhyshchev/src/ai_readiness.py` — same checks, same per-check points, same score formula (texts/language may differ: checker English, pipeline German). A prospect who gets a cold email citing "Score 58" and then runs the checker must see the same number.
+
+Score scale (since 2026-06-12): 6 base checks = 80 pts → normalized to 100; llms.txt (+10) and markdown (+5) are bonus points. llms.txt has an anti-soft-404 guard. Cookie-consent walls are detected and neutralized. TTFB = median of 3 requests, slow threshold 1500ms.
+
+**If you change audit logic here → mirror it in the pipeline repo (and vice versa), then run the parity script** (`.scripts_parity_audit.py` in the pipeline repo) and **redeploy Railway**.
