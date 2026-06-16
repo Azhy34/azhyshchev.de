@@ -267,6 +267,47 @@ body {
   box-shadow: 4px 4px 0 var(--black);
 }
 
+/* Inline CTA — appears right after score, before breakdown cards */
+.inline-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 16px 20px;
+  border: 3px solid var(--black);
+  background: var(--yellow);
+  box-shadow: 4px 4px 0 var(--black);
+  margin-bottom: 32px;
+}
+
+.inline-cta-text {
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+
+.inline-cta-btn {
+  display: inline-block;
+  background: var(--black);
+  color: var(--white);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 10px 18px;
+  border: 2px solid var(--black);
+  box-shadow: 3px 3px 0 var(--black);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.inline-cta-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--yellow);
+  background: var(--white);
+  color: var(--black);
+}
+
 .progress-bar {
   height: 100%;
   width: 0%;

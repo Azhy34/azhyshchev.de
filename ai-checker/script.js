@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Reset UI
         errorMessage.classList.add('hidden');
         resultsSection.classList.add('hidden');
+        document.getElementById('inlineCta').classList.add('hidden');
         loadingSection.classList.remove('hidden');
         analyzeBtn.disabled = true;
 
@@ -96,7 +97,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.getElementById('checkedAt').textContent = new Date(data.checked_at).toLocaleString();
 
-        // Show CTA block if score is not optimal
+        // Show inline CTA always after analysis
+        document.getElementById('inlineCta').classList.remove('hidden');
+
+        // Show bottom CTA block if score is not optimal
         const ctaBlock = document.getElementById('ctaBlock');
         if (data.score < 80) {
             ctaBlock.classList.remove('hidden');
