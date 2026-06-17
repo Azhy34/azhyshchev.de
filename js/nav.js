@@ -173,3 +173,10 @@ function switchLang() {
     if (reviews) reviews.style.display = 'none';
   }
 })();
+
+(function () {
+  /* Ensure downloaded CV has a beautiful, human-readable name */
+  document.querySelectorAll('a[href*="CV.pdf"]').forEach(function (el) {
+    el.setAttribute('download', 'Mikhail Azhyshchev — CV.pdf');
+  });
+})();
