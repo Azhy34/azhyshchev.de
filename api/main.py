@@ -1,17 +1,22 @@
 from fastapi import FastAPI, Query, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
-import statistics
 import urllib.robotparser
 import requests
 import datetime
 import os
 import json
+import time
 import psycopg2
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 import uvicorn
 
 app = FastAPI(title="AI Readiness Checker API")
+
+# Short-lived cache so repeated clicks on the same URL don't re-hit the
+# target site (avoids tripping target-side anti-bot rate limits).
+_ANALYZE_CACHE_TTL = 600  # seconds
+_analyze_cache: dict[str, tuple[float, dict]] = {}
 
 DATABASE_URL = os.environ.get("DATABASE_URL", "")
 
@@ -279,17 +284,16 @@ def audit_ai_readiness(url: str) -> dict:
             r.raise_for_status()
             html = r.text
             final_url = r.url  # Handle redirects
-
-            # TTFB: median of up to 3 probes
-            first_elapsed = r.elapsed.total_seconds() * 1000
-            extra_samples: list[float] = [first_elapsed]
-            for _ in range(2):
-                try:
-                    r2 = requests.get(final_url, headers=_HEADERS, timeout=10)
-                    extra_samples.append(r2.elapsed.total_seconds() * 1000)
-                except Exception:
-                    pass
-            elapsed_ms = statistics.median(extra_samples)
+            elapsed_ms = r.elapsed.total_seconds() * 1000
+        except requests.exceptions.HTTPError as e:
+            code = e.response.status_code if e.response is not None else None
+            if code in (403, 405, 429):
+                return {
+                    "score": 0, "verdict": "Critical",
+                    "error": "This website's security system blocked our automated check (it likely blocks bots/scrapers in general). This isn't an issue with the checker — try again later or check a different page.",
+                    "url": url,
+                }
+            return {"score": 0, "verdict": "Critical", "error": f"Could not reach website: {str(e)}", "url": url}
         except Exception as e:
             return {"score": 0, "verdict": "Critical", "error": f"Could not reach website: {str(e)}", "url": url}
 
@@ -382,7 +386,16 @@ import uvicorn
 
 @app.get("/api/analyze")
 async def analyze(request: Request, url: str = Query(..., description="The URL of the website to analyze")):
+    cache_key = url.strip().lower()
+    cached = _analyze_cache.get(cache_key)
+    if cached and time.time() - cached[0] < _ANALYZE_CACHE_TTL:
+        result = cached[1]
+        if "error" in result:
+            raise HTTPException(status_code=400, detail=result["error"])
+        return result
+
     result = audit_ai_readiness(url)
+    _analyze_cache[cache_key] = (time.time(), result)
     if "error" in result:
         raise HTTPException(status_code=400, detail=result["error"])
     ip = request.headers.get("x-forwarded-for", request.client.host if request.client else "unknown")

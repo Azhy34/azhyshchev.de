@@ -39,7 +39,13 @@ const PORT = process.env.PORT || 3000;
 
 // Security Middlewares
 app.use(helmet());
-app.use(express.json());
+app.use((req, res, next) => {
+  if (req.originalUrl === '/api/webhooks/resend') {
+    next();
+  } else {
+    express.json()(req, res, next);
+  }
+});
 
 // CORS Whitelisting
 app.use((req, res, next) => {
@@ -883,6 +889,125 @@ app.get('/api/bing', authenticateToken, async (req, res) => {
   } catch (err) {
     console.error('Bing API error:', err);
     res.status(500).json({ error: 'Bing API query failed' });
+  }
+});
+
+// Resend Webhooks Endpoint for campaign analytics
+app.post('/api/webhooks/resend', express.raw({ type: 'application/json' }), async (req, res) => {
+  const { Webhook } = require('svix');
+  const secret = process.env.RESEND_WEBHOOK_SECRET || '';
+
+  const headers = {
+    'svix-id': req.headers['svix-id'],
+    'svix-timestamp': req.headers['svix-timestamp'],
+    'svix-signature': req.headers['svix-signature']
+  };
+
+  const payload = req.body;
+
+  if (secret) {
+    try {
+      const wh = new Webhook(secret);
+      wh.verify(payload, headers);
+    } catch (err) {
+      console.warn('Webhook signature verification failed:', err.message);
+      return res.status(400).json({ error: 'Invalid signature' });
+    }
+  } else {
+    console.warn('RESEND_WEBHOOK_SECRET not set — running without signature verification (dev mode)');
+  }
+
+  let event;
+  try {
+    event = JSON.parse(payload.toString());
+  } catch (err) {
+    return res.status(400).json({ error: 'Invalid JSON payload' });
+  }
+
+  const eventType = event.type;
+  const data = event.data || {};
+  const emailId = data.email_id;
+
+  if (!emailId) {
+    return res.json({ status: 'ignored', reason: 'no email_id' });
+  }
+
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const supabaseKey = process.env.SUPABASE_KEY;
+
+  if (!supabaseUrl || !supabaseKey) {
+    console.error('Supabase credentials missing on server.js webhook endpoint');
+    return res.status(500).json({ error: 'DB configuration missing' });
+  }
+
+  try {
+    // 1. Find the lead by its Resend email ID
+    const findUrl = `${supabaseUrl}/rest/v1/leads?resend_email_id=eq.${encodeURIComponent(emailId)}&limit=1`;
+    const findRes = await fetch(findUrl, {
+      method: 'GET',
+      headers: {
+        'apikey': supabaseKey,
+        'Authorization': 'Bearer ' + supabaseKey
+      }
+    });
+
+    if (!findRes.ok) {
+      console.error('Failed to find lead:', await findRes.text());
+      return res.status(502).json({ error: 'Failed to look up lead' });
+    }
+
+    const leads = await findRes.json();
+    if (!leads || leads.length === 0) {
+      console.log(`No lead found for resend_email_id: ${emailId}`);
+      return res.json({ status: 'ignored', reason: 'lead not found' });
+    }
+
+    const lead = leads[0];
+    const placeId = lead.apify_place_id;
+    let updateFields = {};
+
+    if (eventType === 'email.opened') {
+      updateFields.open_count = (lead.open_count || 0) + 1;
+      if (!lead.opened_at) {
+        updateFields.opened_at = data.created_at || new Date().toISOString();
+      }
+    } else if (eventType === 'email.clicked') {
+      const clickData = data.click || {};
+      updateFields.click_count = (lead.click_count || 0) + 1;
+      if (!lead.clicked_at) {
+        updateFields.clicked_at = clickData.timestamp || new Date().toISOString();
+        updateFields.click_url = clickData.link || '';
+      }
+    } else if (eventType === 'email.bounced') {
+      updateFields.status = 'bounced';
+    } else if (eventType === 'email.complained') {
+      updateFields.status = 'spam_complaint';
+    }
+
+    if (Object.keys(updateFields).length > 0) {
+      const updateUrl = `${supabaseUrl}/rest/v1/leads?apify_place_id=eq.${encodeURIComponent(placeId)}`;
+      const updateRes = await fetch(updateUrl, {
+        method: 'PATCH',
+        headers: {
+          'apikey': supabaseKey,
+          'Authorization': 'Bearer ' + supabaseKey,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify(updateFields)
+      });
+
+      if (!updateRes.ok) {
+        console.error(`Failed to update lead ${placeId}:`, await updateRes.text());
+        return res.status(502).json({ error: 'Failed to update lead status' });
+      }
+      console.log(`Successfully updated lead ${placeId} on event ${eventType}`);
+    }
+
+    return res.json({ status: 'ok', event: eventType });
+  } catch (err) {
+    console.error('Error in webhook handler:', err);
+    return res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
