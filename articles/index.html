@@ -916,17 +916,26 @@
         <div>
           <div class="modal-section-label">The problem</div>
           <div class="modal-text">
-            <p>Skill files in <code>.claude/skills/</code> or <code>.agent/skills/</code> exist, are well written, and get skipped anyway — on Claude Code and Gemini both. A clear description at the top of the file is not enough on its own to make the agent open it at the right moment.</p>
+            <p>Skill files in <code>.claude/skills/</code> or <code>.agent/skills/</code> exist, are well written, and get skipped anyway — on Claude Code and Gemini both. A clear description at the top of the file is not enough on its own to make the agent open it at the right moment. The agent still has to decide, mid-conversation, that a phrase warrants opening that specific file — and it often decides wrong.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Why descriptions alone don't fix it</div>
+          <div class="modal-text">
+            <p>There are two separate activation layers, and conflating them is the source of most confusion. Anthropic's own skill-creator tooling optimizes a skill's <code>description</code> field so Claude's internal matching is more likely to fire — that's probabilistic, it improves odds but doesn't guarantee a specific phrase opens the file. A trigger table lives in a different layer: the project config file loaded deterministically, in full, at the start of every session.</p>
           </div>
         </div>
         <div>
           <div class="modal-section-label">The fix</div>
           <div class="modal-text">
-            <p>A trigger table inside the one file the agent already loads every session: CLAUDE.md, AGENTS.md, or .cursorrules. Maps the exact phrases a user types ("write a report", "deploy to prod") to the exact skill file path. Same mechanism across agents, and it holds across multi-agent pipelines too.</p>
+            <p>A trigger table inside the one file the agent already loads every session: CLAUDE.md, AGENTS.md, or .cursorrules. Maps the exact phrases a user types ("write a report", "deploy to prod") to the exact skill file path. Same mechanism across agents — Claude Code, Cursor, Gemini CLI — and it holds across multi-agent pipelines too, as long as each instance has access to that config file.</p>
           </div>
         </div>
         <div>
           <div class="modal-section-label">What's in the repo</div>
+          <div class="modal-text">
+            <p>The exact prompt I use, packaged with a compatibility table and working examples. No install, no package — paste it into your own agent and it scans your skills folder and writes the trigger table for you.</p>
+          </div>
           <div class="modal-stack">
             <span class="stack-chip">MIT License</span>
             <span class="stack-chip">CONTRIBUTING.md</span>
@@ -937,6 +946,7 @@
       </div>
       <div class="modal-footer">
         <a class="action-btn dark" href="/articles/agent-skill-trigger/">Read full article →</a>
+        <a class="action-btn" id="modalGithubLink" href="https://github.com/Azhy34/agent-skill-trigger?utm_source=portfolio&utm_medium=referral&utm_campaign=agent-skill-trigger&utm_content=modal_cta" target="_blank" rel="noreferrer" style="background:var(--white);color:var(--black);">Get the prompt on GitHub ↗</a>
         <button class="mini-btn" onclick="closeModal('modal-agent-skill-trigger')">Close</button>
       </div>
     </div>
@@ -1579,6 +1589,30 @@
       document.body.style.overflow = '';
       var bn = document.getElementById('mobileBottomNav'); if (bn) bn.style.display = '';
     }
+
+    // GA4 tracking: Agent Skill Trigger card/modal
+    (function () {
+      var askCard = document.querySelector('.article-card[data-modal="modal-agent-skill-trigger"]');
+      if (askCard) {
+        askCard.addEventListener('click', function (e) {
+          if (e.target.closest('a')) return;
+          if (window.gtag) gtag('event', 'modal_open', { article_name: 'agent_skill_trigger', page_language: 'en' });
+        });
+      }
+      var askModal = document.getElementById('modal-agent-skill-trigger');
+      if (askModal) {
+        askModal.querySelectorAll('a.action-btn').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            if (!window.gtag) return;
+            if (btn.id === 'modalGithubLink') {
+              gtag('event', 'github_repo_click', { location: 'agent_skill_trigger_modal' });
+            } else {
+              gtag('event', 'article_read_click', { article_name: 'agent_skill_trigger', page_language: 'en' });
+            }
+          });
+        });
+      }
+    })();
 
     // Click on card: open modal OR navigate to article page
     document.querySelectorAll('.article-card').forEach(card => {
