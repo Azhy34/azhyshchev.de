@@ -25,6 +25,7 @@
 
 ## Articles (English)
 
+- [Agent Skill Trigger](https://azhyshchev.de/articles/agent-skill-trigger/) — Why Claude Code, Cursor, and other AI coding agents skip skill files even when they exist, and how a trigger table inside CLAUDE.md, AGENTS.md, or .cursorrules fixes it. Includes an open-source prompt and working examples.
 - [Automated Keyword Research](https://azhyshchev.de/articles/automated-keyword-research/) — How to build a free keyword search volume extractor using Google Ads API and Python, with guides on OAuth2, test tokens, and AI agent integration.
 - [RAG Sales Agent — Technical Case Study](https://azhyshchev.de/articles/rag-sales-agent/) — Deep-dive into building a Hybrid RAG sales agent: architecture decisions, LangGraph ReAct pattern, SQL vs vector search trade-offs, and production deployment lessons.
 - [B2B Lead Pipeline Germany](https://azhyshchev.de/articles/b2b-lead-pipeline-germany/) — How to build a compliant automated B2B lead generation pipeline for the German market, including legal considerations under §7 UWG and Impressum data extraction.
@@ -44,4 +45,4 @@
 
 ## Citation
 
-Last updated: 2026-06-12. Content is bilingual (English + Deutsch). All project and article pages include technical architecture, metrics, and stack details. For inquiries: azhyshchev@gmail.com. Please cite as "Mikhail Azhyshchev, AI Automation Engineer, Munich (azhyshchev.de)".
+Last updated: 2026-06-22. Content is bilingual (English + Deutsch). All project and article pages include technical architecture, metrics, and stack details. For inquiries: azhyshchev@gmail.com. Please cite as "Mikhail Azhyshchev, AI Automation Engineer, Munich (azhyshchev.de)".

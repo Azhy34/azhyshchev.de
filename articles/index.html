@@ -597,6 +597,30 @@
         <!-- Article grid -->
         <div class="articles-grid" id="articlesGrid">
 
+          <!-- Card: Agent Skill Trigger -->
+          <div class="article-card" data-tags="ai-agents" data-modal="modal-agent-skill-trigger">
+            <div class="card-accent" style="background: var(--sky);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">AI Engineering · Agent Workflows · Prompt Engineering</span>
+                <span class="card-readtime">6 min read</span>
+              </div>
+              <h2 class="card-title">Claude Code Skills Don't Activate Themselves: The Trigger Table Fix</h2>
+              <p class="card-excerpt">Skill files in .claude/skills/ or .agent/skills/ only help if the agent opens them. Here's the trigger table pattern that maps real user phrases to skill files in CLAUDE.md, AGENTS.md, or .cursorrules, plus the open-source prompt that writes it for you.</p>
+              <div class="card-tags">
+                <span class="tag">Claude Code</span>
+                <span class="tag">Cursor</span>
+                <span class="tag">Prompt Engineering</span>
+                <span class="tag">AI Agents</span>
+                <span class="tag">Open Source</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Key result: <span>1 trigger table · works across agents</span></div>
+              <a class="read-link" href="/articles/agent-skill-trigger/">Read full article →</a>
+            </div>
+          </div>
+
           <!-- Card: Automated Keyword Research -->
           <div class="article-card" data-tags="automation" data-modal="modal-automated-keyword-research">
             <div class="card-accent" style="background: var(--sky);"></div>
@@ -877,6 +901,46 @@
   </div>
 
   <!-- ── MODALS ── -->
+
+  <!-- Modal: Agent Skill Trigger -->
+  <div class="modal-overlay" id="modal-agent-skill-trigger" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-section-label">AI Engineering · Agent Workflows · Prompt Engineering</div>
+          <h2 class="modal-title">Claude Code Skills Don't Activate Themselves: The Trigger Table Fix</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-agent-skill-trigger')">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="modal-section-label">The problem</div>
+          <div class="modal-text">
+            <p>Skill files in <code>.claude/skills/</code> or <code>.agent/skills/</code> exist, are well written, and get skipped anyway — on Claude Code and Gemini both. A clear description at the top of the file is not enough on its own to make the agent open it at the right moment.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">The fix</div>
+          <div class="modal-text">
+            <p>A trigger table inside the one file the agent already loads every session: CLAUDE.md, AGENTS.md, or .cursorrules. Maps the exact phrases a user types ("write a report", "deploy to prod") to the exact skill file path. Same mechanism across agents, and it holds across multi-agent pipelines too.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">What's in the repo</div>
+          <div class="modal-stack">
+            <span class="stack-chip">MIT License</span>
+            <span class="stack-chip">CONTRIBUTING.md</span>
+            <span class="stack-chip">examples/claude-code</span>
+            <span class="stack-chip">examples/cursorrules</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="action-btn dark" href="/articles/agent-skill-trigger/">Read full article →</a>
+        <button class="mini-btn" onclick="closeModal('modal-agent-skill-trigger')">Close</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Modal: RAG Agent -->
   <div class="modal-overlay" id="modal-rag-agent" role="dialog" aria-modal="true">

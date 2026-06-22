@@ -112,7 +112,8 @@ portfolio/
 ├── skills/index.html           # Skills overview
 ├── articles/index.html         # LinkedIn articles
 │   ├── ai-visibility/index.html    # AI Visibility guide
-│   └── automated-keyword-research/index.html # Keyword extractor guide
+│   ├── automated-keyword-research/index.html # Keyword extractor guide
+│   └── agent-skill-trigger/index.html # Claude Code/Cursor skill trigger table pattern
 ├── cv/index.html               # CV page
 ├── contact/index.html          # Contact — has Calendly "Book a call" button
 ├── impressum/index.html        # Legal
