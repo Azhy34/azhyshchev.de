@@ -700,162 +700,170 @@ INSTRUCTIONS:
   }
 });
 
+// --- GA4 Data API helpers (shared by /api/analytics and /api/seo-insights) ---
+async function getGa4AccessToken() {
+  const crypto = require('crypto');
+  const https = require('https');
+
+  const clientEmail = process.env.GA4_CLIENT_EMAIL;
+  const privateKey = process.env.GA4_PRIVATE_KEY?.replace(/\\n/g, '\n');
+  if (!clientEmail || !privateKey) {
+    throw Object.assign(new Error('GA4 credentials not configured'), { status: 503 });
+  }
+
+  const header = Buffer.from(JSON.stringify({ alg: 'RS256', typ: 'JWT' })).toString('base64url');
+  const now = Math.floor(Date.now() / 1000);
+  const payload = Buffer.from(JSON.stringify({
+    iss: clientEmail,
+    scope: 'https://www.googleapis.com/auth/analytics.readonly',
+    aud: 'https://oauth2.googleapis.com/token',
+    exp: now + 3600,
+    iat: now
+  })).toString('base64url');
+  const sign = crypto.createSign('RSA-SHA256');
+  sign.update(header + '.' + payload);
+  const jwt = header + '.' + payload + '.' + sign.sign(privateKey, 'base64url');
+
+  const tokenData = await new Promise((resolve, reject) => {
+    const postData = 'grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer&assertion=' + jwt;
+    const r = https.request({
+      hostname: 'oauth2.googleapis.com', path: '/token', method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Content-Length': postData.length }
+    }, res => { let d = ''; res.on('data', x => d += x); res.on('end', () => resolve(JSON.parse(d))); });
+    r.on('error', reject);
+    r.write(postData);
+    r.end();
+  });
+
+  if (tokenData.error) throw Object.assign(new Error(tokenData.error_description), { status: 403 });
+  return tokenData.access_token;
+}
+
+async function runGa4Report(accessToken, { dimensions, metrics, dimensionFilter, orderByMetric, limit, range }) {
+  const https = require('https');
+  const propertyId = '513620625';
+  const body = JSON.stringify({
+    dateRanges: [{ startDate: range, endDate: 'today' }],
+    metrics: metrics.map(name => ({ name })),
+    dimensions: dimensions.map(name => ({ name })),
+    ...(dimensionFilter ? { dimensionFilter } : {}),
+    ...(orderByMetric ? { orderBys: [{ metric: { metricName: orderByMetric }, desc: true }] } : {}),
+    limit: limit || 10
+  });
+
+  return new Promise((resolve, reject) => {
+    const r = https.request({
+      hostname: 'analyticsdata.googleapis.com',
+      path: `/v1beta/properties/${propertyId}:runReport`,
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + accessToken, 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) }
+    }, res => { let d = ''; res.on('data', x => d += x); res.on('end', () => resolve(JSON.parse(d))); });
+    r.on('error', reject);
+    r.write(body);
+    r.end();
+  });
+}
+
 // GA4 Analytics endpoint
 app.get('/api/analytics', authenticateToken, async (req, res) => {
   try {
-    const crypto = require('crypto');
-    const https = require('https');
-
-    const clientEmail = process.env.GA4_CLIENT_EMAIL;
-    const privateKey = process.env.GA4_PRIVATE_KEY?.replace(/\\n/g, '\n');
-    const propertyId = '513620625';
-
-    if (!clientEmail || !privateKey) {
-      return res.status(503).json({ error: 'GA4 credentials not configured' });
-    }
-
-    // Create JWT for Google OAuth
-    const header = Buffer.from(JSON.stringify({ alg: 'RS256', typ: 'JWT' })).toString('base64url');
-    const now = Math.floor(Date.now() / 1000);
-    const payload = Buffer.from(JSON.stringify({
-      iss: clientEmail,
-      scope: 'https://www.googleapis.com/auth/analytics.readonly',
-      aud: 'https://oauth2.googleapis.com/token',
-      exp: now + 3600,
-      iat: now
-    })).toString('base64url');
-    const sign = crypto.createSign('RSA-SHA256');
-    sign.update(header + '.' + payload);
-    const jwt = header + '.' + payload + '.' + sign.sign(privateKey, 'base64url');
-
-    // Get access token
-    const tokenData = await new Promise((resolve, reject) => {
-      const postData = 'grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer&assertion=' + jwt;
-      const r = https.request({
-        hostname: 'oauth2.googleapis.com', path: '/token', method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Content-Length': postData.length }
-      }, res => { let d = ''; res.on('data', x => d += x); res.on('end', () => resolve(JSON.parse(d))); });
-      r.on('error', reject);
-      r.write(postData);
-      r.end();
-    });
-
-    if (tokenData.error) return res.status(403).json({ error: tokenData.error_description });
-
-    // Query GA4 Data API
     const range = req.query.range || '7daysAgo';
-    const body = JSON.stringify({
-      dateRanges: [{ startDate: range, endDate: 'today' }],
-      metrics: [
-        { name: 'activeUsers' },
-        { name: 'sessions' },
-        { name: 'screenPageViews' },
-        { name: 'averageSessionDuration' },
-        { name: 'bounceRate' }
-      ],
-      dimensions: [{ name: 'pagePath' }],
-      orderBys: [{ metric: { metricName: 'screenPageViews' }, desc: true }],
-      limit: 10
-    });
+    const accessToken = await getGa4AccessToken();
 
-    const ga4Data = await new Promise((resolve, reject) => {
-      const r = https.request({
-        hostname: 'analyticsdata.googleapis.com',
-        path: `/v1beta/properties/${propertyId}:runReport`,
-        method: 'POST',
-        headers: { 'Authorization': 'Bearer ' + tokenData.access_token, 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body) }
-      }, res => { let d = ''; res.on('data', x => d += x); res.on('end', () => resolve(JSON.parse(d))); });
-      r.on('error', reject);
-      r.write(body);
-      r.end();
-    });
-
-    // Also get top events
-    const eventsBody = JSON.stringify({
-      dateRanges: [{ startDate: range, endDate: 'today' }],
-      metrics: [{ name: 'eventCount' }],
-      dimensions: [{ name: 'eventName' }],
-      orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
-      limit: 20
-    });
-
-    const eventsData = await new Promise((resolve, reject) => {
-      const r = https.request({
-        hostname: 'analyticsdata.googleapis.com',
-        path: `/v1beta/properties/${propertyId}:runReport`,
-        method: 'POST',
-        headers: { 'Authorization': 'Bearer ' + tokenData.access_token, 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(eventsBody) }
-      }, res => { let d = ''; res.on('data', x => d += x); res.on('end', () => resolve(JSON.parse(d))); });
-      r.on('error', reject);
-      r.write(eventsBody);
-      r.end();
-    });
+    const [ga4Data, eventsData] = await Promise.all([
+      runGa4Report(accessToken, {
+        dimensions: ['pagePath'],
+        metrics: ['activeUsers', 'sessions', 'screenPageViews', 'averageSessionDuration', 'bounceRate'],
+        orderByMetric: 'screenPageViews',
+        limit: 10,
+        range
+      }),
+      runGa4Report(accessToken, {
+        dimensions: ['eventName'],
+        metrics: ['eventCount'],
+        orderByMetric: 'eventCount',
+        limit: 20,
+        range
+      })
+    ]);
 
     res.json({ pages: ga4Data, events: eventsData, range });
   } catch (err) {
     console.error('Analytics error:', err);
-    res.status(500).json({ error: 'Analytics query failed' });
+    res.status(err.status || 500).json({ error: err.status ? err.message : 'Analytics query failed' });
   }
 });
+
+// --- GSC Search Console helpers (shared by /api/gsc and /api/seo-insights) ---
+async function getGscAccessToken() {
+  const clientId = process.env.GSC_CLIENT_ID;
+  const clientSecret = process.env.GSC_CLIENT_SECRET;
+  const refreshToken = process.env.GSC_REFRESH_TOKEN;
+
+  if (!clientId || !clientSecret || !refreshToken) {
+    throw Object.assign(new Error('GSC credentials not configured'), { status: 503 });
+  }
+
+  const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      client_id: clientId,
+      client_secret: clientSecret,
+      refresh_token: refreshToken,
+      grant_type: 'refresh_token'
+    })
+  });
+  const tokenData = await tokenRes.json();
+  if (!tokenData.access_token) {
+    throw Object.assign(new Error(tokenData.error_description || 'Failed to get access token'), { status: 403 });
+  }
+  return tokenData.access_token;
+}
+
+function queryGscAnalytics(accessToken, body) {
+  const https = require('https');
+  const siteUrl = 'sc-domain%3Aazhyshchev.de';
+  const bodyStr = JSON.stringify(body);
+  return new Promise((resolve, reject) => {
+    const r = https.request({
+      hostname: 'www.googleapis.com',
+      path: `/webmasters/v3/sites/${siteUrl}/searchAnalytics/query`,
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + accessToken,
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(bodyStr)
+      }
+    }, res => { let d = ''; res.on('data', x => d += x); res.on('end', () => resolve(JSON.parse(d))); });
+    r.on('error', reject);
+    r.write(bodyStr);
+    r.end();
+  });
+}
+
+async function getGscData(days, pagesLimit = 15) {
+  const accessToken = await getGscAccessToken();
+  const endDate = new Date().toISOString().slice(0, 10);
+  const startDate = new Date(Date.now() - days * 86400000).toISOString().slice(0, 10);
+
+  const [queriesData, pagesData] = await Promise.all([
+    queryGscAnalytics(accessToken, { startDate, endDate, dimensions: ['query'], rowLimit: 25, dataState: 'all' }),
+    queryGscAnalytics(accessToken, { startDate, endDate, dimensions: ['page'], rowLimit: pagesLimit, dataState: 'all' })
+  ]);
+
+  return { queries: queriesData.rows || [], pages: pagesData.rows || [], startDate, endDate };
+}
 
 // GSC Search Console endpoint
 app.get('/api/gsc', authenticateToken, async (req, res) => {
   try {
-    const https = require('https');
-
-    const clientId = process.env.GSC_CLIENT_ID;
-    const clientSecret = process.env.GSC_CLIENT_SECRET;
-    const refreshToken = process.env.GSC_REFRESH_TOKEN;
-
-    if (!clientId || !clientSecret || !refreshToken) {
-      return res.status(503).json({ error: 'GSC credentials not configured' });
-    }
-
-    // Get access token via OAuth2 refresh token
-    const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({
-        client_id: clientId,
-        client_secret: clientSecret,
-        refresh_token: refreshToken,
-        grant_type: 'refresh_token'
-      })
-    });
-    const tokenData = await tokenRes.json();
-    if (!tokenData.access_token) return res.status(403).json({ error: tokenData.error_description || 'Failed to get access token' });
-
     const days = parseInt(req.query.days) || 28;
-    const endDate = new Date().toISOString().slice(0, 10);
-    const startDate = new Date(Date.now() - days * 86400000).toISOString().slice(0, 10);
-    const siteUrl = 'sc-domain%3Aazhyshchev.de';
-
-    const queryGsc = (body) => new Promise((resolve, reject) => {
-      const bodyStr = JSON.stringify(body);
-      const r = https.request({
-        hostname: 'www.googleapis.com',
-        path: `/webmasters/v3/sites/${siteUrl}/searchAnalytics/query`,
-        method: 'POST',
-        headers: {
-          'Authorization': 'Bearer ' + tokenData.access_token,
-          'Content-Type': 'application/json',
-          'Content-Length': Buffer.byteLength(bodyStr)
-        }
-      }, res => { let d = ''; res.on('data', x => d += x); res.on('end', () => resolve(JSON.parse(d))); });
-      r.on('error', reject);
-      r.write(bodyStr);
-      r.end();
-    });
-
-    const [queriesData, pagesData] = await Promise.all([
-      queryGsc({ startDate, endDate, dimensions: ['query'], rowLimit: 25, dataState: 'all' }),
-      queryGsc({ startDate, endDate, dimensions: ['page'], rowLimit: 15, dataState: 'all' })
-    ]);
-
-    res.json({ queries: queriesData.rows || [], pages: pagesData.rows || [], startDate, endDate });
+    const data = await getGscData(days);
+    res.json(data);
   } catch (err) {
     console.error('GSC error:', err);
-    res.status(500).json({ error: 'GSC query failed' });
+    res.status(err.status || 500).json({ error: err.status ? err.message : 'GSC query failed' });
   }
 });
 
@@ -889,6 +897,94 @@ app.get('/api/bing', authenticateToken, async (req, res) => {
   } catch (err) {
     console.error('Bing API error:', err);
     res.status(500).json({ error: 'Bing API query failed' });
+  }
+});
+
+// --- SEO insights helpers: join GSC + GA4 by page path, classify per Google's bubble-chart triage ---
+function normalizePath(urlOrPath) {
+  try {
+    return new URL(urlOrPath).pathname.replace(/\/$/, '') || '/';
+  } catch {
+    return (urlOrPath || '').replace(/\/$/, '') || '/';
+  }
+}
+
+function parseGa4PageRows(ga4Response) {
+  return (ga4Response.rows || []).map(row => ({
+    path: row.dimensionValues[0].value,
+    sessions: Number(row.metricValues[0]?.value) || 0,
+    bounceRate: Number(row.metricValues[1]?.value) || 0,
+    conversions: Number(row.metricValues[2]?.value) || 0
+  }));
+}
+
+// Thresholds per Google's documented SEO triage: impressions vs CTR vs position (title/snippet fix)
+// crossed with GA4 bounce rate for organic traffic (on-page content fix). See SKILL.md for rationale.
+function classifySeoPage({ impressions, ctr, position, bounceRate, clicks }) {
+  if (impressions < 10) return 'LOW_IMPRESSIONS';
+  if (ctr < 0.02 && position !== null && position <= 20) return 'HIGH_IMPRESSIONS_LOW_CTR';
+  if (clicks > 0 && bounceRate !== null && bounceRate > 0.7) return 'GOOD_CTR_HIGH_BOUNCE';
+  if (clicks > 0 && ctr >= 0.02) return 'GOOD_PERFORMING';
+  return 'WATCH';
+}
+
+// SEO insights endpoint — joins GSC (impressions/ctr/position) with GA4 organic-only (sessions/bounceRate/conversions)
+app.get('/api/seo-insights', authenticateToken, async (req, res) => {
+  try {
+    const days = parseInt(req.query.days) || 28;
+
+    const [gscData, ga4AccessToken] = await Promise.all([
+      getGscData(days, 30),
+      getGa4AccessToken()
+    ]);
+
+    const ga4Report = await runGa4Report(ga4AccessToken, {
+      dimensions: ['pagePath'],
+      metrics: ['sessions', 'bounceRate', 'conversions'],
+      dimensionFilter: {
+        filter: { fieldName: 'sessionDefaultChannelGroup', stringFilter: { matchType: 'EXACT', value: 'Organic Search' } }
+      },
+      orderByMetric: 'sessions',
+      limit: 30,
+      range: `${days}daysAgo`
+    });
+
+    const ga4ByPath = new Map(parseGa4PageRows(ga4Report).map(r => [normalizePath(r.path), r]));
+
+    const groups = { highImpressionsLowCtr: [], goodCtrHighBounce: [], lowImpressions: [], goodPerforming: [], watch: [] };
+    const bucketKey = {
+      HIGH_IMPRESSIONS_LOW_CTR: 'highImpressionsLowCtr',
+      GOOD_CTR_HIGH_BOUNCE: 'goodCtrHighBounce',
+      LOW_IMPRESSIONS: 'lowImpressions',
+      GOOD_PERFORMING: 'goodPerforming',
+      WATCH: 'watch'
+    };
+
+    (gscData.pages || [])
+      .map(row => {
+        const path = normalizePath(row.keys[0]);
+        const ga4 = ga4ByPath.get(path);
+        const impressions = row.impressions || 0;
+        const clicks = row.clicks || 0;
+        const ctr = row.ctr || 0;
+        const position = row.position ?? null;
+        const bounceRate = ga4 ? ga4.bounceRate : null;
+        return {
+          path,
+          clicks, impressions, ctr, position,
+          organicSessions: ga4 ? ga4.sessions : 0,
+          bounceRate,
+          conversions: ga4 ? ga4.conversions : 0,
+          category: classifySeoPage({ impressions, ctr, position, bounceRate, clicks })
+        };
+      })
+      .sort((a, b) => b.impressions - a.impressions)
+      .forEach(p => groups[bucketKey[p.category]].push(p));
+
+    res.json({ days, startDate: gscData.startDate, endDate: gscData.endDate, ...groups });
+  } catch (err) {
+    console.error('SEO insights error:', err);
+    res.status(err.status || 500).json({ error: err.status ? err.message : 'SEO insights query failed' });
   }
 });
 

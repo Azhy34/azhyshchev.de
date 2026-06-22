@@ -65,6 +65,13 @@ GSC UI doesn't accept service account emails — only regular Google accounts.
 **Site property:** `sc-domain:azhyshchev.de`
 **Endpoint:** `GET /api/gsc` in `portfolio/backend/server.js`
 
+## SEO Insights API (GSC + GA4 combined)
+
+Endpoint: `GET https://azhyshchevde-production.up.railway.app/api/seo-insights?days=90`
+Auth: `X-Widget-Token: 3530a5f865dcb0cc6489f5999cb0bfcb`
+Joins GSC page metrics (clicks/impressions/ctr/position) with GA4 organic-only page metrics (sessions/bounceRate/conversions) by normalized page path, classifies each page into one of 5 buckets per Google's bubble-chart SEO triage method. See `.agent/skills/portfolio-analytics/SKILL.md` for thresholds and bucket meanings.
+**Endpoint:** `GET /api/seo-insights` in `portfolio/backend/server.js`
+
 ## GA4 Events implemented
 
 | Event | Trigger | Location |
