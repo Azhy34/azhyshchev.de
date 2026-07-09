@@ -718,6 +718,31 @@
             </div>
           </div>
 
+          <!-- Card: Hybrid RAG Sales Agent (architecture deep-dive) -->
+          <div class="article-card" data-tags="rag,ai-agents" data-modal="modal-rag-sales-agent">
+            <div class="card-accent" style="background: var(--blue);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">RAG · Architecture · Production Case Study</span>
+                <span class="card-readtime">6 min read</span>
+              </div>
+              <h2 class="card-title">How to Build a Hybrid RAG Sales Agent — Zero Price Hallucinations</h2>
+              <p class="card-excerpt">A technical deep-dive into why pure vector search fails for e-commerce, the SQL + pgvector split that fixes it, and the LangGraph ReAct pattern that cut API costs by ~90% while eliminating hallucinated prices.</p>
+              <div class="card-tags">
+                <span class="tag">Python</span>
+                <span class="tag">LangGraph</span>
+                <span class="tag">FastAPI</span>
+                <span class="tag">Supabase</span>
+                <span class="tag">pgvector</span>
+                <span class="tag">Gemini</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Key result: <span>~90% API cost cut · zero price hallucinations</span></div>
+              <a class="read-link" href="/articles/rag-sales-agent/">Read full article →</a>
+            </div>
+          </div>
+
           <!-- Card 2: Invoice Pipeline -->
           <div class="article-card" data-tags="automation" data-modal="modal-invoice">
             <div class="card-accent" style="background: var(--mint);"></div>
@@ -1518,6 +1543,74 @@
         <a class="action-btn dark" href="/articles/rag-sales-agent-ecommerce/">Read full article →</a>
         <a class="action-btn" href="https://www.linkedin.com/feed/update/urn:li:activity:7445109114369720322/" target="_blank" rel="noreferrer">Read on LinkedIn ↗</a>
         <button class="mini-btn" onclick="closeModal('modal-da-vinchi')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Hybrid RAG Sales Agent (architecture deep-dive) -->
+  <div class="modal-overlay" id="modal-rag-sales-agent" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-section-label">Case Study · RAG · Architecture</div>
+          <h2 class="modal-title">Hybrid RAG Sales Agent: Zero Price Hallucinations</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-rag-sales-agent')">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="modal-section-label">The problem</div>
+          <div class="modal-text">
+            <p>Pure vector search finds semantically related products but doesn't guarantee factual accuracy — similarity isn't the same as correctness. For an e-commerce catalog, that means a bot can confidently return the wrong price or wrong stock status. Hard facts can never come from a vector index.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Hybrid RAG architecture</div>
+          <div class="modal-text">
+            <p><strong>SQL (Supabase Postgres):</strong> hard facts — price, SKU, stock, dimensions, category. The agent never sources a price or URL from memory.</p>
+            <p><strong>pgvector:</strong> soft knowledge only — style guides, use cases, FAQ. Queries are understood semantically first, then translated into SQL filters.</p>
+            <p><strong>LangGraph ReAct agent — 5 tools:</strong> search_products, filter_by_attributes, get_product_detail, semantic_recommend, get_faq.</p>
+            <p><strong>Gemini 2.5 Flash</strong> handles final synthesis only — the facts and semantic context are already resolved by the time the model sees them, so a lighter model is enough.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Key metrics</div>
+          <div class="modal-metrics">
+            <div class="modal-metric">
+              <span class="modal-metric-val">~90%</span>
+              <span class="modal-metric-lbl">API cost reduction vs. naive full-context approach</span>
+            </div>
+            <div class="modal-metric">
+              <span class="modal-metric-val">1,200+</span>
+              <span class="modal-metric-lbl">SKU catalog</span>
+            </div>
+            <div class="modal-metric">
+              <span class="modal-metric-val">Zero</span>
+              <span class="modal-metric-lbl">Hallucinated prices</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Tech stack</div>
+          <div class="modal-stack">
+            <span class="stack-chip">Python</span>
+            <span class="stack-chip">LangGraph</span>
+            <span class="stack-chip">FastAPI</span>
+            <span class="stack-chip">Supabase</span>
+            <span class="stack-chip">pgvector</span>
+            <span class="stack-chip">Gemini 2.5 Flash</span>
+            <span class="stack-chip">Sentence-Transformers</span>
+            <span class="stack-chip">LangSmith</span>
+            <span class="stack-chip">Docker</span>
+            <span class="stack-chip">Railway</span>
+            <span class="stack-chip">pytest</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="action-btn dark" href="/articles/rag-sales-agent/">Read full article →</a>
+        <a class="action-btn" href="/projects/ai-sales-agent-rag/" style="background:var(--white);color:var(--black);">See project page →</a>
+        <button class="mini-btn" onclick="closeModal('modal-rag-sales-agent')">Close</button>
       </div>
     </div>
   </div>

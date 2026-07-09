@@ -199,8 +199,15 @@
     <priority>0.85</priority>
     <changefreq>monthly</changefreq>
     <xhtml:link rel="alternate" hreflang="en" href="https://azhyshchev.de/articles/agent-skill-trigger/"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://azhyshchev.de/de/artikel/agent-skill-trigger/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/articles/agent-skill-trigger/"/>
+  </url>
+  <url>
+    <loc>https://azhyshchev.de/articles/automated-keyword-research/</loc>
+    <lastmod>2026-06-22</lastmod>
+    <priority>0.85</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="en" href="https://azhyshchev.de/articles/automated-keyword-research/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/articles/automated-keyword-research/"/>
   </url>
   <url>
     <loc>https://azhyshchev.de/articles/b2b-lead-pipeline-germany/</loc>

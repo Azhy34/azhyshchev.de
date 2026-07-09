@@ -27,10 +27,14 @@
 
 - [Agent Skill Trigger](https://azhyshchev.de/articles/agent-skill-trigger/) — Why Claude Code, Cursor, and other AI coding agents skip skill files even when they exist, and how a trigger table inside CLAUDE.md, AGENTS.md, or .cursorrules fixes it. Includes an open-source prompt and working examples.
 - [Automated Keyword Research](https://azhyshchev.de/articles/automated-keyword-research/) — How to build a free keyword search volume extractor using Google Ads API and Python, with guides on OAuth2, test tokens, and AI agent integration.
+- [Why Your Website Is Invisible to AI](https://azhyshchev.de/articles/ai-visibility/) — Why AI crawlers like GPTBot and ClaudeBot cannot read most JavaScript-rendered business websites, and a practical checklist covering SSR, llms.txt, robots.txt, and sitemap coverage to fix it.
 - [RAG Sales Agent — Technical Case Study](https://azhyshchev.de/articles/rag-sales-agent/) — Deep-dive into building a Hybrid RAG sales agent: architecture decisions, LangGraph ReAct pattern, SQL vs vector search trade-offs, and production deployment lessons.
+- [RAG Agent for E-commerce Customer Service](https://azhyshchev.de/articles/rag-sales-agent-ecommerce/) — How customer service was automated for a Polish wallpaper e-commerce store using a LangGraph RAG agent with hybrid SQL + pgvector retrieval — zero hallucinated prices, no human agent needed.
+- [Invoice Automation Pipeline](https://azhyshchev.de/articles/invoice-automation-pipeline/) — How to automate invoice processing from email using AI: IMAP fetch, PDF parsing, Gemini extraction, and Google Drive filing for accounting teams.
 - [B2B Lead Pipeline Germany](https://azhyshchev.de/articles/b2b-lead-pipeline-germany/) — How to build a compliant automated B2B lead generation pipeline for the German market, including legal considerations under §7 UWG and Impressum data extraction.
 - [Wallpaper AI Automation](https://azhyshchev.de/articles/wallpaper-ai-automation/) — Technical article on replacing manual Photoshop work with AI automation: Gemini multimodal API, batch processing pipelines, and business impact for retail clients.
 - [AI Image Composer](https://azhyshchev.de/articles/ai-image-composer/) — How to build an AI-powered image composition tool using Gemini vision models, Canvas API, and React 19 for creative and e-commerce workflows.
+- [AI Music SaaS in Two Weeks](https://azhyshchev.de/articles/ai-music-saas/) — Building a full-stack AI music generation SaaS with zero prior domain expertise: two-model lyrics pipeline, Suno V5.5 integration, and real production issues (SSRF, webhook idempotency) fixed pre-launch.
 
 ## Artikel (Deutsch)
 
@@ -45,4 +49,4 @@
 
 ## Citation
 
-Last updated: 2026-06-22. Content is bilingual (English + Deutsch). All project and article pages include technical architecture, metrics, and stack details. For inquiries: azhyshchev@gmail.com. Please cite as "Mikhail Azhyshchev, AI Automation Engineer, Munich (azhyshchev.de)".
+Last updated: 2026-07-09. Content is bilingual (English + Deutsch). All project and article pages include technical architecture, metrics, and stack details. For inquiries: azhyshchev@gmail.com. Please cite as "Mikhail Azhyshchev, AI Automation Engineer, Munich (azhyshchev.de)".
