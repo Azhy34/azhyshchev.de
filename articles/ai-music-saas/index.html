@@ -61,6 +61,43 @@
             { "@type": "ListItem", "position": 3, "name": "AI Music SaaS Case Study" }
           ]
         }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Why use two different LLMs for lyrics instead of one?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A single model couldn't do both jobs well. Gemini 2.5 Flash at high temperature (0.8) writes vivid, emotionally raw Polish lyrics but ignores song structure. Claude Sonnet 4.6 at low temperature (0.35) then edits that draft into a strict [Verse]/[Chorus]/[Bridge] format with correct rhyme scheme — the structure Suno's music engine needs to generate a coherent song. High temperature alone breaks structure; low temperature alone kills the creativity."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why was Suno V5.5 chosen over ElevenLabs, Udio, or fal.ai/Minimax?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "All four were tested against the same brief before shipping. fal.ai/Minimax had weak Polish phonetics on vowel-heavy words. ElevenLabs Music had good vocal timbre but no awareness of verse/chorus structure. Udio showed promising quality but failed silently during testing. Only Suno V5.5 combined natural Polish vocals with correct interpretation of the [Verse]/[Chorus] tags — and the architecture keeps all four as registered providers, so switching is a config change, not a rewrite."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What was the SSRF vulnerability in the audio proxy, and how was it fixed?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Suno's CDN URLs expire within hours, so a proxy-audio route was built to re-serve audio on demand. The first version accepted any URL as input — a classic server-side request forgery hole. The fix restricted it to strict hostname validation, allowing only *.suno.ai over HTTPS, with a backward-compatible allowlist entry for legacy fal.ai URLs already stored in the database. Lesson: never trust a user-supplied URL in a server-side fetch without an allowlist."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How is it possible to ship a full AI SaaS in two weeks with no prior music-AI experience?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "By testing the riskiest unknowns first — four music-generation APIs were benchmarked before writing any production code, which surfaced the Suno decision early. The rest, the lyrics pipeline, Shopify billing, webhook idempotency, reused known patterns. Three real issues still surfaced before launch — a Shopify test-mode gotcha, the SSRF hole, and duplicate webhook delivery — all caught and fixed pre-launch, not in production."
+            }
+          }
+        ]
       }
     ]
   }
@@ -140,6 +177,14 @@
     @media (max-width: 1100px) { .shell { grid-template-columns: 220px 1fr; } .metrics-row { grid-template-columns: repeat(2,1fr); } }
     @media (max-width: 820px) { body { padding: 10px 8px 72px; } .shell { grid-template-columns: 1fr; box-shadow: 6px 6px 0 var(--black); min-height: unset; } .sidebar { border-right: none; border-bottom: 3px solid var(--black); padding: 10px 14px; flex-direction: row; align-items: center; justify-content: space-between; } .brand { font-size: clamp(0.95rem,2.5vw,1.6rem); } .nav { display: none; } .sidebar-bottom { display: none; } .main { padding: 14px; } .two-col { grid-template-columns: 1fr; } }
     @media (max-width: 520px) { .metrics-row { grid-template-columns: 1fr; } .article-title { font-size: 1.5rem; } }
+    .faq { display: flex; flex-direction: column; gap: 16px; }
+    .faq-item { border: 2px solid var(--black); background: var(--cream); padding: 18px 20px; transition: transform 0.2s, box-shadow 0.2s; }
+    .faq-item:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--black); }
+    .faq-q { font-size: 0.9rem; font-weight: 800; cursor: pointer; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; user-select: none; }
+    .faq-q::after { content: "+"; font-size: 1.4rem; font-weight: 900; flex-shrink: 0; }
+    .faq-item.open .faq-q::after { content: "-"; }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding-top 0.2s ease; padding-top: 0; font-size: 0.84rem; line-height: 1.7; opacity: 0.85; }
+    .faq-item.open .faq-a { max-height: 800px; padding-top: 14px; }
   </style>
   <link rel="stylesheet" href="../../mobile.css">
 </head>
@@ -357,6 +402,29 @@
             </div>
           </div>
 
+          <div class="neo-card">
+            <div class="section-label">FAQ</div>
+            <h2 class="section-title">Common questions about building an AI music SaaS</h2>
+            <div class="faq">
+              <div class="faq-item">
+                <div class="faq-q">Why use two different LLMs for lyrics instead of one?</div>
+                <div class="faq-a">A single model couldn't do both jobs well. Gemini 2.5 Flash at high temperature (0.8) writes vivid, emotionally raw Polish lyrics but ignores song structure. Claude Sonnet 4.6 at low temperature (0.35) then edits that draft into a strict [Verse]/[Chorus]/[Bridge] format with correct rhyme scheme — the structure Suno's music engine needs to generate a coherent song. High temperature alone breaks structure; low temperature alone kills the creativity.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">Why was Suno V5.5 chosen over ElevenLabs, Udio, or fal.ai/Minimax?</div>
+                <div class="faq-a">All four were tested against the same brief before shipping. fal.ai/Minimax had weak Polish phonetics on vowel-heavy words. ElevenLabs Music had good vocal timbre but no awareness of verse/chorus structure. Udio showed promising quality but failed silently during testing. Only Suno V5.5 combined natural Polish vocals with correct interpretation of the [Verse]/[Chorus] tags — and the architecture keeps all four as registered providers, so switching is a config change, not a rewrite.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">What was the SSRF vulnerability in the audio proxy, and how was it fixed?</div>
+                <div class="faq-a">Suno's CDN URLs expire within hours, so a proxy-audio route was built to re-serve audio on demand. The first version accepted any URL as input — a classic server-side request forgery hole. The fix restricted it to strict hostname validation, allowing only *.suno.ai over HTTPS, with a backward-compatible allowlist entry for legacy fal.ai URLs already stored in the database. Lesson: never trust a user-supplied URL in a server-side fetch without an allowlist.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">How is it possible to ship a full AI SaaS in two weeks with no prior music-AI experience?</div>
+                <div class="faq-a">By testing the riskiest unknowns first — four music-generation APIs were benchmarked before writing any production code, which surfaced the Suno decision early. The rest, the lyrics pipeline, Shopify billing, webhook idempotency, reused known patterns. Three real issues still surfaced before launch — a Shopify test-mode gotcha, the SSRF hole, and duplicate webhook delivery — all caught and fixed pre-launch, not in production.</div>
+              </div>
+            </div>
+          </div>
+
           <div class="cta-strip">
             <div>
               <strong>Need a custom AI product built fast?</strong>
@@ -398,6 +466,17 @@
         });
       });
     })();
+  </script>
+  <script>
+document.querySelectorAll(".faq-q").forEach(function(q) {
+  q.addEventListener("click", function() {
+    var item = q.closest(".faq-item");
+    var isOpen = item.classList.toggle("open");
+    if (isOpen && typeof gtag === "function") {
+      gtag("event", "faq_open", { question: q.textContent.trim().substring(0, 60), page_language: document.documentElement.lang || "en" });
+    }
+  });
+});
   </script>
 </body>
 </html>

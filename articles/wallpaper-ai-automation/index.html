@@ -62,6 +62,43 @@
             { "@type": "ListItem", "position": 3, "name": "Wallpaper AI Automation" }
           ]
         }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Why did AI generation beat geometric transformation despite being less precise?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Geometric transformation (perspective warp + pattern tiling) is more mathematically accurate, but it required non-technical sales staff to manually correct wall-boundary detection whenever the segmentation got it wrong — half the team gave up and went back to Photoshop within a week. The AI-generation approach needs three actions — upload, select, generate — with no correction step, so daily adoption jumped from 50% to 85-90%."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is AI-generated wallpaper visualization accurate enough for sales use?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "It's less pixel-precise than geometric transformation, but the sales use case doesn't need pixel precision — it needs a photorealistic room that looks good enough for a buying decision in under 2 minutes, with lighting and shadows handled automatically. For product pages where exact color and scale accuracy matters, geometric transformation is still the better tool."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How much time does this save compared to manual Photoshop mockups?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Daily Photoshop time dropped from 4-6 hours to 15-20 minutes per sales office, with each mockup taking under 2 minutes instead of 2-4 hours. Client turnaround moved from 2-3 days to same day, since a salesperson can generate and show the visualization during the client call itself."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What other German retail categories can use this automation approach?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Any sales process built around manual client visualizations: Küchenstudios (kitchen design studios) showing cabinet configurations, Möbelhäuser (furniture showrooms) doing virtual try-on for sofas and tables, Farbenhändler (paint retailers) for wall color previews, and window/door companies showing new products on renovation photos."
+            }
+          }
+        ]
       }
     ]
   }
@@ -128,6 +165,14 @@
     @media (max-width: 1100px) { .shell { grid-template-columns: 220px 1fr; } .metrics-row { grid-template-columns: repeat(2,1fr); } }
     @media (max-width: 820px) { body { padding: 10px 8px 72px; } .shell { grid-template-columns: 1fr; box-shadow: 6px 6px 0 var(--black); min-height: unset; } .sidebar { border-right: none; border-bottom: 3px solid var(--black); padding: 10px 14px; flex-direction: row; align-items: center; justify-content: space-between; } .brand { font-size: clamp(0.95rem,2.5vw,1.6rem); } .nav { display: none; } .sidebar-bottom { display: none; } .main { padding: 14px; } .two-col { grid-template-columns: 1fr; } }
     @media (max-width: 520px) { .metrics-row { grid-template-columns: 1fr; } .article-title { font-size: 1.5rem; } }
+    .faq { display: flex; flex-direction: column; gap: 16px; }
+    .faq-item { border: 2px solid var(--black); background: var(--cream); padding: 18px 20px; transition: transform 0.2s, box-shadow 0.2s; }
+    .faq-item:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--black); }
+    .faq-q { font-size: 0.9rem; font-weight: 800; cursor: pointer; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; user-select: none; }
+    .faq-q::after { content: "+"; font-size: 1.4rem; font-weight: 900; flex-shrink: 0; }
+    .faq-item.open .faq-q::after { content: "-"; }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding-top 0.2s ease; padding-top: 0; font-size: 0.84rem; line-height: 1.7; opacity: 0.85; }
+    .faq-item.open .faq-a { max-height: 800px; padding-top: 14px; }
   </style>
   <link rel="stylesheet" href="../../mobile.css">
 </head>
@@ -303,6 +348,29 @@
             </div>
           </div>
 
+          <div class="neo-card">
+            <div class="section-label">FAQ</div>
+            <h2 class="section-title">Common questions about wallpaper visualization automation</h2>
+            <div class="faq">
+              <div class="faq-item">
+                <div class="faq-q">Why did AI generation beat geometric transformation despite being less precise?</div>
+                <div class="faq-a">Geometric transformation (perspective warp + pattern tiling) is more mathematically accurate, but it required non-technical sales staff to manually correct wall-boundary detection whenever the segmentation got it wrong — half the team gave up and went back to Photoshop within a week. The AI-generation approach needs three actions — upload, select, generate — with no correction step, so daily adoption jumped from 50% to 85-90%.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">Is AI-generated wallpaper visualization accurate enough for sales use?</div>
+                <div class="faq-a">It's less pixel-precise than geometric transformation, but the sales use case doesn't need pixel precision — it needs a photorealistic room that looks good enough for a buying decision in under 2 minutes, with lighting and shadows handled automatically. For product pages where exact color and scale accuracy matters, geometric transformation is still the better tool.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">How much time does this save compared to manual Photoshop mockups?</div>
+                <div class="faq-a">Daily Photoshop time dropped from 4-6 hours to 15-20 minutes per sales office, with each mockup taking under 2 minutes instead of 2-4 hours. Client turnaround moved from 2-3 days to same day, since a salesperson can generate and show the visualization during the client call itself.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">What other German retail categories can use this automation approach?</div>
+                <div class="faq-a">Any sales process built around manual client visualizations: Küchenstudios (kitchen design studios) showing cabinet configurations, Möbelhäuser (furniture showrooms) doing virtual try-on for sofas and tables, Farbenhändler (paint retailers) for wall color previews, and window/door companies showing new products on renovation photos.</div>
+              </div>
+            </div>
+          </div>
+
           <div class="cta-strip">
             <div>
               <strong>Haben Sie ähnliche manuelle Prozesse in Ihrem Betrieb?</strong>
@@ -331,5 +399,16 @@
   </nav>
   <script src="/js/nav.js"></script>
   <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" data-api-url="https://azhyshchevde-production.up.railway.app/api/chat" defer></script>
+  <script>
+document.querySelectorAll(".faq-q").forEach(function(q) {
+  q.addEventListener("click", function() {
+    var item = q.closest(".faq-item");
+    var isOpen = item.classList.toggle("open");
+    if (isOpen && typeof gtag === "function") {
+      gtag("event", "faq_open", { question: q.textContent.trim().substring(0, 60), page_language: document.documentElement.lang || "en" });
+    }
+  });
+});
+  </script>
 </body>
 </html>

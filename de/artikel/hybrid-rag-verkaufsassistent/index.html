@@ -71,23 +71,23 @@
             "name": "Was ist ein Hybrid RAG System und warum ist es besser als reines Vector Search?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Ein Hybrid RAG System kombiniert zwei Abrufstrategien: SQL fur exakte Fakten (Preise, Lagerbestand, Dimensionen) und pgvector fur semantische Suche (Stilbeschreibungen, Empfehlungen, FAQ). Reines Vector Search halluziniert Preise und Lagermengen, weil Ahnlichkeit keine Genauigkeit garantiert. Hybrid RAG lost das, indem harte Fakten immer aus SQL kommen - nie aus dem Vektorindex."
+              "text": "Ein Hybrid RAG System kombiniert zwei Abrufstrategien: SQL für exakte Fakten (Preise, Lagerbestand, Dimensionen) und pgvector für semantische Suche (Stilbeschreibungen, Empfehlungen, FAQ). Reines Vector Search halluziniert Preise und Lagermengen, weil Ähnlichkeit keine Genauigkeit garantiert. Hybrid RAG löst das, indem harte Fakten immer aus SQL kommen — nie aus dem Vektorindex."
             }
           },
           {
             "@type": "Question",
-            "name": "Wie viel kostet ein KI Chatbot fur einen deutschen Online-Shop?",
+            "name": "Wie viel kostet ein KI Chatbot für einen deutschen Online-Shop?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Die Betriebskosten eines Hybrid RAG Chatbots liegen ca. 90% unter dem naiven Ansatz (vollstandiger Katalog als LLM-Kontext). Pro Anfrage werden nur 1.000-1.500 Token statt Millionen verwendet. Entwicklungszeit fur einen Standard-E-Commerce-Aufbau: 3-6 Wochen. Die genauen Kosten hangen von Kataloggrose, Anfragevolumen und Modellwahl ab."
+              "text": "Die Betriebskosten eines Hybrid RAG Chatbots liegen ca. 90% unter dem naiven Ansatz (vollständiger Katalog als LLM-Kontext). Pro Anfrage werden nur 1.000-1.500 Token statt Millionen verwendet. Entwicklungszeit für einen Standard-E-Commerce-Aufbau: 3-6 Wochen. Die genauen Kosten hängen von Kataloggröße, Anfragevolumen und Modellwahl ab."
             }
           },
           {
             "@type": "Question",
-            "name": "Fur welche deutschen Unternehmen eignet sich ein RAG Verkaufsassistent?",
+            "name": "Für welche deutschen Unternehmen eignet sich ein RAG Verkaufsassistent?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Das RAG System eignet sich fur jeden E-Commerce- oder B2B-Betrieb in Deutschland mit 100+ Produkten, Kunden die vor dem Kauf Fragen stellen, einem Katalog der sich regelmasig andert, und einem Support-Team das viel Zeit mit wiederkehrenden Produktfragen verbringt. Geeignete Branchen: Mobel- und Einrichtungshandel, Baustoffhandler, B2B-Teilelieferanten, Tapeten- und Bodenbelaghandler."
+              "text": "Das RAG System eignet sich für jeden E-Commerce- oder B2B-Betrieb in Deutschland mit 100+ Produkten, Kunden die vor dem Kauf Fragen stellen, einem Katalog der sich regelmäßig ändert, und einem Support-Team das viel Zeit mit wiederkehrenden Produktfragen verbringt. Geeignete Branchen: Möbel- und Einrichtungshandel, Baustoffhändler, B2B-Teilelieferanten, Tapeten- und Bodenbelaghändler."
             }
           }
         ]
@@ -352,6 +352,25 @@
               <span class="chip">pytest</span>
               <span class="chip">VS Code</span>
               <span class="chip">Claude Code</span>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">FAQ</div>
+            <h2 class="section-title">Häufige Fragen zu Hybrid RAG Verkaufsassistenten</h2>
+            <div class="faq">
+              <div class="faq-item">
+                <div class="faq-q">Was ist ein Hybrid RAG System und warum ist es besser als reines Vector Search?</div>
+                <div class="faq-a">Ein Hybrid RAG System kombiniert zwei Abrufstrategien: SQL für exakte Fakten (Preise, Lagerbestand, Dimensionen) und pgvector für semantische Suche (Stilbeschreibungen, Empfehlungen, FAQ). Reines Vector Search halluziniert Preise und Lagermengen, weil Ähnlichkeit keine Genauigkeit garantiert. Hybrid RAG löst das, indem harte Fakten immer aus SQL kommen — nie aus dem Vektorindex.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">Wie viel kostet ein KI Chatbot für einen deutschen Online-Shop?</div>
+                <div class="faq-a">Die Betriebskosten eines Hybrid RAG Chatbots liegen ca. 90% unter dem naiven Ansatz (vollständiger Katalog als LLM-Kontext). Pro Anfrage werden nur 1.000-1.500 Token statt Millionen verwendet. Entwicklungszeit für einen Standard-E-Commerce-Aufbau: 3-6 Wochen. Die genauen Kosten hängen von Kataloggröße, Anfragevolumen und Modellwahl ab.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">Für welche deutschen Unternehmen eignet sich ein RAG Verkaufsassistent?</div>
+                <div class="faq-a">Das RAG System eignet sich für jeden E-Commerce- oder B2B-Betrieb in Deutschland mit 100+ Produkten, Kunden die vor dem Kauf Fragen stellen, einem Katalog der sich regelmäßig ändert, und einem Support-Team das viel Zeit mit wiederkehrenden Produktfragen verbringt. Geeignete Branchen: Möbel- und Einrichtungshandel, Baustoffhändler, B2B-Teilelieferanten, Tapeten- und Bodenbelaghändler.</div>
+              </div>
             </div>
           </div>
 
