@@ -767,7 +767,7 @@
           </div>
 
           <!-- Card: B2B Lead Pipeline Germany -->
-          <div class="article-card" data-tags="automation,ai-agents" data-modal="">
+          <div class="article-card" data-tags="automation,ai-agents" data-modal="modal-b2b-lead-pipeline">
             <div class="card-accent" style="background: var(--mint);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -791,7 +791,7 @@
           </div>
 
           <!-- Card: Wallpaper AI Automation -->
-          <div class="article-card" data-tags="automation,full-stack" data-modal="">
+          <div class="article-card" data-tags="automation,full-stack" data-modal="modal-wallpaper">
             <div class="card-accent" style="background: var(--coral);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -1148,8 +1148,143 @@
         </div>
       </div>
       <div class="modal-footer">
-        <a class="action-btn dark" href="https://www.linkedin.com/feed/update/urn:li:activity:7414375422395662336/" target="_blank" rel="noreferrer">Read on LinkedIn ↗</a>
+        <a class="action-btn dark" href="/articles/ai-image-composer/">Read full article →</a>
+        <a class="action-btn" href="https://www.linkedin.com/feed/update/urn:li:activity:7414375422395662336/" target="_blank" rel="noreferrer">Read on LinkedIn ↗</a>
         <button class="mini-btn" onclick="closeModal('modal-composer')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Wallpaper AI Automation -->
+  <div class="modal-overlay" id="modal-wallpaper" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-section-label">Case Study · Automation · AI Image · Retail</div>
+          <h2 class="modal-title">Wallpaper Visualization Automation: AI Replaces Photoshop</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-wallpaper')">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="modal-section-label">The problem</div>
+          <div class="modal-text">
+            <p>A wallpaper manufacturer's sales team spent 4-6 hours every day creating client mockups in Photoshop — manual perspective correction, pattern tiling, lighting adjustments, for every single order. Clients waited 2-3 days per mockup set, and when the one trained designer was unavailable, the whole process stopped.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">The critical decision: geometric transformation vs. AI generation</div>
+          <div class="modal-text">
+            <p>Two approaches were prototyped before shipping. <strong>Geometric transformation</strong> (perspective warp + pattern tiling) was pixel-perfect when it worked, but required non-technical sales staff to manually correct wall-boundary detection — half the team gave up and went back to Photoshop within a week.</p>
+            <p><strong>AI generation (Gemini)</strong> is less mathematically precise, but requires exactly three user actions — upload photo, select pattern, click generate — and handles lighting and perspective automatically. Adoption jumped from 50% to 85-90% on day one. For internal tools, adoption rate beat technical elegance.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Key metrics</div>
+          <div class="modal-metrics">
+            <div class="modal-metric">
+              <span class="modal-metric-val">75%</span>
+              <span class="modal-metric-lbl">Manual work reduction</span>
+            </div>
+            <div class="modal-metric">
+              <span class="modal-metric-val">&lt;2 min</span>
+              <span class="modal-metric-lbl">Per mockup (was hours)</span>
+            </div>
+            <div class="modal-metric">
+              <span class="modal-metric-val">85-90%</span>
+              <span class="modal-metric-lbl">Daily team adoption</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Tech stack</div>
+          <div class="modal-stack">
+            <span class="stack-chip">Python</span>
+            <span class="stack-chip">FastAPI</span>
+            <span class="stack-chip">OpenCV</span>
+            <span class="stack-chip">Gemini</span>
+            <span class="stack-chip">React</span>
+            <span class="stack-chip">TypeScript</span>
+            <span class="stack-chip">Supabase</span>
+            <span class="stack-chip">Railway</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="action-btn dark" href="/articles/wallpaper-ai-automation/">Read full article →</a>
+        <a class="action-btn" href="https://www.linkedin.com/feed/update/urn:li:activity:7426965245002178560/" target="_blank" rel="noreferrer">Read on LinkedIn ↗</a>
+        <button class="mini-btn" onclick="closeModal('modal-wallpaper')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: B2B Lead Pipeline Germany -->
+  <div class="modal-overlay" id="modal-b2b-lead-pipeline" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-section-label">Case Study · Automation · B2B · Lead Gen</div>
+          <h2 class="modal-title">B2B Lead Pipeline: 107 German Companies, $4.80 Cost, 22 Min</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-b2b-lead-pipeline')">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="modal-section-label">The problem</div>
+          <div class="modal-text">
+            <p>Every business in Germany is legally required to publish its Geschäftsführer name, address, and contact data in a public Impressum (§5 TMG) — a structured, publicly available database of German business contacts hiding in plain sight. I built a pipeline that turns this into an automated lead source instead of manual research.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Pipeline — 5 steps, fully automated</div>
+          <div class="modal-text">
+            <p><strong>1. Google Maps (Apify):</strong> search term + city → company list with name, address, category, website.</p>
+            <p><strong>2. Impressum discovery (Tavily + Exa):</strong> Tavily extracts the Impressum page even from JS-rendered sites; Exa runs a semantic fallback by company name when Tavily misses. Two-layer coverage beats either alone.</p>
+            <p><strong>3. Gemini 2.5 Flash extraction:</strong> structured JSON from raw Impressum text — Geschäftsführer name, email, phone, address, Steuernummer.</p>
+            <p><strong>4. Supabase upsert + dedup:</strong> by Apify's unique place_id — re-running on the same city never creates duplicates.</p>
+            <p><strong>5. Pandas CSV export:</strong> clean, CRM-ready file for direct import or mail-merge.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">§7 UWG compliance</div>
+          <div class="modal-text">
+            <p>The pipeline only uses data companies are legally required to publish. B2B outreach under §7 UWG is permitted with a legitimate business interest and a clear opt-out — every outgoing message includes both.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Key metrics</div>
+          <div class="modal-metrics">
+            <div class="modal-metric">
+              <span class="modal-metric-val">107</span>
+              <span class="modal-metric-lbl">CRM-ready leads</span>
+            </div>
+            <div class="modal-metric">
+              <span class="modal-metric-val">$4.80</span>
+              <span class="modal-metric-lbl">Total pipeline cost</span>
+            </div>
+            <div class="modal-metric">
+              <span class="modal-metric-val">22 min</span>
+              <span class="modal-metric-lbl">End-to-end runtime</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Tech stack</div>
+          <div class="modal-stack">
+            <span class="stack-chip">Python</span>
+            <span class="stack-chip">Apify</span>
+            <span class="stack-chip">Tavily</span>
+            <span class="stack-chip">Exa</span>
+            <span class="stack-chip">Gemini</span>
+            <span class="stack-chip">Supabase</span>
+            <span class="stack-chip">Pandas</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="action-btn dark" href="/articles/b2b-lead-pipeline-germany/">Read full article →</a>
+        <a class="action-btn" href="https://www.linkedin.com/feed/update/urn:li:activity:7426965245002178560/" target="_blank" rel="noreferrer">Read on LinkedIn ↗</a>
+        <button class="mini-btn" onclick="closeModal('modal-b2b-lead-pipeline')">Close</button>
       </div>
     </div>
   </div>
