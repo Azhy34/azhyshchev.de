@@ -1,0 +1,56 @@
+{
+  "$schema": "https://a2a-protocol.org/latest/agent-card-schema.json",
+  "name": "azhy_ai_consultant_de",
+  "displayName": "Mikhail Azhyshchev — KI-Berater für B2B-Prozessautomatisierung",
+  "version": "1.0.0",
+  "description": "Autonomer KI-B2B-Vertriebsagent von Mikhail Azhyshchev (azhyshchev.de/de/). Spezialisiert auf B2B-Prozessautomatisierung, Rechnungs-Parsing, Google Maps MCP Lead-Generierung und Google Cloud Infrastruktur für deutsche Unternehmen.",
+  "provider": {
+    "name": "Mikhail Azhyshchev",
+    "url": "https://azhyshchev.de/de/",
+    "location": "München, Deutschland",
+    "legalStatus": "Registrierter Freiberufler in Deutschland",
+    "contactEmail": "azhyshchev@gmail.com"
+  },
+  "endpoints": {
+    "chat_api": "https://azhy-ai-consultant-377331886416.europe-west3.run.app/api/chat",
+    "health_check": "https://azhy-ai-consultant-377331886416.europe-west3.run.app/health"
+  },
+  "capabilities": {
+    "languages": ["de", "en"],
+    "supportedProtocols": ["A2A-1.0", "HTTP-REST", "JSON-Schema"],
+    "privacyCompliance": "DSGVO-konform (Hosting in Frankfurt am Main, Deutschland)",
+    "dpaAvailable": true
+  },
+  "skills": [
+    {
+      "id": "b2b_prozessautomatisierung_de",
+      "name": "B2B Prozessautomatisierung",
+      "description": "Analyse und Implementierung von automatisierten B2B-Workflows zur Reduzierung von Büro-Routine um 80-90%.",
+      "tags": ["B2B Automatisierung", "Prozessoptimierung", "München", "Kostenreduktion"],
+      "examples": [
+        "Wie kann ich meine Geschäftsprozesse in Deutschland automatisieren?",
+        "Welche Routineaufgaben lassen sich durch KI einsparen?"
+      ]
+    },
+    {
+      "id": "rechnungs_automatisierung_de",
+      "name": "Rechnungs-Automatisierung & PDF-Parsing",
+      "description": "Automatische Dokumentenverarbeitung, E-Mail-Anhang-Extraktion, Gemini API Parsing und DATEV/ERP Integration.",
+      "tags": ["Rechnungsverarbeitung", "PDF Parsing", "DATEV", "Gemini API"],
+      "examples": [
+        "Wir verbringen 20 Stunden pro Woche mit Rechnungen. Gibt es eine Lösung?",
+        "Wie verarbeitet man 500 PDF-Rechnungen monatlich ohne manuelle Eingabe?"
+      ]
+    },
+    {
+      "id": "b2b_lead_generierung_de",
+      "name": "B2B Lead-Generierung & Google Maps MCP",
+      "description": "Automatische B2B-Kundensuche, Website-Analyse, Impressum-Extraktion und Qualifizierungspipelines.",
+      "tags": ["Lead-Generierung", "Google Maps MCP", "Neukundengewinnung", "Deutschland"],
+      "examples": [
+        "Wie finde ich effizient neue B2B-Kunden in Deutschland?",
+        "Wie funktioniert die Lead-Pipeline über Google Maps MCP?"
+      ]
+    }
+  ]
+}

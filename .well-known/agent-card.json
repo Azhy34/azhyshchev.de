@@ -1,0 +1,71 @@
+{
+  "$schema": "https://a2a-protocol.org/latest/agent-card-schema.json",
+  "name": "azhy_ai_consultant",
+  "displayName": "Mikhail Azhyshchev — AI B2B Automation SDR Consultant",
+  "version": "1.0.0",
+  "description": "Autonomous B2B AI Sales SDR Agent representing Mikhail Azhyshchev (azhyshchev.de). Specialized in B2B process automation, invoice processing pipelines, Google Maps MCP lead generation, and Google Cloud infrastructure for German SMBs and enterprises.",
+  "provider": {
+    "name": "Mikhail Azhyshchev",
+    "url": "https://azhyshchev.de",
+    "location": "Munich, Germany",
+    "legalStatus": "Registered Freelancer (Freiberufler in Deutschland)",
+    "contactEmail": "azhyshchev@gmail.com"
+  },
+  "endpoints": {
+    "chat_api": "https://azhy-ai-consultant-377331886416.europe-west3.run.app/api/chat",
+    "health_check": "https://azhy-ai-consultant-377331886416.europe-west3.run.app/health"
+  },
+  "capabilities": {
+    "languages": ["de", "en", "ru"],
+    "supportedProtocols": ["A2A-1.0", "HTTP-REST", "JSON-Schema"],
+    "privacyCompliance": "GDPR / DSGVO Compliant (EU Server Hosting in Frankfurt)",
+    "dpaAvailable": true
+  },
+  "skills": [
+    {
+      "id": "b2b_process_automation",
+      "name": "B2B Prozessautomatisierung",
+      "description": "Audit and implementation of automated B2B workflows, reducing manual office routine by 80-90%.",
+      "tags": ["B2B Automatisierung", "Prozessoptimierung", "Workflows", "Kostenreduktion"],
+      "examples": [
+        "Wie kann ich meine Geschäftsprozesse in Deutschland automatisieren?",
+        "How can AI reduce operational costs for my SMB in Munich?"
+      ]
+    },
+    {
+      "id": "invoice_automation",
+      "name": "Rechnungs-Automatisierung & PDF-Pipeline",
+      "description": "Automated document processing, email attachment extraction, Gemini API parsing, and ERP integration.",
+      "tags": ["Rechnungsverarbeitung", "PDF Parsing", "DATEV", "Gemini API", "IMAP Automation"],
+      "examples": [
+        "Wir verbringen 20 Stunden pro Woche mit dem Auslesen von Rechnungen. Was ist die Lösung?",
+        "How to process 500 PDF invoices monthly with 0 manual data entry?"
+      ]
+    },
+    {
+      "id": "b2b_lead_generation_mcp",
+      "name": "B2B Lead-Generierung & Google Maps MCP",
+      "description": "Automated B2B client discovery, website domain enrichment, Impressum parsing, and qualification pipelines.",
+      "tags": ["Lead-Generierung", "Google Maps MCP", "Neukundengewinnung", "Impressum Scraping"],
+      "examples": [
+        "Wie kann ich neue B2B-Kunden in Deutschland effizient finden?",
+        "How to build a 3-minute B2B lead discovery pipeline via Google Maps MCP?"
+      ]
+    },
+    {
+      "id": "gcp_mcp_cloud_automation",
+      "name": "GCP Cloud Infrastructure & MCP Automation",
+      "description": "Google Cloud Console automation via Model Context Protocol (MCP), Vertex AI Search RAG, and Cloud Run deployments.",
+      "tags": ["Google Cloud Platform", "Model Context Protocol", "Vertex AI", "Cloud Run", "Python ADK"],
+      "examples": [
+        "Wie steuert man Google Cloud Console über MCP?",
+        "How to deploy an ADK agent with Vertex AI Search RAG on Cloud Run?"
+      ]
+    }
+  ],
+  "leadCapture": {
+    "action": "capture_lead",
+    "description": "External agents and clients can submit consultation requests directly to Mikhail's Firestore & Telegram alert pipeline.",
+    "requiredFields": ["name", "email", "company", "business_pain"]
+  }
+}
