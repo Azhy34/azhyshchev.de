@@ -512,7 +512,7 @@
         <div class="articles-grid">
 
           <!-- Card: Google Cloud Console automatisieren -->
-          <div class="article-card">
+          <div class="article-card" data-modal="modal-gcp-mcp-console-de">
             <div class="card-accent" style="background: var(--yellow);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -1122,6 +1122,59 @@
       <div class="modal-footer">
         <a class="action-btn dark" href="/de/artikel/hybrid-rag-verkaufsassistent/">Artikel lesen →</a>
         <button class="mini-btn" onclick="closeModal('modal-hybrid-rag')">Schliessen</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Google Cloud Console automatisieren -->
+  <div class="modal-overlay" id="modal-gcp-mcp-console-de" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-section-label">DevOps via KI · Google Cloud · MCP Server</div>
+          <h2 class="modal-title">Google Cloud Console automatisieren mit KI-Agenten &amp; MCP</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-gcp-mcp-console-de')">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="modal-section-label">Das Problem</div>
+          <div class="modal-text">
+            <p>Die Google Cloud Console (console.cloud.google.com) ist oft ein unübersichtliches Labyrinth aus Hunderter Menüs, IAM-Berechtigungen und Unterseiten. Einfache Aufgaben wie die Log-Analyse oder das Deployen eines Dienstes erfordern oft 30+ Klicks auf 5 verschiedenen Seiten.</p>
+            <p>Das Model Context Protocol (MCP) fungiert als universeller intelligenter Adapter, der es einem KI-Entwicklungsagenten (wie Antigravity oder Cursor) ermöglicht, GCP-CLI-Befehle sicher direkt im Editor-Chat auszuführen.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">5 Kernbeispiele</div>
+          <div class="modal-text">
+            <p><strong>🚀 Cloud Run Deploy in 30 Sek.</strong> — KI generiert Dockerfiles, startet Cloud Build und liefert HTTPS-Links.</p>
+            <p><strong>🔍 Zero-Console Fehleranalyse</strong> — KI liest Cloud Logging aus, findet Fehlerursachen und behebt den Code.</p>
+            <p><strong>🔑 IAM &amp; Secret Manager</strong> — Service Accounts erstellen und Schlüssel ohne Formulare speichern.</p>
+            <p><strong>🧪 Staging-Testumgebungen</strong> — Parallele Test-Container mit einer Nachricht starten.</p>
+            <p><strong>📦 Cloud Storage</strong> — Buckets erstellen, Zugriffsrechte setzen und Dateien hochladen.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Kernergebnisse</div>
+          <div class="modal-metrics">
+            <div class="modal-metric">
+              <span class="modal-metric-val">22.200/Mo</span>
+              <span class="modal-metric-lbl">GCP Console Suchanfragen</span>
+            </div>
+            <div class="modal-metric">
+              <span class="modal-metric-val">30 Sek</span>
+              <span class="modal-metric-lbl">Cloud Run Deploymentzeit</span>
+            </div>
+            <div class="modal-metric">
+              <span class="modal-metric-val">Zero UI</span>
+              <span class="modal-metric-lbl">GCP-Steuerung direkt im Chat</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="action-btn dark" href="/de/artikel/google-cloud-console-automatisieren-mcp/">Artikel lesen →</a>
+        <button class="mini-btn" onclick="closeModal('modal-gcp-mcp-console-de')">Schließen</button>
       </div>
     </div>
   </div>
