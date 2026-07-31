@@ -25,6 +25,7 @@
 
 ## Articles (English)
 
+- [Automating Google Cloud Console with MCP](https://azhyshchev.de/articles/automating-google-cloud-console-mcp/) — How Model Context Protocol (MCP) turns Google Cloud Console into a natural language AI chat interface for Cloud Run deployments, log debugging, IAM, secret management, and storage.
 - [Agent Skill Trigger](https://azhyshchev.de/articles/agent-skill-trigger/) — Why Claude Code, Cursor, and other AI coding agents skip skill files even when they exist, and how a trigger table inside CLAUDE.md, AGENTS.md, or .cursorrules fixes it. Includes an open-source prompt and working examples.
 - [Automated Keyword Research](https://azhyshchev.de/articles/automated-keyword-research/) — How to build a free keyword search volume extractor using Google Ads API and Python, with guides on OAuth2, test tokens, and AI agent integration.
 - [Why Your Website Is Invisible to AI](https://azhyshchev.de/articles/ai-visibility/) — Why AI crawlers like GPTBot and ClaudeBot cannot read most JavaScript-rendered business websites, and a practical checklist covering SSR, llms.txt, robots.txt, and sitemap coverage to fix it.
@@ -38,6 +39,7 @@
 
 ## Artikel (Deutsch)
 
+- [Google Cloud Console automatisieren mit MCP](https://azhyshchev.de/de/artikel/google-cloud-console-automatisieren-mcp/) — Wie das Model Context Protocol (MCP) die GCP Console in ein KI-Chat-Interface für Cloud Run Deployments, Log-Analyse, Secret Manager und Storage verwandelt.
 - [KI-Sichtbarkeit fur Websites](https://azhyshchev.de/de/artikel/ki-sichtbarkeit-website/) — Warum 97% der React-Websites fur KI-Systeme unsichtbar sind und wie man das andert: SSR, llms.txt, strukturierte Daten.
 - [KI-Musik-SaaS in 2 Wochen](https://azhyshchev.de/de/artikel/ki-musik-saas/) — Vollstandige SaaS-Plattform fur KI-generierte Musik: React, Python, LLM-Kompositions-Workflows, in 2 Wochen ohne Vorwissen gebaut.
 - [RAG-Kundenservice fur E-Commerce](https://azhyshchev.de/de/artikel/rag-kundenservice-ecommerce/) — Hybrid RAG Agent fur 1.200+ SKU ohne halluzinierte Preise: LangGraph, pgvector, SQL-Suche kombiniert.
