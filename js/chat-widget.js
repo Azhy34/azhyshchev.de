@@ -206,6 +206,11 @@
     };
 
     const openDrawer = () => {
+      // Remove proactive teaser if visible
+      const teaser = document.getElementById('nbw-proactive-teaser');
+      if (teaser) teaser.remove();
+      sessionStorage.setItem('portfolio_chat_teaser_dismissed', 'true');
+
       launcher.style.display = 'none';
       launcher.setAttribute('aria-expanded', 'true');
       drawer.style.display = 'flex';
@@ -234,6 +239,11 @@
     };
 
     const closeDrawer = () => {
+      // Remove proactive teaser if visible
+      const teaser = document.getElementById('nbw-proactive-teaser');
+      if (teaser) teaser.remove();
+      sessionStorage.setItem('portfolio_chat_teaser_dismissed', 'true');
+
       drawer.classList.add('closing');
       launcher.setAttribute('aria-expanded', 'false');
       

@@ -117,7 +117,7 @@ body.nbw-no-scroll {
   display: flex;
   flex-direction: column;
   transform-origin: bottom right;
-  z-index: 100000;
+  z-index: 9999999;
   animation: nbw-slide-in 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
   pointer-events: auto; /* Enable clicks inside the drawer */
 }
