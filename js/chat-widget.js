@@ -64,9 +64,9 @@
     const hostname = window.location.hostname;
     // Check if development environment (localhost)
     if (hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '[::1]') {
-      return 'http://localhost:3000/api/chat';
+      return 'http://localhost:8080/api/chat';
     }
-    return '/api/chat';
+    return 'https://azhy-ai-consultant-377331886416.europe-west3.run.app/api/chat';
   };
   const widgetApiUrl = (currentScript && currentScript.getAttribute('data-api-url')) || getApiUrl();
   const scriptSrc = currentScript ? currentScript.src : '';
@@ -440,9 +440,52 @@
 
     // Send button click
     sendBtn.addEventListener('click', sendMessage);
+
+    // 6. Proactive AI Agent Engagement Teaser (Wakeup Trigger)
+    const initProactiveTeaser = () => {
+      // Don't show teaser if user already interacted in this session
+      if (sessionStorage.getItem('portfolio_chat_teaser_dismissed')) return;
+
+      setTimeout(() => {
+        if (drawer.style.display === 'block') return; // Drawer is open
+
+        const teaserBubble = document.createElement('div');
+        teaserBubble.id = 'nbw-proactive-teaser';
+        teaserBubble.className = 'nbw-proactive-teaser';
+        
+        const isDe = window.location.pathname.includes('/de/') || document.documentElement.lang === 'de';
+        const teaserText = isDe 
+          ? "🤖 <b>Guten Tag!</b> Erfahren Sie, wie Sie Betriebskosten senken, hochwertige B2B-Kunden gewinnen und Ihre Prozesse automatisieren können."
+          : "🤖 <b>Guten Tag!</b> Discover how to cut business costs, acquire high-quality B2B leads, and automate your company routine.";
+
+        teaserBubble.innerHTML = `
+          <div class="nbw-teaser-content">
+            <span class="nbw-teaser-text">${teaserText}</span>
+            <button class="nbw-teaser-close" aria-label="Close message">&times;</button>
+          </div>
+        `;
+
+        container.appendChild(teaserBubble);
+
+        // Teaser click triggers chat drawer open
+        teaserBubble.addEventListener('click', (e) => {
+          if (e.target.classList.contains('nbw-teaser-close')) {
+            e.stopPropagation();
+            teaserBubble.remove();
+            sessionStorage.setItem('portfolio_chat_teaser_dismissed', 'true');
+            return;
+          }
+          teaserBubble.remove();
+          sessionStorage.setItem('portfolio_chat_teaser_dismissed', 'true');
+          openDrawer();
+        });
+      }, 12000); // 12 seconds proactive popup
+    };
+
+    initProactiveTeaser();
   };
 
-  // 6. Page load trigger with a brief delay (500ms) for smoother rendering
+  // 7. Page load trigger with a brief delay (500ms) for smoother rendering
   const startWidgetTimer = () => {
     setTimeout(initChatWidget, 500);
   };
