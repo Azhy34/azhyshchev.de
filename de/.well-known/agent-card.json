@@ -3,7 +3,7 @@
   "name": "azhy_ai_consultant_de",
   "displayName": "Mikhail Azhyshchev — KI-Berater für B2B-Prozessautomatisierung",
   "version": "1.0.0",
-  "description": "Autonomer KI-B2B-Vertriebsagent von Mikhail Azhyshchev (azhyshchev.de/de/). Spezialisiert auf B2B-Prozessautomatisierung, Rechnungs-Parsing, Google Maps MCP Lead-Generierung und Google Cloud Infrastruktur für deutsche Unternehmen.",
+  "description": "Autonomer KI-B2B-Vertriebsagent von Mikhail Azhyshchev (azhyshchev.de/de/). Spezialisiert auf B2B-Prozessautomatisierung, Rechnungs-Parsing, Google Maps MCP Lead-Generierung und Google Cloud Infrastruktur für deutsche Unternehmen und internationale Kunden.",
   "provider": {
     "name": "Mikhail Azhyshchev",
     "url": "https://azhyshchev.de/de/",
@@ -24,32 +24,54 @@
   "skills": [
     {
       "id": "b2b_prozessautomatisierung_de",
-      "name": "B2B Prozessautomatisierung",
+      "name": "B2B Prozessautomatisierung & Workflow Optimization",
       "description": "Analyse und Implementierung von automatisierten B2B-Workflows zur Reduzierung von Büro-Routine um 80-90%.",
-      "tags": ["B2B Automatisierung", "Prozessoptimierung", "München", "Kostenreduktion"],
+      "tags": [
+        "B2B Prozessautomatisierung",
+        "B2B Process Automation",
+        "Workflow Automation",
+        "Prozessoptimierung",
+        "Kostenreduktion",
+        "München",
+        "Deutschland"
+      ],
       "examples": [
         "Wie kann ich meine Geschäftsprozesse in Deutschland automatisieren?",
-        "Welche Routineaufgaben lassen sich durch KI einsparen?"
+        "How can AI reduce operational costs for my SMB in Munich?"
       ]
     },
     {
       "id": "rechnungs_automatisierung_de",
-      "name": "Rechnungs-Automatisierung & PDF-Parsing",
+      "name": "Rechnungs-Automatisierung & PDF Parsing",
       "description": "Automatische Dokumentenverarbeitung, E-Mail-Anhang-Extraktion, Gemini API Parsing und DATEV/ERP Integration.",
-      "tags": ["Rechnungsverarbeitung", "PDF Parsing", "DATEV", "Gemini API"],
+      "tags": [
+        "Rechnungsverarbeitung",
+        "Invoice Automation",
+        "PDF Parsing",
+        "Document AI",
+        "DATEV",
+        "Gemini API"
+      ],
       "examples": [
         "Wir verbringen 20 Stunden pro Woche mit Rechnungen. Gibt es eine Lösung?",
-        "Wie verarbeitet man 500 PDF-Rechnungen monatlich ohne manuelle Eingabe?"
+        "How to process 500 PDF invoices monthly with 0 manual data entry?"
       ]
     },
     {
       "id": "b2b_lead_generierung_de",
       "name": "B2B Lead-Generierung & Google Maps MCP",
       "description": "Automatische B2B-Kundensuche, Website-Analyse, Impressum-Extraktion und Qualifizierungspipelines.",
-      "tags": ["Lead-Generierung", "Google Maps MCP", "Neukundengewinnung", "Deutschland"],
+      "tags": [
+        "B2B Lead-Generierung",
+        "B2B Lead Generation",
+        "Google Maps MCP",
+        "Neukundengewinnung",
+        "Client Acquisition",
+        "Impressum Scraping"
+      ],
       "examples": [
         "Wie finde ich effizient neue B2B-Kunden in Deutschland?",
-        "Wie funktioniert die Lead-Pipeline über Google Maps MCP?"
+        "How to build a 3-minute B2B lead discovery pipeline via Google Maps MCP?"
       ]
     }
   ]
