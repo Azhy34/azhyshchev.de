@@ -538,6 +538,7 @@ body.nbw-no-scroll {
   line-height: 1.4;
   cursor: pointer;
   z-index: 999998;
+  pointer-events: auto; /* Enable interaction within container */
   animation: nbwTeaserBounce 0.4s ease-out;
 }
 
@@ -556,12 +557,14 @@ body.nbw-no-scroll {
 .nbw-teaser-close {
   background: none;
   border: none;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 800;
   cursor: pointer;
   color: var(--nbw-black);
-  padding: 0 4px;
+  padding: 8px 12px;
+  margin: -8px -12px -8px 0;
   line-height: 1;
+  pointer-events: auto;
 }
 
 .nbw-teaser-close:hover {

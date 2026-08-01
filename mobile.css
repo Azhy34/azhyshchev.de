@@ -231,9 +231,20 @@ a.brand {
     justify-content: center;
   }
 
-  /* ── PROJECTS GRID MOBILE ── */
-  .projects-grid {
+  /* ── PROJECTS & ARTICLES GRID MOBILE ── */
+  .projects-grid,
+  .articles-grid {
     grid-template-columns: 1fr !important;
+  }
+
+  /* ── FIX PAGE TITLE WRAPPING ON MOBILE ── */
+  .page-title {
+    white-space: normal !important;
+  }
+
+  /* ── FIX CARD FOOTER FLEX WRAP ON MOBILE ── */
+  .card-footer {
+    flex-wrap: wrap !important;
   }
 
   /* ── HIDE reviews section on mobile (index.html) ── */

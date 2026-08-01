@@ -477,14 +477,19 @@
 
         container.appendChild(teaserBubble);
 
-        // Teaser click triggers chat drawer open
-        teaserBubble.addEventListener('click', (e) => {
-          if (e.target.classList.contains('nbw-teaser-close')) {
+        const closeBtn = teaserBubble.querySelector('.nbw-teaser-close');
+        if (closeBtn) {
+          closeBtn.addEventListener('click', (e) => {
+            e.preventDefault();
             e.stopPropagation();
             teaserBubble.remove();
             sessionStorage.setItem('portfolio_chat_teaser_dismissed', 'true');
-            return;
-          }
+          });
+        }
+
+        // Teaser click triggers chat drawer open
+        teaserBubble.addEventListener('click', (e) => {
+          if (e.target.classList.contains('nbw-teaser-close')) return;
           teaserBubble.remove();
           sessionStorage.setItem('portfolio_chat_teaser_dismissed', 'true');
           openDrawer();
