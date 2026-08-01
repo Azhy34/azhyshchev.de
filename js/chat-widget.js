@@ -451,11 +451,27 @@
     // Send button click
     sendBtn.addEventListener('click', sendMessage);
 
-    // 6. Proactive AI Agent Engagement Teaser (Wakeup Loop Trigger)
+    // 6. Proactive AI Agent Engagement Teaser (Rotating Scenario Trigger)
     const initProactiveTeaser = () => {
       // Don't show teaser if user explicitly closed it or opened chat in this session
       if (sessionStorage.getItem('portfolio_chat_teaser_dismissed')) return;
 
+      const teaserScenarios = {
+        de: [
+          "🤖 <b>Guten Tag!</b> Wie kann KI Ihre Betriebskosten senken und Routineaufgaben automatisieren?",
+          "💡 <b>Wussten Sie?</b> Ich baue maßgeschneiderte RAG-Agenten & B2B-Lead-Pipelines für Unternehmen in Deutschland.",
+          "📊 <b>B2B Lead Gen:</b> Entdecken Sie, wie man qualifizierte Firmendaten & E-Mails vollautomatisch anreichert.",
+          "💬 <b>Fragen zum Stack?</b> Fragen Sie mich zu Python, LangGraph, Supabase, n8n oder Google Cloud!"
+        ],
+        en: [
+          "🤖 <b>Hello there!</b> Discover how AI agents can cut your operational costs and automate routine workflows.",
+          "💡 <b>Did you know?</b> I engineer custom RAG pipelines & automated B2B lead generation systems.",
+          "📊 <b>B2B Prospecting:</b> Learn how to extract direct decision-maker emails & company data in minutes.",
+          "💬 <b>Tech Stack Questions?</b> Ask me anything about Python, LangGraph, Supabase, n8n, or GCP!"
+        ]
+      };
+
+      let teaserIndex = 0;
       let hideTimer = null;
 
       const scheduleShowTeaser = (delayMs) => {
@@ -473,9 +489,8 @@
           teaserBubble.className = 'nbw-proactive-teaser';
           
           const isDe = window.location.pathname.includes('/de/') || document.documentElement.lang === 'de';
-          const teaserText = isDe 
-            ? "🤖 <b>Guten Tag!</b> Erfahren Sie, wie Sie Betriebskosten senken, hochwertige B2B-Kunden gewinnen und Ihre Prozesse automatisieren können."
-            : "🤖 <b>Guten Tag!</b> Discover how to cut business costs, acquire high-quality B2B leads, and automate your company routine.";
+          const scenarios = isDe ? teaserScenarios.de : teaserScenarios.en;
+          const teaserText = scenarios[teaserIndex % scenarios.length];
 
           teaserBubble.innerHTML = `
             <div class="nbw-teaser-content">
@@ -496,7 +511,8 @@
             if (manuallyClosed) {
               sessionStorage.setItem('portfolio_chat_teaser_dismissed', 'true');
             } else {
-              // Automatically repeat after 15 seconds if not manually dismissed
+              // Rotate to next scenario question and repeat after 15 seconds
+              teaserIndex++;
               scheduleShowTeaser(15000);
             }
           };
