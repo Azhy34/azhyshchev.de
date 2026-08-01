@@ -458,16 +458,16 @@
 
       const teaserScenarios = {
         de: [
-          "🤖 <b>Guten Tag!</b> Wie kann KI Ihre Betriebskosten senken und Routineaufgaben automatisieren?",
-          "💡 <b>Wussten Sie?</b> Ich baue maßgeschneiderte RAG-Agenten & B2B-Lead-Pipelines für Unternehmen in Deutschland.",
+          "🤖 <b>Guten Tag!</b> Wie kann ein KI-Assistent Ihre Betriebskosten senken und Routineaufgaben automatisieren?",
+          "💡 <b>Wussten Sie?</b> Ich baue intelligente KI-Assistenten & B2B-Lead-Pipelines für Unternehmen in Deutschland.",
           "📊 <b>B2B Lead Gen:</b> Entdecken Sie, wie man qualifizierte Firmendaten & E-Mails vollautomatisch anreichert.",
-          "💬 <b>Fragen zum Stack?</b> Fragen Sie mich zu Python, LangGraph, Supabase, n8n oder Google Cloud!"
+          "💬 <b>Fragen zu KI-Lösungen?</b> Fragen Sie mich zu KI-Integration, Automatisierung und Workflows!"
         ],
         en: [
-          "🤖 <b>Hello there!</b> Discover how AI agents can cut your operational costs and automate routine workflows.",
-          "💡 <b>Did you know?</b> I engineer custom RAG pipelines & automated B2B lead generation systems.",
+          "🤖 <b>Hello there!</b> Discover how AI assistants can cut your operational costs and automate routine workflows.",
+          "💡 <b>Did you know?</b> I engineer custom AI assistants & automated B2B lead generation systems.",
           "📊 <b>B2B Prospecting:</b> Learn how to extract direct decision-maker emails & company data in minutes.",
-          "💬 <b>Tech Stack Questions?</b> Ask me anything about Python, LangGraph, Supabase, n8n, or GCP!"
+          "💬 <b>Questions about AI?</b> Ask me anything about AI integration, workflow automation, and tech stack!"
         ]
       };
 
