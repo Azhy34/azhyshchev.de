@@ -451,50 +451,85 @@
     // Send button click
     sendBtn.addEventListener('click', sendMessage);
 
-    // 6. Proactive AI Agent Engagement Teaser (Wakeup Trigger)
+    // 6. Proactive AI Agent Engagement Teaser (Wakeup Loop Trigger)
     const initProactiveTeaser = () => {
-      // Don't show teaser if user already interacted in this session
+      // Don't show teaser if user explicitly closed it or opened chat in this session
       if (sessionStorage.getItem('portfolio_chat_teaser_dismissed')) return;
 
-      setTimeout(() => {
-        if (drawer.style.display === 'block') return; // Drawer is open
+      let hideTimer = null;
 
-        const teaserBubble = document.createElement('div');
-        teaserBubble.id = 'nbw-proactive-teaser';
-        teaserBubble.className = 'nbw-proactive-teaser';
-        
-        const isDe = window.location.pathname.includes('/de/') || document.documentElement.lang === 'de';
-        const teaserText = isDe 
-          ? "🤖 <b>Guten Tag!</b> Erfahren Sie, wie Sie Betriebskosten senken, hochwertige B2B-Kunden gewinnen und Ihre Prozesse automatisieren können."
-          : "🤖 <b>Guten Tag!</b> Discover how to cut business costs, acquire high-quality B2B leads, and automate your company routine.";
+      const scheduleShowTeaser = (delayMs) => {
+        setTimeout(() => {
+          // Double check dismissal or active drawer state
+          if (sessionStorage.getItem('portfolio_chat_teaser_dismissed')) return;
+          if (drawer.style.display !== 'none') return;
 
-        teaserBubble.innerHTML = `
-          <div class="nbw-teaser-content">
-            <span class="nbw-teaser-text">${teaserText}</span>
-            <button class="nbw-teaser-close" aria-label="Close message">&times;</button>
-          </div>
-        `;
+          // Remove existing teaser element if present
+          const existingTeaser = document.getElementById('nbw-proactive-teaser');
+          if (existingTeaser) existingTeaser.remove();
 
-        container.appendChild(teaserBubble);
+          const teaserBubble = document.createElement('div');
+          teaserBubble.id = 'nbw-proactive-teaser';
+          teaserBubble.className = 'nbw-proactive-teaser';
+          
+          const isDe = window.location.pathname.includes('/de/') || document.documentElement.lang === 'de';
+          const teaserText = isDe 
+            ? "🤖 <b>Guten Tag!</b> Erfahren Sie, wie Sie Betriebskosten senken, hochwertige B2B-Kunden gewinnen und Ihre Prozesse automatisieren können."
+            : "🤖 <b>Guten Tag!</b> Discover how to cut business costs, acquire high-quality B2B leads, and automate your company routine.";
 
-        const closeBtn = teaserBubble.querySelector('.nbw-teaser-close');
-        if (closeBtn) {
-          closeBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
+          teaserBubble.innerHTML = `
+            <div class="nbw-teaser-content">
+              <span class="nbw-teaser-text">${teaserText}</span>
+              <button class="nbw-teaser-close" aria-label="Close message">&times;</button>
+            </div>
+          `;
+
+          container.appendChild(teaserBubble);
+
+          const dismissTeaser = (manuallyClosed = false) => {
+            if (hideTimer) clearTimeout(hideTimer);
+            teaserBubble.classList.add('hiding');
+            setTimeout(() => {
+              teaserBubble.remove();
+            }, 300);
+
+            if (manuallyClosed) {
+              sessionStorage.setItem('portfolio_chat_teaser_dismissed', 'true');
+            } else {
+              // Automatically repeat after 15 seconds if not manually dismissed
+              scheduleShowTeaser(15000);
+            }
+          };
+
+          // Auto-hide after 7 seconds
+          hideTimer = setTimeout(() => {
+            dismissTeaser(false);
+          }, 7000);
+
+          // Manual close via 'X' button
+          const closeBtn = teaserBubble.querySelector('.nbw-teaser-close');
+          if (closeBtn) {
+            closeBtn.addEventListener('click', (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              dismissTeaser(true);
+            });
+          }
+
+          // Teaser click opens chat drawer
+          teaserBubble.addEventListener('click', (e) => {
+            if (e.target.classList.contains('nbw-teaser-close')) return;
+            if (hideTimer) clearTimeout(hideTimer);
             teaserBubble.remove();
             sessionStorage.setItem('portfolio_chat_teaser_dismissed', 'true');
+            openDrawer();
           });
-        }
 
-        // Teaser click triggers chat drawer open
-        teaserBubble.addEventListener('click', (e) => {
-          if (e.target.classList.contains('nbw-teaser-close')) return;
-          teaserBubble.remove();
-          sessionStorage.setItem('portfolio_chat_teaser_dismissed', 'true');
-          openDrawer();
-        });
-      }, 12000); // 12 seconds proactive popup
+        }, delayMs);
+      };
+
+      // Initial show after 8 seconds of browsing
+      scheduleShowTeaser(8000);
     };
 
     initProactiveTeaser();

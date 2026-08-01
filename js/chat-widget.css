@@ -571,6 +571,10 @@ body.nbw-no-scroll {
   color: #d32f2f;
 }
 
+.nbw-proactive-teaser.hiding {
+  animation: nbwTeaserFadeOut 0.3s ease-in forwards;
+}
+
 @keyframes nbwTeaserBounce {
   0% {
     opacity: 0;
@@ -579,5 +583,16 @@ body.nbw-no-scroll {
   100% {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes nbwTeaserFadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.95);
   }
 }
