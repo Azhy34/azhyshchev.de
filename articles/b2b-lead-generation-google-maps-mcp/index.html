@@ -187,11 +187,11 @@
     .related-links a { text-decoration: underline; }
     @media (max-width: 900px) {
       .shell { grid-template-columns: 1fr; }
-      .sidebar { border-right: none; border-bottom: 3px solid var(--black); }
       .main { padding: 20px; }
       .article-title { font-size: 1.6rem; }
     }
   </style>
+  <link rel="stylesheet" href="../../mobile.css">
 </head>
 <body>
   <div class="shell">
@@ -200,6 +200,7 @@
         <div class="brand-badge">&lt;/&gt;</div>
         <span>AZHYSHCHEV</span>
       </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">&#9776;</button>
       <nav class="nav">
         <a class="nav-item" href="/"><span class="icon-box">H</span><span>Home</span></a>
         <a class="nav-item" href="/ai-checker"><span class="icon-box">🤖</span><span>AI Checker</span></a>
@@ -315,6 +316,14 @@
     </main>
   </div>
 
+  <nav class="mobile-bottom-nav" id="mobileBottomNav">
+    <a class="mbn-item" href="/"><span class="mbn-icon">&lt;/&gt;</span><span class="mbn-label">Home</span></a>
+    <a class="mbn-item" href="/ai-checker"><span class="mbn-icon">🤖</span><span class="mbn-label">AI Checker</span></a>
+    <a class="mbn-item" href="/experience"><span class="mbn-icon">E</span><span class="mbn-label">Experience</span></a>
+    <a class="mbn-item" href="/projects"><span class="mbn-icon">P</span><span class="mbn-label">Projects</span></a>
+    <a class="mbn-item active" href="/articles"><span class="mbn-icon">A</span><span class="mbn-label">Articles</span></a>
+    <a class="mbn-item" href="/contact"><span class="mbn-icon">C</span><span class="mbn-label">Contact</span></a>
+  </nav>
   <script src="/js/nav.js"></script>
   <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" data-api-url="https://azhyshchevde-production.up.railway.app/api/chat" defer></script>
 </body>

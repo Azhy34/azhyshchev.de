@@ -35,7 +35,9 @@ var langMap = {
   '/projects/invoice-automation-germany/': '/de/projekte/rechnungsautomatisierung-deutschland/',
   '/de/projekte/rechnungsautomatisierung-deutschland/': '/projects/invoice-automation-germany/',
   '/ai-checker/': '/de/ki-checker/',
-  '/de/ki-checker/': '/ai-checker/'
+  '/de/ki-checker/': '/ai-checker/',
+  '/articles/b2b-lead-generation-google-maps-mcp/': '/de/artikel/b2b-lead-generierung-google-maps-mcp/',
+  '/de/artikel/b2b-lead-generierung-google-maps-mcp/': '/articles/b2b-lead-generation-google-maps-mcp/'
 };
 
 function normalizePath(p) {
