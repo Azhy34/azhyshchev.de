@@ -25,6 +25,7 @@
 
 ## Articles (English)
 
+- [AI Chatbot & Customer Support Automation](https://azhyshchev.de/articles/rag-sales-agent-lead-gen/) — How businesses convert any data source (websites, PDFs, catalogs) into instant vector search engines to power 24/7 AI sales agents on Google Cloud Run without lost leads.
 - [B2B Lead Generation via Google Maps MCP](https://azhyshchev.de/articles/b2b-lead-generation-google-maps-mcp/) — Beyond Web Scraping: How replacing external scrapers (Apify) with Google Maps Model Context Protocol (MCP) delivers direct company website URLs, 3-minute lead enrichment, Impressum email extraction, and zero scraper subscription fees.
 - [Automating Google Cloud Console with MCP](https://azhyshchev.de/articles/automating-google-cloud-console-mcp/) — How Model Context Protocol (MCP) turns Google Cloud Console into a natural language AI chat interface for Cloud Run deployments, log debugging, IAM, secret management, and storage.
 - [Agent Skill Trigger](https://azhyshchev.de/articles/agent-skill-trigger/) — Why Claude Code, Cursor, and other AI coding agents skip skill files even when they exist, and how a trigger table inside CLAUDE.md, AGENTS.md, or .cursorrules fixes it. Includes an open-source prompt and working examples.
@@ -40,6 +41,7 @@
 
 ## Artikel (Deutsch)
 
+- [KI Chatbot & Kundenservice automatisieren](https://azhyshchev.de/de/artikel/rag-verkaufsassistent-lead-generierung/) — Wie Unternehmen Kundenservice automatisieren, beliebige Firmendaten (Websites, PDFs, Kataloge) in Minuten vektorisieren und Leads ohne Verlust auf Google Cloud Run konvertieren.
 - [B2B-Lead-Generierung via Google Maps MCP](https://azhyshchev.de/de/artikel/b2b-lead-generierung-google-maps-mcp/) — B2B-Kunden akquirieren ohne Scraper-Abos: Wie Google Maps Model Context Protocol (MCP) direkte Website-URLs liefert, die Vor-Ort-Analyse automatisiert und verifizierte Entscheider-E-Mails aus dem Impressum zieht.
 - [Google Cloud Console automatisieren mit MCP](https://azhyshchev.de/de/artikel/google-cloud-console-automatisieren-mcp/) — Wie das Model Context Protocol (MCP) die GCP Console in ein KI-Chat-Interface für Cloud Run Deployments, Log-Analyse, Secret Manager und Storage verwandelt.
 - [KI-Sichtbarkeit fur Websites](https://azhyshchev.de/de/artikel/ki-sichtbarkeit-website/) — Warum 97% der React-Websites fur KI-Systeme unsichtbar sind und wie man das andert: SSR, llms.txt, strukturierte Daten.
@@ -53,4 +55,4 @@
 
 ## Citation
 
-Last updated: 2026-07-31. Content is bilingual (English + Deutsch). All project and article pages include technical architecture, metrics, and stack details. For inquiries: azhyshchev@gmail.com. Please cite as "Mikhail Azhyshchev, AI Automation Engineer, Munich (azhyshchev.de)".
+Last updated: 2026-08-10. Content is bilingual (English + Deutsch). All project and article pages include technical architecture, metrics, and stack details. For inquiries: azhyshchev@gmail.com. Please cite as "Mikhail Azhyshchev, AI Automation Engineer, Munich (azhyshchev.de)".
