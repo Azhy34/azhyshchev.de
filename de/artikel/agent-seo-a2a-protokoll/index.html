@@ -129,38 +129,57 @@
             <div class="section-label">Neuer B2B-Suchkanal</div>
             <h2 class="section-title">Vom menschlichen SEO zu autonomem Agent SEO</h2>
             <div class="prose">
-              <p>Während Unternehmen Tausende Euro in SEO für menschliche Besucher investieren, entsteht ein neuer Suchkanal: Einkäufer beauftragen autonome KI-Agenten mit der Anbietersuche und Vorkqualifizierung.</p>
-              <p>Ohne einen maschinenlesbaren Agenten-Pass bleibt Ihr Unternehmen für fremde KI-Systeme komplett unsichtbar.</p>
+              <p>Jahrelang optimierten Unternehmen ihre Websites für menschliche Besucher und Suchmaschinen. Das Einkaufsverhalten hat sich geändert: Einkäufer schicken autonome KI-Agenten los, um den Markt zu scannen, Angebote zu vergleichen und Dienstleister vorzuqualifizieren.</p>
+              <p>Fehlt Ihrer Infrastruktur ein maschinenlesbarer Agenten-Pass, bleibt Ihr Angebot für diese KI-Einkaufsagenten unsichtbar.</p>
             </div>
           </div>
 
           <div class="highlight-box">
-            💡 <strong>Der Kern-Standard:</strong> Google hat das A2A-Protokoll (Agent-to-Agent) entwickelt und der Linux Foundation übergeben. Dadurch können KI-Agenten (unabhängig von LangChain, AutoGen oder Google ADK) direkt miteinander kommunizieren.
+            💡 <strong>Der Kern-Standard:</strong> Google hat das A2A-Protokoll (Agent-to-Agent) entwickelt und der Linux Foundation übergeben. A2A ermöglicht direkte Kommunikation zwischen beliebigen KI-Agenten – egal ob auf Google ADK, LangChain, AutoGen basierend oder mit Gemini, GPT-4 oder Claude betrieben.
           </div>
 
           <div class="neo-card">
             <div class="section-label">Technische Struktur</div>
-            <h2 class="section-title">Der Agenten-Pass: agent-card.json</h2>
+            <h2 class="section-title">Der Agenten-Pass: Manifest-Architektur (agent-card.json)</h2>
             <div class="prose">
-              <p>Über <code>/.well-known/agent-card.json</code> veröffentlicht Ihr Server ein A2A v0.3.0 Manifest als digitale Visitenkarte:</p>
+              <p>Über <code>/.well-known/agent-card.json</code> veröffentlicht Ihr Server ein A2A v0.3.0 Manifest als digitale Visitenkarte mit allen angebotenen Fähigkeiten:</p>
+              
+              <h3>Wichtige Manifest-Komponenten:</h3>
               <ul>
-                <li><strong>Skills & Fähigkeiten:</strong> Weist Fachwissen aus (z. B. <em>KI Automatisierung</em>, <em>DATEV-Rechnungsverarbeitung</em>, <em>GCP-Architektur</em>).</li>
-                <li><strong>Protokoll-Version & Endpunkte:</strong> Definiert REST/gRPC-Schnittstellen und Authentifizierung.</li>
-                <li><strong>Unterstützte Sprachen:</strong> Deutsch, Englisch und strukturierte API-Formate.</li>
+                <li><strong>Ausgewiesene Skills:</strong> Exakte Auflistung spezialisierter Fähigkeiten (z. B. <em>KI Automatisierung</em>, <em>DATEV-Rechnungsverarbeitung</em>, <em>GCP-Cloud-Architektur</em>).</li>
+                <li><strong>Schnittstellen-Protokolle:</strong> REST- und gRPC-Verbindungs-URLs mit geforderten Auth-Headern.</li>
+                <li><strong>Sprachen & Eingabemodi:</strong> Unterstützung für Deutsch, Englisch und strukturierte JSON-Formate.</li>
               </ul>
             </div>
           </div>
 
           <div class="neo-card">
             <div class="section-label">Produktives Live-Setup</div>
-            <h2 class="section-title">Live-System in Deutschland (GCP Cloud Run + Telegram)</h2>
+            <h2 class="section-title">Produktivsystem auf Google Cloud Run & Vertex AI RAG</h2>
             <div class="prose">
-              <p>Mein eigener RAG-Agent ist direkt an das A2A-Ökosystem angebunden:</p>
+              <p>Mein eigener RAG-Agent ist direkt an das globale A2A-Netzwerk angebunden. So läuft die Verarbeitung eingehender KI-Agenten ab:</p>
+              
+              <h3>Ablauf der Anfrage:</h3>
               <ul>
-                <li><strong>1. Auffinden:</strong> Fremde Agenten lesen das Manifest unter <code>https://azhyshchev.de/.well-known/agent-card.json</code> aus.</li>
-                <li><strong>2. Prüfung:</strong> Der Einkaufs-Agent stellt Anfragen an den Cloud Run Service in Frankfurt. Mein Agent antwortet mit echten Fallstudien aus der Vertex AI Search Wissensbasis.</li>
-                <li><strong>3. Mangleitung:</strong> Nach der Qualifizierung speichert der Agent den Lead in Cloud Firestore und schickt sofort einen Telegram-Alert an mein Smartphone.</li>
+                <li><strong>1. Manifest-Abruf:</strong> Fremde Agenten rufen <code>https://azhyshchev.de/.well-known/agent-card.json</code> ab und lesen Endpunkte aus.</li>
+                <li><strong>2. Fakten-Recherche:</strong> Der Einkaufs-Agent stellt Fragen an meinen Cloud Run Service in Frankfurt. Mein Agent nutzt Vertex AI Search RAG für verifizierte Daten aus meinen Fallstudien.</li>
+                <li><strong>3. Lead-Erfassung:</strong> Nach der Qualifizierung speichert der Agent den Lead in Cloud Firestore und schickt sofort einen Telegram-Alert an mein Smartphone.</li>
               </ul>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Häufig gestellte Fragen</div>
+            <h2 class="section-title">Häufige Fragen zu Agent SEO & A2A-Protokoll</h2>
+            <div class="prose">
+              <h3>Was ist der Unterschied zwischen SEO, GEO und Agent SEO?</h3>
+              <p>SEO zielt auf menschliche Google-Nutzer ab. Generative Engine Optimization (GEO) optimiert für KI-Suchantworten (ChatGPT/Perplexity). Agent SEO (A2A) ermöglicht die direkte maschinelle Kommunikation mit autonomen KI-Einkaufsagenten über API-Protokolle.</p>
+
+              <h3>Ist das A2A-Protokoll ein offener Standard?</h3>
+              <p>Ja. Ursprünglich von Google entwickelt, wurde die Führung an die Linux Foundation übertragen, um einen offenen herstellerunabhängigen Standard zu garantieren.</p>
+
+              <h3>Wie erstelle ich ein agent-card.json Manifest?</h3>
+              <p>Sie erstellen eine JSON-Datei nach dem A2A v0.3.0 Standard unter <code>/.well-known/agent-card.json</code> und tragen die URL in öffentlichen Registern wie <code>a2a-registry.org</code> ein.</p>
             </div>
           </div>
 
@@ -169,11 +188,12 @@
               <strong>Machen Sie Ihre Infrastruktur bereit für KI-Agenten</strong>
               <p>Buchen Sie ein 30-minütiges Erstgespräch für Ihr A2A-Manifest und Ihre RAG-Pipeline.</p>
             </div>
-            <a class="cta-btn" href="https://calendly.com/azhyshchev/30min" target="_blank">30-Min. Erstgespräch buchen →</a>
+            <a class="cta-btn" href="https://calendly.com/azhyshchev/30min?utm_source=portfolio&utm_medium=website&utm_campaign=booking&utm_content=agent_seo_article_de" target="_blank">30-Min. Erstgespräch buchen →</a>
           </div>
 
           <a class="back-link" href="/de/artikel">← Zurück zur Übersicht</a>
         </div>
+
       </div>
     </main>
   </div>
