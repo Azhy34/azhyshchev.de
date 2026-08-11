@@ -4,15 +4,23 @@
   "package_name": "de.azhyshchev.azhy_ai_consultant",
   "description": "Autonomous B2B AI Sales SDR Agent representing Mikhail Azhyshchev (azhyshchev.de). Specialized in B2B process automation, invoice processing pipelines, Google Maps MCP lead generation, and Google Cloud infrastructure for German SMBs and global enterprises.",
   "url": "https://azhyshchev.de",
+  "protocolVersion": "0.3.0",
   "version": "1.0.0",
   "category": "General",
   "target_audience": "General",
+  "defaultInputModes": [
+    "text"
+  ],
+  "defaultOutputModes": [
+    "text"
+  ],
   "provider": {
     "name": "Mikhail Azhyshchev",
     "url": "https://azhyshchev.de",
     "email": "azhyshchev@gmail.com"
   },
   "capabilities": {
+    "streaming": false,
     "languages": [
       "en",
       "de",
