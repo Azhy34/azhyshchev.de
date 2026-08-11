@@ -200,23 +200,23 @@
             <div class="section-label">Marketing Budget Protection</div>
             <h2 class="section-title">Never Waste Paid Ad Traffic Again (Zero Lost Leads)</h2>
             <div class="prose">
-              <p>Every click from Google Ads or LinkedIn Ads costs money — often $10 to $50+ per B2B click. When an interested prospect reaches out after hours (e.g. at 7:00 PM) and gets a reply the next morning, your ad spend is wasted: the prospect has already booked a call with a faster competitor.</p>
+              <p>A single click in Google Ads or LinkedIn Ads often costs $10 to $50. If a prospect submits an inquiry after hours at 7:00 PM and waits until 9:00 AM for a reply, they've already moved on to a competitor. That ad spend is gone.</p>
             </div>
           </div>
 
           <div class="highlight-box">
-            <p>💡 <strong>The B2B Sales ROI:</strong> A RAG AI Sales Agent protects your marketing budget. It responds in <strong>sub-second latency</strong>, answers client questions from your indexed data, and books sales calls directly into your calendar 24 hours a day, 7 days a week.</p>
+            <p>💡 <strong>The Sales Effect:</strong> The RAG agent responds in <strong>sub-second latency</strong>, queries live company data, qualifies the prospect, and books the sales call straight into the calendar — around the clock.</p>
           </div>
 
           <div class="neo-card">
             <div class="section-label">Fast Data Vectorization</div>
             <h2 class="section-title">Turn Any Client Data Source Into Instant Knowledge</h2>
             <div class="prose">
-              <p>Building an AI assistant no longer requires long, expensive integration projects. Modern vector search pipelines allow you to index any knowledge source in minutes:</p>
+              <p>With <strong>Google Agent Development Kit (ADK)</strong>, long integration projects are unnecessary. Knowledge sources connect directly:</p>
               <ul>
-                <li><strong>Websites & Sitemaps:</strong> Real-time vector indexing of your public domain via Vertex AI Search.</li>
-                <li><strong>PDF Documents & Catalogs:</strong> Technical specification sheets, user guides, and price lists indexed in minutes.</li>
-                <li><strong>Databases & Product Catalogs:</strong> Live data integration for stock levels and factual pricing.</li>
+                <li><strong>Websites & Sitemaps:</strong> Automatic vector indexing of product pages, FAQs, and docs via Vertex AI Search.</li>
+                <li><strong>PDF Documents & Catalogs:</strong> Technical spec sheets, user guides, and price lists indexed in minutes.</li>
+                <li><strong>Databases & CRM:</strong> Real-time mapping to inventory data and FAQs.</li>
               </ul>
             </div>
           </div>
@@ -225,10 +225,10 @@
             <div class="section-label">Live Architecture & Production Stack</div>
             <h2 class="section-title">Google ADK & Cloud Run Infrastructure Teardown</h2>
             <div class="prose">
-              <p>The agent is deployed as a serverless microservice running in <strong>Frankfurt am Main (Germany)</strong> on Google Cloud Run:</p>
+              <p>The agent runs as an isolated microservice on Google Cloud Run in <strong>Frankfurt am Main</strong>:</p>
               <ul>
                 <li><strong>Framework:</strong> Google Agent Development Kit (ADK) + Gemini 3.1 Flash.</li>
-                <li><strong>Vector Engine:</strong> Vertex AI Search Data Store indexing live domain data.</li>
+                <li><strong>Vector Engine:</strong> Vertex AI Search Data Store for live sitemap sync.</li>
                 <li><strong>A2A Discovery (Agent SEO):</strong> Publicly discoverable via <code>https://azhyshchev.de/.well-known/agent-card.json</code> following the Linux Foundation / Google A2A protocol.</li>
                 <li><strong>GDPR Compliance:</strong> 100% EU data locality without raw API keys in code (IAM ADC authentication).</li>
               </ul>
@@ -239,16 +239,16 @@
             <div class="section-label">Future of B2B Sales</div>
             <h2 class="section-title">Agent SEO (A2A Protocol): Making Your Services Discoverable to Foreign AI Agents</h2>
             <div class="prose">
-              <p>Beyond traditional human-focused SEO, <strong>Agent SEO (Agent-to-Agent Discovery)</strong> is rapidly becoming essential. B2B buyers no longer rely solely on manual search engines — they delegate vendor discovery, price comparisons, and workflow audits to autonomous AI agents.</p>
-              <p>To enable cross-framework communication (Google ADK, LangChain, AutoGen, Microsoft Semantic Kernel), Google introduced the <strong>A2A (Agent-to-Agent) Protocol</strong> and transferred its governance to the <strong>Linux Foundation</strong> as an open global standard.</p>
+              <p>Beyond human SEO, <strong>Agent SEO (Agent-to-Agent Discovery)</strong> is becoming essential. B2B buyers rarely search Google manually — they deploy autonomous AI agents to scan the market and vet vendors.</p>
+              <p>To let agents communicate across frameworks (Google ADK, LangChain, AutoGen) and LLMs (Gemini, GPT-4, Claude), Google created the <strong>A2A Protocol</strong> and transferred its governance to the <strong>Linux Foundation</strong>.</p>
 
-              <h3>How A2A Agent Discovery Works in Practice:</h3>
+              <h3>How A2A Discovery Works in Practice:</h3>
               <ul>
-                <li><strong>1. Digital Agent Passport:</strong> Your server hosts an open A2A manifest at <code>/.well-known/agent-card.json</code> detailing advertised skills (such as <em>B2B Process Automation</em>, <em>DATEV Invoice Pipelines</em>, and <em>GCP Cloud Architecture</em>), supported languages, and API endpoints.</li>
-                <li><strong>2. Registry Indexing:</strong> The manifest is indexed in enterprise registries like <em>Google Cloud Agent Registry</em> and public hubs like <em>a2a-registry.org</em>.</li>
-                <li><strong>3. Autonomous B2B Interaction:</strong> When an external buyer agent searches for B2B automation expertise, it fetches your agent card, verifies capabilities, and sends a REST request to your Cloud Run microservice in milliseconds.</li>
+                <li><strong>1. Digital Agent Passport:</strong> The server hosts a manifest at <code>/.well-known/agent-card.json</code> listing advertised skills (<em>B2B Process Automation</em>, <em>DATEV Invoice Pipelines</em>, <em>GCP Architecture</em>), endpoints, and languages.</li>
+                <li><strong>2. Registry Indexing:</strong> The manifest is listed in registries like <em>Google Cloud Agent Registry</em> and <em>a2a-registry.org</em>.</li>
+                <li><strong>3. Autonomous B2B Inquiry:</strong> When an external agent searches for automation expertise, it reads the agent card, verifies capabilities, and sends a REST request to Cloud Run in milliseconds.</li>
               </ul>
-              <p>The Result: The AI Sales Assistant fields the query using indexed domain knowledge, qualifies the lead, and stores the contact in Cloud Firestore — instantly alerting your sales team on Telegram.</p>
+              <p>The Result: The AI Sales Assistant answers using indexed domain knowledge, qualifies the lead, stores the record in Cloud Firestore, and sends an instant Telegram alert to the sales team.</p>
             </div>
           </div>
 
