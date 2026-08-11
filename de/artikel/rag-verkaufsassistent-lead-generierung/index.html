@@ -236,12 +236,21 @@
 
           <div class="neo-card">
             <div class="section-label">Zukunft des B2B-Vertriebs</div>
-            <h2 class="section-title">Agent SEO (A2A-Protokoll): Auffindbar für fremde KI-Agenten</h2>
+            <h2 class="section-title">Agent SEO (A2A-Protokoll): Wie fremde KI-Agenten Ihre Dienstleistungen finden</h2>
             <div class="prose">
-              <p>Neben dem klassischen SEO für menschliche Besucher gewinnt <strong>Agent SEO (Agent-to-Agent Discovery)</strong> rasant an Bedeutung. Zukünftig suchen Einkäufer und Unternehmen B2B-Dienstleistungen nicht mehr nur manuell bei Google, sondern lassen ihre eigenen autonomen KI-Agenten den Markt scannen.</p>
-              <p>Durch die Implementierung des A2A-Standards (v0.3.0 / Linux Foundation) ist dieser Verkaufsagent im globalen <strong>A2A-Register</strong> eingetragen. Fremde KI-Systeme lesen die Visitenkarte (<code>agent-card.json</code>) automatisch aus, prüfen die angebotenen Leistungen (Prozessautomatisierung, DATEV-Pipelines, GCP-Architektur) und treten direkt per API in Kontakt. Das eröffnet völlig neue B2B-Akquisekanäle für Unternehmen.</p>
+              <p>Neben der klassischen Suchmaschinenoptimierung (SEO) für menschliche Besucher entsteht ein völlig neuer Suchkanal: <strong>Agent SEO (Agent-to-Agent Discovery)</strong>. Einkäufer und Unternehmen suchen B2B-Dienstleistungen und Prozessautomatisierungen nicht mehr nur manuell bei Google, sondern beauftragen autonome KI-Agenten mit der Anbietersuche und Vorkqualifizierung.</p>
+              <p>Damit KI-Agenten unabhängig von Frameworks (Google ADK, LangChain, AutoGen) oder Sprachmodellen (Gemini, GPT-4, Claude) miteinander kommunizieren können, hat Google das <strong>A2A-Protokoll (Agent-to-Agent)</strong> entwickelt und unter die Leitung der <strong>Linux Foundation</strong> gestellt.</p>
+              
+              <h3>Wie die A2A-Registrierung in der Praxis funktioniert:</h3>
+              <ul>
+                <li><strong>1. Digitale Visitenkarte (Manifest):</strong> Über den Pfad <code>/.well-known/agent-card.json</code> veröffentlicht Ihr Server eine maschinenlesbare Visitenkarte (v0.3.0). Sie definiert angebotene Skills (z. B. <em>KI Automatisierung</em>, <em>DATEV-Rechnungsverarbeitung</em>, <em>GCP-Architektur</em>), API-Endpunkte und Sprachen.</li>
+                <li><strong>2. Indizierung in A2A-Registern:</strong> Das Manifest wird im <em>Google Cloud Agent Registry</em> und globalen Verzeichnissen wie <em>a2a-registry.org</em> indiziert.</li>
+                <li><strong>3. Autonome B2B-Kommunikation:</strong> Sucht ein fremder KI-Agent nach <code>KI Chatbot Kundenservice</code> oder <code>Prozessautomatisierung KI</code> in Deutschland, liest er die Visitenkarte aus, prüft die Eignung und sendet in Millisekunden eine API-Anfrage direkt an den Cloud Run Microservice.</li>
+              </ul>
+              <p>Ergebnis: Der KI-Verkaufsberater beantwortet die Anfrage auf Basis der indizierten Firmendaten, qualifiziert den Lead und speichert den Kontakt DSGVO-konform in Cloud Firestore – inklusive sofortiger Telegram-Benachrichtigung an den Vertrieb.</p>
             </div>
           </div>
+
 
           <div class="cta-strip">
             <div>

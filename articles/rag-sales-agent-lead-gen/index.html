@@ -238,10 +238,19 @@
             <div class="section-label">Future of B2B Sales</div>
             <h2 class="section-title">Agent SEO (A2A Protocol): Making Your Services Discoverable to Foreign AI Agents</h2>
             <div class="prose">
-              <p>Beyond traditional human-focused SEO, <strong>Agent SEO (Agent-to-Agent Discovery)</strong> is rapidly becoming essential. In the near future, B2B buyers won't search Google manually — they will delegate contractor discovery, price comparisons, and service audits to autonomous AI agents.</p>
-              <p>By implementing the A2A specification (v0.3.0 / Linux Foundation), this sales agent is indexed in global <strong>A2A Registries</strong>. External AI agents can automatically read its passport (<code>agent-card.json</code>), verify its specialized skills (process automation, DATEV parsing, GCP architecture), and initiate API-level B2B conversations automatically.</p>
+              <p>Beyond traditional human-focused SEO, <strong>Agent SEO (Agent-to-Agent Discovery)</strong> is rapidly becoming essential. B2B buyers no longer rely solely on manual search engines — they delegate vendor discovery, price comparisons, and workflow audits to autonomous AI agents.</p>
+              <p>To enable cross-framework communication (Google ADK, LangChain, AutoGen, Microsoft Semantic Kernel), Google introduced the <strong>A2A (Agent-to-Agent) Protocol</strong> and transferred its governance to the <strong>Linux Foundation</strong> as an open global standard.</p>
+
+              <h3>How A2A Agent Discovery Works in Practice:</h3>
+              <ul>
+                <li><strong>1. Digital Agent Passport:</strong> Your server hosts an open A2A manifest at <code>/.well-known/agent-card.json</code> detailing advertised skills (such as <em>B2B Process Automation</em>, <em>DATEV Invoice Pipelines</em>, and <em>GCP Cloud Architecture</em>), supported languages, and API endpoints.</li>
+                <li><strong>2. Registry Indexing:</strong> The manifest is indexed in enterprise registries like <em>Google Cloud Agent Registry</em> and public hubs like <em>a2a-registry.org</em>.</li>
+                <li><strong>3. Autonomous B2B Interaction:</strong> When an external buyer agent searches for B2B automation expertise, it fetches your agent card, verifies capabilities, and sends a REST request to your Cloud Run microservice in milliseconds.</li>
+              </ul>
+              <p>The Result: The AI Sales Assistant fields the query using indexed domain knowledge, qualifies the lead, and stores the contact in Cloud Firestore — instantly alerting your sales team on Telegram.</p>
             </div>
           </div>
+
 
 
           <div class="cta-strip">
