@@ -1,0 +1,121 @@
+{
+  "name": "Azhy AI Sales & Cloud Consultant",
+  "display_name": "azhy_ai_consultant",
+  "package_name": "de.azhyshchev.azhy_ai_consultant",
+  "description": "Autonomous B2B AI Sales SDR Agent representing Mikhail Azhyshchev (azhyshchev.de). Specialized in B2B process automation, invoice processing pipelines, Google Maps MCP lead generation, and Google Cloud infrastructure for German SMBs and global enterprises.",
+  "url": "https://azhyshchev.de",
+  "protocolVersion": "0.3.0",
+  "version": "1.0.0",
+  "category": "General",
+  "target_audience": "General",
+  "defaultInputModes": [
+    "text"
+  ],
+  "defaultOutputModes": [
+    "text"
+  ],
+  "provider": {
+    "name": "Mikhail Azhyshchev",
+    "url": "https://azhyshchev.de",
+    "email": "azhyshchev@gmail.com"
+  },
+  "capabilities": {
+    "streaming": false,
+    "languages": [
+      "en",
+      "de",
+      "ru"
+    ],
+    "supportedProtocols": [
+      "A2A-1.0",
+      "HTTP-REST",
+      "JSON-Schema"
+    ],
+    "privacyCompliance": "GDPR / DSGVO Compliant (EU Server Hosting in Frankfurt am Main, Germany)",
+    "dpaAvailable": true
+  },
+  "skills": [
+    {
+      "id": "b2b_process_automation",
+      "name": "B2B Process Automation & Optimization",
+      "description": "Audit and implementation of automated B2B workflows, reducing manual office routine by 80-90%.",
+      "tags": [
+        "B2B Process Automation",
+        "B2B Prozessautomatisierung",
+        "Workflow Automation",
+        "Process Optimization",
+        "Cost Reduction",
+        "Operations Automation",
+        "Munich",
+        "Germany"
+      ],
+      "examples": [
+        "How can AI reduce operational costs for my SMB in Munich?",
+        "Wie kann ich meine Geschäftsprozesse in Deutschland automatisieren?"
+      ]
+    },
+    {
+      "id": "invoice_automation",
+      "name": "Invoice Automation & PDF Parsing Pipeline",
+      "description": "Automated document processing, email attachment extraction, Gemini API parsing, and DATEV/ERP integration.",
+      "tags": [
+        "Invoice Automation",
+        "Rechnungsverarbeitung",
+        "PDF Parsing",
+        "Document AI",
+        "DATEV",
+        "Gemini API",
+        "IMAP Automation",
+        "Accounting Automation"
+      ],
+      "examples": [
+        "How to process 500 PDF invoices monthly with 0 manual data entry?",
+        "Wir verbringen 20 Stunden pro Woche mit dem Auslesen von Rechnungen. Was ist die Lösung?"
+      ]
+    },
+    {
+      "id": "b2b_lead_generation_mcp",
+      "name": "B2B Lead Generation & Google Maps MCP",
+      "description": "Automated B2B client discovery, website domain enrichment, Impressum parsing, and qualification pipelines.",
+      "tags": [
+        "B2B Lead Generation",
+        "Lead-Generierung",
+        "Google Maps MCP",
+        "Client Acquisition",
+        "Neukundengewinnung",
+        "Impressum Scraping",
+        "Sales Pipeline Automation"
+      ],
+      "examples": [
+        "How to build a 3-minute B2B lead discovery pipeline via Google Maps MCP?",
+        "Wie kann ich neue B2B-Kunden in Deutschland effizient finden?"
+      ]
+    },
+    {
+      "id": "gcp_mcp_cloud_automation",
+      "name": "GCP Cloud Infrastructure & MCP Automation",
+      "description": "Google Cloud Console automation via Model Context Protocol (MCP), Vertex AI Search RAG, and Cloud Run deployments.",
+      "tags": [
+        "Google Cloud Platform",
+        "Model Context Protocol",
+        "MCP Automation",
+        "Vertex AI RAG",
+        "Cloud Run",
+        "Python ADK",
+        "DevOps Automation",
+        "AI Agent Engineering"
+      ],
+      "examples": [
+        "How to deploy an ADK agent with Vertex AI Search RAG on Cloud Run?",
+        "Wie steuert man Google Cloud Console über MCP?"
+      ]
+    }
+  ],
+  "endpoints": {
+    "a2a_chat": {
+      "url": "https://azhy-ai-consultant-377331886416.europe-west3.run.app/api/chat",
+      "method": "POST",
+      "content_type": "application/json"
+    }
+  }
+}
