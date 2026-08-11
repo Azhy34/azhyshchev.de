@@ -512,7 +512,7 @@
         <div class="articles-grid">
 
           <!-- Card: Standalone Agent SEO & A2A Protocol -->
-          <div class="article-card">
+          <div class="article-card" data-modal="modal-agent-seo-a2a-protokoll">
             <div class="card-accent" style="background: var(--sky);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -536,7 +536,7 @@
           </div>
 
           <!-- Card: RAG Sales Agent -->
-          <div class="article-card">
+          <div class="article-card" data-modal="modal-rag-verkaufsassistent-lead-generierung">
             <div class="card-accent" style="background: var(--yellow);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -557,6 +557,7 @@
               <a class="read-link" href="/de/artikel/rag-verkaufsassistent-lead-generierung/">Artikel lesen →</a>
             </div>
           </div>
+
 
 
           <div class="article-card" data-modal="modal-gmaps-mcp-de">
@@ -885,7 +886,48 @@
   </div>
   <!-- ── MODALS ── -->
 
+  <!-- Modal: Agent SEO & A2A-Protokoll -->
+  <div class="modal-overlay" id="modal-agent-seo-a2a-protokoll" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-section-label">Agent SEO · A2A-Protokoll · Agenten-Pass</div>
+          <h2 class="modal-title">Agent SEO & A2A-Protokoll: Der digitale Agenten-Pass für B2B-Unternehmen</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-agent-seo-a2a-protokoll')">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="modal-section-label">Neuer B2B-Suchkanal</div>
+          <div class="modal-text">
+            <p>Während Unternehmen Tausende Euro in SEO für menschliche Besucher investieren, entsteht ein neuer Suchkanal: Einkäufer beauftragen autonome KI-Agenten mit der Anbietersuche und Vorkqualifizierung.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Linux Foundation A2A Standard</div>
+          <div class="modal-text">
+            <p>Google hat das A2A-Protokoll entwickelt und der Linux Foundation übergeben. Über <code>/.well-known/agent-card.json</code> lesen fremde Einkaufs-Agenten Ihre angebotenen Skills automatisch aus.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Produktives Live-Setup (GCP Cloud Run)</div>
+          <div class="modal-text">
+            <p>Als Serverless Microservice in Frankfurt aufgesetzt. Fremde Agenten rufen das Manifest ab, prüfen Daten per Vertex AI Search RAG und speichern qualifizierte Leads in Firestore – inklusive Telegram-Push.</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center;">
+        <p style="font-size: 0.82rem; font-weight: 700; opacity: 0.85;">📖 Vollständige Schritt-für-Schritt Anleitung mit Code und Architektur auf der Artikelseite:</p>
+        <div style="display: flex; gap: 10px; width: 100%; justify-content: center; align-items: center;">
+          <a class="action-btn dark" href="/de/artikel/agent-seo-a2a-protokoll/" style="font-size: 0.92rem; padding: 12px 24px; font-weight: 800;">Vollständigen Artikel lesen →</a>
+          <button class="mini-btn" onclick="closeModal('modal-agent-seo-a2a-protokoll')">Schließen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Modal: RAG Sales Agent & Kundenservice Automatisierung -->
+
   <div class="modal-overlay" id="modal-rag-verkaufsassistent-lead-generierung" role="dialog" aria-modal="true">
     <div class="modal">
       <div class="modal-header">

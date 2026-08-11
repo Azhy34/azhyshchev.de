@@ -598,7 +598,7 @@
         <div class="articles-grid" id="articlesGrid">
 
           <!-- Card: Standalone Agent SEO & A2A Protocol -->
-          <div class="article-card" data-tags="ai-agents automation">
+          <div class="article-card" data-tags="ai-agents automation" data-modal="modal-agent-seo-a2a-protocol">
             <div class="card-accent" style="background: var(--sky);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -620,6 +620,7 @@
               <a class="read-link" href="/articles/agent-seo-a2a-protocol/">Read full article →</a>
             </div>
           </div>
+
 
           <!-- Card: RAG Sales Agent & Customer Support Automation -->
           <div class="article-card" data-tags="rag ai-agents automation" data-modal="modal-rag-sales-agent-lead-gen">
@@ -1021,7 +1022,48 @@
 
   <!-- ── MODALS ── -->
 
+  <!-- Modal: Agent SEO & A2A Protocol -->
+  <div class="modal-overlay" id="modal-agent-seo-a2a-protocol" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-section-label">Agent SEO · A2A Protocol · Agent Passport</div>
+          <h2 class="modal-title">Agent SEO & A2A Protocol: Why Your Business Needs an Agent Passport</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-agent-seo-a2a-protocol')">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="modal-section-label">The New B2B Search Paradigm</div>
+          <div class="modal-text">
+            <p>While companies spend thousands optimizing websites for human clicks, a new buyer behavior is rising: purchasing departments delegate contractor discovery, price comparisons, and technical audits to autonomous AI agents.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Linux Foundation A2A Standard</div>
+          <div class="modal-text">
+            <p>Google created the Agent-to-Agent (A2A) Protocol and donated it to the Linux Foundation. Hosted at <code>/.well-known/agent-card.json</code>, your Agent Passport lets external buyer agents query your services automatically.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Live GCP Cloud Run Production Setup</div>
+          <div class="modal-text">
+            <p>Deployed as a serverless microservice in Frankfurt. External buyer agents fetch the manifest, query indexed case studies via Vertex AI Search RAG, log qualified leads in Firestore, and trigger instant Telegram alerts.</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center;">
+        <p style="font-size: 0.82rem; font-weight: 700; opacity: 0.85;">📖 Full step-by-step article with code and architecture available on the article page:</p>
+        <div style="display: flex; gap: 10px; width: 100%; justify-content: center; align-items: center;">
+          <a class="action-btn dark" href="/articles/agent-seo-a2a-protocol/" style="font-size: 0.92rem; padding: 12px 24px; font-weight: 800;">Read Full Article Page →</a>
+          <button class="mini-btn" onclick="closeModal('modal-agent-seo-a2a-protocol')">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Modal: RAG Sales Agent & Customer Support Automation -->
+
   <div class="modal-overlay" id="modal-rag-sales-agent-lead-gen" role="dialog" aria-modal="true">
     <div class="modal">
       <div class="modal-header">
