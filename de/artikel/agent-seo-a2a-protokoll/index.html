@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <script src="/js/cookie-consent.js" defer></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="Agent SEO & A2A-Protokoll: Warum Unternehmen einen digitalen Agenten-Pass (agent-card.json) brauchen. KI-Agenten suchen B2B-Dienstleister automatisch über das Linux Foundation Standard-Protokoll.">
+  <meta name="keywords" content="KI Automatisierung, Agent SEO, A2A Protokoll, Agenten Pass, agent-card.json, Linux Foundation, Google ADK, B2B Neukundengewinnung, Prozessautomatisierung KI">
+  <meta name="author" content="Mikhail Azhyshchev">
+  <link rel="canonical" href="https://azhyshchev.de/de/artikel/agent-seo-a2a-protokoll/">
+  <link rel="alternate" hreflang="en" href="https://azhyshchev.de/articles/agent-seo-a2a-protocol/" />
+  <link rel="alternate" hreflang="de" href="https://azhyshchev.de/de/artikel/agent-seo-a2a-protokoll/" />
+  <link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/articles/agent-seo-a2a-protocol/" />
+
+  <meta property="og:title" content="Agent SEO & A2A-Protokoll: Der Agenten-Pass für B2B-Unternehmen | Mikhail Azhyshchev">
+  <meta property="og:description" content="Wie fremde KI-Agenten Ihr Unternehmen über agent-card.json und das Linux Foundation A2A-Protokoll finden und qualifizieren. Live-Setup auf Google Cloud Run.">
+  <meta property="og:url" content="https://azhyshchev.de/de/artikel/agent-seo-a2a-protokoll/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://azhyshchev.de/Azhyschev.JPG">
+  <meta property="og:locale" content="de_DE">
+
+  <title>Agent SEO & A2A-Protokoll: Der Agenten-Pass für B2B-Unternehmen | Mikhail Azhyshchev</title>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://azhyshchev.de/de/artikel/agent-seo-a2a-protokoll/#article",
+        "headline": "Agent SEO & A2A-Protokoll: Der Agenten-Pass für B2B-Unternehmen",
+        "description": "Wie autonome KI-Einkaufsagenten B2B-Dienstleister über den A2A-Standard der Linux Foundation und agent-card.json finden.",
+        "author": { "@id": "https://azhyshchev.de/#person" },
+        "publisher": { "@id": "https://azhyshchev.de/#person" },
+        "datePublished": "2026-08-11",
+        "dateModified": "2026-08-11",
+        "inLanguage": "de",
+        "keywords": "KI Automatisierung, Agent SEO, A2A Protokoll, agent-card.json",
+        "url": "https://azhyshchev.de/de/artikel/agent-seo-a2a-protokoll/"
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --sky: #61b5e8; --mint: #b9ddb7; --cream: #f8f0dc; --yellow: #f5c84b; --pink: #efb2d5; --blue: #d8ebff; --peach: #f7d4b1; --coral: #ff9a77; --rose: #ecb0c4; --black: #111111; --white: #ffffff; --accent: var(--sky); }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { min-height: 100vh; font-family: 'JetBrains Mono', monospace; color: var(--black); background: linear-gradient(120deg, var(--sky) 0 34%, var(--peach) 34% 55%, var(--coral) 55% 72%, var(--rose) 72% 100%); padding: 48px 24px; }
+    a { color: inherit; text-decoration: none; }
+    .shell { width: min(1320px, 100%); margin: 0 auto; border: 3px solid var(--black); box-shadow: 12px 12px 0 var(--black); background: var(--mint); display: grid; grid-template-columns: 250px 1fr; min-height: 820px; overflow: hidden; }
+    .sidebar { border-right: 3px solid var(--black); padding: 20px 18px; display: flex; flex-direction: column; gap: 22px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 8px; }
+    .brand-badge { width: 42px; height: 34px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 1rem; font-weight: 800; }
+    .nav { display: flex; flex-direction: column; gap: 8px; }
+    .nav-item { display: flex; align-items: center; gap: 12px; padding: 11px 12px; font-size: 0.9rem; font-weight: 700; border: 2px solid transparent; transition: transform 0.18s ease; }
+    .nav-item:hover { transform: translate(-2px, -2px); }
+    .nav-item.active { border-color: var(--black); background: var(--white); box-shadow: 4px 4px 0 var(--black); }
+    .icon-box { width: 34px; height: 34px; border: 2px solid var(--black); background: var(--white); display: grid; place-items: center; font-weight: 800; font-size: 0.85rem; }
+    .nav-item.active .icon-box { background: var(--yellow); }
+    .sidebar-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+    .socials { display: flex; gap: 10px; padding-top: 8px; }
+    .social-link { width: 42px; height: 42px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-weight: 800; }
+
+    .main { background: var(--cream); padding: 28px; }
+    .article-shell { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
+    .article-hero { border: 3px solid var(--black); box-shadow: 8px 8px 0 var(--black); background: var(--sky); padding: 32px; display: flex; flex-direction: column; gap: 16px; }
+    .article-type { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.8; }
+    .article-title { font-size: clamp(1.6rem, 3vw, 2.5rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.04em; }
+    .article-lead { font-size: 1.05rem; line-height: 1.6; opacity: 0.9; }
+
+    .metrics-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-top: 12px; }
+    .metric-box { border: 2px solid var(--black); background: var(--white); padding: 14px; box-shadow: 4px 4px 0 var(--black); }
+    .metric-box strong { display: block; font-size: 1.2rem; font-weight: 800; }
+    .metric-box span { font-size: 0.75rem; opacity: 0.8; font-weight: 700; }
+
+    .article-body { display: flex; flex-direction: column; gap: 24px; }
+    .neo-card { border: 3px solid var(--black); background: var(--white); box-shadow: 6px 6px 0 var(--black); padding: 28px; display: flex; flex-direction: column; gap: 16px; }
+    .section-label { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6; }
+    .section-title { font-size: 1.4rem; font-weight: 800; line-height: 1.2; }
+    .prose { font-size: 0.95rem; line-height: 1.7; display: flex; flex-direction: column; gap: 14px; }
+    .prose ul { padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+    .prose code { background: var(--yellow); padding: 2px 6px; border: 1.5px solid var(--black); font-size: 0.88rem; font-weight: 700; }
+
+    .highlight-box { border: 3px solid var(--black); background: var(--yellow); box-shadow: 6px 6px 0 var(--black); padding: 22px; font-weight: 700; font-size: 1rem; line-height: 1.6; }
+
+    .cta-strip { border: 3px solid var(--black); background: var(--black); color: var(--white); box-shadow: 8px 8px 0 var(--coral); padding: 32px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+    .cta-btn { border: 2px solid var(--white); background: var(--coral); color: var(--black); padding: 14px 24px; font-weight: 800; font-size: 1rem; box-shadow: 4px 4px 0 var(--white); }
+
+    .back-link { font-weight: 800; text-decoration: underline; margin-top: 10px; display: inline-block; }
+
+    @media (max-width: 900px) { .shell { grid-template-columns: 1fr; } .sidebar { border-right: none; border-bottom: 3px solid var(--black); } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="/de/">
+        <div class="brand-badge">&lt;/&gt;</div>
+        <span>AZHYSHCHEV</span>
+      </a>
+      <nav class="nav">
+        <a class="nav-item" href="/de/"><span class="icon-box">H</span><span>Startseite</span></a>
+        <a class="nav-item" href="/de/artikel"><span class="icon-box">A</span><span>Artikel</span></a>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <div class="article-shell">
+        <header class="article-hero">
+          <div class="article-type">Agent SEO & B2B-Kundenakquise</div>
+          <h1 class="article-title">Agent SEO & A2A-Protokoll: Der digitale Agenten-Pass für B2B-Unternehmen</h1>
+          <p class="article-lead">Autonome KI-Agenten suchen und qualifizieren B2B-Dienstleister bereits direkt. So macht das A2A-Protokoll der Linux Foundation Ihr Unternehmen auffindbar.</p>
+
+          <div class="metrics-row">
+            <div class="metric-box"><strong>Linux Foundation</strong><span>A2A-Protokoll Standard</span></div>
+            <div class="metric-box"><strong>agent-card.json</strong><span>Offener Agenten-Pass</span></div>
+            <div class="metric-box"><strong>Millisekunden</strong><span>API-Lead-Qualifizierung</span></div>
+            <div class="metric-box"><strong>GCP Cloud Run</strong><span>Serverless Frankfurt Host</span></div>
+          </div>
+        </header>
+
+        <div class="article-body">
+          <div class="neo-card">
+            <div class="section-label">Neuer B2B-Suchkanal</div>
+            <h2 class="section-title">Vom menschlichen SEO zu autonomem Agent SEO</h2>
+            <div class="prose">
+              <p>Während Unternehmen Tausende Euro in SEO für menschliche Besucher investieren, entsteht ein neuer Suchkanal: Einkäufer beauftragen autonome KI-Agenten mit der Anbietersuche und Vorkqualifizierung.</p>
+              <p>Ohne einen maschinenlesbaren Agenten-Pass bleibt Ihr Unternehmen für fremde KI-Systeme komplett unsichtbar.</p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            💡 <strong>Der Kern-Standard:</strong> Google hat das A2A-Protokoll (Agent-to-Agent) entwickelt und der Linux Foundation übergeben. Dadurch können KI-Agenten (unabhängig von LangChain, AutoGen oder Google ADK) direkt miteinander kommunizieren.
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Technische Struktur</div>
+            <h2 class="section-title">Der Agenten-Pass: agent-card.json</h2>
+            <div class="prose">
+              <p>Über <code>/.well-known/agent-card.json</code> veröffentlicht Ihr Server ein A2A v0.3.0 Manifest als digitale Visitenkarte:</p>
+              <ul>
+                <li><strong>Skills & Fähigkeiten:</strong> Weist Fachwissen aus (z. B. <em>KI Automatisierung</em>, <em>DATEV-Rechnungsverarbeitung</em>, <em>GCP-Architektur</em>).</li>
+                <li><strong>Protokoll-Version & Endpunkte:</strong> Definiert REST/gRPC-Schnittstellen und Authentifizierung.</li>
+                <li><strong>Unterstützte Sprachen:</strong> Deutsch, Englisch und strukturierte API-Formate.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Produktives Live-Setup</div>
+            <h2 class="section-title">Live-System in Deutschland (GCP Cloud Run + Telegram)</h2>
+            <div class="prose">
+              <p>Mein eigener RAG-Agent ist direkt an das A2A-Ökosystem angebunden:</p>
+              <ul>
+                <li><strong>1. Auffinden:</strong> Fremde Agenten lesen das Manifest unter <code>https://azhyshchev.de/.well-known/agent-card.json</code> aus.</li>
+                <li><strong>2. Prüfung:</strong> Der Einkaufs-Agent stellt Anfragen an den Cloud Run Service in Frankfurt. Mein Agent antwortet mit echten Fallstudien aus der Vertex AI Search Wissensbasis.</li>
+                <li><strong>3. Mangleitung:</strong> Nach der Qualifizierung speichert der Agent den Lead in Cloud Firestore und schickt sofort einen Telegram-Alert an mein Smartphone.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="cta-strip">
+            <div>
+              <strong>Machen Sie Ihre Infrastruktur bereit für KI-Agenten</strong>
+              <p>Buchen Sie ein 30-minütiges Erstgespräch für Ihr A2A-Manifest und Ihre RAG-Pipeline.</p>
+            </div>
+            <a class="cta-btn" href="https://calendly.com/azhyshchev/30min" target="_blank">30-Min. Erstgespräch buchen →</a>
+          </div>
+
+          <a class="back-link" href="/de/artikel">← Zurück zur Übersicht</a>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="/js/nav.js"></script>
+  <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" data-api-url="https://azhyshchevde-production.up.railway.app/api/chat" defer></script>
+</body>
+</html>

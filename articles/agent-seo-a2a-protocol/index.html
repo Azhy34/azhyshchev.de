@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="/js/cookie-consent.js" defer></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="Agent SEO & A2A Protocol: Why B2B businesses need an open Agent Passport (agent-card.json) to stay discoverable to autonomous AI buyer agents. Google ADK, Linux Foundation standard, GCP Cloud Run live setup.">
+  <meta name="keywords" content="Business Process Automation, Agent SEO, A2A Protocol, Agent Passport, agent-card.json, AI agents, Google ADK, Linux Foundation A2A, GCP Cloud Run, B2B AI discovery, LLM integration, AI automation engineer">
+  <meta name="author" content="Mikhail Azhyshchev">
+  <link rel="canonical" href="https://azhyshchev.de/articles/agent-seo-a2a-protocol/">
+  <link rel="alternate" hreflang="en" href="https://azhyshchev.de/articles/agent-seo-a2a-protocol/" />
+  <link rel="alternate" hreflang="de" href="https://azhyshchev.de/de/artikel/agent-seo-a2a-protokoll/" />
+  <link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/articles/agent-seo-a2a-protocol/" />
+
+  <meta property="og:title" content="Agent SEO & A2A Protocol: The Agent Passport for B2B Business | Mikhail Azhyshchev">
+  <meta property="og:description" content="Why your business needs an agent-card.json manifest to be discoverable by autonomous AI agents. Real live implementation with Google ADK on GCP Cloud Run.">
+  <meta property="og:url" content="https://azhyshchev.de/articles/agent-seo-a2a-protocol/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://azhyshchev.de/Azhyschev.JPG">
+  <meta property="og:locale" content="en_US">
+
+  <title>Agent SEO & A2A Protocol: The Agent Passport for B2B Business | Mikhail Azhyshchev</title>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://azhyshchev.de/articles/agent-seo-a2a-protocol/#article",
+        "headline": "Agent SEO & A2A Protocol: The Open Agent Passport for B2B Discovery",
+        "description": "How autonomous AI buyer agents search, evaluate, and qualify B2B contractors via the Linux Foundation A2A standard and agent-card.json manifest.",
+        "author": { "@id": "https://azhyshchev.de/#person" },
+        "publisher": { "@id": "https://azhyshchev.de/#person" },
+        "datePublished": "2026-08-11",
+        "dateModified": "2026-08-11",
+        "inLanguage": "en",
+        "keywords": "Business Process Automation, Agent SEO, A2A Protocol, agent-card.json, AI Agents",
+        "url": "https://azhyshchev.de/articles/agent-seo-a2a-protocol/"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is Agent SEO and the A2A Protocol?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Agent SEO is the process of making your company services discoverable to autonomous AI agents rather than human web searchers. The Agent-to-Agent (A2A) Protocol, governed by the Linux Foundation and originally developed by Google, provides an open standard for AI agents to locate, evaluate, and interact with company agent endpoints regardless of LLM or framework."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is an Agent Passport (agent-card.json)?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "An Agent Passport is a machine-readable JSON manifest hosted at /.well-known/agent-card.json. It publishes your agent's capabilities, supported languages, API endpoints, and authentication schemes so foreign AI buyer agents can query your company automatically."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --sky: #61b5e8; --mint: #b9ddb7; --cream: #f8f0dc; --yellow: #f5c84b; --pink: #efb2d5; --blue: #d8ebff; --peach: #f7d4b1; --coral: #ff9a77; --rose: #ecb0c4; --black: #111111; --white: #ffffff; --accent: var(--sky); }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { min-height: 100vh; font-family: 'JetBrains Mono', monospace; color: var(--black); background: linear-gradient(120deg, var(--sky) 0 34%, var(--peach) 34% 55%, var(--coral) 55% 72%, var(--rose) 72% 100%); padding: 48px 24px; }
+    a { color: inherit; text-decoration: none; }
+    .shell { width: min(1320px, 100%); margin: 0 auto; border: 3px solid var(--black); box-shadow: 12px 12px 0 var(--black); background: var(--mint); display: grid; grid-template-columns: 250px 1fr; min-height: 820px; overflow: hidden; }
+    .sidebar { border-right: 3px solid var(--black); padding: 20px 18px; display: flex; flex-direction: column; gap: 22px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 8px; }
+    .brand-badge { width: 42px; height: 34px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 1rem; font-weight: 800; }
+    .nav { display: flex; flex-direction: column; gap: 8px; }
+    .nav-item { display: flex; align-items: center; gap: 12px; padding: 11px 12px; font-size: 0.9rem; font-weight: 700; border: 2px solid transparent; transition: transform 0.18s ease; }
+    .nav-item:hover { transform: translate(-2px, -2px); }
+    .nav-item.active { border-color: var(--black); background: var(--white); box-shadow: 4px 4px 0 var(--black); }
+    .icon-box { width: 34px; height: 34px; border: 2px solid var(--black); background: var(--white); display: grid; place-items: center; font-weight: 800; font-size: 0.85rem; }
+    .nav-item.active .icon-box { background: var(--yellow); }
+    .sidebar-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+    .socials { display: flex; gap: 10px; padding-top: 8px; }
+    .social-link { width: 42px; height: 42px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-weight: 800; }
+
+    .main { background: var(--cream); padding: 28px; }
+    .article-shell { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
+    .article-hero { border: 3px solid var(--black); box-shadow: 8px 8px 0 var(--black); background: var(--sky); padding: 32px; display: flex; flex-direction: column; gap: 16px; }
+    .article-type { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.8; }
+    .article-title { font-size: clamp(1.6rem, 3vw, 2.5rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.04em; }
+    .article-lead { font-size: 1.05rem; line-height: 1.6; opacity: 0.9; }
+
+    .metrics-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-top: 12px; }
+    .metric-box { border: 2px solid var(--black); background: var(--white); padding: 14px; box-shadow: 4px 4px 0 var(--black); }
+    .metric-box strong { display: block; font-size: 1.2rem; font-weight: 800; }
+    .metric-box span { font-size: 0.75rem; opacity: 0.8; font-weight: 700; }
+
+    .article-body { display: flex; flex-direction: column; gap: 24px; }
+    .neo-card { border: 3px solid var(--black); background: var(--white); box-shadow: 6px 6px 0 var(--black); padding: 28px; display: flex; flex-direction: column; gap: 16px; }
+    .section-label { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6; }
+    .section-title { font-size: 1.4rem; font-weight: 800; line-height: 1.2; }
+    .prose { font-size: 0.95rem; line-height: 1.7; display: flex; flex-direction: column; gap: 14px; }
+    .prose ul { padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+    .prose code { background: var(--yellow); padding: 2px 6px; border: 1.5px solid var(--black); font-size: 0.88rem; font-weight: 700; }
+
+    .highlight-box { border: 3px solid var(--black); background: var(--yellow); box-shadow: 6px 6px 0 var(--black); padding: 22px; font-weight: 700; font-size: 1rem; line-height: 1.6; }
+
+    .cta-strip { border: 3px solid var(--black); background: var(--black); color: var(--white); box-shadow: 8px 8px 0 var(--coral); padding: 32px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+    .cta-btn { border: 2px solid var(--white); background: var(--coral); color: var(--black); padding: 14px 24px; font-weight: 800; font-size: 1rem; box-shadow: 4px 4px 0 var(--white); }
+
+    .back-link { font-weight: 800; text-decoration: underline; margin-top: 10px; display: inline-block; }
+
+    @media (max-width: 900px) { .shell { grid-template-columns: 1fr; } .sidebar { border-right: none; border-bottom: 3px solid var(--black); } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="/">
+        <div class="brand-badge">&lt;/&gt;</div>
+        <span>AZHYSHCHEV</span>
+      </a>
+      <nav class="nav">
+        <a class="nav-item" href="/"><span class="icon-box">H</span><span>Home</span></a>
+        <a class="nav-item" href="/ai-checker"><span class="icon-box">🤖</span><span>AI Checker</span></a>
+        <a class="nav-item" href="/experience"><span class="icon-box">E</span><span>Experience</span></a>
+        <a class="nav-item" href="/projects"><span class="icon-box">P</span><span>Projects</span></a>
+        <a class="nav-item active" href="/articles"><span class="icon-box">A</span><span>Articles</span></a>
+        <a class="nav-item" href="/skills"><span class="icon-box">S</span><span>Skills</span></a>
+        <a class="nav-item" href="/contact"><span class="icon-box">C</span><span>Contact</span></a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a class="nav-item" href="../CV.pdf" download><span class="icon-box">CV</span><span>Download CV</span></a>
+        <a class="nav-item" href="mailto:azhyshchev@gmail.com"><span class="icon-box">@</span><span>Email</span></a>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="article-shell">
+        <header class="article-hero">
+          <div class="article-type">Agent SEO & B2B Discovery</div>
+          <h1 class="article-title">Agent SEO & A2A Protocol: Why Your Business Needs an Agent Passport</h1>
+          <p class="article-lead">Autonomous AI buyer agents now search, evaluate, and qualify service providers directly. Here is how the Linux Foundation A2A standard makes your business discoverable.</p>
+
+          <div class="metrics-row">
+            <div class="metric-box"><strong>Linux Foundation</strong><span>A2A Protocol Standard</span></div>
+            <div class="metric-box"><strong>agent-card.json</strong><span>Open Manifest Passport</span></div>
+            <div class="metric-box"><strong>Milliseconds</strong><span>API Lead Qualification</span></div>
+            <div class="metric-box"><strong>GCP Cloud Run</strong><span>Serverless Frankfurt Host</span></div>
+          </div>
+        </header>
+
+        <div class="article-body">
+          <div class="neo-card">
+            <div class="section-label">A New B2B Search Paradigm</div>
+            <h2 class="section-title">From Human Website SEO to Autonomous Agent SEO</h2>
+            <div class="prose">
+              <p>While companies spend thousands optimizing websites for human clicks, a new buyer behavior is rising: company purchasing agents delegate contractor discovery, price comparisons, and technical audits to autonomous AI agents.</p>
+              <p>Without a standardized, machine-readable passport, your website is completely invisible to these autonomous buying agents.</p>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            💡 <strong>The Core Shift:</strong> Google created the A2A (Agent-to-Agent) Protocol and transferred governance to the Linux Foundation. Now any AI agent (built on LangChain, AutoGen, or Google ADK) can discover and query another company's agent natively.
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Technical Anatomy</div>
+            <h2 class="section-title">The Agent Passport: agent-card.json</h2>
+            <div class="prose">
+              <p>An open A2A v0.3.0 manifest hosted at <code>/.well-known/agent-card.json</code> acts as your company's digital passport:</p>
+              <ul>
+                <li><strong>Skills & Capabilities:</strong> Advertises domain skills (e.g. <em>B2B Process Automation</em>, <em>DATEV Invoice Pipelines</em>, <em>GCP Architecture</em>).</li>
+                <li><strong>Protocol Version & Endpoints:</strong> Specifies REST/gRPC interfaces and auth requirements.</li>
+                <li><strong>Supported Languages:</strong> English, German, and domain-specific APIs.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Live Production Implementation</div>
+            <h2 class="section-title">Live Setup in Germany (GCP Cloud Run + Telegram Alerts)</h2>
+            <div class="prose">
+              <p>I connected my custom GCP RAG Agent to the global A2A ecosystem. Here is how the live pipeline handles inbound buyer agents:</p>
+              <ul>
+                <li><strong>1. Discovery:</strong> External buyer agents read my manifest at <code>https://azhyshchev.de/.well-known/agent-card.json</code>.</li>
+                <li><strong>2. Evaluation:</strong> The buyer agent queries my Google Cloud Run microservice in Frankfurt. My agent uses Vertex AI Search RAG to present factual case study data from my site.</li>
+                <li><strong>3. Instant Qualification:</strong> The agent validates requirements, logs the lead in Cloud Firestore, and sends an instant Telegram push alert to my phone.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="cta-strip">
+            <div>
+              <strong>Make Your Infrastructure Agent-Ready Today</strong>
+              <p>Book a 30-minute strategy call to deploy your A2A Agent Passport and RAG pipeline.</p>
+            </div>
+            <a class="cta-btn" href="https://calendly.com/azhyshchev/30min" target="_blank">Book 30-Min Strategy Call →</a>
+          </div>
+
+          <a class="back-link" href="/articles">← Back to Articles</a>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="/js/nav.js"></script>
+  <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" data-api-url="https://azhyshchevde-production.up.railway.app/api/chat" defer></script>
+</body>
+</html>
