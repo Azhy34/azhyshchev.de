@@ -597,6 +597,30 @@
         <!-- Article grid -->
         <div class="articles-grid" id="articlesGrid">
 
+          <!-- Card: AI Google Ads Management -->
+          <div class="article-card" data-tags="automation ai-agents" data-modal="modal-ai-google-ads-management">
+            <div class="card-accent" style="background: var(--mint);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">Paid Advertising · AI Automation · E-commerce</span>
+                <span class="card-readtime">8 min read</span>
+              </div>
+              <h2 class="card-title">AI Google Ads Management: How Custom Agent Tooling Stopped the Budget Leaks</h2>
+              <p class="card-excerpt">The automation reported a perfect score while the ad account leaked money. A case study on why an off-the-shelf API connector is not enough, and what changes when the business rules live inside the tools.</p>
+              <div class="card-tags">
+                <span class="tag">Google Ads</span>
+                <span class="tag">MCP</span>
+                <span class="tag">PPC Automation</span>
+                <span class="tag">Pinterest Ads</span>
+                <span class="tag">Python</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Key result: <span>CPC 1.67 → 0.50 EUR · 909 queries audited</span></div>
+              <a class="read-link" href="/articles/ai-google-ads-management/">Read full article →</a>
+            </div>
+          </div>
+
           <!-- Card: Standalone Agent SEO & A2A Protocol -->
           <div class="article-card" data-tags="ai-agents automation" data-modal="modal-agent-seo-a2a-protocol">
             <div class="card-accent" style="background: var(--sky);"></div>
@@ -1941,6 +1965,60 @@
   </div>
 
   <!-- Modal: Automating Google Cloud Console with MCP -->
+  <div class="modal-overlay" id="modal-ai-google-ads-management" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-section-label">Paid Advertising · AI Automation · Google Ads + Pinterest</div>
+          <h2 class="modal-title">AI Google Ads Management: How Custom Agent Tooling Stopped the Budget Leaks</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-ai-google-ads-management')">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="modal-section-label">The problem</div>
+          <div class="modal-text">
+            <p>Most Google Ads budget is not lost to a bad strategy. It leaks one level below the dashboard, in the search queries nobody looks at and the campaign settings nobody re-checks.</p>
+            <p>The first version of this automation used an off-the-shelf connector to the Google Ads API. It reported the account as perfect, 100 out of 100, while a manual review found ads below the quality standard, keywords competing against each other, and one broad match term that had spent 30.02 EUR on 18 clicks.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">What changed</div>
+          <div class="modal-text">
+            <p><strong>Business rules inside the tools</strong> — an ad cannot go live below the creative standard, a bid cannot be reset by accident.</p>
+            <p><strong>Automated search term mining</strong> — real queries classified into winners and waste, negatives applied before the next spend cycle.</p>
+            <p><strong>Collision detection</strong> — keywords duplicated across your own campaigns stop bidding against each other.</p>
+            <p><strong>Human approval gate</strong> — every change that spends money is created paused and waits for an explicit go.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Key metrics</div>
+          <div class="modal-metrics">
+            <div class="modal-metric">
+              <span class="modal-metric-val">1.67 → 0.50</span>
+              <span class="modal-metric-lbl">Campaign CPC in EUR, before and after</span>
+            </div>
+            <div class="modal-metric">
+              <span class="modal-metric-val">909</span>
+              <span class="modal-metric-lbl">Search queries audited in one pass</span>
+            </div>
+            <div class="modal-metric">
+              <span class="modal-metric-val">36</span>
+              <span class="modal-metric-lbl">Duplicate keywords removed, zero collisions</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center;">
+        <p style="font-size: 0.82rem; font-weight: 700; opacity: 0.85;">📖 Full case study with the comparison table and the safety model:</p>
+        <div style="display: flex; gap: 10px; width: 100%; justify-content: center; align-items: center;">
+          <a class="action-btn dark" href="/articles/ai-google-ads-management/">Read full article →</a>
+          <button class="mini-btn" onclick="closeModal('modal-ai-google-ads-management')">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="modal-overlay" id="modal-gcp-mcp-console" role="dialog" aria-modal="true">
     <div class="modal">
       <div class="modal-header">
@@ -2135,6 +2213,25 @@
             } else {
               gtag('event', 'article_read_click', { article_name: 'agent_skill_trigger', page_language: 'en' });
             }
+          });
+        });
+      }
+    })();
+
+    // GA4 tracking: AI Google Ads Management card/modal
+    (function () {
+      var adsCard = document.querySelector('.article-card[data-modal="modal-ai-google-ads-management"]');
+      if (adsCard) {
+        adsCard.addEventListener('click', function (e) {
+          if (e.target.closest('a')) return;
+          if (window.gtag) gtag('event', 'modal_open', { article_name: 'ai_google_ads_management', page_language: 'en' });
+        });
+      }
+      var adsModal = document.getElementById('modal-ai-google-ads-management');
+      if (adsModal) {
+        adsModal.querySelectorAll('a.action-btn').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            if (window.gtag) gtag('event', 'article_read_click', { article_name: 'ai_google_ads_management', page_language: 'en' });
           });
         });
       }

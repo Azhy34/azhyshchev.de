@@ -118,6 +118,7 @@ portfolio/
 ├── projects/index.html         # Projects gallery (cards + modals)
 ├── skills/index.html           # Skills overview
 ├── articles/index.html         # LinkedIn articles
+│   ├── ai-google-ads-management/index.html # AI-managed ad account case study (Google Ads + Pinterest MCP)
 │   ├── ai-visibility/index.html    # AI Visibility guide
 │   ├── automated-keyword-research/index.html # Keyword extractor guide
 │   └── agent-skill-trigger/index.html # Claude Code/Cursor skill trigger table pattern

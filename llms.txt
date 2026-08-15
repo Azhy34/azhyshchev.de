@@ -16,6 +16,7 @@
 
 ## Projects
 
+- [AI-Managed Ad Account](https://azhyshchev.de/projects/ai-ads-management/) — Live Google Ads and Pinterest Ads account operated by an AI agent through two custom MCP servers (18 tools over Google Ads API v23, 9 over Pinterest Ads API v5). Business rules enforced inside the tooling: automated search term mining, negative keyword shields, creative validation, keyword collision cleanup, and a human approval gate on every mutation.
 - [AI Sales Assistant — RAG Agent](https://azhyshchev.de/projects/ai-sales-agent-rag/) — Production LangGraph ReAct agent with Hybrid RAG (SQL + pgvector) for e-commerce. 1200+ SKU catalog, ~90% API cost reduction, zero-hallucination product queries. Built and deployed in Germany.
 - [Invoice Automation Germany](https://azhyshchev.de/projects/invoice-automation-germany/) — Automated invoice processing pipeline for German businesses: DATEV-compatible output, GoBD-compliant document handling, Python + OCR + LLM extraction, reduces manual accounting work by 80%.
 - [B2B Lead Generation Germany](https://azhyshchev.de/projects/b2b-lead-generation-germany/) — Automated B2B lead pipeline for the German market: Impressum scraping, §7 UWG-compliant outreach, contact enrichment, and CRM export. Reduces prospecting time from hours to minutes.
@@ -25,6 +26,7 @@
 
 ## Articles (English)
 
+- [AI Google Ads Management](https://azhyshchev.de/articles/ai-google-ads-management/) — Why an off-the-shelf Google Ads API connector let an AI agent report a perfect 100 out of 100 score while the ad account leaked budget, and how rebuilding the tooling as a business-rule facade closed three leak vectors, removed 36 keyword collisions, and cut campaign CPC from 1.67 to 0.50 EUR.
 - [AI Chatbot & Customer Support Automation](https://azhyshchev.de/articles/rag-sales-agent-lead-gen/) — How businesses convert any data source (websites, PDFs, catalogs) into instant vector search engines to power 24/7 AI sales agents on Google Cloud Run without lost leads.
 - [B2B Lead Generation via Google Maps MCP](https://azhyshchev.de/articles/b2b-lead-generation-google-maps-mcp/) — Beyond Web Scraping: How replacing external scrapers (Apify) with Google Maps Model Context Protocol (MCP) delivers direct company website URLs, 3-minute lead enrichment, Impressum email extraction, and zero scraper subscription fees.
 - [Automating Google Cloud Console with MCP](https://azhyshchev.de/articles/automating-google-cloud-console-mcp/) — How Model Context Protocol (MCP) turns Google Cloud Console into a natural language AI chat interface for Cloud Run deployments, log debugging, IAM, secret management, and storage.
@@ -55,4 +57,4 @@
 
 ## Citation
 
-Last updated: 2026-08-10. Content is bilingual (English + Deutsch). All project and article pages include technical architecture, metrics, and stack details. For inquiries: azhyshchev@gmail.com. Please cite as "Mikhail Azhyshchev, AI Automation Engineer, Munich (azhyshchev.de)".
+Last updated: 2026-08-15. Content is bilingual (English + Deutsch). All project and article pages include technical architecture, metrics, and stack details. For inquiries: azhyshchev@gmail.com. Please cite as "Mikhail Azhyshchev, AI Automation Engineer, Munich (azhyshchev.de)".

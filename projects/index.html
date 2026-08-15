@@ -578,6 +578,31 @@
         <!-- Projects grid -->
         <section class="projects-grid">
 
+          <!-- Card 0: AI-Managed Ad Account (Google Ads + Pinterest) -->
+          <div class="project-card" data-modal="modal-adsmcp">
+            <div class="card-accent" style="background: var(--mint);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">Paid Advertising · AI Automation · E-commerce</span>
+                <span class="card-readtime">Production</span>
+              </div>
+              <h2 class="card-title">AI-Managed Ad Account: Google Ads + Pinterest</h2>
+              <p class="card-excerpt">Live ad account operated by an AI agent through custom tooling that encodes the business rules. Automated search term audits, negative keyword shields, and a human approval gate on every change that spends money.</p>
+              <div class="card-tags">
+                <span class="tag">Python</span>
+                <span class="tag">MCP</span>
+                <span class="tag">Google Ads API</span>
+                <span class="tag">Pinterest Ads API</span>
+                <span class="tag">Obsidian</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Key result: <span>CPC 1.67 → 0.50 EUR · 909 queries audited</span></div>
+              <!-- Full project page for SEO indexing, keeps modal UX intact -->
+              <a class="read-link" href="/projects/ai-ads-management/">Open full page →</a>
+            </div>
+          </div>
+
           <!-- Card 1: hitdlaciebie.pl AI Music SaaS -->
           <div class="project-card" data-modal="modal-hitdlaciebie">
             <div class="card-accent" style="background: var(--coral);"></div>
@@ -765,6 +790,80 @@
   <!-- ── MODALS ── -->
 
   <!-- Modal: Web Sales Assistant -->
+  <!-- Modal: AI-Managed Ad Account -->
+  <div class="overlay" id="modal-adsmcp">
+    <div class="modal">
+      <div class="modal-accent" style="background:var(--mint);"></div>
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">AI-Managed Ad Account</div>
+          <div class="modal-meta">Paid Advertising · AI Automation · Google Ads + Pinterest</div>
+        </div>
+        <button class="modal-close" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <h3 style="font-size:1rem;font-weight:800;margin-bottom:10px;letter-spacing:-0.02em;">The problem</h3>
+          <p>The first version of this automation used a standard off-the-shelf connector to the Google Ads API. It reported the account as perfect, 100 out of 100, while a manual review found ads below the quality standard, keywords competing against each other in the auction, and one broad match term that had spent 30.02 EUR on 18 clicks. The automation was checking whether the API accepted each change. It had no idea whether the money was well spent.</p>
+        </div>
+        <div class="modal-metrics">
+          <div class="metric-box">
+            <strong>1.67 → 0.50</strong>
+            <span>Campaign CPC in EUR, before and after the cleanup, under a hard bid ceiling.</span>
+          </div>
+          <div class="metric-box">
+            <strong>909 queries</strong>
+            <span>Real search terms audited in a single automated pass, three leak vectors closed.</span>
+          </div>
+          <div class="metric-box">
+            <strong>36 duplicates</strong>
+            <span>Keywords competing across own campaigns paused, zero active collisions left.</span>
+          </div>
+          <div class="metric-box">
+            <strong>27 tools</strong>
+            <span>18 over Google Ads API v23, 9 over Pinterest Ads API v5, two local MCP servers.</span>
+          </div>
+        </div>
+        <div class="modal-cols">
+          <div class="modal-section">
+            <h3>What it does</h3>
+            <ul>
+              <li>Mines real search queries on a schedule and applies negative keywords before the next spend cycle.</li>
+              <li>Detects keywords duplicated across your own campaigns so they stop inflating your cost per click.</li>
+              <li>Validates every ad against a quality checklist before it can go live.</li>
+              <li>Pulls both channels into one reporting surface with a shared keyword bank.</li>
+            </ul>
+          </div>
+          <div class="modal-section">
+            <h3>Why it is safe on a live budget</h3>
+            <ul>
+              <li>Every change that costs money is created paused and waits for an explicit human go.</li>
+              <li>Bid mutations always carry an explicit field mask, blocking a platform behaviour that silently resets bids to 0.01 EUR.</li>
+              <li>Business rules live inside the tools, so invalid states are unreachable rather than discouraged in a prompt.</li>
+              <li>Every decision is written to a dated log, so the account has an audit trail.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="modal-section">
+          <h3>Tech stack</h3>
+          <div class="modal-chips">
+            <span class="modal-chip">Python</span>
+            <span class="modal-chip">MCP</span>
+            <span class="modal-chip">Google Ads API v23</span>
+            <span class="modal-chip">Pinterest Ads API v5</span>
+            <span class="modal-chip">Protobuf field masks</span>
+            <span class="modal-chip">Obsidian</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="modal-btn light" href="../CV.pdf" download>Download CV</a>
+        <a class="modal-btn light" href="/projects/ai-ads-management/">Open full page</a>
+        <a class="modal-btn" href="/articles/ai-google-ads-management/">Read case study</a>
+      </div>
+    </div>
+  </div>
+
   <div class="overlay" id="modal-agent">
     <div class="modal">
       <div class="modal-accent" style="background:var(--yellow);"></div>
