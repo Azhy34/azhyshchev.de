@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <meta name="description" content="AI Google Ads management done right: why an off-the-shelf agent reported 100 out of 100 while the budget leaked, and how custom MCP tooling cut CPC from 1.67 to 0.50 EUR across 6 campaigns.">
-  <meta name="keywords" content="ai google ads management, google ads automation, reduce google ads costs, google ads audit, ppc automation, ad budget optimization, google ads api, mcp server, model context protocol, ai agent google ads, pinterest ads api, google ads kosten senken, werbebudget optimieren, google ads verwalten lassen, weniger streuverluste google ads, werbekampagnen automatisieren, KI google ads, Kundenakquise automatisieren, AI-Powered Automation, Digital Transformation">
+  <meta name="keywords" content="mcp server, model context protocol, google ads mcp server, ai google ads management, google ads management, google ads audit, google ads automation, ai agent google ads, ppc automation, ecommerce ppc, google ads api, pinterest ads api, google ads agentur, google ads kosten senken, kunden akquirieren, adwords agentur preise, sea google adwords, KI google ads, Werbekampagnen automatisieren, AI-Powered Automation, Digital Transformation">
   <meta name="author" content="Mikhail Azhyshchev">
   <link rel="canonical" href="https://azhyshchev.de/articles/ai-google-ads-management/">
   <link rel="alternate" hreflang="en" href="https://azhyshchev.de/articles/ai-google-ads-management/" />
@@ -40,7 +40,7 @@
         "datePublished": "2026-08-15",
         "dateModified": "2026-08-15",
         "inLanguage": "en",
-        "keywords": "ai google ads management, google ads automation, reduce google ads costs, google ads audit, ppc automation, ad budget optimization, mcp server, model context protocol, google ads kosten senken, werbebudget optimieren, google ads verwalten lassen, weniger streuverluste google ads, KI google ads",
+        "keywords": "mcp server, model context protocol, google ads mcp server, ai google ads management, google ads management, google ads audit, google ads automation, ai agent google ads, ppc automation, ecommerce ppc, google ads agentur, google ads kosten senken, kunden akquirieren, KI google ads",
         "url": "https://azhyshchev.de/articles/ai-google-ads-management/",
         "isPartOf": { "@id": "https://azhyshchev.de/#website" }
       },
@@ -361,11 +361,11 @@
 
           <div class="neo-card">
             <div class="section-label">Architecture</div>
-            <h2 class="section-title">From a raw API wrapper to a business facade</h2>
+            <h2 class="section-title">From a raw API wrapper to a custom MCP server</h2>
             <div class="prose">
-              <p>Both channels are exposed to the agent through MCP, the Model Context Protocol, which is the standard way to give an AI agent a defined set of tools. The question is not whether to use MCP. It is what level of abstraction those tools sit at.</p>
-              <p>An off-the-shelf server mirrors the API: hundreds of low level methods, one per endpoint, each accepting the platform's native request objects. A facade exposes a small number of business shaped operations instead, and does the platform mechanics internally.</p>
-              <p>The replacement is two local Python MCP servers:</p>
+              <p>Both channels are exposed to the agent through MCP, the Model Context Protocol, which is the standard way to give an AI agent a defined set of tools. The question is not whether to use an MCP server. It is what level of abstraction its tools sit at.</p>
+              <p>An off-the-shelf MCP server mirrors the API: hundreds of low level methods, one per endpoint, each accepting the platform's native request objects. A facade exposes a small number of business shaped operations instead, and does the platform mechanics internally.</p>
+              <p>The replacement is two local Python MCP servers, a Google Ads MCP server and a Pinterest Ads MCP server:</p>
               <ul>
                 <li><code>google-ads-mcp</code>, 18 tools over Google Ads API v23</li>
                 <li><code>pinterest-ads-mcp</code>, 9 tools over Pinterest Ads API v5</li>
@@ -386,7 +386,7 @@
 
           <div class="neo-card">
             <div class="section-label">Comparison</div>
-            <h2 class="section-title">Off-the-shelf MCP versus a custom facade</h2>
+            <h2 class="section-title">Off-the-shelf MCP server versus a custom facade</h2>
             <div class="table-scroll">
               <table class="compare">
                 <thead>
