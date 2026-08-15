@@ -583,21 +583,21 @@
             <div class="card-accent" style="background: var(--mint);"></div>
             <div class="card-body">
               <div class="card-meta">
-                <span class="card-type">Paid Advertising · AI Automation · E-commerce</span>
+                <span class="card-type">MCP Server Design · Agent Tooling · Ad Platforms</span>
                 <span class="card-readtime">Production</span>
               </div>
-              <h2 class="card-title">AI-Managed Ad Account: Google Ads + Pinterest</h2>
-              <p class="card-excerpt">Live ad account operated by an AI agent through custom tooling that encodes the business rules. Automated search term audits, negative keyword shields, and a human approval gate on every change that spends money.</p>
+              <h2 class="card-title">Custom MCP Servers for Google Ads &amp; Pinterest</h2>
+              <p class="card-excerpt">Engineering case on designing an agent tool surface from official API references: collapsing a long endpoint list into business-shaped operations, and encoding the invariants the advertising APIs do not enforce themselves.</p>
               <div class="card-tags">
                 <span class="tag">Python</span>
                 <span class="tag">MCP</span>
-                <span class="tag">Google Ads API</span>
-                <span class="tag">Pinterest Ads API</span>
-                <span class="tag">Obsidian</span>
+                <span class="tag">Google Ads API v23</span>
+                <span class="tag">Pinterest Ads API v5</span>
+                <span class="tag">Protobuf</span>
               </div>
             </div>
             <div class="card-footer">
-              <div class="metric-pill">Key result: <span>CPC 1.67 → 0.50 EUR · 909 queries audited</span></div>
+              <div class="metric-pill">Design: <span>27 tools over 2 official APIs · 3-level facade</span></div>
               <!-- Full project page for SEO indexing, keeps modal UX intact -->
               <a class="read-link" href="/projects/ai-ads-management/">Open full page →</a>
             </div>
@@ -796,51 +796,50 @@
       <div class="modal-accent" style="background:var(--mint);"></div>
       <div class="modal-header">
         <div>
-          <div class="modal-title">AI-Managed Ad Account</div>
-          <div class="modal-meta">Paid Advertising · AI Automation · Google Ads + Pinterest</div>
+          <div class="modal-title">Custom MCP Servers for Ad Platforms</div>
+          <div class="modal-meta">MCP Server Design · Agent Tooling · Google Ads + Pinterest</div>
         </div>
         <button class="modal-close" aria-label="Close">&times;</button>
       </div>
       <div class="modal-body">
         <div class="modal-section">
-          <h3 style="font-size:1rem;font-weight:800;margin-bottom:10px;letter-spacing:-0.02em;">The problem</h3>
-          <p>The first version of this automation used a standard off-the-shelf connector to the Google Ads API. It reported the account as perfect, 100 out of 100, while a manual review found ads below the quality standard, keywords competing against each other in the auction, and one broad match term that had spent 30.02 EUR on 18 clicks. The automation was checking whether the API accepted each change. It had no idea whether the money was well spent.</p>
+          <h3 style="font-size:1rem;font-weight:800;margin-bottom:10px;letter-spacing:-0.02em;">The design problem</h3>
+          <p>An off-the-shelf MCP server mirrors the advertising API: many low level methods named after the mutations they wrap, and no opinion about what a correct campaign looks like. Running an account that way, the agent kept reporting success, because the only signal available to it was whether the API accepted a call. The fix was to design a different tool surface, working from the official endpoint references rather than from the existing wrapper.</p>
         </div>
         <div class="modal-metrics">
           <div class="metric-box">
-            <strong>1.67 → 0.50</strong>
-            <span>Campaign CPC in EUR, before and after the cleanup, under a hard bid ceiling.</span>
+            <strong>18 + 9 tools</strong>
+            <span>Google Ads API v23 and Pinterest Ads API v5, two local Python MCP servers.</span>
           </div>
           <div class="metric-box">
-            <strong>909 queries</strong>
-            <span>Real search terms audited in a single automated pass, three leak vectors closed.</span>
+            <strong>3-level facade</strong>
+            <span>Tool surface mirrors campaign, ad group and ad instead of the endpoint list.</span>
           </div>
           <div class="metric-box">
-            <strong>36 duplicates</strong>
-            <span>Keywords competing across own campaigns paused, zero active collisions left.</span>
+            <strong>Invariants inside</strong>
+            <span>Field masks, creative standards and cross-campaign checks enforced by the tool.</span>
           </div>
           <div class="metric-box">
-            <strong>27 tools</strong>
-            <span>18 over Google Ads API v23, 9 over Pinterest Ads API v5, two local MCP servers.</span>
+            <strong>Paused by default</strong>
+            <span>Anything able to spend money is created inert and waits for human approval.</span>
           </div>
         </div>
         <div class="modal-cols">
           <div class="modal-section">
-            <h3>What it does</h3>
+            <h3>Design method</h3>
             <ul>
-              <li>Mines real search queries on a schedule and applies negative keywords before the next spend cycle.</li>
-              <li>Detects keywords duplicated across your own campaigns so they stop inflating your cost per click.</li>
-              <li>Validates every ad against a quality checklist before it can go live.</li>
-              <li>Pulls both channels into one reporting surface with a shared keyword bank.</li>
+              <li>Inventory endpoints and their exact request and response schemas from the official references.</li>
+              <li>List the operations actually performed on the account in plain language.</li>
+              <li>Map intents onto endpoints: some are one call, some a chain, many endpoints map to nothing needed.</li>
+              <li>Expose one tool per intent, keep chains, field selection and payload assembly server side.</li>
             </ul>
           </div>
           <div class="modal-section">
-            <h3>Why it is safe on a live budget</h3>
+            <h3>Worked examples</h3>
             <ul>
-              <li>Every change that costs money is created paused and waits for an explicit human go.</li>
-              <li>Bid mutations always carry an explicit field mask, blocking a platform behaviour that silently resets bids to 0.01 EUR.</li>
-              <li>Business rules live inside the tools, so invalid states are unreachable rather than discouraged in a prompt.</li>
-              <li>Every decision is written to a dated log, so the account has an audit trail.</li>
+              <li>Pinterest analytics pins nine reporting columns instead of forwarding the whole catalogue, and converts micro units to currency before the agent sees them.</li>
+              <li>Every Google Ads write path builds a protobuf field mask, which blocks a platform behaviour that otherwise resets a bid to the 0.01 EUR minimum without raising an error.</li>
+              <li>Cross-campaign duplicate detection, a check no single endpoint can express.</li>
             </ul>
           </div>
         </div>
@@ -858,8 +857,8 @@
       </div>
       <div class="modal-footer">
         <a class="modal-btn light" href="../CV.pdf" download>Download CV</a>
-        <a class="modal-btn light" href="/projects/ai-ads-management/">Open full page</a>
-        <a class="modal-btn" href="/articles/ai-google-ads-management/">Read case study</a>
+        <a class="modal-btn light" href="/articles/ai-google-ads-management/">Business side</a>
+        <a class="modal-btn" href="/projects/ai-ads-management/">Read engineering case</a>
       </div>
     </div>
   </div>

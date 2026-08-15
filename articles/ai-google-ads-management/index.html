@@ -6,25 +6,25 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta name="description" content="AI Google Ads management done right: why an off-the-shelf agent reported 100 out of 100 while the budget leaked, and how custom MCP tooling cut CPC from 1.67 to 0.50 EUR across 6 campaigns.">
-  <meta name="keywords" content="mcp server, model context protocol, google ads mcp server, ai google ads management, google ads management, google ads audit, google ads automation, ai agent google ads, ppc automation, ecommerce ppc, google ads api, pinterest ads api, google ads agentur, google ads kosten senken, kunden akquirieren, adwords agentur preise, sea google adwords, KI google ads, Werbekampagnen automatisieren, AI-Powered Automation, Digital Transformation">
+  <meta name="description" content="AI Google Ads management in practice: what an AI agent actually does with a live ad account, why generic automation reports success while budget leaks, and which routine checks start running every cycle instead of once a quarter.">
+  <meta name="keywords" content="ai google ads management, google ads management, google ads audit, google ads automation, ppc automation, ecommerce ppc, ad budget optimization, google ads consultant, ai agent for advertising, google ads agentur, google ads kosten senken, kunden akquirieren, adwords agentur preise, KI google ads, Werbekampagnen automatisieren, AI-Powered Automation, Digital Transformation">
   <meta name="author" content="Mikhail Azhyshchev">
   <link rel="canonical" href="https://azhyshchev.de/articles/ai-google-ads-management/">
   <link rel="alternate" hreflang="en" href="https://azhyshchev.de/articles/ai-google-ads-management/" />
   <link rel="alternate" hreflang="de" href="https://azhyshchev.de/de/artikel/ki-google-ads-verwaltung/" />
   <link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/articles/ai-google-ads-management/" />
 
-  <meta property="og:title" content="AI Google Ads Management: Stop the Budget Leaks | Mikhail Azhyshchev">
-  <meta property="og:description" content="The agent reported 100 out of 100. The budget said otherwise. How custom MCP tooling cut CPC from 1.67 to 0.50 EUR and closed 3 hidden leak vectors.">
+  <meta property="og:title" content="AI Google Ads Management: What an Agent Actually Does | Mikhail Azhyshchev">
+  <meta property="og:description" content="An AI agent can run a live ad account. The gain is not magic: the routine checks nobody does by hand start running every cycle. Here is what that looks like in practice.">
   <meta property="og:url" content="https://azhyshchev.de/articles/ai-google-ads-management/">
   <meta property="og:type" content="article">
   <meta property="og:image" content="https://azhyshchev.de/Azhyschev.JPG">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="AI Google Ads Management: Stop the Budget Leaks">
-  <meta name="twitter:description" content="909 search terms audited, 36 keyword collisions removed, CPC from 1.67 to 0.50 EUR. What automated ad management looks like when the tools know your business rules.">
+  <meta name="twitter:title" content="AI Google Ads Management: What an Agent Actually Does">
+  <meta name="twitter:description" content="What changes when an AI agent runs your ad account, and why a generic integration can report everything as fine while the budget leaks.">
 
-  <title>AI Google Ads Management: Stop the Budget Leaks</title>
+  <title>AI Google Ads Management: What an Agent Actually Does</title>
 
   <script type="application/ld+json">
   {
@@ -33,14 +33,14 @@
       {
         "@type": "Article",
         "@id": "https://azhyshchev.de/articles/ai-google-ads-management/#article",
-        "headline": "AI Google Ads Management: How Custom Agent Tooling Stopped the Budget Leaks",
-        "description": "An off-the-shelf AI integration reported a perfect score while the ad account leaked money. Rebuilding the tooling as a custom MCP facade closed 3 leak vectors and cut CPC from 1.67 to 0.50 EUR.",
+        "headline": "AI Google Ads Management: What an AI Agent Actually Does With Your Ad Account",
+        "description": "A practical look at AI Google Ads management: which routine checks an AI agent takes over, why a generic API integration can report a perfect score while budget leaks, and what has to be true before an agent is safe on a live account.",
         "author": { "@id": "https://azhyshchev.de/#person" },
         "publisher": { "@id": "https://azhyshchev.de/#person" },
         "datePublished": "2026-08-15",
         "dateModified": "2026-08-15",
         "inLanguage": "en",
-        "keywords": "mcp server, model context protocol, google ads mcp server, ai google ads management, google ads management, google ads audit, google ads automation, ai agent google ads, ppc automation, ecommerce ppc, google ads agentur, google ads kosten senken, kunden akquirieren, KI google ads",
+        "keywords": "ai google ads management, google ads management, google ads audit, google ads automation, ppc automation, ecommerce ppc, google ads agentur, google ads kosten senken, kunden akquirieren, KI google ads",
         "url": "https://azhyshchev.de/articles/ai-google-ads-management/",
         "isPartOf": { "@id": "https://azhyshchev.de/#website" }
       },
@@ -48,8 +48,8 @@
         "@type": "WebPage",
         "@id": "https://azhyshchev.de/articles/ai-google-ads-management/#webpage",
         "url": "https://azhyshchev.de/articles/ai-google-ads-management/",
-        "name": "AI Google Ads Management: Stop the Budget Leaks",
-        "description": "How custom MCP tooling turned an AI agent from a confident reporter into a reliable ad account operator.",
+        "name": "AI Google Ads Management: What an Agent Actually Does",
+        "description": "What changes operationally when an AI agent runs a live Google Ads and Pinterest account.",
         "isPartOf": { "@id": "https://azhyshchev.de/#website" },
         "author": { "@id": "https://azhyshchev.de/#person" },
         "dateModified": "2026-08-15",
@@ -68,10 +68,10 @@
         "mainEntity": [
           {
             "@type": "Question",
-            "name": "How do I stop wasting my Google Ads budget?",
+            "name": "What does an AI agent actually do with a Google Ads account?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Most waste is invisible in the campaign dashboard because it hides one level down, in the actual search queries people typed. A 30 day audit of 909 real search queries on this account found three leak patterns: shoppers looking for licensed cartoon characters that the shop does not sell, people searching for a completely different room type, and bargain hunters searching for the word cheap. Each of those clicks was paid for and bounced. The fix is a recurring search term audit that classifies queries into winners and waste, then applies negative keywords automatically before the next spend cycle."
+              "text": "It takes over the recurring checks that a person only gets to occasionally. Reading the real search queries that triggered your ads and separating the ones worth paying for from the ones that are not. Checking whether the same keyword sits in two of your own campaigns, where they compete in the same auction. Verifying that every ad meets your creative standard before it runs. Pulling performance from every channel into one place. None of this is clever work. It is simply work that has to happen often, which is exactly what makes it a poor fit for a human calendar and a good fit for automation."
             }
           },
           {
@@ -79,15 +79,15 @@
             "name": "Can an AI agent manage my ad account safely?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Only if the tools it uses enforce your rules. An AI agent connected directly to the raw Google Ads API optimises for one thing: did the API accept the change. It will happily publish an ad with 3 headlines instead of 15 and report success. In this setup every write tool validates against business rules first, every mutation is created in a paused state, and nothing goes live in the account without a human approving it. The safety comes from the tool design, not from asking the model to be careful."
+              "text": "Only when the tools it uses enforce your rules. An agent wired straight into a raw advertising API optimises for one thing: whether the platform accepted the change. That is a very low bar, and an account can fail badly while every single call reports success. In a safe setup the checks live inside the tools, every change that spends money is created in a paused state, and a person approves anything before it goes live. The safety comes from how the tooling is built, not from instructing the model to be careful."
             }
           },
           {
             "@type": "Question",
-            "name": "Why build a custom MCP server instead of using a ready-made one?",
+            "name": "How do I stop wasting my Google Ads budget?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "An off-the-shelf MCP server is a thin wrapper over the raw API. It exposes hundreds of low level methods that mirror API endpoints and knows nothing about your business: your quality standards, your promotions, your product range. A custom facade exposes a small number of business shaped tools instead, such as audit this campaign against our quality checklist or mine search terms and harvest negatives. The business rules live inside the tool, so a whole class of expensive mistakes becomes structurally impossible rather than merely discouraged."
+              "text": "Most waste is not visible in the campaign dashboard because it sits one level down, in the search queries people actually typed. On this account a single 30 day audit covering 909 real queries surfaced three separate leak patterns: shoppers looking for licensed characters the shop does not sell, people searching for an entirely different product context, and bargain hunters who were never going to buy a premium item. Every one of those clicks was paid for. The fix is to make that audit routine rather than occasional, and to apply the resulting negative keywords before the next spend cycle instead of after it."
             }
           },
           {
@@ -95,7 +95,7 @@
             "name": "Do I still need a PPC agency if I automate ad management with AI?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Automation replaces the mechanical part of the work: pulling reports, auditing search queries, spotting duplicate keywords across campaigns, checking that every ad meets the quality standard. It does not replace commercial judgement about positioning, offers and creative. What changes is where the human time goes. Instead of spending it on data collection and manual checks, it goes into strategy, while the agent handles the routine and flags anything that needs a decision."
+              "text": "Automation covers the mechanical half of the work: reports, query audits, duplicate detection, creative compliance checks. It does not cover commercial judgement about positioning, offers and creative direction, and it does not decide what your advertising is trying to achieve. What changes is where the human hours go. Instead of being spent collecting and cleaning data, they go into the decisions that data is supposed to support."
             }
           }
         ]
@@ -136,7 +136,7 @@
     .article-lead { font-size: 0.95rem; line-height: 1.65; max-width: 72ch; }
     .metrics-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
     .metric-box { border: 2px solid var(--black); background: rgba(255,255,255,0.75); padding: 14px 12px; }
-    .metric-box strong { display: block; font-size: 1.3rem; line-height: 1; margin-bottom: 6px; }
+    .metric-box strong { display: block; font-size: 1.15rem; line-height: 1.15; margin-bottom: 6px; }
     .metric-box span { font-size: 0.72rem; line-height: 1.4; opacity: 0.8; }
     .article-body { display: flex; flex-direction: column; gap: 24px; }
     .neo-card { border: 3px solid var(--black); background: var(--white); box-shadow: 6px 6px 0 var(--black); padding: 24px; }
@@ -147,30 +147,12 @@
     .prose h3 { font-size: 0.95rem; font-weight: 800; margin-top: 8px; letter-spacing: -0.02em; }
     .prose ul { padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
     .prose li { font-size: 0.88rem; line-height: 1.65; }
-    .prose code { background: var(--cream); border: 1px solid var(--black); padding: 1px 5px; font-size: 0.82rem; }
-    .highlight-box { border: 3px solid var(--black); background: var(--yellow); box-shadow: 4px 4px 0 var(--black); padding: 18px 20px; transition: transform 0.2s, box-shadow 0.2s; }
-    .highlight-box:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--black); }
-    .highlight-box h2 { font-size: 0.9rem; font-weight: 800; margin-bottom: 10px; }
-    .highlight-box p { font-size: 0.84rem; line-height: 1.65; }
     .check-list { display: flex; flex-direction: column; gap: 12px; margin-top: 4px; }
     .check-item { border: 2px solid var(--black); background: var(--cream); padding: 14px 16px; transition: transform 0.2s, box-shadow 0.2s; }
     .check-item:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--black); }
     .check-item strong { display: block; font-size: 0.88rem; font-weight: 800; margin-bottom: 6px; }
     .check-item span { font-size: 0.84rem; line-height: 1.65; opacity: 0.85; }
-    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-    .layer-divider { border: 3px solid var(--black); background: var(--black); color: var(--white); box-shadow: 6px 6px 0 rgba(0,0,0,0.25); padding: 20px 24px; }
-    .layer-divider h2 { font-size: 1.15rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 8px; }
-    .layer-divider p { font-size: 0.86rem; line-height: 1.6; opacity: 0.85; max-width: 70ch; }
-    .table-scroll { overflow-x: auto; border: 2px solid var(--black); background: var(--white); }
-    table.compare { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 0.8rem; }
-    table.compare th, table.compare td { border: 1px solid var(--black); padding: 12px 14px; text-align: left; vertical-align: top; line-height: 1.55; }
-    table.compare thead th { background: var(--accent); font-weight: 800; font-size: 0.78rem; }
-    table.compare tbody th { background: var(--cream); font-weight: 800; width: 18%; }
-    table.compare td code { background: var(--cream); border: 1px solid var(--black); padding: 1px 5px; font-size: 0.74rem; }
-    table.compare td.risk { background: rgba(245,200,75,0.28); }
-    .arch-diagram { border: 2px solid var(--black); background: var(--cream); padding: 16px 20px; font-size: 0.82rem; line-height: 2; font-weight: 700; margin: 16px 0; }
-    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
-    .chip { padding: 6px 10px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); font-size: 0.72rem; font-weight: 700; }
+    .cadence { border: 2px solid var(--black); background: var(--cream); padding: 16px 20px; font-size: 0.84rem; line-height: 1.9; font-weight: 700; margin: 4px 0; }
     .cta-strip { border: 3px solid var(--black); background: var(--black); color: var(--white); box-shadow: 6px 6px 0 rgba(0,0,0,0.3); padding: 22px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
     .cta-strip p { font-size: 0.9rem; line-height: 1.5; max-width: 58ch; }
     .cta-strip strong { display: block; font-size: 1rem; margin-bottom: 4px; }
@@ -180,7 +162,7 @@
     .back-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 2px solid var(--black); background: var(--white); box-shadow: 4px 4px 0 var(--black); font-size: 0.82rem; font-weight: 700; transition: transform 0.15s; align-self: flex-start; }
     .back-link:hover { transform: translate(-2px,-2px); }
     @media (max-width: 1100px) { .shell { grid-template-columns: 220px 1fr; } .metrics-row { grid-template-columns: repeat(2,1fr); } }
-    @media (max-width: 820px) { body { padding: 10px 8px 72px; } .shell { grid-template-columns: 1fr; box-shadow: 6px 6px 0 var(--black); min-height: unset; } .sidebar { border-right: none; border-bottom: 3px solid var(--black); padding: 10px 14px; flex-direction: row; align-items: center; justify-content: space-between; } .brand { font-size: clamp(0.95rem,2.5vw,1.6rem); } .nav { display: none; } .sidebar-bottom { display: none; } .main { padding: 14px; } .two-col { grid-template-columns: 1fr; } }
+    @media (max-width: 820px) { body { padding: 10px 8px 72px; } .shell { grid-template-columns: 1fr; box-shadow: 6px 6px 0 var(--black); min-height: unset; } .sidebar { border-right: none; border-bottom: 3px solid var(--black); padding: 10px 14px; flex-direction: row; align-items: center; justify-content: space-between; } .brand { font-size: clamp(0.95rem,2.5vw,1.6rem); } .nav { display: none; } .sidebar-bottom { display: none; } .main { padding: 14px; } }
     @media (max-width: 520px) { .metrics-row { grid-template-columns: 1fr; } .article-title { font-size: 1.5rem; } }
     .faq { display: flex; flex-direction: column; gap: 16px; }
     .faq-item { border: 2px solid var(--black); background: var(--cream); padding: 18px 20px; transition: transform 0.2s, box-shadow 0.2s; }
@@ -227,126 +209,115 @@
         </nav>
 
         <div class="article-hero">
-          <div class="article-type">Paid Advertising · AI Automation · E-commerce · Case Study</div>
-          <h1 class="article-title">AI Google Ads Management: How Custom Agent Tooling Stopped the Budget Leaks</h1>
-          <p class="article-lead">A working case study in AI Google Ads management: a live e-commerce ad account across Google Ads and Pinterest, run day to day by an AI agent instead of through the dashboards. Most of the wasted budget here was never visible in the campaign view. It sat one level down, in the search queries nobody reads and the campaign settings nobody re-checks. This is where the money was going, why the first version of the automation reported a perfect score while the account kept losing it, and what had to change in the tooling to bring cost per click from 1.67 down to 0.50 EUR.</p>
+          <div class="article-type">Paid Advertising · AI Automation · E-commerce · B2B</div>
+          <h1 class="article-title">AI Google Ads Management: What an AI Agent Actually Does With Your Ad Account</h1>
+          <p class="article-lead">AI Google Ads management sounds like a promise of better results. In practice it is something more boring and more reliable: the recurring checks that keep an ad account healthy stop depending on whether anyone had time this week. This is what that looks like on a live e-commerce account running Google Ads and Pinterest, including the part where the first attempt confidently reported that everything was fine when it was not.</p>
           <div class="metrics-row">
-            <div class="metric-box"><strong>1.67 to 0.50</strong><span>Campaign CPC in EUR, before and after the cleanup</span></div>
-            <div class="metric-box"><strong>909</strong><span>Real search queries audited in a single automated pass</span></div>
-            <div class="metric-box"><strong>36</strong><span>Duplicate keywords removed, zero campaign collisions left</span></div>
-            <div class="metric-box"><strong>2 channels</strong><span>Google Ads and Pinterest managed from one control surface</span></div>
+            <div class="metric-box"><strong>909 queries</strong><span>Real search terms reviewed in a single automated audit</span></div>
+            <div class="metric-box"><strong>Every cycle</strong><span>Checks run on schedule instead of when someone remembers</span></div>
+            <div class="metric-box"><strong>2 channels</strong><span>Google Ads and Pinterest on one reporting surface</span></div>
+            <div class="metric-box"><strong>0 blind changes</strong><span>Nothing goes live in the account without human approval</span></div>
           </div>
         </div>
 
         <div class="article-body">
 
           <div class="neo-card">
-            <div class="section-label">The business problem</div>
-            <h2 class="section-title">Where ad budget actually leaks</h2>
+            <div class="section-label">The starting problem</div>
+            <h2 class="section-title">What actually eats an advertising budget</h2>
             <div class="prose">
-              <p>When a campaign underperforms, the usual reaction is to change the bid, the budget or the creative. Those are the three levers the interface puts in front of you. The money, however, is usually leaving through a door that the campaign view does not show.</p>
-              <p>A 30 day audit of this account analysed 909 real search queries that had triggered ads. It surfaced three distinct leak patterns, none of which were visible at campaign level:</p>
+              <p>When a campaign underperforms, the instinct is to change the bid, the budget or the creative. Those are the three levers the interface puts in front of you. Most of the loss, though, happens somewhere the campaign view does not show at all: in the individual search queries that triggered your ads.</p>
+              <p>A single 30 day audit on this account covered 909 real queries and surfaced three distinct leak patterns:</p>
               <ul>
-                <li><strong>Wrong product intent.</strong> Shoppers searching for licensed cartoon characters the shop does not sell were clicking the ads and bouncing immediately. Every one of those clicks was paid for.</li>
-                <li><strong>Wrong context.</strong> Queries for a completely different room type were matching the ads through broad keyword matching. Right category, wrong buyer.</li>
-                <li><strong>Wrong buyer.</strong> Searches containing the words cheap and bargain were pulling in traffic that was never going to buy a premium product.</li>
+                <li><strong>Wrong product.</strong> People searching for licensed characters the shop does not sell were clicking the ads and leaving immediately. Every click was paid for.</li>
+                <li><strong>Wrong context.</strong> Broad keyword matching pulled in searches for an entirely different product setting. Right category, wrong buyer.</li>
+                <li><strong>Wrong buyer.</strong> Queries built around the word cheap brought in traffic that was never going to buy a premium item.</li>
               </ul>
-              <p>None of that shows up as a red flag in a campaign report. It shows up as a slightly worse cost per click and a slightly worse conversion rate, spread thinly across everything, which is exactly why it survives for months.</p>
+              <p>None of that raises a flag anywhere. It appears as a slightly worse cost per click and a slightly worse conversion rate, thinly spread across everything, which is how it survives for months without anyone noticing.</p>
+              <p>The queries were always visible. The problem was that reading several hundred of them, deciding which ones deserve to keep spending, and turning the rest into negative keywords is a genuinely tedious hour of work, so it happens rarely.</p>
             </div>
-          </div>
-
-          <div class="highlight-box">
-            <h2>One keyword, 30.02 EUR, 18 clicks</h2>
-            <p>A single broad match keyword in this account had spent 30.02 EUR across 18 clicks at an average cost per click of 1.67 EUR before it was identified and paused. That is one keyword out of hundreds. The point is not the absolute number, it is the rate: a leak like this scales linearly with your budget, and nothing in the standard reporting view flags it.</p>
           </div>
 
           <div class="neo-card">
             <div class="section-label">Why the first attempt failed</div>
-            <h2 class="section-title">The automation reported 100 out of 100. The budget said otherwise.</h2>
+            <h2 class="section-title">The automation reported 100 out of 100 while the account was in poor shape</h2>
             <div class="prose">
-              <p>The account is managed through an AI agent rather than by clicking through dashboards. The first version of that setup used an off-the-shelf connector to the Google Ads API: a standard, publicly available integration that exposes the advertising platform to an AI agent.</p>
-              <p>It worked, in the narrow sense that commands executed. Then a manual review of the account turned up a list of defects: ads running with a fraction of the required headline count, keywords duplicated across campaigns so that they competed against each other in the auction, and junk queries that had already spent money.</p>
+              <p>The obvious move was to hand that tedious work to an AI agent, so the account was connected using a standard off-the-shelf integration to the advertising API.</p>
+              <p>Commands executed. Reports came back clean. A later manual review told a different story: ads running with a fraction of the required headlines, the same keyword sitting in two of my own campaigns competing in the same auction, and junk queries that had already spent money.</p>
               <p>The agent had been reporting everything as fine. A perfect score, 100 out of 100.</p>
-              <p>It was not malfunctioning. It was answering honestly against the only definition of success it had been given: did the advertising platform accept the change. Nobody had told it that an ad with three headlines instead of fifteen gets a poor quality rating and therefore a more expensive click, or that two of your own campaigns holding the same keyword means you are bidding against yourself.</p>
-              <p>This is the failure mode that matters for any business adding AI to an operational process. The automation was optimising against the technical contract of the platform. The commercial contract, the rules that decide whether the money is well spent, was invisible to it.</p>
+              <p>It was answering honestly against the only definition of success available to it, which was whether the advertising platform accepted each change. Nobody had told it that an ad missing most of its headlines gets a poor quality rating and therefore a more expensive click, or that two of your own campaigns holding one keyword means you are bidding against yourself.</p>
+              <p>This is the part worth carrying into any AI project, not only advertising. An integration measures whatever it was given to measure. Connect an agent to a system without encoding what good actually means in your business, and it will keep reporting success right up until someone looks properly.</p>
             </div>
           </div>
 
           <div class="neo-card">
-            <div class="section-label">The fix, in business terms</div>
-            <h2 class="section-title">What you get when the tools know your rules</h2>
+            <div class="section-label">What changed</div>
+            <h2 class="section-title">What an agent-run ad account looks like day to day</h2>
             <div class="prose">
-              <p>The tooling was rebuilt so that every action the agent can take validates against the business rules first. Four practical consequences:</p>
+              <p>Once the tooling was rebuilt so that every action validates against the account's own standards, the working rhythm changed more than any single setting did. Work that used to be occasional became routine.</p>
             </div>
-            <div class="check-list">
-              <div class="check-item">
-                <strong>Budget protection that runs on a schedule</strong>
-                <span>Search queries are mined automatically and classified into winners and waste. Junk terms are blocked as negative keywords before the next spend cycle, instead of being discovered in a quarterly review.</span>
-              </div>
-              <div class="check-item">
-                <strong>No silent misconfiguration</strong>
-                <span>An ad cannot go live below the quality standard, and a bid cannot be changed in a way that silently resets it. The guardrail sits inside the tool, so it holds even when the instruction was ambiguous.</span>
-              </div>
-              <div class="check-item">
-                <strong>One control surface across channels</strong>
-                <span>Google Ads and Pinterest return data in the same shape into one knowledge base with a shared keyword bank. Cross channel comparison stops being a manual export and merge job.</span>
-              </div>
-              <div class="check-item">
-                <strong>A human approval gate</strong>
-                <span>Every change to a live account is created in a paused state and waits for an explicit go. The agent proposes and prepares, a person decides what actually spends money.</span>
-              </div>
+            <div class="cadence">
+              Search query audit<br>
+              &nbsp;&nbsp;before: occasionally, when someone had a free hour<br>
+              &nbsp;&nbsp;now: every cycle, with negatives applied before the next spend<br>
+              Duplicate keywords across campaigns<br>
+              &nbsp;&nbsp;before: usually invisible, since each campaign looks fine alone<br>
+              &nbsp;&nbsp;now: detected across the whole account and cleared<br>
+              Ad quality check<br>
+              &nbsp;&nbsp;before: noticed after the ad was already running<br>
+              &nbsp;&nbsp;now: enforced before the ad can go live at all<br>
+              Cross-channel reporting<br>
+              &nbsp;&nbsp;before: manual export and merge<br>
+              &nbsp;&nbsp;now: both channels answer in the same shape on request
+            </div>
+            <div class="prose">
+              <p>That is the whole mechanism behind the efficiency gain, and it is deliberately unglamorous. No new budget, no clever bidding trick. The account simply stops drifting between reviews, because the reviews no longer depend on anyone's calendar.</p>
+              <p>Asking a question in plain language and getting an answer from the live account in seconds also changes behaviour in a way that is easy to underrate. Checks that felt like a chore get made casually, and problems surface while they are still small.</p>
             </div>
           </div>
 
-          <div class="two-col">
-            <div class="neo-card">
-              <div class="section-label">Before</div>
-              <h2 class="section-title">The account as found</h2>
-              <div class="prose">
-                <ul>
-                  <li>Cost per click ranging from 1.20 to 4.80 EUR, inflated by unfiltered broad match traffic</li>
-                  <li>Duplicate keywords across campaigns competing in the same auction</li>
-                  <li>Ads published below the quality standard, rated poor by the platform</li>
-                  <li>Three untracked leak vectors spending budget on the wrong buyers</li>
-                  <li>Automation reporting a perfect score throughout</li>
-                </ul>
+          <div class="neo-card">
+            <div class="section-label">The practical value</div>
+            <h2 class="section-title">What you get out of it</h2>
+            <div class="check-list">
+              <div class="check-item">
+                <strong>Waste gets caught early instead of quarterly</strong>
+                <span>Search queries are mined on a schedule and classified into worth keeping and worth blocking, so junk terms are stopped before the next spend cycle rather than discovered in a review months later.</span>
               </div>
-            </div>
-
-            <div class="neo-card">
-              <div class="section-label">After</div>
-              <h2 class="section-title">The account after the rebuild</h2>
-              <div class="prose">
-                <ul>
-                  <li>Cost per click running at 0.50 to 0.53 EUR under a hard bid ceiling</li>
-                  <li>36 duplicate keywords paused, zero active collisions between campaigns</li>
-                  <li>909 search queries audited in one pass, 20 term negative shield deployed</li>
-                  <li>Every campaign passing the full quality checklist</li>
-                  <li>Six search campaigns across four countries on a controlled shared budget</li>
-                </ul>
+              <div class="check-item">
+                <strong>Nothing breaks quietly</strong>
+                <span>Ads cannot go live below your quality standard, and settings cannot be changed in ways that silently damage a campaign. The guardrail sits inside the tools, so it holds even when an instruction was ambiguous.</span>
+              </div>
+              <div class="check-item">
+                <strong>One surface across channels</strong>
+                <span>Google Ads and Pinterest answer in the same shape into one place, so comparing them stops being an export and merge exercise and becomes a question you can just ask.</span>
+              </div>
+              <div class="check-item">
+                <strong>You still decide what spends money</strong>
+                <span>Every change is prepared in a paused state and waits for an explicit go. The agent does the preparation and the checking, a person makes the call.</span>
               </div>
             </div>
           </div>
 
           <div class="neo-card">
             <div class="section-label">Fit</div>
-            <h2 class="section-title">Who this approach is for</h2>
+            <h2 class="section-title">Who this suits, and who it does not</h2>
             <div class="prose">
-              <p>This is not a fit for every advertiser. It pays off in a specific situation:</p>
+              <p>This approach earns its keep in a fairly specific situation:</p>
               <ul>
-                <li><strong>E-commerce and B2B companies spending consistently on paid search</strong>, where a percentage point of wasted spend is a real number every month rather than a rounding error.</li>
-                <li><strong>Advertisers running more than one channel</strong>, where the reporting work of comparing Google Ads against Pinterest, Meta or another platform currently happens in spreadsheets.</li>
-                <li><strong>Companies with no in-house PPC engineer</strong>, where the account is either managed part time by a marketer or handed to an agency with limited visibility into what changed and why.</li>
-                <li><strong>Teams already experimenting with AI</strong> that want the operational safety rails before letting an agent near a live budget.</li>
+                <li><strong>E-commerce and B2B companies advertising continuously</strong>, where the account runs week after week and small recurring waste compounds.</li>
+                <li><strong>Advertisers on more than one channel</strong>, where comparing platforms currently means exporting spreadsheets.</li>
+                <li><strong>Companies with no in-house PPC engineer</strong>, where the account is looked after part time or handed to an agency with limited visibility into what changed and why.</li>
+                <li><strong>Teams already adopting AI</strong> that want operational guardrails settled before an agent goes anywhere near a live budget.</li>
               </ul>
-              <p>It is a poor fit for very small budgets, where the engineering effort will not pay for itself, and for accounts that need a fundamental strategy or positioning rethink first. Automation makes a sound strategy cheaper to execute. It does not rescue a broken one.</p>
+              <p>It suits some situations badly, and that is worth saying plainly. On a very small or occasional ad spend the setup effort will not pay for itself. If an account is struggling because the offer, the landing pages or the targeting strategy are wrong, automation will only make the wrong thing happen more consistently. Getting the strategy right comes first, and automation makes a sound strategy cheaper to run.</p>
             </div>
           </div>
 
           <div class="cta-strip">
             <div>
               <strong>Wie viel Ihres Werbebudgets versickert unbemerkt?</strong>
-              <p>Most accounts have at least one leak like the ones above. If you run paid search for an e-commerce or B2B business, let's spend 30 minutes on your account and find out where yours is.</p>
+              <p>Most accounts have at least one leak of the kind described here, hiding in the search query report. If paid advertising is a meaningful line in your budget, let's spend 30 minutes looking at yours.</p>
             </div>
             <div style="display:flex;gap:10px;flex-wrap:wrap;">
               <a class="cta-btn" href="https://calendly.com/azhyshchev/30min?utm_source=portfolio&amp;utm_medium=website&amp;utm_campaign=booking&amp;utm_content=ai_google_ads_management" target="_blank" rel="noreferrer">Book a 30 min review</a>
@@ -354,130 +325,13 @@
             </div>
           </div>
 
-          <div class="layer-divider">
-            <h2>How it works under the hood</h2>
-            <p>Everything above is the commercial result. What follows is the engineering that produced it, for readers who want to know whether the approach is sound rather than just whether the numbers look good.</p>
-          </div>
-
           <div class="neo-card">
-            <div class="section-label">Architecture</div>
-            <h2 class="section-title">From a raw API wrapper to a custom MCP server</h2>
+            <div class="section-label">Under the hood</div>
+            <h2 class="section-title">How the tooling is built</h2>
             <div class="prose">
-              <p>Both channels are exposed to the agent through MCP, the Model Context Protocol, which is the standard way to give an AI agent a defined set of tools. The question is not whether to use an MCP server. It is what level of abstraction its tools sit at.</p>
-              <p>An off-the-shelf MCP server mirrors the API: hundreds of low level methods, one per endpoint, each accepting the platform's native request objects. A facade exposes a small number of business shaped operations instead, and does the platform mechanics internally.</p>
-              <p>The replacement is two local Python MCP servers, a Google Ads MCP server and a Pinterest Ads MCP server:</p>
-              <ul>
-                <li><code>google-ads-mcp</code>, 18 tools over Google Ads API v23</li>
-                <li><code>pinterest-ads-mcp</code>, 9 tools over Pinterest Ads API v5</li>
-              </ul>
-              <p>The design rule is that the tool surface mirrors the real advertising hierarchy rather than the API surface. Each level exposes read tools and guarded write tools.</p>
-            </div>
-            <div class="arch-diagram">
-              Campaign level<br>
-              &nbsp;&nbsp;↓ audit, budget, targeting, bid ceiling, impression share<br>
-              Ad group level<br>
-              &nbsp;&nbsp;↓ keywords, negatives, collision detection across campaigns<br>
-              Ad level<br>
-              &nbsp;&nbsp;↓ creative validation, asset coverage, quality checklist<br>
-              Every write path<br>
-              &nbsp;&nbsp;↓ validate against business rules → create paused → wait for human go
-            </div>
-          </div>
-
-          <div class="neo-card">
-            <div class="section-label">Comparison</div>
-            <h2 class="section-title">Off-the-shelf MCP server versus a custom facade</h2>
-            <div class="table-scroll">
-              <table class="compare">
-                <thead>
-                  <tr>
-                    <th scope="col">Dimension</th>
-                    <th scope="col">Off-the-shelf Google Ads MCP</th>
-                    <th scope="col">Custom smart facade</th>
-                    <th scope="col">What it costs the business</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">Abstraction level</th>
-                    <td>Raw API. Hundreds of low level methods mirroring endpoints.</td>
-                    <td>Business operations such as <code>audit_campaign_4level_shield</code> and <code>mine_search_terms_and_harvest_negatives</code>.</td>
-                    <td class="risk">The agent spends its effort on plumbing instead of on the account.</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Protection from platform quirks</th>
-                    <td>None. A bid mutation without an explicit field mask makes the API silently reset the bid to 0.01 EUR.</td>
-                    <td>The facade computes <code>update_mask</code> itself. The failure mode is unreachable.</td>
-                    <td class="risk">A campaign stops delivering and nobody knows why.</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Knowledge of your business</th>
-                    <td>None. It does not know your quality standard, promotions or product range.</td>
-                    <td>Your rules are encoded in the tool and checked on every write.</td>
-                    <td class="risk">Ads go live that contradict your actual offer.</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Creative validation</th>
-                    <td>Will happily publish an ad with 3 headlines and a poor strength rating.</td>
-                    <td>Hard gate. Below the 15 headline and 4 description standard the tool refuses.</td>
-                    <td class="risk">Low ad strength means a more expensive click for the same position.</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Keyword cannibalisation</th>
-                    <td>No concept of overlap between your own campaigns.</td>
-                    <td><code>auto_fix_collisions_and_dupes</code> finds and clears duplicates.</td>
-                    <td class="risk">You bid against yourself and raise your own cost per click.</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Context cost per action</th>
-                    <td>Entire platform request and response structures travel through the agent's context on every call.</td>
-                    <td>The agent passes a campaign id and the headline text. The facade assembles the payload.</td>
-                    <td class="risk">Every routine operation is slower and more expensive to run.</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <div class="neo-card">
-            <div class="section-label">Guardrails</div>
-            <h2 class="section-title">What the tools refuse to do</h2>
-            <div class="prose">
-              <h3>The 0.01 EUR trap</h3>
-              <p>In the Google Ads API, mutating a bid without explicitly populating the update mask does not raise an error. The platform accepts the call and silently resets the bid to its 0.01 EUR fallback, which effectively removes the keyword from the auction. This is exactly the kind of failure an agent cannot detect on its own, because the API returns success. The facade builds the field mask internally on every bid mutation, so the mistake cannot be made.</p>
-              <h3>Creative standard as a gate, not a guideline</h3>
-              <p>Responsive search ads perform best with the full complement of assets. The deployment tool enforces 15 headlines and 4 descriptions in the target language as a precondition. A partial ad is rejected at the tool boundary rather than published and flagged later.</p>
-              <h3>Collision detection across campaigns</h3>
-              <p>When a keyword appears in more than one active campaign, those campaigns enter the same auction and inflate each other's cost. A dedicated tool scans for exact and phrase overlaps and pauses the duplicates. In this account it paused 36 duplicated top keywords and brought active collisions to zero.</p>
-              <h3>Human approval on anything that spends</h3>
-              <p>Write tools create objects in a paused state by default. A new campaign, a new ad group, a bid change: all prepared, none live. This is deliberate, because the risk with a capable agent is not malice, it is a confidently executed misreading of an ambiguous instruction. A hypothetical question in a chat should never become a live change to a real budget.</p>
-            </div>
-          </div>
-
-          <div class="neo-card">
-            <div class="section-label">The transferable principle</div>
-            <h2 class="section-title">Design agent tools from business rules, not from API docs</h2>
-            <div class="prose">
-              <p>The abstraction level of your tooling decides what your agent is allowed to be wrong about.</p>
-              <p>Give an agent raw endpoints and it will optimise against the contract those endpoints define, then report success in good faith. Encode the commercial rules into the tool surface and an entire class of expensive mistakes becomes structurally impossible rather than merely discouraged in a prompt.</p>
-              <p>This generalises well beyond advertising. Any operational system where an agent has write access, whether that is a CRM, an inventory platform or a billing system, has the same split between the technical contract and the business contract. The technical one is documented. The business one usually lives in someone's head, which is precisely why it needs to be written into the tools.</p>
-              <p>The same pattern applied to other platforms is covered in <a href="/articles/automating-google-cloud-console-mcp/?utm_source=portfolio&amp;utm_medium=internal&amp;utm_campaign=ai_google_ads_management&amp;utm_content=gcp_mcp_link">automating Google Cloud Console with MCP</a> and in <a href="/articles/b2b-lead-generation-google-maps-mcp/?utm_source=portfolio&amp;utm_medium=internal&amp;utm_campaign=ai_google_ads_management&amp;utm_content=maps_mcp_link">B2B lead generation via Google Maps MCP</a>.</p>
-              <p>Adding another channel is now a matter of adding a server rather than rewriting the workflow. Google Analytics 4 and Meta Ads are the next two on the list.</p>
-            </div>
-          </div>
-
-          <div class="neo-card">
-            <div class="section-label">Stack</div>
-            <h2 class="section-title">Tools used</h2>
-            <div class="chips">
-              <span class="chip">Python</span>
-              <span class="chip">MCP</span>
-              <span class="chip">Google Ads API v23</span>
-              <span class="chip">Pinterest Ads API v5</span>
-              <span class="chip">Protobuf field masks</span>
-              <span class="chip">Obsidian</span>
-              <span class="chip">Claude Code</span>
-              <span class="chip">VS Code</span>
+              <p>Everything above is what changed operationally. The engineering behind it, how the official advertising API endpoints were analysed and turned into a small set of tools that enforce the account's rules, is written up separately for readers who want that level of detail.</p>
+              <p><a href="/projects/ai-ads-management/?utm_source=portfolio&amp;utm_medium=internal&amp;utm_campaign=ai_google_ads_management&amp;utm_content=engineering_case_link"><strong>Read the engineering case: designing custom tooling from the official ad APIs →</strong></a></p>
+              <p>Related engineering write-ups: <a href="/articles/automating-google-cloud-console-mcp/?utm_source=portfolio&amp;utm_medium=internal&amp;utm_campaign=ai_google_ads_management&amp;utm_content=gcp_link">automating Google Cloud Console with AI agents</a> and <a href="/articles/b2b-lead-generation-google-maps-mcp/?utm_source=portfolio&amp;utm_medium=internal&amp;utm_campaign=ai_google_ads_management&amp;utm_content=maps_link">automated B2B lead generation via Google Maps</a>.</p>
             </div>
           </div>
 
@@ -486,20 +340,20 @@
             <h2 class="section-title">Common questions about AI-managed ad accounts</h2>
             <div class="faq">
               <div class="faq-item">
-                <div class="faq-q">How do I stop wasting my Google Ads budget?</div>
-                <div class="faq-a">Most waste is invisible in the campaign dashboard because it hides one level down, in the actual search queries people typed. A 30 day audit of 909 real search queries on this account found three leak patterns: shoppers looking for licensed cartoon characters that the shop does not sell, people searching for a completely different room type, and bargain hunters searching for the word cheap. Each of those clicks was paid for and bounced. The fix is a recurring search term audit that classifies queries into winners and waste, then applies negative keywords automatically before the next spend cycle.</div>
+                <div class="faq-q">What does an AI agent actually do with a Google Ads account?</div>
+                <div class="faq-a">It takes over the recurring checks that a person only gets to occasionally. Reading the real search queries that triggered your ads and separating the ones worth paying for from the ones that are not. Checking whether the same keyword sits in two of your own campaigns, where they compete in the same auction. Verifying that every ad meets your creative standard before it runs. Pulling performance from every channel into one place. None of this is clever work. It is simply work that has to happen often, which is exactly what makes it a poor fit for a human calendar and a good fit for automation.</div>
               </div>
               <div class="faq-item">
                 <div class="faq-q">Can an AI agent manage my ad account safely?</div>
-                <div class="faq-a">Only if the tools it uses enforce your rules. An AI agent connected directly to the raw Google Ads API optimises for one thing: did the API accept the change. It will happily publish an ad with 3 headlines instead of 15 and report success. In this setup every write tool validates against business rules first, every mutation is created in a paused state, and nothing goes live in the account without a human approving it. The safety comes from the tool design, not from asking the model to be careful.</div>
+                <div class="faq-a">Only when the tools it uses enforce your rules. An agent wired straight into a raw advertising API optimises for one thing: whether the platform accepted the change. That is a very low bar, and an account can fail badly while every single call reports success. In a safe setup the checks live inside the tools, every change that spends money is created in a paused state, and a person approves anything before it goes live. The safety comes from how the tooling is built, not from instructing the model to be careful.</div>
               </div>
               <div class="faq-item">
-                <div class="faq-q">Why build a custom MCP server instead of using a ready-made one?</div>
-                <div class="faq-a">An off-the-shelf MCP server is a thin wrapper over the raw API. It exposes hundreds of low level methods that mirror API endpoints and knows nothing about your business: your quality standards, your promotions, your product range. A custom facade exposes a small number of business shaped tools instead, such as audit this campaign against our quality checklist or mine search terms and harvest negatives. The business rules live inside the tool, so a whole class of expensive mistakes becomes structurally impossible rather than merely discouraged.</div>
+                <div class="faq-q">How do I stop wasting my Google Ads budget?</div>
+                <div class="faq-a">Most waste is not visible in the campaign dashboard because it sits one level down, in the search queries people actually typed. On this account a single 30 day audit covering 909 real queries surfaced three separate leak patterns: shoppers looking for licensed characters the shop does not sell, people searching for an entirely different product context, and bargain hunters who were never going to buy a premium item. Every one of those clicks was paid for. The fix is to make that audit routine rather than occasional, and to apply the resulting negative keywords before the next spend cycle instead of after it.</div>
               </div>
               <div class="faq-item">
                 <div class="faq-q">Do I still need a PPC agency if I automate ad management with AI?</div>
-                <div class="faq-a">Automation replaces the mechanical part of the work: pulling reports, auditing search queries, spotting duplicate keywords across campaigns, checking that every ad meets the quality standard. It does not replace commercial judgement about positioning, offers and creative. What changes is where the human time goes. Instead of spending it on data collection and manual checks, it goes into strategy, while the agent handles the routine and flags anything that needs a decision.</div>
+                <div class="faq-a">Automation covers the mechanical half of the work: reports, query audits, duplicate detection, creative compliance checks. It does not cover commercial judgement about positioning, offers and creative direction, and it does not decide what your advertising is trying to achieve. What changes is where the human hours go. Instead of being spent collecting and cleaning data, they go into the decisions that data is supposed to support.</div>
               </div>
             </div>
           </div>
@@ -507,12 +361,11 @@
           <div class="cta-strip">
             <div>
               <strong>Let's look at your ad account</strong>
-              <p>I build AI automation for companies that want their operations to run on rules, not on hope. If paid advertising is a meaningful line in your budget, a 30 minute review usually finds something worth fixing.</p>
+              <p>I build AI automation for companies that want their operations to run on rules rather than on somebody remembering. A 30 minute review of a live ad account usually turns up something worth fixing.</p>
             </div>
             <div style="display:flex;gap:10px;flex-wrap:wrap;">
               <a class="cta-btn" href="https://calendly.com/azhyshchev/30min?utm_source=portfolio&amp;utm_medium=website&amp;utm_campaign=booking&amp;utm_content=ai_google_ads_management" target="_blank" rel="noreferrer">Book a 30 min review</a>
               <a class="cta-btn outline" href="mailto:azhyshchev@gmail.com">Email me</a>
-              <a class="cta-btn outline" href="/projects/ai-ads-management/?utm_source=portfolio&amp;utm_medium=internal&amp;utm_campaign=ai_google_ads_management&amp;utm_content=project_page_link">See project page</a>
             </div>
           </div>
 

@@ -6,25 +6,25 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta name="description" content="AI-managed paid advertising for e-commerce and B2B: automated search term audits, negative keyword shields, cross-channel reporting for Google Ads and Pinterest. CPC cut from 1.67 to 0.50 EUR.">
-  <meta name="keywords" content="mcp server, model context protocol, google ads mcp server, ai google ads management, google ads management, google ads audit, google ads automation, ppc automation, ecommerce ppc, cross channel ad reporting, google ads agentur, google ads kosten senken, kunden akquirieren, KI Google Ads">
+  <meta name="description" content="Building a custom MCP server from official API endpoints: how the Google Ads and Pinterest Ads references were analysed and collapsed into 27 business-shaped tools, with worked examples of column selection and protobuf field masks.">
+  <meta name="keywords" content="mcp server, model context protocol, google ads mcp server, custom mcp server, mcp server design, ai agent tools, google ads api, pinterest ads api v5, protobuf field mask, api facade pattern, ai agent guardrails, agent tool design, python mcp, KI Agenten Werkzeuge">
   <meta name="author" content="Mikhail Azhyshchev">
   <link rel="canonical" href="https://azhyshchev.de/projects/ai-ads-management/">
   <link rel="alternate" hreflang="en" href="https://azhyshchev.de/projects/ai-ads-management/" />
   <link rel="alternate" hreflang="de" href="https://azhyshchev.de/de/projekte/ki-werbeverwaltung/" />
   <link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/projects/ai-ads-management/" />
 
-  <meta property="og:title" content="AI-Managed Ad Account: Google Ads + Pinterest | Mikhail Azhyshchev">
-  <meta property="og:description" content="Paid advertising run by an AI agent with business rules built into the tooling. 909 search terms audited per pass, 36 keyword collisions removed, CPC from 1.67 to 0.50 EUR.">
+  <meta property="og:title" content="Designing a Custom MCP Server from Official Ad API Endpoints | Mikhail Azhyshchev">
+  <meta property="og:description" content="Why an off-the-shelf MCP server was replaced with a purpose-built facade: endpoint analysis, business-shaped tools, and invariants the API itself does not enforce.">
   <meta property="og:url" content="https://azhyshchev.de/projects/ai-ads-management/">
   <meta property="og:type" content="article">
   <meta property="og:image" content="https://azhyshchev.de/Azhyschev.JPG">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="AI-Managed Ad Account: Google Ads + Pinterest">
-  <meta name="twitter:description" content="Automated ad management with guardrails: search term mining, collision cleanup, human approval on every change.">
+  <meta name="twitter:title" content="Designing a Custom MCP Server from Official Ad API Endpoints">
+  <meta name="twitter:description" content="Endpoint analysis to tool surface: 27 tools over Google Ads API v23 and Pinterest Ads API v5, with guardrails built into the tools.">
 
-  <title>AI-Managed Ad Account: Google Ads + Pinterest</title>
+  <title>Custom MCP Server Design from Official Ad API Endpoints</title>
 
   <script type="application/ld+json">
   {
@@ -34,30 +34,30 @@
         "@type": "WebPage",
         "@id": "https://azhyshchev.de/projects/ai-ads-management/#webpage",
         "url": "https://azhyshchev.de/projects/ai-ads-management/",
-        "name": "AI-Managed Ad Account: Google Ads and Pinterest",
+        "name": "Custom MCP Server Design from Official Ad API Endpoints",
         "isPartOf": { "@id": "https://azhyshchev.de/#website" },
         "author": { "@id": "https://azhyshchev.de/#person" },
         "dateModified": "2026-08-15",
-        "description": "Paid advertising operated by an AI agent through custom MCP tooling with business rules and a human approval gate.",
+        "description": "Engineering case: analysing the official Google Ads and Pinterest Ads API references and designing a custom MCP server whose tools mirror the advertising hierarchy rather than the endpoint list.",
         "inLanguage": "en",
         "breadcrumb": {
           "@type": "BreadcrumbList",
           "itemListElement": [
             { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://azhyshchev.de/" },
             { "@type": "ListItem", "position": 2, "name": "Projects", "item": "https://azhyshchev.de/projects" },
-            { "@type": "ListItem", "position": 3, "name": "AI-Managed Ad Account" }
+            { "@type": "ListItem", "position": 3, "name": "Custom MCP Server for Ad Platforms" }
           ]
         }
       },
       {
         "@type": "SoftwareApplication",
         "@id": "https://azhyshchev.de/projects/ai-ads-management/#project",
-        "name": "AI-Managed Ad Account: Google Ads and Pinterest",
-        "description": "Two custom MCP servers exposing Google Ads API v23 and Pinterest Ads API v5 to an AI agent as business shaped tools: search term mining, negative keyword shields, creative validation, collision cleanup, and a human approval gate on every mutation.",
-        "applicationCategory": "BusinessApplication",
+        "name": "Custom MCP Servers for Google Ads and Pinterest Ads",
+        "description": "Two purpose-built MCP servers in Python exposing 18 tools over Google Ads API v23 and 9 tools over Pinterest Ads API v5. Tools are shaped around the advertising hierarchy of campaign, ad group and ad, with validation, protobuf field masks and a paused-by-default write policy enforced inside the server.",
+        "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Web",
         "author": { "@id": "https://azhyshchev.de/#person" },
-        "keywords": "mcp server, model context protocol, google ads mcp server, ai google ads management, google ads management, google ads audit, ppc automation, ecommerce ppc, google ads agentur, google ads kosten senken, kunden akquirieren",
+        "keywords": "mcp server, model context protocol, google ads mcp server, custom mcp server, api facade, protobuf field mask, ai agent tool design, google ads api, pinterest ads api",
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -98,22 +98,35 @@
     .breadcrumb a:hover { opacity: 1; text-decoration: underline; }
     .project-hero { border: 3px solid var(--black); background: var(--accent); box-shadow: 6px 6px 0 var(--black); padding: 24px; }
     .project-type { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; margin-bottom: 12px; }
-    .project-title { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800; line-height: 1; letter-spacing: -0.05em; margin-bottom: 16px; }
-    .project-lead { font-size: 0.95rem; line-height: 1.6; max-width: 70ch; margin-bottom: 20px; }
+    .project-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.04em; margin-bottom: 16px; }
+    .project-lead { font-size: 0.95rem; line-height: 1.65; max-width: 72ch; margin-bottom: 20px; }
     .metrics-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
     .metric-box { border: 2px solid var(--black); background: rgba(255,255,255,0.75); padding: 14px 12px; }
-    .metric-box strong { display: block; font-size: 1.4rem; line-height: 1; margin-bottom: 6px; }
+    .metric-box strong { display: block; font-size: 1.2rem; line-height: 1.15; margin-bottom: 6px; }
     .metric-box span { font-size: 0.72rem; line-height: 1.4; opacity: 0.8; }
     .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-    .neo-card { border: 3px solid var(--black); background: var(--white); box-shadow: 6px 6px 0 var(--black); padding: 20px; }
-    .section-label { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.45; margin-bottom: 12px; }
-    .section-title { font-size: 1.05rem; font-weight: 800; margin-bottom: 14px; letter-spacing: -0.02em; }
-    ul.detail-list { padding-left: 16px; display: flex; flex-direction: column; gap: 10px; }
-    ul.detail-list li { font-size: 0.86rem; line-height: 1.6; }
+    .neo-card { border: 3px solid var(--black); background: var(--white); box-shadow: 6px 6px 0 var(--black); padding: 24px; }
+    .section-label { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.45; margin-bottom: 10px; }
+    .section-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.02em; }
+    .prose { display: flex; flex-direction: column; gap: 14px; }
+    .prose p { font-size: 0.88rem; line-height: 1.75; }
+    .prose h3 { font-size: 0.95rem; font-weight: 800; margin-top: 8px; letter-spacing: -0.02em; }
+    .prose ul, .prose ol { padding-left: 18px; display: flex; flex-direction: column; gap: 10px; }
+    .prose li { font-size: 0.88rem; line-height: 1.65; }
+    .prose code { background: var(--cream); border: 1px solid var(--black); padding: 1px 5px; font-size: 0.8rem; word-break: break-word; }
+    .arch-diagram { border: 2px solid var(--black); background: var(--cream); padding: 16px 20px; font-size: 0.82rem; line-height: 2; font-weight: 700; margin: 16px 0; overflow-x: auto; }
     .highlight-box { border: 3px solid var(--black); background: var(--yellow); box-shadow: 4px 4px 0 var(--black); padding: 18px 20px; transition: transform 0.2s, box-shadow 0.2s; }
     .highlight-box:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--black); }
     .highlight-box h2 { font-size: 0.9rem; font-weight: 800; margin-bottom: 10px; }
     .highlight-box p { font-size: 0.84rem; line-height: 1.65; }
+    .highlight-box code { background: rgba(255,255,255,0.6); border: 1px solid var(--black); padding: 1px 5px; font-size: 0.78rem; }
+    .table-scroll { overflow-x: auto; border: 2px solid var(--black); background: var(--white); }
+    table.compare { border-collapse: collapse; width: 100%; min-width: 780px; font-size: 0.78rem; }
+    table.compare th, table.compare td { border: 1px solid var(--black); padding: 12px 14px; text-align: left; vertical-align: top; line-height: 1.55; }
+    table.compare thead th { background: var(--accent); font-weight: 800; }
+    table.compare tbody th { background: var(--cream); font-weight: 800; width: 17%; }
+    table.compare td code { background: var(--cream); border: 1px solid var(--black); padding: 1px 4px; font-size: 0.72rem; word-break: break-word; }
+    table.compare td.risk { background: rgba(245,200,75,0.28); }
     .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
     .chip { padding: 6px 10px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); font-size: 0.72rem; font-weight: 700; }
     .cta-strip { border: 3px solid var(--black); background: var(--black); color: var(--white); box-shadow: 6px 6px 0 rgba(0,0,0,0.3); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
@@ -126,7 +139,7 @@
     .back-link:hover { transform: translate(-2px,-2px); }
     @media (max-width: 1100px) { .shell { grid-template-columns: 220px 1fr; } .metrics-row { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 820px) { body { padding: 10px 8px 72px; } .shell { grid-template-columns: 1fr; box-shadow: 6px 6px 0 var(--black); min-height: unset; } .sidebar { border-right: none; border-bottom: 3px solid var(--black); padding: 10px 14px; flex-direction: row; align-items: center; justify-content: space-between; } .brand { font-size: clamp(0.95rem, 2.5vw, 1.6rem); } .nav { display: none; } .sidebar-bottom { display: none; } .main { padding: 14px; } .content-grid { grid-template-columns: 1fr; } }
-    @media (max-width: 520px) { .metrics-row { grid-template-columns: 1fr; } .project-title { font-size: 1.7rem; } }
+    @media (max-width: 520px) { .metrics-row { grid-template-columns: 1fr; } .project-title { font-size: 1.5rem; } }
   </style>
   <link rel="stylesheet" href="../../mobile.css">
 </head>
@@ -159,71 +172,191 @@
         <nav class="breadcrumb" aria-label="Breadcrumb">
           <a href="/">Home</a><span>→</span>
           <a href="/projects">Projects</a><span>→</span>
-          <span>AI-Managed Ad Account</span>
+          <span>Custom MCP Server for Ad Platforms</span>
         </nav>
 
         <div class="project-hero">
-          <div class="project-type">Paid Advertising · AI Automation · Google Ads + Pinterest · Production</div>
-          <h1 class="project-title">AI-Managed Ad Account</h1>
+          <div class="project-type">Engineering Case · MCP Server Design · Google Ads + Pinterest · Production</div>
+          <h1 class="project-title">Designing a Custom MCP Server from Official Ad API Endpoints</h1>
           <p class="project-lead">
-            A live e-commerce ad account across Google Ads and Pinterest, operated day to day by an AI agent instead of by clicking through dashboards. The agent does not talk to the advertising APIs directly. It works through two custom tool servers that encode the account's business rules, so budget protection, creative standards and approval gates are enforced by the tooling rather than by remembering to check.
+            Two purpose-built MCP servers that let an AI agent operate a live advertising account. The interesting work was not wiring up the protocol, which is straightforward. It was deciding what the tools should be: reading the official Google Ads and Pinterest API references end to end, working out which operations an agent genuinely needs, and collapsing a long endpoint list into a short set of tools that carry the account's own rules inside them.
           </p>
           <div class="metrics-row">
-            <div class="metric-box"><strong>1.67 to 0.50</strong><span>Campaign CPC in EUR, before and after the cleanup</span></div>
-            <div class="metric-box"><strong>909</strong><span>Real search queries audited in a single automated pass</span></div>
-            <div class="metric-box"><strong>36</strong><span>Duplicate keywords removed, zero campaign collisions left</span></div>
-            <div class="metric-box"><strong>6 campaigns</strong><span>Across four countries, two ad channels, one control surface</span></div>
+            <div class="metric-box"><strong>18 tools</strong><span>Google Ads MCP server over API v23</span></div>
+            <div class="metric-box"><strong>9 tools</strong><span>Pinterest Ads MCP server over API v5</span></div>
+            <div class="metric-box"><strong>3 levels</strong><span>Tool surface mirrors campaign, ad group, ad</span></div>
+            <div class="metric-box"><strong>2 references</strong><span>Official API docs analysed to design the surface</span></div>
           </div>
-        </div>
-
-        <div class="highlight-box">
-          <h2>The problem this solves</h2>
-          <p>The first version of this automation used a standard off-the-shelf connector to the Google Ads API. It reported the account as perfect, 100 out of 100, while a manual review found ads below the quality standard, keywords competing against each other, and one broad match term that had spent 30.02 EUR on 18 clicks. The automation was checking whether the API accepted each change. It had no idea whether the money was well spent.</p>
         </div>
 
         <div class="content-grid">
           <div class="neo-card">
-            <div class="section-label">What it does</div>
-            <h2 class="section-title">Capabilities</h2>
-            <ul class="detail-list">
-              <li>Mines real search queries on a schedule, classifies them into winners and waste, and applies negative keywords before the next spend cycle.</li>
-              <li>Detects keywords duplicated across your own campaigns so they stop competing in the same auction and inflating your cost per click.</li>
-              <li>Validates every ad against a quality checklist before it can go live, including full asset coverage in the target language.</li>
-              <li>Pulls performance and spend from both channels into one reporting surface with a shared keyword bank.</li>
-            </ul>
+            <div class="section-label">Starting point</div>
+            <h2 class="section-title">An off-the-shelf MCP server mirrors the API</h2>
+            <div class="prose">
+              <p>The first version of this setup used a publicly available MCP server for Google Ads. It works, and for a general audience its design is the correct one: it exposes the advertising API more or less as it is, one tool per operation, each taking the platform's native request objects.</p>
+              <p>That means the agent receives a long list of low level methods named after the mutations they wrap, and has to compose the right sequence itself on every task. It also means the server has no opinion about what a good campaign looks like, because it cannot have one.</p>
+              <p>Running an account that way surfaced the real problem quickly. The agent reported success consistently, because the only signal available to it was whether the API accepted a call.</p>
+            </div>
           </div>
 
           <div class="neo-card">
-            <div class="section-label">Safety model</div>
-            <h2 class="section-title">Why it is safe to run on a live budget</h2>
-            <ul class="detail-list">
-              <li>Every change that costs money is created in a paused state and waits for an explicit human go.</li>
-              <li>Bid mutations always carry an explicit field mask, which blocks a known platform behaviour that silently resets bids to 0.01 EUR.</li>
-              <li>Ads below the creative standard are rejected at the tool boundary rather than published and flagged later.</li>
-              <li>Every decision, test and adjustment is written to a dated log, so the account has an audit trail rather than a black box.</li>
-            </ul>
+            <div class="section-label">Method</div>
+            <h2 class="section-title">Working from the endpoint reference</h2>
+            <div class="prose">
+              <p>The design work started in the official documentation for both platforms rather than in code:</p>
+              <ol>
+                <li>Inventory the endpoints and their exact request and response schemas, including the reporting fields each one accepts.</li>
+                <li>List the operations that actually get performed on the account in a normal week, in plain language.</li>
+                <li>Map the second list onto the first. Some intents map to one endpoint. Several map to a chain of calls. Many endpoints map to nothing anyone needs.</li>
+                <li>Expose one tool per intent, and keep the chains, the field selection and the payload assembly inside the server.</li>
+              </ol>
+              <p>The mismatch between those two lists is the whole design. An API is organised by resource, because that is the sane way to publish one. Work is organised by intent.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="neo-card">
+          <div class="section-label">Design rule</div>
+          <h2 class="section-title">The tool surface mirrors the ad hierarchy, not the endpoint list</h2>
+          <div class="prose">
+            <p>An advertising account has a natural shape: campaigns contain ad groups, ad groups contain ads and keywords. Every real task lands on one of those levels. Shaping the tools the same way means the agent never has to translate between two different mental models, and it makes the surface small enough to reason about.</p>
+          </div>
+          <div class="arch-diagram">
+            Campaign level<br>
+            &nbsp;&nbsp;↓ audit against the quality checklist, budget, targeting, bid ceiling, impression share<br>
+            Ad group level<br>
+            &nbsp;&nbsp;↓ keywords, negative shields, collision detection across the whole account<br>
+            Ad level<br>
+            &nbsp;&nbsp;↓ creative validation, asset coverage, deployment<br>
+            Every write path<br>
+            &nbsp;&nbsp;↓ validate against business rules → create paused → wait for human approval
+          </div>
+          <div class="prose">
+            <p>Tool names follow the intent rather than the mutation. <code>audit_campaign_4level_shield</code> runs the full quality checklist over a campaign. <code>mine_search_terms_and_harvest_negatives</code> pulls the search query report, classifies terms and returns the negatives worth applying. <code>auto_fix_collisions_and_dupes</code> looks across campaigns for the same keyword competing with itself. Each one hides several API calls and a set of rules.</p>
+          </div>
+        </div>
+
+        <div class="content-grid">
+          <div class="neo-card">
+            <div class="section-label">Worked example 1</div>
+            <h2 class="section-title">Choosing columns instead of forwarding everything</h2>
+            <div class="prose">
+              <p>Pinterest exposes campaign analytics through a reporting endpoint that takes a catalogue of available columns. Handing an agent that catalogue and asking it to choose each time would be slow, inconsistent and expensive in context.</p>
+              <p>The tool pins the set instead. <code>get_pinterest_analytics_report</code> always requests exactly nine columns: campaign id and name, spend, paid impressions, clickthroughs, outbound clicks, saves, total engagement and click-through rate.</p>
+              <p>One request from the agent also fans out into two calls: fetch the campaigns to collect their ids, then request analytics for those ids over the chosen date range.</p>
+              <p>The server also does the unit conversion. Spend arrives from the API in micro units and is turned into currency before the agent ever sees it, which removes an entire category of silent arithmetic mistakes.</p>
+            </div>
           </div>
 
           <div class="neo-card">
-            <div class="section-label">Fit</div>
-            <h2 class="section-title">Who this is built for</h2>
-            <ul class="detail-list">
-              <li>E-commerce and B2B companies with consistent monthly paid search spend, where wasted percentage points are real money.</li>
-              <li>Advertisers running more than one channel who currently compare performance by exporting spreadsheets.</li>
-              <li>Companies without an in-house PPC engineer, where the account is managed part time or handed off with limited visibility.</li>
-              <li>Teams adopting AI that want operational guardrails in place before an agent touches a live budget.</li>
-            </ul>
+            <div class="section-label">Worked example 2</div>
+            <h2 class="section-title">Encoding an invariant the API does not enforce</h2>
+            <div class="prose">
+              <p>Google Ads mutations take a field mask that tells the API which fields to update. Omit it while changing a bid and the call still succeeds. The platform simply applies its fallback and the bid quietly drops to its minimum, which takes the keyword out of the auction.</p>
+              <p>Nothing about that response looks like a failure, so an agent has no way to notice it.</p>
+              <p>In the server every write path that touches a bid or a status builds the mask from the object being updated, using <code>protobuf_helpers.field_mask</code>, before the operation is sent. Three write paths carry it.</p>
+              <p>The agent is never asked to remember this. It cannot express the broken version of the call, because the tool does not offer it.</p>
+            </div>
           </div>
+        </div>
 
-          <div class="neo-card">
-            <div class="section-label">Engineering</div>
-            <h2 class="section-title">How it is built</h2>
-            <ul class="detail-list">
-              <li>Two local MCP servers in Python: 18 tools over Google Ads API v23, 9 tools over Pinterest Ads API v5.</li>
-              <li>The tool surface mirrors the advertising hierarchy, campaign then ad group then ad, not the API endpoint list.</li>
-              <li>Business rules live inside the tools, so invalid states are unreachable rather than merely discouraged in a prompt.</li>
-              <li>The agent passes identifiers and copy. The server assembles the platform payloads, which keeps each operation cheap and fast.</li>
-            </ul>
+        <div class="highlight-box">
+          <h2>The rule that came out of it</h2>
+          <p>An agent optimises against whatever definition of success its tools give it. If the only available signal is <code>the API accepted this call</code>, that is what gets optimised, and the report will say everything is fine. Moving the definition of correct into the tool surface turns a class of expensive mistakes into calls that cannot be made at all.</p>
+        </div>
+
+        <div class="neo-card">
+          <div class="section-label">The decision</div>
+          <h2 class="section-title">Why build a custom MCP server instead of using the ready-made one</h2>
+          <div class="prose">
+            <p>The public server is well made and it is honest about what it is: a faithful mirror of the advertising API. For general use that is exactly right, and for a while it was enough here too.</p>
+            <p>Generality becomes the constraint at the point where an account acquires standards of its own. A shared, public tool has no way of knowing what counts as a correct ad in your business, so it cannot refuse an incorrect one. Five specific gaps made the case for building a replacement.</p>
+            <h3>1. Level of abstraction</h3>
+            <p>Low level methods named after API mutations put the burden of composing a correct sequence on the agent, every time. The same task can be assembled differently on different days, which makes behaviour hard to reason about and harder to trust.</p>
+            <h3>2. Invariants the platform does not check</h3>
+            <p>The field mask case above is the clearest example. A general purpose server cannot forbid that call, because without knowing the intent it cannot tell a mistake from a deliberate reset. A facade built for one account knows the intent and can refuse.</p>
+            <h3>3. Knowledge of the business</h3>
+            <p>Creative standards, link formats, product constraints and promotional rules exist only in the account they belong to. A public server has no access to any of it, so validation against those rules has to live somewhere else, which in practice means it lives in a prompt and gets forgotten.</p>
+            <h3>4. No cross-campaign view</h3>
+            <p>Endpoints operate on one object at a time. Keyword cannibalisation exists between objects, so no single call can see it. Detecting it requires a tool designed to look across the account, which is a shape the API reference does not suggest.</p>
+            <h3>5. The cost of context</h3>
+            <p>Passing whole platform request and response structures through the agent's context on every action makes routine work slow and expensive. With a facade the agent sends an identifier and some copy, and the server assembles the payload.</p>
+          </div>
+        </div>
+
+        <div class="neo-card">
+          <div class="section-label">Comparison</div>
+          <h2 class="section-title">Off-the-shelf MCP server versus a purpose-built facade</h2>
+          <div class="table-scroll">
+            <table class="compare">
+              <thead>
+                <tr>
+                  <th scope="col">Dimension</th>
+                  <th scope="col">Off-the-shelf MCP server</th>
+                  <th scope="col">Purpose-built facade</th>
+                  <th scope="col">Consequence when it goes wrong</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Abstraction level</th>
+                  <td>Raw API. Many low level methods named after the mutation they wrap.</td>
+                  <td>Business operations such as <code>audit_campaign_4level_shield</code> and <code>mine_search_terms_and_harvest_negatives</code>.</td>
+                  <td class="risk">Effort goes into plumbing rather than into the account.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Platform quirks</th>
+                  <td>Unguarded. A bid mutation without a field mask succeeds and silently resets the bid to the 0.01 EUR minimum.</td>
+                  <td>The mask is built inside the server on every write path.</td>
+                  <td class="risk">A keyword drops out of the auction and nothing reports an error.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Business rules</th>
+                  <td>Unknown to the server by design.</td>
+                  <td>Encoded in the tool and checked on every write.</td>
+                  <td class="risk">Ads go live that contradict the actual offer.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Creative validation</th>
+                  <td>Will publish a partial ad with a poor strength rating.</td>
+                  <td>Hard gate at 15 headlines and 4 descriptions in the target language.</td>
+                  <td class="risk">Weaker ad strength raises the price of the same placement.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Cross-campaign checks</th>
+                  <td>No concept of overlap between your own campaigns.</td>
+                  <td><code>auto_fix_collisions_and_dupes</code> scans the account and clears duplicates.</td>
+                  <td class="risk">Your campaigns bid against each other in the same auction.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Context cost</th>
+                  <td>Full platform payloads travel through the agent's context on every call.</td>
+                  <td>Identifiers and copy in, assembled payload built server side.</td>
+                  <td class="risk">Every routine operation is slower and more expensive.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="neo-card">
+          <div class="section-label">Write safety</div>
+          <h2 class="section-title">Paused by default</h2>
+          <div class="prose">
+            <p>Every tool that creates or changes something able to spend money produces it in a paused state. New campaigns, new ad groups, bid adjustments: prepared, validated, inert until a person enables them.</p>
+            <p>The reasoning is specific. The realistic failure mode for a capable agent with write access is not a rogue decision, it is a confident action taken on a misread instruction. A hypothetical question in a chat window should never be able to become a live change to a real budget, and a paused-by-default policy makes that structurally impossible rather than unlikely.</p>
+            <p>Alongside that, every decision, test and adjustment is written to a dated log, so the account carries an audit trail instead of a black box.</p>
+          </div>
+        </div>
+
+        <div class="neo-card">
+          <div class="section-label">Outcome</div>
+          <h2 class="section-title">What this changed in practice</h2>
+          <div class="prose">
+            <p>With the rules living in the tools, the recurring account work became routine instead of occasional: search query audits with negatives applied before the next spend cycle, cross-campaign collision checks, creative compliance enforced before an ad can run, and both channels answering in the same shape.</p>
+            <p>Adding another platform is now a matter of adding a server rather than reworking the whole setup. Google Analytics 4 and Meta Ads are the next candidates.</p>
+            <p><a href="/articles/ai-google-ads-management/?utm_source=portfolio&amp;utm_medium=internal&amp;utm_campaign=ai_ads_management_project&amp;utm_content=business_article_link"><strong>The operational side of this, written for a non-technical reader →</strong></a></p>
           </div>
         </div>
 
@@ -233,6 +366,7 @@
           <div class="chips">
             <span class="chip">Python</span>
             <span class="chip">MCP</span>
+            <span class="chip">Model Context Protocol</span>
             <span class="chip">Google Ads API v23</span>
             <span class="chip">Pinterest Ads API v5</span>
             <span class="chip">Protobuf field masks</span>
@@ -243,12 +377,12 @@
 
         <div class="cta-strip">
           <div>
-            <strong>Wie viel Ihres Werbebudgets versickert unbemerkt?</strong>
-            <p>Most accounts have at least one leak like the ones described here. If paid advertising is a meaningful line in your budget, let's spend 30 minutes finding where yours is.</p>
+            <strong>Need an agent that can safely touch a production system?</strong>
+            <p>I design tool surfaces for AI agents working against real APIs, where the interesting part is which operations to expose and which invariants to enforce. Happy to talk through a specific system.</p>
           </div>
           <div style="display:flex;gap:10px;flex-wrap:wrap;">
-            <a class="cta-btn" href="https://calendly.com/azhyshchev/30min?utm_source=portfolio&amp;utm_medium=website&amp;utm_campaign=booking&amp;utm_content=ai_ads_management_project" target="_blank" rel="noreferrer">Book a 30 min review</a>
-            <a class="cta-btn outline" href="/articles/ai-google-ads-management/?utm_source=portfolio&amp;utm_medium=internal&amp;utm_campaign=ai_ads_management_project&amp;utm_content=case_study_link">Read the case study</a>
+            <a class="cta-btn" href="https://calendly.com/azhyshchev/30min?utm_source=portfolio&amp;utm_medium=website&amp;utm_campaign=booking&amp;utm_content=ai_ads_management_project" target="_blank" rel="noreferrer">Book a 30 min call</a>
+            <a class="cta-btn outline" href="mailto:azhyshchev@gmail.com">Email me</a>
             <a class="cta-btn outline" href="/projects">All projects</a>
           </div>
         </div>
