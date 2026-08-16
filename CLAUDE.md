@@ -276,9 +276,10 @@ Token in HTML: `3530a5f865dcb0cc6489f5999cb0bfcb` (public-facing, intentional)
 5. `validateAndSanitizeInput` — validates message/lang/history/sessionId, strips HTML
 
 ### AI call
-- API: OpenRouter (`https://openrouter.ai/api/v1/chat/completions`)
-- Model: env `OPENROUTER_MODEL` || `google/gemini-3.1-flash-lite`
-- `max_tokens: 300`, `temperature: 0.3`
+- API: Google Gemini API via Generative Language API (`https://generativelanguage.googleapis.com/v1beta/models/...`)
+- Model: env `GEMINI_MODEL` || `gemini-3.1-flash-lite`
+- Reasoning Budget: `thinkingConfig.thinkingBudget` configurable via `GEMINI_THINKING_BUDGET` env or `reasoningLevel` (`off`, `low`, `medium` [default: 2048], `high`, `dynamic`)
+- `maxOutputTokens: 1000`, `temperature: 0.3`
 - Timeout: 12 seconds (AbortController)
 - History parts validated for structure but NOT for length (AI replies can exceed 500 chars)
 
@@ -298,17 +299,18 @@ When user provides email in chat:
 - `NODE_ENV=development` or `test`: uses `gemini-cache.json` to avoid real API calls
 - Cache key: `lang:message.toLowerCase()`
 
-### Environment variables on Railway
+### Environment variables on Railway / Server
 ```
-OPENROUTER_API_KEY      required
+GEMINI_API_KEY          required (GCP Project azhyshchev)
 SECRET_WIDGET_TOKEN     required
 SUPABASE_URL            required
 SUPABASE_KEY            required
 TELEGRAM_BOT_TOKEN      optional
 TELEGRAM_CHAT_ID        optional
 CORS_ORIGIN             optional (comma-separated extra origins)
-OPENROUTER_MODEL        optional override
-PORT                    set by Railway automatically
+GEMINI_MODEL            optional override (default: gemini-3.1-flash-lite)
+GEMINI_THINKING_BUDGET  optional reasoning level (off, low, medium, high, dynamic; default: medium / 2048)
+PORT                    set by host automatically
 ```
 
 ---

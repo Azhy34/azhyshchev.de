@@ -25,8 +25,8 @@ function saveCache() {
 }
 
 // Fail-fast environment variable checks
-if (!process.env.OPENROUTER_API_KEY) {
-  console.error('CRITICAL ERROR: OPENROUTER_API_KEY environment variable is not defined.');
+if (!process.env.GEMINI_API_KEY) {
+  console.error('CRITICAL ERROR: GEMINI_API_KEY environment variable is not defined.');
   process.exit(1);
 }
 if (!process.env.SECRET_WIDGET_TOKEN) {
@@ -513,8 +513,34 @@ app.get('/api/logs', async (req, res) => {
 
 // Chat Integration Route
 app.post('/api/chat', rateLimiter, authenticateToken, validateAndSanitizeInput, async (req, res) => {
-  const url = 'https://openrouter.ai/api/v1/chat/completions';
-  const model = process.env.OPENROUTER_MODEL || 'google/gemini-3.1-flash-lite';
+  const geminiModel = process.env.GEMINI_MODEL || 'gemini-3.1-flash';
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${geminiModel}:generateContent?key=${process.env.GEMINI_API_KEY}`;
+
+  // Resolve Thinking / Reasoning Budget (Effort: off, low, medium, high, max, dynamic)
+  const reasoningMap = {
+    'off': 0,
+    'none': 0,
+    'low': 2048,
+    'medium': 4096,
+    'high': 8192,
+    'max': 16384,
+    'dynamic': -1
+  };
+  let thinkingBudget = 4096; // Default medium reasoning ceiling (4096 tokens)
+  const envThinking = process.env.GEMINI_THINKING_BUDGET || process.env.GEMINI_REASONING_EFFORT;
+  if (envThinking !== undefined) {
+    if (!isNaN(Number(envThinking))) {
+      thinkingBudget = Number(envThinking);
+    } else if (reasoningMap[envThinking.toLowerCase()] !== undefined) {
+      thinkingBudget = reasoningMap[envThinking.toLowerCase()];
+    }
+  }
+  // Request-level override (e.g. { reasoningLevel: "medium" } or { thinkingBudget: 4096 })
+  if (req.body.reasoningLevel && reasoningMap[String(req.body.reasoningLevel).toLowerCase()] !== undefined) {
+    thinkingBudget = reasoningMap[String(req.body.reasoningLevel).toLowerCase()];
+  } else if (req.body.thinkingBudget !== undefined && !isNaN(Number(req.body.thinkingBudget))) {
+    thinkingBudget = Number(req.body.thinkingBudget);
+  }
 
   // Extract email address if present in the current message or history
   let detectedEmail = extractEmail(req.sanitizedMessage);
@@ -597,21 +623,35 @@ INSTRUCTIONS:
     systemInstructionText += leadContext;
   }
 
-  // Build OpenAI-compatible messages array
-  const messages = [{ role: 'system', content: systemInstructionText }];
+  // Build Gemini contents array
+  const geminiContents = [];
   for (const item of req.sanitizedHistory) {
-    messages.push({
-      role: item.role === 'model' ? 'assistant' : 'user',
-      content: item.parts.map(p => p.text).join('\n')
+    geminiContents.push({
+      role: item.role === 'assistant' ? 'model' : item.role,
+      parts: item.parts.map(p => ({ text: p.text }))
     });
   }
-  messages.push({ role: 'user', content: req.sanitizedMessage });
+  geminiContents.push({
+    role: 'user',
+    parts: [{ text: req.sanitizedMessage }]
+  });
+
+  const generationConfig = {
+    temperature: 0.3,
+    maxOutputTokens: 2000
+  };
+  if (thinkingBudget !== undefined && thinkingBudget !== null) {
+    generationConfig.thinkingConfig = {
+      thinkingBudget: thinkingBudget
+    };
+  }
 
   const payload = {
-    model,
-    messages,
-    temperature: 0.3,
-    max_tokens: 300
+    system_instruction: {
+      parts: [{ text: systemInstructionText }]
+    },
+    contents: geminiContents,
+    generationConfig
   };
   const isDevOrTest = (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') && process.env.DISABLE_CACHE !== 'true';
   const cacheKey = `${req.body.lang || 'en'}:${req.sanitizedMessage.trim().toLowerCase()}`;
@@ -643,10 +683,7 @@ INSTRUCTIONS:
     const response = await fetch(url, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
-        'HTTP-Referer': 'https://azhyshchev.de',
-        'X-Title': 'Mikhail Azhyshchev Portfolio Chat'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(payload),
       signal: controller.signal
@@ -656,12 +693,15 @@ INSTRUCTIONS:
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error(`OpenRouter API Error (status ${response.status}):`, errorText);
+      console.error(`Gemini API Error (status ${response.status}):`, errorText);
       return res.status(502).json({ error: 'Failed to communicate with the AI model. Please try again later.' });
     }
 
     const data = await response.json();
-    const replyText = data.choices?.[0]?.message?.content;
+    const candidates = data.candidates || [];
+    const parts = candidates[0]?.content?.parts || [];
+    const textParts = parts.filter(p => !p.thought && p.text).map(p => p.text);
+    const replyText = (textParts.length > 0 ? textParts.join('\n') : parts[parts.length - 1]?.text) || '';
 
     if (!replyText) {
       console.error('Invalid response format from Gemini API:', JSON.stringify(data));

@@ -1,6 +1,6 @@
 # FAQ Chat Agent — Backend Proxy
 
-Express.js proxy server between the frontend chat widget (`js/chat-widget.js`) and AI models via [OpenRouter](https://openrouter.ai). Default model: `google/gemini-2.5-flash`. Model can be swapped via `OPENROUTER_MODEL` env var without code changes. Handles security, rate limiting, conversation logging, and personalized lead context injection.
+Express.js proxy server between the frontend chat widget (`js/chat-widget.js`) and Google Gemini API (`generativelanguage.googleapis.com`). Default model: `gemini-3.1-flash-lite`. Model can be swapped via `GEMINI_MODEL` env var without code changes. Handles security, rate limiting, conversation logging, and personalized lead context injection.
 
 ## Features
 
@@ -13,7 +13,7 @@ Express.js proxy server between the frontend chat widget (`js/chat-widget.js`) a
 - **Telegram Logging** — every conversation turn sent to a Telegram bot (non-blocking, optional).
 - **Supabase Logging** — every turn written to `chat_logs` table (non-blocking, optional).
 - **Local Gemini Cache** — in `development` and `test` modes, responses are cached to `gemini-cache.json` to avoid redundant API calls during development.
-- **5s Timeout** — `AbortController` on every Gemini API fetch to prevent hung processes.
+- **12s Timeout** — `AbortController` on every Gemini API fetch to prevent hung processes.
 - **Health Check** — `GET /health` returns `{ status: "OK", timestamp }`.
 - **Log Retrieval** — `GET /api/logs` returns latest 100 chat logs from Supabase (requires token).
 
@@ -67,11 +67,11 @@ Header `X-From-Cache: true` is set when the response was served from local cache
    NODE_ENV=development
 
    # Required
-   OPENROUTER_API_KEY=sk-or-v1-...
+   GEMINI_API_KEY=AIzaSy...
    SECRET_WIDGET_TOKEN=your-secret-token
 
-   # Model (default: google/gemini-2.5-flash — swap anytime without code changes)
-   OPENROUTER_MODEL=google/gemini-2.5-flash
+   # Model (default: gemini-3.1-flash-lite)
+   GEMINI_MODEL=gemini-3.1-flash-lite
 
    # CORS (production URL, localhost added automatically in dev mode)
    CORS_ORIGIN=https://azhyshchev.de
