@@ -276,10 +276,11 @@ Token in HTML: `3530a5f865dcb0cc6489f5999cb0bfcb` (public-facing, intentional)
 5. `validateAndSanitizeInput` — validates message/lang/history/sessionId, strips HTML
 
 ### AI call
-- API: Google Gemini API via Generative Language API (`https://generativelanguage.googleapis.com/v1beta/models/...`)
-- Model: env `GEMINI_MODEL` || `gemini-3.1-flash-lite`
-- Reasoning Budget: `thinkingConfig.thinkingBudget` configurable via `GEMINI_THINKING_BUDGET` env or `reasoningLevel` (`off`, `low`, `medium` [default: 2048], `high`, `dynamic`)
-- `maxOutputTokens: 1000`, `temperature: 0.3`
+- Architecture: Multi-Vendor AI Digital Avatar on Cloud Run (`https://azhy-ai-consultant-377331886416.europe-west3.run.app/api/chat`) with Google ADK + Vertex AI Search RAG and Direct Gemini 3.1 Flash.
+- API (Backend fallback): Google Gemini API via Generative Language API (`https://generativelanguage.googleapis.com/v1beta/models/...`)
+- Model: env `GEMINI_MODEL` || `gemini-3.1-flash`
+- Reasoning Budget: `thinkingConfig.thinkingBudget` configurable via `GEMINI_THINKING_BUDGET` env or `reasoningLevel` (`off`, `low`, `medium` [default: 4096], `high`, `max`, `dynamic`)
+- `maxOutputTokens: 2000`, `temperature: 0.3`
 - Timeout: 12 seconds (AbortController)
 - History parts validated for structure but NOT for length (AI replies can exceed 500 chars)
 
@@ -292,7 +293,7 @@ When user provides email in chat:
 
 ### Logging (non-blocking, background)
 - Telegram: sends each interaction to configured bot/chat
-- Supabase: inserts into `chat_logs` table (session_id, ip, lang, user_message, agent_reply, timestamp)
+- Database Shield: inserts into Cloud Firestore (`leads`) and Supabase (`chat_logs`)
 - 90-day retention per Datenschutz
 
 ### Dev/test cache
@@ -308,8 +309,8 @@ SUPABASE_KEY            required
 TELEGRAM_BOT_TOKEN      optional
 TELEGRAM_CHAT_ID        optional
 CORS_ORIGIN             optional (comma-separated extra origins)
-GEMINI_MODEL            optional override (default: gemini-3.1-flash-lite)
-GEMINI_THINKING_BUDGET  optional reasoning level (off, low, medium, high, dynamic; default: medium / 2048)
+GEMINI_MODEL            optional override (default: gemini-3.1-flash)
+GEMINI_THINKING_BUDGET  optional reasoning level (off, low, medium, high, max, dynamic; default: medium / 4096)
 PORT                    set by host automatically
 ```
 
