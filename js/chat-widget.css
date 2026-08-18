@@ -48,6 +48,11 @@ body.nbw-no-scroll {
   -webkit-tap-highlight-color: transparent;
 }
 
+.nbw-msg strong,
+.nbw-msg b {
+  font-weight: 700 !important;
+}
+
 /* Launcher Pill Button */
 .nbw-launcher {
   display: flex;
