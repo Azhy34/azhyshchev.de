@@ -274,19 +274,37 @@
       }, 300);
     };
 
-    const appendMessage = (role, text) => {
-      const msg = document.createElement('div');
-      msg.className = `nbw-msg nbw-msg-${role}`;
-      // Escape HTML first (XSS), then make URLs clickable
-      const escaped = text
+    const formatMarkdown = (text) => {
+      if (!text) return '';
+      // 1. Escape HTML first
+      let html = text
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;');
-      msg.innerHTML = escaped.replace(
-        /(https?:\/\/[^\s<>"]+)/g,
-        '<a href="$1" target="_blank" rel="noreferrer noopener">$1</a>'
-      );
+
+      // 2. Parse Markdown Links [Text](URL) or [[Text](URL)](URL) artifacts
+      html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^\s\)\>]+)\)/g, '<a href="$2" target="_blank" rel="noreferrer noopener">$1</a>');
+
+      // 3. Bold (**text**)
+      html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+
+      // 4. Standalone URLs (not already part of an <a> tag)
+      html = html.replace(/(^|[\s\n])(https?:\/\/[^\s<>\)\]]+)/g, '$1<a href="$2" target="_blank" rel="noreferrer noopener">$2</a>');
+
+      // 5. Ordered lists (1. Item) and unordered lists (* Item / - Item)
+      html = html.replace(/(?:^|\n)\s*(\d+\.|\*|\-)\s+(.+)/g, '<br>• $2');
+
+      // 6. Line breaks
+      html = html.replace(/\n/g, '<br>');
+
+      return html;
+    };
+
+    const appendMessage = (role, text) => {
+      const msg = document.createElement('div');
+      msg.className = `nbw-msg nbw-msg-${role}`;
+      msg.innerHTML = formatMarkdown(text);
       messagesBox.appendChild(msg);
       scrollToBottom();
     };
