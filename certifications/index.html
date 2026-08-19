@@ -159,29 +159,29 @@
       padding: 11px 12px;
       font-size: 0.9rem; font-weight: 700;
       border: 2px solid transparent;
-      transition: transform 0.18s ease;
+      transition: transform 0.18s ease, background 0.18s ease;
     }
 
-    .nav-item:hover,
-    .social-link:hover { transform: translate(-2px, -2px); }
+    .nav-item:hover { transform: translate(-2px, -2px); }
 
     .nav-item.active {
-      border-color: var(--black);
       background: var(--black);
       color: var(--white);
-      box-shadow: 4px 4px 0 var(--black);
+      border-color: var(--black);
+      box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.12);
+    }
+
+    .icon-box {
+      width: 24px; height: 24px;
+      display: grid; place-items: center;
+      font-size: 0.75rem; font-weight: 800;
+      box-shadow: none;
+      flex-shrink: 0;
     }
 
     .nav-item.active .icon-box {
       background: var(--yellow);
       color: var(--black);
-    }
-
-    .icon-box {
-      width: 28px; height: 28px;
-      display: grid; place-items: center;
-      font-size: 0.85rem; font-weight: 800;
-      flex-shrink: 0;
     }
 
     .social-row { display: flex; gap: 8px; margin-top: auto; }
