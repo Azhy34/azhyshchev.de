@@ -1,10 +1,27 @@
 {
   "name": "Azhy AI Sales & Cloud Consultant (Google ADK Architecture)",
-  "description": "Autonomous B2B AI Sales & Technical Consultant representing Mikhail Azhyshchev (azhyshchev.de). Specialized in Google ADK Multi-Agent systems, WebMCP & Agent-Ready Web integrations, Hybrid RAG pipelines, and Google Cloud infrastructure.",
+  "package_name": "de.azhyshchev.azhy_ai_consultant",
+  "display_name": "azhy_ai_consultant",
+  "description": "Autonomous B2B AI Sales & Technical Consultant representing Mikhail Azhyshchev (azhyshchev.de). Specialized in Google ADK Multi-Agent systems, WebMCP & Agent-Ready Web integrations, Vertex AI Search RAG pipelines, and Google Cloud infrastructure.",
   "url": "https://azhyshchev.de",
+  "agent_url": "https://azhy-ai-consultant-377331886416.europe-west3.run.app",
   "protocolVersion": "0.3.0",
+  "protocols": [
+    "WebMCP-0.3",
+    "A2A-1.0",
+    "HTTP-REST"
+  ],
   "capabilities": {
-    "streaming": false
+    "streaming": false,
+    "rag": "Vertex AI Search RAG",
+    "webMCP": true,
+    "privacyCompliance": "GDPR / DSGVO Compliant (EU Server Hosting in Frankfurt am Main, Germany)"
+  },
+  "endpoints": {
+    "chat": "https://azhy-ai-consultant-377331886416.europe-west3.run.app/api/chat",
+    "health": "https://azhy-ai-consultant-377331886416.europe-west3.run.app/health",
+    "agentCard": "https://azhyshchev.de/.well-known/agent-card.json",
+    "webMCPRuntime": "https://azhyshchev.de/js/webmcp.js"
   },
   "defaultInputModes": [
     "text"
@@ -25,8 +42,8 @@
     },
     {
       "id": "hybrid_rag_sales_assistants",
-      "name": "Hybrid RAG & Knowledge Base Assistants",
-      "description": "Building production RAG pipelines combining SQL truth with semantic vector search, cutting API costs by ~90%."
+      "name": "Vertex AI Search & Hybrid RAG",
+      "description": "Building production RAG pipelines combining ground-truth data with semantic vector search on Google Cloud."
     },
     {
       "id": "b2b_lead_generation_mcp",
@@ -37,6 +54,28 @@
       "id": "gcp_cloud_run_infrastructure",
       "name": "GCP Cloud Run & Enterprise Infrastructure",
       "description": "Serverless containerized AI microservices on Google Cloud Run with Secret Manager, IAM ADC, and Cloud Firestore."
+    }
+  ],
+  "tools": [
+    {
+      "name": "get_candidate_profile",
+      "description": "Retrieves Mikhail Azhyshchev's core profile, positioning, contact links, and Agent Card metadata."
+    },
+    {
+      "name": "get_candidate_skills",
+      "description": "Retrieves verified technical skills and proficiencies filtered by category (ai_agents, cloud_rag, b2b_automation, all)."
+    },
+    {
+      "name": "get_project_case_study",
+      "description": "Retrieves detailed case studies of Mikhail's flagship AI projects, architecture, and technology stacks."
+    },
+    {
+      "name": "ask_consultant_live",
+      "description": "Direct bridge to Mikhail's live Google ADK Multi-Agent AI Consultant on Google Cloud Run with Vertex AI RAG grounding."
+    },
+    {
+      "name": "book_intro_call",
+      "description": "Generates Calendly 30-min booking link and direct contact channels for scheduling an intro call with Mikhail Azhyshchev."
     }
   ]
 }

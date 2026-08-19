@@ -602,6 +602,30 @@
         <!-- Article grid -->
         <div class="articles-grid" id="articlesGrid">
 
+          <!-- Card: WebMCP & Agentic AI -->
+          <div class="article-card" data-tags="ai-agents automation" data-modal="modal-webmcp-agent-ready-web">
+            <div class="card-accent" style="background: var(--yellow);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">Agentic AI · WebMCP · Model Context Protocol</span>
+                <span class="card-readtime">5 min read</span>
+              </div>
+              <h2 class="card-title">Agentic AI &amp; WebMCP: Why Autonomous AI Agents Are Replacing Classical SEO</h2>
+              <p class="card-excerpt">How the new Google Cloud WebMCP standard and Model Context Protocol turn websites into self-describing, tool-executable APIs for autonomous AI buyer agents.</p>
+              <div class="card-tags">
+                <span class="tag">Agentic AI</span>
+                <span class="tag">WebMCP</span>
+                <span class="tag">AI Agents</span>
+                <span class="tag">Google ADK</span>
+                <span class="tag">Vertex AI RAG</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Key result: <span>Browser-Native MCP · Tool-Executable DOM</span></div>
+              <a class="read-link" href="/articles/webmcp-agent-ready-web/">Read full article →</a>
+            </div>
+          </div>
+
           <!-- Card: AI Google Ads Management -->
           <div class="article-card" data-tags="automation ai-agents" data-modal="modal-ai-google-ads-management">
             <div class="card-accent" style="background: var(--mint);"></div>
@@ -2019,6 +2043,59 @@
         <div style="display: flex; gap: 10px; width: 100%; justify-content: center; align-items: center;">
           <a class="action-btn dark" href="/articles/ai-google-ads-management/">Read full article →</a>
           <button class="mini-btn" onclick="closeModal('modal-ai-google-ads-management')">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: WebMCP & Agentic AI -->
+  <div class="modal-overlay" id="modal-webmcp-agent-ready-web" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-section-label">Agentic AI · WebMCP · Model Context Protocol</div>
+          <h2 class="modal-title">Agentic AI &amp; WebMCP: Why Autonomous AI Agents Are Replacing Classical SEO</h2>
+          <div class="modal-meta">5 min read · Published August 2026</div>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-webmcp-agent-ready-web')">×</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="modal-section-label">The Core Shift</div>
+          <p>Websites are transitioning from static visual brochures into tool-executable APIs. Google Cloud WebMCP brings the Model Context Protocol directly into the browser (<code>window.modelContext</code>), allowing external AI buyer agents to query skills, retrieve case studies, and book intro calls without brittle HTML scraping.</p>
+        </div>
+        <div>
+          <div class="modal-section-label">4-Layer AI Visibility Stack</div>
+          <ul class="modal-checklist">
+            <li><strong>1. Classical SEO</strong> — Foundation for Googlebot indexation.</li>
+            <li><strong>2. GEO / AEO</strong> — Semantic discovery by neural engines (Exa.ai, Perplexity).</li>
+            <li><strong>3. A2A Agent Passport</strong> — Official open capability manifest via <code>agent-card.json</code>.</li>
+            <li><strong>4. WebMCP Runtime</strong> — Browser-native typed tool execution directly on the client.</li>
+          </ul>
+        </div>
+        <div>
+          <div class="modal-section-label">Key metrics</div>
+          <div class="modal-metrics">
+            <div class="modal-metric">
+              <span class="modal-metric-val">WebMCP</span>
+              <span class="modal-metric-lbl">v0.3.0 Standard</span>
+            </div>
+            <div class="modal-metric">
+              <span class="modal-metric-val">15.9%</span>
+              <span class="modal-metric-lbl">AI search conversion</span>
+            </div>
+            <div class="modal-metric">
+              <span class="modal-metric-val">Cloud Run</span>
+              <span class="modal-metric-lbl">Vertex AI RAG Gateway</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center;">
+        <p style="font-size: 0.82rem; font-weight: 700; opacity: 0.85;">📖 Full step-by-step article with code and architecture available on the article page:</p>
+        <div style="display: flex; gap: 10px; width: 100%; justify-content: center; align-items: center;">
+          <a class="action-btn dark" href="/articles/webmcp-agent-ready-web/" style="font-size: 0.92rem; padding: 12px 24px; font-weight: 800;">Read Full Article Page →</a>
+          <button class="mini-btn" onclick="closeModal('modal-webmcp-agent-ready-web')">Close</button>
         </div>
       </div>
     </div>
