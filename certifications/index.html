@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certifications & Credentials | Mikhail Azhyshchev — Google ADK, AI & Machine Learning</title>
+  <meta name="description" content="Verified professional certifications and credentials of Mikhail Azhyshchev: Google Cloud ADK & Multi-Agents, Stanford / DeepLearning.AI Machine Learning, Hochschule München 6 ECTS, Advanced RAG, and IBM GenAI.">
+  <link rel="canonical" href="https://azhyshchev.de/certifications/">
+  <link rel="alternate" hreflang="en" href="https://azhyshchev.de/certifications/">
+  <link rel="alternate" hreflang="de" href="https://azhyshchev.de/de/zertifikate/">
+  <link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/certifications/">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Certifications & Credentials | Mikhail Azhyshchev">
+  <meta property="og:description" content="Verified credentials in Google Cloud ADK, Multi-Agent Systems, Advanced RAG, Stanford ML, and Applied Deep Learning.">
+  <meta property="og:type" content="profile">
+  <meta property="og:url" content="https://azhyshchev.de/certifications/">
+  <meta property="og:image" content="https://azhyshchev.de/Azhyschev.JPG">
+
+  <!-- Schema.org LD+JSON -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "mainEntity": {
+      "@type": "Person",
+      "name": "Mikhail Azhyshchev",
+      "jobTitle": "AI-Enabled Automation Engineer",
+      "url": "https://azhyshchev.de",
+      "knowsAbout": [
+        "Google Agent Development Kit (ADK)",
+        "Multi-Agent Systems",
+        "Retrieval-Augmented Generation (RAG)",
+        "Vector Databases",
+        "Machine Learning",
+        "Python"
+      ],
+      "hasCredential": [
+        {
+          "@type": "EducationalOccupationalCredential",
+          "name": "Engineer AI Agents with Agent Development Kit (ADK)",
+          "credentialCategory": "badge",
+          "recognizedBy": { "@type": "Organization", "name": "Google Cloud" },
+          "url": "https://www.credly.com/badges/8343dd1f-d412-4825-b9d1-6e14322b5765/public_url"
+        },
+        {
+          "@type": "EducationalOccupationalCredential",
+          "name": "Build Collaborative Multi-Agent Systems with ADK",
+          "credentialCategory": "badge",
+          "recognizedBy": { "@type": "Organization", "name": "Google Cloud" },
+          "url": "https://www.skills.google/public_profiles/4e2bc6b3-aca1-47d8-9eb7-2ef4a6373f9d/badges/26735580"
+        },
+        {
+          "@type": "EducationalOccupationalCredential",
+          "name": "Applied Machine Learning and Deep Learning (6 ECTS)",
+          "recognizedBy": { "@type": "CollegeOrUniversity", "name": "Hochschule München" }
+        },
+        {
+          "@type": "EducationalOccupationalCredential",
+          "name": "Supervised Machine Learning: Regression and Classification",
+          "recognizedBy": { "@type": "Organization", "name": "Stanford Online & DeepLearning.AI" },
+          "url": "https://coursera.org/share/48862dbd45c99a6949049d353ad0e136"
+        }
+      ]
+    }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --sky: #61b5e8;
+      --mint: #b9ddb7;
+      --cream: #f8f0dc;
+      --yellow: #f5c84b;
+      --pink: #efb2d5;
+      --blue: #d8ebff;
+      --peach: #f7d4b1;
+      --coral: #ff9a77;
+      --rose: #ecb0c4;
+      --black: #111111;
+      --white: #ffffff;
+      --google-blue: #e8f0fe;
+      --google-green: #e6f4ea;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--black);
+      background: linear-gradient(120deg,
+        var(--sky) 0 34%,
+        var(--peach) 34% 55%,
+        var(--coral) 55% 72%,
+        var(--rose) 72% 100%);
+      padding: 48px 24px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── SHELL ── */
+    .shell {
+      width: min(1320px, 100%);
+      margin: 0 auto;
+      border: 3px solid var(--black);
+      box-shadow: 12px 12px 0 var(--black);
+      background: var(--mint);
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      min-height: 820px;
+      overflow: hidden;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      border-right: 3px solid var(--black);
+      padding: 20px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin-bottom: 8px;
+    }
+
+    .brand-badge,
+    .icon-box,
+    .social-link,
+    .top-icon,
+    .avatar-chip,
+    .cert-badge {
+      border: 2px solid var(--black);
+      background: var(--white);
+      box-shadow: 3px 3px 0 var(--black);
+    }
+
+    .brand-badge {
+      width: 42px; height: 34px;
+      display: grid; place-items: center;
+      font-size: 1rem; font-weight: 800;
+    }
+
+    .nav { display: flex; flex-direction: column; gap: 8px; }
+
+    .nav-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 11px 12px;
+      font-size: 0.9rem; font-weight: 700;
+      border: 2px solid transparent;
+      transition: transform 0.18s ease;
+    }
+
+    .nav-item:hover,
+    .social-link:hover { transform: translate(-2px, -2px); }
+
+    .nav-item.active {
+      border-color: var(--black);
+      background: var(--black);
+      color: var(--white);
+      box-shadow: 4px 4px 0 var(--black);
+    }
+
+    .nav-item.active .icon-box {
+      background: var(--yellow);
+      color: var(--black);
+    }
+
+    .icon-box {
+      width: 28px; height: 28px;
+      display: grid; place-items: center;
+      font-size: 0.85rem; font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .social-row { display: flex; gap: 8px; margin-top: auto; }
+    .social-link {
+      width: 38px; height: 38px;
+      display: grid; place-items: center;
+      font-size: 0.85rem; font-weight: 800;
+    }
+
+    /* ── MAIN ── */
+    .main {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      overflow-y: auto;
+      background: var(--cream);
+    }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      border: 3px solid var(--black);
+      background: var(--white);
+      box-shadow: 6px 6px 0 var(--black);
+      padding: 18px 20px;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .status-pill {
+      border: 2px solid var(--black);
+      background: var(--yellow);
+      box-shadow: 3px 3px 0 var(--black);
+      padding: 6px 14px;
+      font-size: 0.82rem; font-weight: 800;
+    }
+
+    .page-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .page-subtitle {
+      font-size: 0.88rem;
+      color: #444;
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    /* ── SUMMARY STATS ── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .stat-card {
+      border: 3px solid var(--black);
+      background: var(--white);
+      box-shadow: 5px 5px 0 var(--black);
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .stat-card.google { background: var(--blue); }
+    .stat-card.academic { background: var(--pink); }
+    .stat-card.rag { background: var(--mint); }
+    .stat-card.lang { background: var(--yellow); }
+
+    .stat-number { font-size: 1.8rem; font-weight: 800; }
+    .stat-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+
+    /* ── SECTION HEADER ── */
+    .section-title-box {
+      border: 3px solid var(--black);
+      background: var(--black);
+      color: var(--white);
+      box-shadow: 6px 6px 0 var(--black);
+      padding: 12px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .section-title-box .tag {
+      background: var(--yellow);
+      color: var(--black);
+      padding: 3px 10px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      border: 1px solid var(--black);
+    }
+
+    /* ── CERTIFICATE CARDS GRID ── */
+    .certs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+    }
+
+    .cert-card {
+      border: 3px solid var(--black);
+      background: var(--white);
+      box-shadow: 6px 6px 0 var(--black);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .cert-card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 9px 9px 0 var(--black);
+    }
+
+    .cert-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .cert-issuer {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #555;
+    }
+
+    .cert-badge-tag {
+      border: 2px solid var(--black);
+      background: var(--yellow);
+      box-shadow: 2px 2px 0 var(--black);
+      padding: 2px 8px;
+      font-size: 0.7rem;
+      font-weight: 800;
+    }
+
+    .cert-card.credly .cert-badge-tag { background: var(--pink); }
+    .cert-card.academic .cert-badge-tag { background: var(--mint); }
+    .cert-card.rag .cert-badge-tag { background: var(--sky); }
+
+    .cert-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .cert-meta {
+      font-size: 0.8rem;
+      color: #555;
+      line-height: 1.4;
+    }
+
+    .cert-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 2px solid var(--black);
+      background: var(--yellow);
+      box-shadow: 3px 3px 0 var(--black);
+      padding: 9px 14px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background 0.15s ease;
+      margin-top: auto;
+    }
+
+    .cert-btn:hover {
+      background: var(--coral);
+    }
+
+    .cert-btn.academic-btn { background: var(--mint); }
+    .cert-btn.academic-btn:hover { background: var(--yellow); }
+
+    /* ── COURSERA SKILL XP BARS ── */
+    .xp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .xp-card {
+      border: 3px solid var(--black);
+      background: var(--white);
+      box-shadow: 5px 5px 0 var(--black);
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .xp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      font-weight: 800;
+    }
+
+    .xp-value {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #555;
+    }
+
+    .xp-bar-bg {
+      width: 100%;
+      height: 10px;
+      border: 2px solid var(--black);
+      background: var(--cream);
+      box-shadow: 2px 2px 0 var(--black);
+      overflow: hidden;
+    }
+
+    .xp-bar-fill {
+      height: 100%;
+      background: var(--coral);
+    }
+
+    .xp-bar-fill.max { background: var(--mint); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 980px) {
+      .shell { grid-template-columns: 1fr; }
+      .sidebar { border-right: none; border-bottom: 3px solid var(--black); }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .xp-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      .stats-grid { grid-template-columns: 1fr; }
+      .certs-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <link rel="stylesheet" href="../mobile.css">
+</head>
+<body>
+  <div class="shell">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <a class="brand" href="/">
+        <div class="brand-badge">&lt;/&gt;</div>
+        <span>AZHYSHCHEV</span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">&#9776;</button>
+      <nav class="nav">
+        <a class="nav-item" href="/">
+          <span class="icon-box">H</span>
+          <span>Home</span>
+        </a>
+        <a class="nav-item" href="/ai-checker">
+          <span class="icon-box">🤖</span>
+          <span>AI Checker</span>
+        </a>
+        <a class="nav-item" href="/experience">
+          <span class="icon-box">E</span>
+          <span>Experience</span>
+        </a>
+        <a class="nav-item" href="/projects">
+          <span class="icon-box">P</span>
+          <span>Projects</span>
+        </a>
+        <a class="nav-item" href="/articles">
+          <span class="icon-box">A</span>
+          <span>Articles</span>
+        </a>
+        <a class="nav-item" href="/skills">
+          <span class="icon-box">S</span>
+          <span>Skills</span>
+        </a>
+        <a class="nav-item active" href="/certifications">
+          <span class="icon-box">🎓</span>
+          <span>Certificates</span>
+        </a>
+        <a class="nav-item" href="/contact">
+          <span class="icon-box">C</span>
+          <span>Contact</span>
+        </a>
+      </nav>
+
+      <div class="social-row">
+        <a class="social-link" href="https://linkedin.com/in/azhyshchev" target="_blank" rel="noopener noreferrer" title="LinkedIn">in</a>
+        <a class="social-link" href="https://github.com/Azhy34" target="_blank" rel="noopener noreferrer" title="GitHub">gh</a>
+        <a class="social-link" href="https://t.me/azhyshchev" target="_blank" rel="noopener noreferrer" title="Telegram">tg</a>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <div>
+          <h1 class="page-title">
+            <span>🎓</span>
+            <span>Certifications & Credentials</span>
+          </h1>
+          <p class="page-subtitle">
+            100% verified credentials in Google Cloud ADK & Multi-Agents, Stanford Machine Learning, Advanced RAG, and Applied Deep Learning.
+          </p>
+        </div>
+        <div class="top-actions">
+          <a class="status-pill" href="/de/zertifikate/" title="Auf Deutsch anzeigen">🇩🇪 Deutsch</a>
+          <a class="status-pill" href="https://calendly.com/azhyshchev/30min" target="_blank" rel="noopener noreferrer" style="background:var(--pink);">📅 Book Intro</a>
+        </div>
+      </header>
+
+      <!-- STATS OVERVIEW -->
+      <section class="stats-grid" aria-label="Credentials Overview">
+        <div class="stat-card google">
+          <span class="stat-number">10</span>
+          <span class="stat-label">Google Cloud & ADK Badges</span>
+        </div>
+        <div class="stat-card academic">
+          <span class="stat-number">6 ECTS</span>
+          <span class="stat-label">Hochschule München Applied ML</span>
+        </div>
+        <div class="stat-card rag">
+          <span class="stat-number">7</span>
+          <span class="stat-label">RAG & GenAI Specializations</span>
+        </div>
+        <div class="stat-card lang">
+          <span class="stat-number">B1</span>
+          <span class="stat-label">German Certified (telc)</span>
+        </div>
+      </section>
+
+      <!-- 1. GOOGLE CLOUD & AGENT DEVELOPMENT KIT -->
+      <div class="section-title-box">
+        <span>1. Google Cloud — Agent Development Kit (ADK) & Multi-Agents</span>
+        <span class="tag">Google Skills Boost & Credly</span>
+      </div>
+
+      <section class="certs-grid">
+        <!-- Credly ADK Badge -->
+        <article class="cert-card credly">
+          <div class="cert-header">
+            <span class="cert-issuer">Google Cloud & Credly</span>
+            <span class="cert-badge-tag">Official Credly Badge</span>
+          </div>
+          <h2 class="cert-title">Engineer AI Agents with Agent Development Kit (ADK)</h2>
+          <p class="cert-meta">
+            Comprehensive certification in ADK agent runtime, multi-agent swarms, tool calling, memory management, and Cloud Run production deployments.
+          </p>
+          <a class="cert-btn" href="https://www.credly.com/badges/8343dd1f-d412-4825-b9d1-6e14322b5765/public_url" target="_blank" rel="noopener noreferrer">
+            Verify on Credly ↗
+          </a>
+        </article>
+
+        <!-- Google: Build Agent Skills -->
+        <article class="cert-card">
+          <div class="cert-header">
+            <span class="cert-issuer">Google Cloud Skills Boost</span>
+            <span class="cert-badge-tag">Badge #26982446</span>
+          </div>
+          <h2 class="cert-title">Build Agent Skills with Google</h2>
+          <p class="cert-meta">
+            Authoring 3-Tier agent skill architectures, self-correction scripts, Agents CLI lifecycle, and Enterprise Skill Registry integration.
+          </p>
+          <a class="cert-btn" href="https://www.skills.google/public_profiles/4e2bc6b3-aca1-47d8-9eb7-2ef4a6373f9d/badges/26982446" target="_blank" rel="noopener noreferrer">
+            Verify Badge ↗
+          </a>
+        </article>
+
+        <!-- Google: Collaborative Multi-Agent Systems -->
+        <article class="cert-card">
+          <div class="cert-header">
+            <span class="cert-issuer">Google Cloud Skills Boost</span>
+            <span class="cert-badge-tag">Badge #26735580</span>
+          </div>
+          <h2 class="cert-title">Build Collaborative Multi-Agent Systems with ADK</h2>
+          <p class="cert-meta">
+            Hierarchical multi-agent swarms, Agent-to-Agent (A2A) protocol, loop agents, sequential pipelines, and Two-Layer Shields.
+          </p>
+          <a class="cert-btn" href="https://www.skills.google/public_profiles/4e2bc6b3-aca1-47d8-9eb7-2ef4a6373f9d/badges/26735580" target="_blank" rel="noopener noreferrer">
+            Verify Badge ↗
+          </a>
+        </article>
+
+        <!-- Google: Gemini for Application Developers -->
+        <article class="cert-card">
+          <div class="cert-header">
+            <span class="cert-issuer">Google Cloud Skills Boost</span>
+            <span class="cert-badge-tag">Badge #26579741</span>
+          </div>
+          <h2 class="cert-title">Gemini for Application Developers</h2>
+          <p class="cert-meta">
+            Multimodal reasoning, function calling, structured output with Pydantic, embeddings, and context window optimization.
+          </p>
+          <a class="cert-btn" href="https://www.skills.google/public_profiles/4e2bc6b3-aca1-47d8-9eb7-2ef4a6373f9d/badges/26579741" target="_blank" rel="noopener noreferrer">
+            Verify Badge ↗
+          </a>
+        </article>
+
+        <!-- Google: Add Capabilities with Tools -->
+        <article class="cert-card">
+          <div class="cert-header">
+            <span class="cert-issuer">Google Cloud Skills Boost</span>
+            <span class="cert-badge-tag">Badge #26309895</span>
+          </div>
+          <h2 class="cert-title">Add Agent Capabilities With Tools</h2>
+          <p class="cert-meta">
+            Deterministic Python custom tools, Model Context Protocol (MCP) integrations, API error handling, and guardrails.
+          </p>
+          <a class="cert-btn" href="https://www.skills.google/public_profiles/4e2bc6b3-aca1-47d8-9eb7-2ef4a6373f9d/badges/26309895" target="_blank" rel="noopener noreferrer">
+            Verify Badge ↗
+          </a>
+        </article>
+
+        <!-- Google: Manage Agent Memory & State -->
+        <article class="cert-card">
+          <div class="cert-header">
+            <span class="cert-issuer">Google Cloud Skills Boost</span>
+            <span class="cert-badge-tag">Badge #26061362</span>
+          </div>
+          <h2 class="cert-title">Manage Agent Memory and State</h2>
+          <p class="cert-meta">
+            Session state persistence, Firestore integration, multi-turn memory routing, and context variable safety.
+          </p>
+          <a class="cert-btn" href="https://www.skills.google/public_profiles/4e2bc6b3-aca1-47d8-9eb7-2ef4a6373f9d/badges/26061362" target="_blank" rel="noopener noreferrer">
+            Verify Badge ↗
+          </a>
+        </article>
+
+        <!-- Google: Optimize Agent Behavior -->
+        <article class="cert-card">
+          <div class="cert-header">
+            <span class="cert-issuer">Google Cloud Skills Boost</span>
+            <span class="cert-badge-tag">Badge #26029776</span>
+          </div>
+          <h2 class="cert-title">Optimize Agent Behavior</h2>
+          <p class="cert-meta">
+            Thinking budget configuration, automated regression evaluation with eval datasets, and prompt drift mitigation.
+          </p>
+          <a class="cert-btn" href="https://www.skills.google/public_profiles/4e2bc6b3-aca1-47d8-9eb7-2ef4a6373f9d/badges/26029776" target="_blank" rel="noopener noreferrer">
+            Verify Badge ↗
+          </a>
+        </article>
+
+        <!-- Google: Build Agents with ADK -->
+        <article class="cert-card">
+          <div class="cert-header">
+            <span class="cert-issuer">Google Cloud Skills Boost</span>
+            <span class="cert-badge-tag">Badge #24403522</span>
+          </div>
+          <h2 class="cert-title">Build Agents with Agent Development Kit (ADK)</h2>
+          <p class="cert-meta">
+            Core foundations of Google ADK, agent lifecycle, serverless deployment on Google Cloud Run, and IAM security.
+          </p>
+          <a class="cert-btn" href="https://www.skills.google/public_profiles/4e2bc6b3-aca1-47d8-9eb7-2ef4a6373f9d/badges/24403522" target="_blank" rel="noopener noreferrer">
+            Verify Badge ↗
+          </a>
+        </article>
+      </section>
+
+      <!-- 2. ACADEMIC & MACHINE LEARNING FOUNDATIONS -->
+      <div class="section-title-box">
+        <span>2. Academic & Machine Learning Foundations</span>
+        <span class="tag">Stanford & Hochschule München</span>
+      </div>
+
+      <section class="certs-grid">
+        <!-- Hochschule München -->
+        <article class="cert-card academic">
+          <div class="cert-header">
+            <span class="cert-issuer">Hochschule München (HM)</span>
+            <span class="cert-badge-tag">6 ECTS • Master Level</span>
+          </div>
+          <h2 class="cert-title">Applied Machine Learning & Deep Learning</h2>
+          <p class="cert-meta">
+            Deep Neural Networks, CNNs, Transformers, model evaluation metrics, feature engineering, and PyTorch implementations.
+          </p>
+          <a class="cert-btn academic-btn" href="/experience">
+            View Academic Credentials ↗
+          </a>
+        </article>
+
+        <!-- Stanford Andrew Ng ML -->
+        <article class="cert-card academic">
+          <div class="cert-header">
+            <span class="cert-issuer">Stanford Online & DeepLearning.AI</span>
+            <span class="cert-badge-tag">Andrew Ng</span>
+          </div>
+          <h2 class="cert-title">Supervised Machine Learning: Regression & Classification</h2>
+          <p class="cert-meta">
+            Mathematical foundations of gradient descent, linear & logistic regression, regularization, decision boundaries, and loss optimization.
+          </p>
+          <a class="cert-btn academic-btn" href="https://coursera.org/share/48862dbd45c99a6949049d353ad0e136" target="_blank" rel="noopener noreferrer">
+            Verify Certificate ↗
+          </a>
+        </article>
+
+        <!-- Python Basics -->
+        <article class="cert-card">
+          <div class="cert-header">
+            <span class="cert-issuer">University of Michigan / Coursera</span>
+            <span class="cert-badge-tag">Verified Certificate</span>
+          </div>
+          <h2 class="cert-title">Python Basics & Core Algorithms</h2>
+          <p class="cert-meta">
+            Algorithmic problem solving, data structures, OOP patterns, and clean code fundamentals.
+          </p>
+          <a class="cert-btn" href="https://coursera.org/share/991397364b0e7d0522c8248cb21a4952" target="_blank" rel="noopener noreferrer">
+            Verify Certificate ↗
+          </a>
+        </article>
+      </section>
+
+      <!-- 3. ADVANCED RAG, VECTOR DATABASES & GENAI -->
+      <div class="section-title-box">
+        <span>3. Advanced RAG, Vector Databases & GenAI Applications</span>
+        <span class="tag">IBM & Coursera Professional</span>
+      </div>
+
+      <section class="certs-grid">
+        <!-- Advanced RAG with Vector DBs -->
+        <article class="cert-card rag">
+          <div class="cert-header">
+            <span class="cert-issuer">IBM / Coursera</span>
+            <span class="cert-badge-tag">Advanced RAG</span>
+          </div>
+          <h2 class="cert-title">Advanced RAG with Vector Databases and Retrievers</h2>
+          <p class="cert-meta">
+            Hybrid search (Dense + Sparse), semantic chunking, re-ranking strategies, and pgvector / Chroma integration.
+          </p>
+          <a class="cert-btn" href="https://coursera.org/share/c7afc736e9a0877c2852af4d7394a9e2" target="_blank" rel="noopener noreferrer">
+            Verify Certificate ↗
+          </a>
+        </article>
+
+        <!-- Vector Databases for RAG: Introduction -->
+        <article class="cert-card rag">
+          <div class="cert-header">
+            <span class="cert-issuer">IBM / Coursera</span>
+            <span class="cert-badge-tag">Vector DBs</span>
+          </div>
+          <h2 class="cert-title">Vector Databases for RAG: An Introduction</h2>
+          <p class="cert-meta">
+            Embeddings mathematical spaces, cosine similarity, HNSW indexing, and vector database clustering.
+          </p>
+          <a class="cert-btn" href="https://coursera.org/share/68ea34779feaa5f1aac0308f0e81d458" target="_blank" rel="noopener noreferrer">
+            Verify Certificate ↗
+          </a>
+        </article>
+
+        <!-- Build Multimodal GenAI -->
+        <article class="cert-card rag">
+          <div class="cert-header">
+            <span class="cert-issuer">IBM / Coursera</span>
+            <span class="cert-badge-tag">Multimodal AI</span>
+          </div>
+          <h2 class="cert-title">Build Multimodal Generative AI Applications</h2>
+          <p class="cert-meta">
+            Processing audio, image, and text pipelines, vision-language models, and multimodal agent orchestration.
+          </p>
+          <a class="cert-btn" href="https://coursera.org/share/a62e65146c3fbe9756386f3bce3335f2" target="_blank" rel="noopener noreferrer">
+            Verify Certificate ↗
+          </a>
+        </article>
+
+        <!-- Build RAG Applications: Get Started -->
+        <article class="cert-card rag">
+          <div class="cert-header">
+            <span class="cert-issuer">IBM / Coursera</span>
+            <span class="cert-badge-tag">RAG Pipelines</span>
+          </div>
+          <h2 class="cert-title">Build RAG Applications: Get Started</h2>
+          <p class="cert-meta">
+            End-to-end document ingestion, embedding generation, context window injection, and hallucination reduction.
+          </p>
+          <a class="cert-btn" href="https://coursera.org/share/04d337c8d32a9fe81c9f8bf2e1ce6d3e" target="_blank" rel="noopener noreferrer">
+            Verify Certificate ↗
+          </a>
+        </article>
+
+        <!-- Develop Generative AI Applications -->
+        <article class="cert-card rag">
+          <div class="cert-header">
+            <span class="cert-issuer">IBM / Coursera</span>
+            <span class="cert-badge-tag">GenAI App Dev</span>
+          </div>
+          <h2 class="cert-title">Develop Generative AI Applications: Get Started</h2>
+          <p class="cert-meta">
+            LLM API integration, prompt engineering techniques, Few-Shot learning, and API shield architecture.
+          </p>
+          <a class="cert-btn" href="https://coursera.org/share/92e6c2e9eef65339940062d4a83cac10" target="_blank" rel="noopener noreferrer">
+            Verify Certificate ↗
+          </a>
+        </article>
+      </section>
+
+      <!-- 4. COURSERA VERIFIED SKILL COMPETENCIES (XP) -->
+      <div class="section-title-box">
+        <span>4. Coursera Verified Skill Competencies</span>
+        <span class="tag">Skill XP Breakdown</span>
+      </div>
+
+      <section class="xp-grid" aria-label="Skill Competencies">
+        <div class="xp-card">
+          <div class="xp-header">
+            <span>Advanced RAG System Implementation</span>
+            <span class="xp-value">400 / 400 XP (100%)</span>
+          </div>
+          <div class="xp-bar-bg"><div class="xp-bar-fill max" style="width:100%;"></div></div>
+        </div>
+
+        <div class="xp-card">
+          <div class="xp-header">
+            <span>Applied Generative AI Development & Strategy</span>
+            <span class="xp-value">377 / 800 XP</span>
+          </div>
+          <div class="xp-bar-bg"><div class="xp-bar-fill" style="width:47%;"></div></div>
+        </div>
+
+        <div class="xp-card">
+          <div class="xp-header">
+            <span>Foundational Programming</span>
+            <span class="xp-value">560 / 1000 XP</span>
+          </div>
+          <div class="xp-bar-bg"><div class="xp-bar-fill" style="width:56%;"></div></div>
+        </div>
+
+        <div class="xp-card">
+          <div class="xp-header">
+            <span>Machine Learning Foundations</span>
+            <span class="xp-value">200 / 500 XP</span>
+          </div>
+          <div class="xp-bar-bg"><div class="xp-bar-fill" style="width:40%;"></div></div>
+        </div>
+
+        <div class="xp-card">
+          <div class="xp-header">
+            <span>Statistical Modeling & Inference</span>
+            <span class="xp-value">172 / 1200 XP</span>
+          </div>
+          <div class="xp-bar-bg"><div class="xp-bar-fill" style="width:25%;"></div></div>
+        </div>
+
+        <div class="xp-card">
+          <div class="xp-header">
+            <span>Predictive Analytics & Forecasting</span>
+            <span class="xp-value">138 / 1200 XP</span>
+          </div>
+          <div class="xp-bar-bg"><div class="xp-bar-fill" style="width:20%;"></div></div>
+        </div>
+
+        <div class="xp-card">
+          <div class="xp-header">
+            <span>Systematic Debugging, Testing & QA</span>
+            <span class="xp-value">88 / 700 XP</span>
+          </div>
+          <div class="xp-bar-bg"><div class="xp-bar-fill" style="width:18%;"></div></div>
+        </div>
+
+        <div class="xp-card">
+          <div class="xp-header">
+            <span>Transformation Engineering & Reusable Components</span>
+            <span class="xp-value">63 / 800 XP</span>
+          </div>
+          <div class="xp-bar-bg"><div class="xp-bar-fill" style="width:15%;"></div></div>
+        </div>
+      </section>
+
+      <!-- 5. LANGUAGES & ACADEMIC DEGREE -->
+      <div class="section-title-box">
+        <span>5. Languages & Academic Degree</span>
+        <span class="tag">Germany & University</span>
+      </div>
+
+      <section class="certs-grid">
+        <article class="cert-card">
+          <div class="cert-header">
+            <span class="cert-issuer">telc / BAMF Germany</span>
+            <span class="cert-badge-tag">Certified B1</span>
+          </div>
+          <h2 class="cert-title">German Language B1 & Integrationskurs</h2>
+          <p class="cert-meta">
+            Official telc Zertifikat Deutsch B1 + Bundesamt für Migration und Flüchtlinge (BAMF) Integrationskurs (Leben in Deutschland).
+          </p>
+          <span class="status-pill" style="margin-top:auto; width:fit-content; background:var(--mint);">Verified in Germany</span>
+        </article>
+
+        <article class="cert-card">
+          <div class="cert-header">
+            <span class="cert-issuer">Odesa National Polytechnic University</span>
+            <span class="cert-badge-tag">Master's Degree</span>
+          </div>
+          <h2 class="cert-title">Master's Degree in Engineering</h2>
+          <p class="cert-meta">
+            5-year university program covering engineering fundamentals, automation principles, mathematics, and systems analysis.
+          </p>
+          <span class="status-pill" style="margin-top:auto; width:fit-content; background:var(--yellow);">Master of Science Equivalent</span>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script src="../js/chat-widget.js" defer></script>
+  <script src="../mobile.js" defer></script>
+</body>
+</html>
