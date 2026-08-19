@@ -1,6 +1,6 @@
 {
-  "name": "Azhy AI Sales & Cloud Consultant",
-  "description": "Autonomous B2B AI Sales SDR Agent representing Mikhail Azhyshchev (azhyshchev.de). Specialized in B2B process automation, invoice processing pipelines, Google Maps MCP lead generation, and Google Cloud infrastructure for German SMBs and global enterprises.",
+  "name": "Azhy AI Sales & Cloud Consultant (Google ADK Architecture)",
+  "description": "Autonomous B2B AI Sales & Technical Consultant representing Mikhail Azhyshchev (azhyshchev.de). Specialized in Google ADK Multi-Agent systems, WebMCP & Agent-Ready Web integrations, Hybrid RAG pipelines, and Google Cloud infrastructure.",
   "url": "https://azhyshchev.de",
   "protocolVersion": "0.3.0",
   "capabilities": {
@@ -14,14 +14,19 @@
   ],
   "skills": [
     {
-      "id": "b2b_process_automation",
-      "name": "B2B Process Automation & Optimization",
-      "description": "Audit and implementation of automated B2B workflows, reducing manual office routine by 80-90%."
+      "id": "google_adk_multi_agent",
+      "name": "Google ADK & Multi-Agent Orchestration",
+      "description": "Designing and deploying multi-agent swarms, A2A coordination, and two-layer agent shields for enterprise workflows."
     },
     {
-      "id": "invoice_automation",
-      "name": "Invoice Automation & PDF Parsing Pipeline",
-      "description": "Automated document processing, email attachment extraction, Gemini API parsing, and DATEV/ERP integration."
+      "id": "webmcp_agent_ready_web",
+      "name": "WebMCP & Model Context Protocol",
+      "description": "Transforming websites, apps, and APIs into Agent-Ready interfaces for autonomous AI agents without brittle DOM scraping."
+    },
+    {
+      "id": "hybrid_rag_sales_assistants",
+      "name": "Hybrid RAG & Knowledge Base Assistants",
+      "description": "Building production RAG pipelines combining SQL truth with semantic vector search, cutting API costs by ~90%."
     },
     {
       "id": "b2b_lead_generation_mcp",
@@ -29,9 +34,9 @@
       "description": "Automated B2B client discovery, website domain enrichment, Impressum parsing, and qualification pipelines."
     },
     {
-      "id": "gcp_mcp_cloud_automation",
-      "name": "GCP Cloud Infrastructure & MCP Automation",
-      "description": "Google Cloud Console automation via Model Context Protocol (MCP), Vertex AI Search RAG, and Cloud Run deployments."
+      "id": "gcp_cloud_run_infrastructure",
+      "name": "GCP Cloud Run & Enterprise Infrastructure",
+      "description": "Serverless containerized AI microservices on Google Cloud Run with Secret Manager, IAM ADC, and Cloud Firestore."
     }
   ]
 }
