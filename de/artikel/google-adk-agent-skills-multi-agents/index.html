@@ -278,7 +278,10 @@
       font-size: 0.8rem;
       line-height: 1.5;
       overflow-x: auto;
-      margin: 10px 0;
+      margin: 14px 0;
+      white-space: pre;
+      font-family: 'JetBrains Mono', monospace;
+      display: block;
     }
 
     .highlight-box {
@@ -322,15 +325,58 @@
 
     .action-btn:hover { transform: translate(-2px, -2px); }
 
-    .faq-item {
+    /* FAQ ACCORDION DROPDOWNS */
+    details.faq-item {
       border: 2px solid var(--black);
       background: var(--cream);
-      padding: 16px;
+      box-shadow: 3px 3px 0 var(--black);
       margin-bottom: 12px;
+      transition: background 0.18s ease;
     }
 
-    .faq-question { font-size: 0.92rem; font-weight: 800; margin-bottom: 8px; }
-    .faq-answer { font-size: 0.84rem; line-height: 1.65; color: #333; }
+    details.faq-item[open] {
+      background: var(--white);
+    }
+
+    summary.faq-question {
+      padding: 14px 16px;
+      font-size: 0.92rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      list-style: none;
+      user-select: none;
+    }
+
+    summary.faq-question::-webkit-details-marker {
+      display: none;
+    }
+
+    summary.faq-question:hover {
+      background: rgba(0,0,0,0.03);
+    }
+
+    .faq-icon {
+      font-size: 1.2rem;
+      font-weight: 800;
+      transition: transform 0.2s ease;
+      line-height: 1;
+    }
+
+    details[open] .faq-icon {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      padding: 0 16px 16px 16px;
+      font-size: 0.86rem;
+      line-height: 1.65;
+      color: #333;
+      border-top: 1px dashed rgba(0,0,0,0.15);
+      padding-top: 12px;
+    }
 
     @media (max-width: 980px) {
       .shell { grid-template-columns: 1fr; }
@@ -490,8 +536,7 @@
                 Unterstützende Python-Validierungsskripte, Pydantic-Schemas und API-Payload-Templates. Das Modell rät keine mathematischen Werte, sondern ruft deterministische Skripte direkt aus dem Skill-Ordner auf.
               </p>
 
-              <div class="code-block">
-# Anatomie eines produktionsreifen Skills
+              <pre class="code-block"><code># Anatomie eines produktionsreifen Skills
 skills/
 └── b2b_lead_audit/
     ├── SKILL.md                # Regeln, Entscheidungsbaum, Negativ-Constraints
@@ -499,8 +544,7 @@ skills/
     │   ├── validate_vat.py     # Deterministische USt-IdNr.-Prüfung
     │   └── score_lead.py       # Python-basierter Scoring-Algorithmus
     └── references/
-        └── schema_v2.json      # Strukturiertes JSON-LD Schnittstellen-Schema
-              </div>
+        └── schema_v2.json      # Strukturiertes JSON-LD Schnittstellen-Schema</code></pre>
             </div>
           </article>
 
@@ -593,25 +637,37 @@ skills/
             <h2 class="section-title">Agent Skills in der Praxis: Enterprise FAQ</h2>
             <div class="prose">
               
-              <div class="faq-item">
-                <div class="faq-question">Wie unterscheiden sich Agent Skills von LangChain- oder CrewAI-Tools?</div>
+              <details class="faq-item">
+                <summary class="faq-question">
+                  <span>Wie unterscheiden sich Agent Skills von LangChain- oder CrewAI-Tools?</span>
+                  <span class="faq-icon">+</span>
+                </summary>
                 <div class="faq-answer">Tools stellen die reine Ausführungsfähigkeit bereit (API-Aufruf oder Datenbankabfrage). Agent Skills definieren die strategische Methodik, Verbote, Schrittfolgen und Validierungsverträge, die dem Agenten vorgeben, <em>wann</em>, <em>warum</em> und <em>wie</em> er diese Tools sicher einsetzt.</div>
-              </div>
+              </details>
 
-              <div class="faq-item">
-                <div class="faq-question">Können Agent Skills über verschiedene Modelle hinweg (Gemini, Claude, GPT) geteilt werden?</div>
+              <details class="faq-item">
+                <summary class="faq-question">
+                  <span>Können Agent Skills über verschiedene Modelle hinweg (Gemini, Claude, GPT) geteilt werden?</span>
+                  <span class="faq-icon">+</span>
+                </summary>
                 <div class="faq-answer">Ja. Da Skills auf standardisiertem Markdown (SKILL.md) und YAML-Frontmatter basieren, sind sie modellunabhängig. Dasselbe Skill-Repository kann sowohl Gemini 2.5 Flash auf Cloud Run als auch Claude Code lokal steuern.</div>
-              </div>
+              </details>
 
-              <div class="faq-item">
-                <div class="faq-question">Welches Swarm-Routing-Modell ist am kosteneffizientesten?</div>
+              <details class="faq-item">
+                <summary class="faq-question">
+                  <span>Welches Swarm-Routing-Modell ist am kosteneffizientesten?</span>
+                  <span class="faq-icon">+</span>
+                </summary>
                 <div class="faq-answer">In produktiven ADK-Swarms übernehmen schnelle Modelle wie <code>gemini-3.1-flash-lite</code> das Routing und die Tool-Zuweisung (Latenz unter 100ms). Leistungsstarke Thinking-Modelle werden nur für komplexe Synthesen zugeschaltet, was die Gesamtkosten pro Session unter 0,02 € hält.</div>
-              </div>
+              </details>
 
-              <div class="faq-item">
-                <div class="faq-question">Wie schützt Google Cloud IAM sensible Skills vor unbefugtem Zugriff?</div>
+              <details class="faq-item">
+                <summary class="faq-question">
+                  <span>Wie schützt Google Cloud IAM sensible Skills vor unbefugtem Zugriff?</span>
+                  <span class="faq-icon">+</span>
+                </summary>
                 <div class="faq-answer">Jedem Skill im Register können spezifische IAM-Rollen zugewiesen werden. Ein einfacher Support-Agent kann ohne explizite IAM-Berechtigung keine Finanzbuchhaltungs- oder Datenbank-Änderungs-Skills aufrufen.</div>
-              </div>
+              </details>
 
             </div>
           </article>
