@@ -51,6 +51,7 @@
   const SKILLS_CATALOG = {
     ai_agents: [
       { name: "Google Agent Development Kit (ADK)", level: "Expert", description: "Multi-agent coordinator, subagent routing, tool calling, two-layer shields." },
+      { name: "Google Agent Skills Architecture", level: "Expert", description: "3-Tier Agent Skills (YAML, SKILL.md, scripts), Progressive Disclosure, Enterprise Skill Registry." },
       { name: "WebMCP & Model Context Protocol", level: "Expert", description: "Agent-Ready browser interfaces, client-side MCP discovery, tool registration." },
       { name: "Autonomous Workflows & Swarms", level: "Expert", description: "Goal-driven execution, state management, deterministic guardrails." }
     ],
@@ -87,6 +88,13 @@
       description: "Autonomous lead generation system scraping local businesses, extracting decision makers and generating customized AI readiness audits.",
       url: "https://azhyshchev.de/projects/",
       technologies: ["MCP", "Python", "Google Maps API", "Firecrawl", "Gemini 2.5"]
+    },
+    {
+      id: "google-adk-agent-skills-multi-agents",
+      title: "Google ADK Agent Skills & Multi-Agent Architecture",
+      description: "Enterprise design guide for 3-tier Agent Skills, Progressive Disclosure (80% token reduction), Two-Layer Shields, in-loop self-correction, and Cloud Skill Registry.",
+      url: "https://azhyshchev.de/articles/google-adk-agent-skills-multi-agents/",
+      technologies: ["Google ADK", "Agent Skills", "Multi-Agent Systems", "Cloud Run", "Progressive Disclosure", "Python"]
     }
   ];
 
