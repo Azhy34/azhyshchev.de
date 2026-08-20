@@ -7,15 +7,18 @@ Technical documentation for azhyshchev.de. Keep this file up to date when adding
 | Layer | Technology | Hosting | Deploy |
 |-------|-----------|---------|--------|
 | Frontend | Static HTML/CSS/JS | GitHub Pages | `git push` auto-deploys |
-| Chat backend | Node.js + Express | Railway (`azhyshchev.de` service) | `git push` same repo |
+| WebMCP Polyfill | JavaScript (`webmcp.js`) | GitHub Pages | `git push` auto-deploys |
+| ADK AI Consultant | Python + Google ADK + FastAPI | Google Cloud Run (`azhyshchev`) | `gcloud run deploy azhy-ai-consultant` |
+| Observability 4 Pillars | Cloud Logging + Trace + Metrics | Google Cloud Platform | Native GCP + `/api/metrics` |
+| Chat backend (legacy) | Node.js + Express | Railway (`azhyshchev.de` service) | `git push` same repo |
 | AI Checker API | Python + FastAPI | Railway (`ai-readiness-api` service) | `cd portfolio/api && railway up` |
 | AI Checker DB | PostgreSQL | Railway (Postgres service, project `jubilant-tenderness`) | auto-managed |
 | Chat logs | Supabase (PostgreSQL) | Supabase cloud | — |
-| AI model | OpenRouter API | — | model: `google/gemini-3.1-flash-lite` |
-| Email outreach | Resend API | — | used in ADS_Az pipeline (separate project) |
+| AI model | Google GenAI / Vertex AI Search | GCP Cloud Run | `gemini-3.1-flash-lite` |
 | Scheduling | Calendly | calendly.com | `calendly.com/azhyshchev/30min` |
 
-**Frontend + chat backend:** one `git push` deploys both.
+**Frontend + WebMCP:** one `git push` deploys to GitHub Pages.
+**ADK AI Consultant:** deploy via `gcloud run deploy azhy-ai-consultant` from `azhy-ai-consultant/` folder.
 **AI Checker API:** deploy separately via `cd portfolio/api && railway up` (must run from `api/` folder, not repo root).
 
 ## Railway CLI
