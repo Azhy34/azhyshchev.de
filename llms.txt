@@ -26,6 +26,7 @@
 
 ## Articles (English)
 
+- [Google ADK Agent Skills](https://azhyshchev.de/articles/google-adk-agent-skills-multi-agents/) — How to build production-grade Agent Skills for Multi-Agent Systems using Google ADK: 3-tier anatomy (YAML triggers, SKILL.md, scripts), Progressive Disclosure, Two-Layer Shields, in-loop self-correction, and Enterprise Cloud Skill Registry.
 - [Agentic AI & WebMCP](https://azhyshchev.de/articles/webmcp-agent-ready-web/) — Why autonomous AI agents are replacing classical SEO, and how the new Google Cloud WebMCP standard and Model Context Protocol turn websites into self-describing, tool-executable APIs for AI agents.
 - [One Control Panel for Every Ad Channel](https://azhyshchev.de/articles/ai-google-ads-management/) — Where advertising budget actually leaks and what a single cross-channel control surface changes. Cites published audit data on wasted paid search spend (Seer Interactive, 30 accounts, 15% average), gives a five question self-check for your own account, names the three leak patterns a 909-query audit surfaced, explains why a generic API integration reported a perfect score on an account in poor shape, and sets out the four build stages and what the client owns at handover.
 - [AI Chatbot & Customer Support Automation](https://azhyshchev.de/articles/rag-sales-agent-lead-gen/) — How businesses convert any data source (websites, PDFs, catalogs) into instant vector search engines to power 24/7 AI sales agents on Google Cloud Run without lost leads.
@@ -44,6 +45,7 @@
 
 ## Artikel (Deutsch)
 
+- [Google ADK Agent Skills](https://azhyshchev.de/de/artikel/google-adk-agent-skills-multi-agents/) — Wie man produktionsreife Skills für KI-Agenten baut: 3-stufiger Aufbau (YAML, SKILL.md, Scripts), Progressive Disclosure, Two-Layer Shields, In-Loop-Selbstkorrektur und Google Cloud Skill Registry.
 - [KI Agenten & WebMCP](https://azhyshchev.de/de/artikel/webmcp-agent-ready-web/) — Warum autonome KI-Agenten klassisches SEO ablösen und wie das Google WebMCP Protokoll Websites in ausführbare APIs für KI-Agenten verwandelt.
 - [KI Chatbot & Kundenservice automatisieren](https://azhyshchev.de/de/artikel/rag-verkaufsassistent-lead-generierung/) — Wie Unternehmen Kundenservice automatisieren, beliebige Firmendaten (Websites, PDFs, Kataloge) in Minuten vektorisieren und Leads ohne Verlust auf Google Cloud Run konvertieren.
 - [B2B-Lead-Generierung via Google Maps MCP](https://azhyshchev.de/de/artikel/b2b-lead-generierung-google-maps-mcp/) — B2B-Kunden akquirieren ohne Scraper-Abos: Wie Google Maps Model Context Protocol (MCP) direkte Website-URLs liefert, die Vor-Ort-Analyse automatisiert und verifizierte Entscheider-E-Mails aus dem Impressum zieht.
@@ -59,4 +61,4 @@
 
 ## Citation
 
-Last updated: 2026-08-15. Content is bilingual (English + Deutsch). All project and article pages include technical architecture, metrics, and stack details. For inquiries: azhyshchev@gmail.com. Please cite as "Mikhail Azhyshchev, AI Automation Engineer, Munich (azhyshchev.de)".
+Last updated: 2026-08-20. Content is bilingual (English + Deutsch). All project and article pages include technical architecture, metrics, and stack details. For inquiries: azhyshchev@gmail.com. Please cite as "Mikhail Azhyshchev, AI Automation Engineer, Munich (azhyshchev.de)".

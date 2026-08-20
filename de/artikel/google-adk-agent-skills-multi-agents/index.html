@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <script src="/js/cookie-consent.js" defer></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="Architektur-Leitfaden für Google ADK Agent Skills: 3-stufiger Aufbau (YAML, SKILL.md, Scripts), Progressive Disclosure, Two-Layer Shields, In-Loop-Selbstkorrektur und Google Cloud Skill Registry.">
+  <meta name="keywords" content="ki agenten, ai agents, google adk, agent skills, multi agenten systeme, progressive disclosure, cloud run, enterprise agent registry, Mikhail Azhyshchev">
+  <meta name="author" content="Mikhail Azhyshchev">
+  <link rel="canonical" href="https://azhyshchev.de/de/artikel/google-adk-agent-skills-multi-agents/">
+  <link rel="alternate" hreflang="en" href="https://azhyshchev.de/articles/google-adk-agent-skills-multi-agents/" />
+  <link rel="alternate" hreflang="de" href="https://azhyshchev.de/de/artikel/google-adk-agent-skills-multi-agents/" />
+  <link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/articles/google-adk-agent-skills-multi-agents/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Google ADK Agent Skills: Wie man produktionsreife Skills für KI-Agenten baut">
+  <meta property="og:description" content="Schluss mit 5.000-Zeilen-Monolithen: Modulare Agent Skills, Two-Layer Shields, In-Loop-Selbstkorrektur und Google Cloud Skill Registry.">
+  <meta property="og:url" content="https://azhyshchev.de/de/artikel/google-adk-agent-skills-multi-agents/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://azhyshchev.de/Azhyschev.JPG">
+  <meta property="og:locale" content="de_DE">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Google ADK Agent Skills: Produktions-Blueprint">
+  <meta name="twitter:description" content="Architektur-Leitfaden für 3-stufige Agent Skills, Progressive Disclosure und Cloud Skill Registry im Google ADK.">
+
+  <title>Google ADK Agent Skills: Wie man produktionsreife Skills für KI-Agenten baut | Mikhail Azhyshchev</title>
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "TechArticle",
+        "@id": "https://azhyshchev.de/de/artikel/google-adk-agent-skills-multi-agents/#article",
+        "headline": "Google ADK Agent Skills: Wie man produktionsreife Skills für KI-Agenten baut",
+        "description": "Technischer Leitfaden für Google ADK Agent Skills: 3-Tier-Anatomie, Progressive Disclosure, Two-Layer Shields und Google Cloud Skill Registry.",
+        "author": { "@id": "https://azhyshchev.de/#person" },
+        "publisher": { "@id": "https://azhyshchev.de/#person" },
+        "datePublished": "2026-08-20",
+        "dateModified": "2026-08-20",
+        "inLanguage": "de",
+        "keywords": "ki agenten, ai agents, google adk, agent skills, multi agenten systeme, progressive disclosure, cloud run",
+        "url": "https://azhyshchev.de/de/artikel/google-adk-agent-skills-multi-agents/",
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://azhyshchev.de/de/artikel/google-adk-agent-skills-multi-agents/#webpage",
+        "url": "https://azhyshchev.de/de/artikel/google-adk-agent-skills-multi-agents/",
+        "name": "Google ADK Agent Skills: Wie man produktionsreife Skills für KI-Agenten baut",
+        "description": "Produktionsleitfaden für Google ADK Agent Skills und Multi-Agenten-Systeme von Mikhail Azhyshchev.",
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" },
+        "author": { "@id": "https://azhyshchev.de/#person" },
+        "dateModified": "2026-08-20",
+        "inLanguage": "de",
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Startseite", "item": "https://azhyshchev.de/" },
+            { "@type": "ListItem", "position": 2, "name": "Artikel", "item": "https://azhyshchev.de/de/artikel" },
+            { "@type": "ListItem", "position": 3, "name": "Google ADK Agent Skills" }
+          ]
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Was sind Agent Skills im Google ADK?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Agent Skills im Google ADK sind modulare, isolierte Pakete aus Fachanweisungen, Schemas und deterministischen Skripten. Statt eines monolithischen 5.000-Zeilen-Prompts werden Skills über YAML-Trigger dynamisch erkannt und bei Bedarf geladen (Progressive Disclosure), was 70% bis 80% des Kontextfensters spart."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Was ist das Two-Layer Shield Muster für KI-Agenten-Tools?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Das Two-Layer Shield trennt reine API-Konnektivität von Geschäftslogik. Das Python-Tool führt den API-Aufruf aus (Layer 1), während der Agent Skill diesen mit Validierung, Ratenbegrenzung und Verhaltensregeln schützt (Layer 2), um Halluzinationen und Laufzeitfehler zu verhindern."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Wie funktioniert die Google Cloud Skill Registry in der Produktion?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Die Google Cloud Skill Registry ermöglicht es Entwicklerteams, Skills über agents-cli zentral zu versionieren und zu veröffentlichen. Cloud Run Microservices laden genehmigte Revisionen zur Laufzeit nach, ohne dass Docker-Container neu gebaut werden müssen."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Wie verhindern Multi-Agenten-Systeme mathematische Halluzinationen?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "In Google ADK Multi-Agenten-Systemen werden Berechnungen, Budgets und Steuern strikt an deterministische Python-Funktionen übergeben statt von der LLM erraten zu werden, was 100% mathematische Genauigkeit garantiert."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sky: #61b5e8;
+      --mint: #b9ddb7;
+      --cream: #f8f0dc;
+      --yellow: #f5c84b;
+      --pink: #efb2d5;
+      --blue: #d8ebff;
+      --peach: #f7d4b1;
+      --coral: #ff9a77;
+      --rose: #ecb0c4;
+      --black: #111111;
+      --white: #ffffff;
+      --accent: var(--sky);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--black);
+      background: linear-gradient(120deg, var(--sky) 0 34%, var(--peach) 34% 55%, var(--coral) 55% 72%, var(--rose) 72% 100%);
+      padding: 48px 24px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .shell {
+      width: min(1320px, 100%);
+      margin: 0 auto;
+      border: 3px solid var(--black);
+      box-shadow: 12px 12px 0 var(--black);
+      background: var(--mint);
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      min-height: 820px;
+      overflow: hidden;
+    }
+
+    .sidebar {
+      border-right: 3px solid var(--black);
+      padding: 20px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin-bottom: 8px;
+    }
+
+    .brand-badge {
+      width: 42px;
+      height: 34px;
+      border: 2px solid var(--black);
+      background: var(--white);
+      box-shadow: 3px 3px 0 var(--black);
+      display: grid;
+      place-items: center;
+      font-size: 1rem;
+      font-weight: 800;
+    }
+
+    .nav { display: flex; flex-direction: column; gap: 8px; }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 12px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      border: 2px solid transparent;
+      transition: transform 0.18s ease;
+    }
+
+    .nav-item:hover { transform: translate(-2px, -2px); }
+    .nav-item.active { background: var(--black); color: var(--white); }
+
+    .icon-box {
+      width: 24px;
+      height: 24px;
+      display: grid;
+      place-items: center;
+      border: 2px solid var(--black);
+      background: var(--white);
+      box-shadow: 3px 3px 0 var(--black);
+      font-size: 0.75rem;
+      font-weight: 800;
+    }
+
+    .nav-item.active .icon-box { background: var(--yellow); color: var(--black); }
+    .sidebar-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+    .socials { display: flex; gap: 10px; padding-top: 8px; }
+
+    .social-link {
+      width: 42px;
+      height: 42px;
+      border: 2px solid var(--black);
+      background: var(--white);
+      box-shadow: 3px 3px 0 var(--black);
+      display: grid;
+      place-items: center;
+      font-size: 0.8rem;
+      font-weight: 800;
+      transition: transform 0.18s ease;
+    }
+
+    .social-link:hover { transform: translate(-2px, -2px); }
+    .main { background: var(--cream); padding: 22px; }
+    .panel { border: 2px solid var(--black); background: rgba(255,255,255,0.2); padding: 18px; display: flex; flex-direction: column; gap: 28px; }
+    .breadcrumb { font-size: 0.78rem; opacity: 0.6; display: flex; align-items: center; gap: 8px; }
+    .breadcrumb a:hover { opacity: 1; text-decoration: underline; }
+
+    .article-hero {
+      border: 3px solid var(--black);
+      background: var(--accent);
+      box-shadow: 6px 6px 0 var(--black);
+      padding: 28px 24px;
+    }
+
+    .article-type {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      margin-bottom: 12px;
+    }
+
+    .article-title {
+      font-size: clamp(1.5rem, 2.6vw, 2.3rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+      margin-bottom: 16px;
+    }
+
+    .article-lead { font-size: 0.95rem; line-height: 1.65; max-width: 76ch; }
+    .metrics-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+    .metric-box { border: 2px solid var(--black); background: rgba(255,255,255,0.85); padding: 14px 12px; }
+    .metric-box strong { display: block; font-size: 1.25rem; line-height: 1; margin-bottom: 6px; }
+    .metric-box span { font-size: 0.72rem; line-height: 1.4; opacity: 0.85; }
+
+    .article-body { display: flex; flex-direction: column; gap: 24px; }
+    .neo-card { border: 3px solid var(--black); background: var(--white); box-shadow: 6px 6px 0 var(--black); padding: 24px; }
+    .section-label { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.45; margin-bottom: 10px; }
+    .section-title { font-size: 1.15rem; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.02em; }
+
+    .prose { display: flex; flex-direction: column; gap: 14px; }
+    .prose p { font-size: 0.88rem; line-height: 1.75; }
+    .prose h3 { font-size: 0.98rem; font-weight: 800; margin-top: 10px; letter-spacing: -0.02em; }
+    .prose ul { padding-left: 20px; display: flex; flex-direction: column; gap: 8px; font-size: 0.88rem; line-height: 1.65; }
+
+    .code-block {
+      border: 2px solid var(--black);
+      background: var(--black);
+      color: #7bf;
+      padding: 16px;
+      font-size: 0.8rem;
+      line-height: 1.5;
+      overflow-x: auto;
+      margin: 10px 0;
+    }
+
+    .highlight-box {
+      border: 2px solid var(--black);
+      background: var(--yellow);
+      padding: 16px;
+      font-weight: 700;
+      font-size: 0.86rem;
+      line-height: 1.6;
+    }
+
+    .cta-strip {
+      border: 3px solid var(--black);
+      background: var(--peach);
+      box-shadow: 6px 6px 0 var(--black);
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .cta-content h2 { font-size: 1.15rem; font-weight: 800; margin-bottom: 6px; }
+    .cta-content p { font-size: 0.84rem; opacity: 0.8; }
+
+    .action-btn {
+      padding: 10px 20px;
+      border: 2px solid var(--black);
+      background: var(--black);
+      color: var(--white);
+      font-weight: 800;
+      font-size: 0.84rem;
+      box-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.15s ease;
+    }
+
+    .action-btn:hover { transform: translate(-2px, -2px); }
+
+    .faq-item {
+      border: 2px solid var(--black);
+      background: var(--cream);
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+
+    .faq-question { font-size: 0.92rem; font-weight: 800; margin-bottom: 8px; }
+    .faq-answer { font-size: 0.84rem; line-height: 1.65; color: #333; }
+
+    @media (max-width: 980px) {
+      .shell { grid-template-columns: 1fr; }
+      .sidebar { border-right: none; border-bottom: 3px solid var(--black); }
+      .metrics-row { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 560px) {
+      .metrics-row { grid-template-columns: 1fr; }
+      body { padding: 16px 8px; }
+    }
+  </style>
+  <link rel="stylesheet" href="../../../mobile.css">
+</head>
+<body>
+  <div class="shell">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <a class="brand" href="/">
+        <div class="brand-badge">&lt;/&gt;</div>
+        <span>AZHYSHCHEV</span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Navigation umschalten">&#9776;</button>
+      <nav class="nav">
+        <a class="nav-item" href="/">
+          <span class="icon-box">H</span>
+          <span>Startseite</span>
+        </a>
+        <a class="nav-item" href="/de/ki-checker">
+          <span class="icon-box">🤖</span>
+          <span>KI Checker</span>
+        </a>
+        <a class="nav-item" href="/experience">
+          <span class="icon-box">E</span>
+          <span>Erfahrung</span>
+        </a>
+        <a class="nav-item" href="/projects">
+          <span class="icon-box">P</span>
+          <span>Projekte</span>
+        </a>
+        <a class="nav-item active" href="/de/artikel">
+          <span class="icon-box">A</span>
+          <span>Artikel</span>
+        </a>
+        <a class="nav-item" href="/skills">
+          <span class="icon-box">S</span>
+          <span>Skills</span>
+        </a>
+        <a class="nav-item" href="/de/zertifikate">
+          <span class="icon-box">🎓</span>
+          <span>Zertifikate</span>
+        </a>
+        <a class="nav-item" href="/contact">
+          <span class="icon-box">C</span>
+          <span>Kontakt</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="socials">
+          <a class="social-link" href="https://linkedin.com/in/azhyshchev" target="_blank" rel="noopener noreferrer" title="LinkedIn">in</a>
+          <a class="social-link" href="https://github.com/Azhy34" target="_blank" rel="noopener noreferrer" title="GitHub">gh</a>
+          <a class="social-link" href="https://t.me/azhyshchev" target="_blank" rel="noopener noreferrer" title="Telegram">tg</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+      <div class="panel">
+        
+        <!-- Breadcrumb & Lang Toggle -->
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+          <div class="breadcrumb">
+            <a href="/">Startseite</a> <span>/</span>
+            <a href="/de/artikel">Artikel</a> <span>/</span>
+            <span>Google ADK Agent Skills</span>
+          </div>
+          <a href="/articles/google-adk-agent-skills-multi-agents/" class="action-btn" style="background:var(--yellow); color:var(--black); padding: 4px 10px; font-size: 0.76rem;">🇬🇧 Read in English</a>
+        </div>
+
+        <!-- HERO SECTION -->
+        <header class="article-hero">
+          <div class="article-type">KI-Architektur · Google ADK · Multi-Agenten-Swarms</div>
+          <h1 class="article-title">Google ADK Agent Skills: Wie man produktionsreife Skills für KI-Agenten baut</h1>
+          <p class="article-lead">
+            Monolithische 5.000-Zeilen-Prompts scheitern im Produktivbetrieb an Context Rot und explodierenden Token-Kosten. <strong>Google ADK Agent Skills</strong> ersetzen statische Prompts durch modulare 3-Tier-Skills, Progressive Disclosure, deterministische Python-Tool-Shields und Versionierung über die Google Cloud Skill Registry — mit bis zu 80% weniger Token-Overhead.
+          </p>
+
+          <div class="metrics-row">
+            <div class="metric-box">
+              <strong>70–80%</strong>
+              <span>Weniger Kontext-Tokens durch Progressive Disclosure</span>
+            </div>
+            <div class="metric-box">
+              <strong>0 Fehler</strong>
+              <span>Deterministische Python-Tools für Berechnungen</span>
+            </div>
+            <div class="metric-box">
+              <strong>$0.018</strong>
+              <span>Swarm-Kosten mit Flash-Lite + 16k Thinking</span>
+            </div>
+            <div class="metric-box">
+              <strong>Zero-Downtime</strong>
+              <span>Hot-Reloading von Skills via Cloud Skill Registry</span>
+            </div>
+          </div>
+        </header>
+
+        <!-- ARTICLE BODY -->
+        <div class="article-body">
+
+          <!-- Section 1: The Monolith Problem -->
+          <article class="neo-card">
+            <div class="section-label">Abschnitt 01 · Das Architektur-Problem</div>
+            <h2 class="section-title">Das Ende der monolithischen Mega-Prompts</h2>
+            <div class="prose">
+              <p>
+                Beim Bau autonomer KI-Agenten packen viele Entwicklungsteams sämtliche Edge-Case-Regeln, Datenbankschemata und Formatierungsanweisungen in einen einzigen riesigen <code>System Prompt</code>.
+              </p>
+              <p>
+                In einfachen Prototypen funktioniert das scheinbar. Sobald das System jedoch in mehrstufigen Kundendialogen oder komplexen Workflows läuft, treten drei kritische Engpässe auf:
+              </p>
+              <ul>
+                <li><strong>Context Rot (Aufmerksamkeitsverlust):</strong> Bei 4.000 bis 8.000 Tokens im System-Prompt verwässert die Aufmerksamkeit des Sprachmodells. Anweisungen in der Mitte des Textes werden schlicht ignoriert.</li>
+                <li><strong>Explodierende Token-Kosten:</strong> Bei jedem Turn 5.000 statische Tokens mitzuschicken, verbrennt API-Budget für Regeln, die für die aktuelle Teilaufgabe irrelevant sind.</li>
+                <li><strong>Aufwendige Deployments:</strong> Jede Anpassung einer Geschäftsregel erfordert einen Container-Rebuild und ein neues Deployment.</li>
+              </ul>
+              <div class="highlight-box">
+                <strong>Das Grundprinzip:</strong> Ein KI-Agent darf kein statischer Prompt-Container sein. Der Orchestrator fungiert als schlanker Koordinator, der spezialisierte <em>Agent Skills</em> dynamisch nachlädt.
+              </div>
+            </div>
+          </article>
+
+          <!-- Section 2: 3-Tier Anatomy -->
+          <article class="neo-card">
+            <div class="section-label">Abschnitt 02 · Anatomie & Manifest</div>
+            <h2 class="section-title">3-Tier-Anatomie eines produktionsreifen Agent Skills</h2>
+            <div class="prose">
+              <p>
+                Im Google ADK-Ökosystem ist ein Skill ein eigenständiges, versioniertes Verzeichnis mit drei klar getrennten Schichten:
+              </p>
+
+              <h3>Tier 1: YAML Frontmatter (Erkennungs- und Trigger-Engine)</h3>
+              <p>
+                Ein schlanker Metadaten-Header mit Name, Zweck und präzisen Trigger-Schlüsselwörtern. Der Orchestrator prüft nur diese Metadaten über alle Skills hinweg (Latenz unter 100ms), ohne den gesamten Skill-Text zu laden.
+              </p>
+
+              <h3>Tier 2: SKILL.md (Ausführungsvertrag & Heuristiken)</h3>
+              <p>
+                Der operative Bauplan. Er definiert die zwingende Schrittfolge, Entscheidungsbäume, Negativ-Vorgaben (*was der Agent ausdrücklich nicht tun darf*) und Fallback-Strategien bei API-Fehlern.
+              </p>
+
+              <h3>Tier 3: <code>scripts/</code> und <code>references/</code> (Deterministische Ausführungsebene)</h3>
+              <p>
+                Unterstützende Python-Validierungsskripte, Pydantic-Schemas und API-Payload-Templates. Das Modell rät keine mathematischen Werte, sondern ruft deterministische Skripte direkt aus dem Skill-Ordner auf.
+              </p>
+
+              <div class="code-block">
+# Anatomie eines produktionsreifen Skills
+skills/
+└── b2b_lead_audit/
+    ├── SKILL.md                # Regeln, Entscheidungsbaum, Negativ-Constraints
+    ├── scripts/
+    │   ├── validate_vat.py     # Deterministische USt-IdNr.-Prüfung
+    │   └── score_lead.py       # Python-basierter Scoring-Algorithmus
+    └── references/
+        └── schema_v2.json      # Strukturiertes JSON-LD Schnittstellen-Schema
+              </div>
+            </div>
+          </article>
+
+          <!-- Section 3: Progressive Disclosure -->
+          <article class="neo-card">
+            <div class="section-label">Abschnitt 03 · Token-Effizienz</div>
+            <h2 class="section-title">Progressive Disclosure: 80% Kontext-Ersparnis</h2>
+            <div class="prose">
+              <p>
+                <strong>Progressive Disclosure</strong> ist das Architekturmuster, bei dem detaillierter technischer Kontext erst dann geladen wird, wenn der Workflow einen bestimmten Trigger erreicht.
+              </p>
+              <p>
+                Statt 20 verschiedene Geschäfts-Workflows beim Start vollständig in den Kontext zu laden:
+              </p>
+              <ul>
+                <li><strong>Phase 1 (Routing):</strong> Der Orchestrator scannt schlanke Metadaten (~150 Tokens), um den passenden Skill zu wählen.</li>
+                <li><strong>Phase 2 (Ausführung):</strong> Der Agent lädt gezielt die spezifische <code>SKILL.md</code> (z.B. 800 Tokens) für die Ausführung.</li>
+                <li><strong>Phase 3 (Bereinigung):</strong> Nach Abschluss der Teilaufgabe wird der Tiefenkontext freigegeben, sodass nachfolgende Agenten mit sauberem Kontext arbeiten.</li>
+              </ul>
+              <p>
+                In Produktions-Benchmarks auf Google Cloud Run sank der durchschnittliche Token-Verbrauch pro mehrstufiger Session von <strong>120.000 Tokens</strong> auf <strong>18.500 Tokens</strong> — eine Ersparnis von 84%.
+              </p>
+            </div>
+          </article>
+
+          <!-- Section 4: Two-Layer Shield -->
+          <article class="neo-card">
+            <div class="section-label">Abschnitt 04 · Zuverlässigkeit & Guardrails</div>
+            <h2 class="section-title">Das "Two-Layer Shield" Muster: Tool + Skill Synergie</h2>
+            <div class="prose">
+              <p>
+                Ein Standard-Python-Tool oder ein Model Context Protocol (MCP) Server stellt die Schnittstelle zu einer API her. Rohe API-Tools ohne Verhaltensgrenzen sind jedoch die häufigste Ursache für Ausfälle im Live-Betrieb.
+              </p>
+              <p>
+                Das <strong>Two-Layer Shield</strong> stellt vollständige Zuverlässigkeit sicher:
+              </p>
+              <ul>
+                <li><strong>Layer 1 (Python Tool — 50%):</strong> Die technische API-Schnittstelle (Google Ads, Google Maps, CRM), die Authentifizierung, Netzwerkverbindung und HTTP-Aufrufe abwickelt.</li>
+                <li><strong>Layer 2 (Strategischer Skill — 50%):</strong> Die Geschäftslogik, die Parameter vor dem Aufruf validiert, Budgetgrenzen prüft, Ratenlimits abfängt und deterministische Fallbacks durchsetzt.</li>
+              </ul>
+              <div class="highlight-box">
+                Geben Sie einem Sprachmodell niemals rohe API-Endpunkte ohne einen deklarativen Skill mit klaren Parametergrenzen und Fehlerpfaden.
+              </div>
+            </div>
+          </article>
+
+          <!-- Section 5: Enterprise Skill Registry -->
+          <article class="neo-card">
+            <div class="section-label">Abschnitt 05 · Enterprise Lifecycle</div>
+            <h2 class="section-title">Enterprise-Infrastruktur: Google Built-in Skills & Cloud Registry</h2>
+            <div class="prose">
+              <p>
+                Für den Einsatz von Agenten in Unternehmen ist zentrale Steuerung unverzichtbar. Google ADK löst dies über die <strong>Google Cloud Skill Registry</strong> und den Built-in Skills-Katalog:
+              </p>
+              <ul>
+                <li><strong>Google Built-in Skills:</strong> Vorgefertigte, geprüfte Standard-Skills (Datenformatierung, Dokumenten-Parsing, Routing), die Entwicklungszeit drastisch verkürzen.</li>
+                <li><strong>Zentrale Veröffentlichung via <code>agents-cli</code>:</strong> Entwickler veröffentlichen Fach-Skills mit <code>agents-cli skill publish</code> im zentralen Cloud-Register.</li>
+                <li><strong>Semantische Versionierung (<code>revisions/v1</code>, <code>revisions/v2</code>):</strong> Cloud Run Services binden feste Skill-Versionen an. Updates im Staging gefährden die Produktionsstabilität nicht.</li>
+                <li><strong>Hot-Reloading ohne Rebuilds:</strong> Cloud Run Instanzen ziehen genehmigte Skill-Revisionen zur Laufzeit. Geschäftsregeln werden in Sekunden aktiv — ohne Docker-Build oder Container-Neustart.</li>
+                <li><strong>Enterprise IAM-Sicherheit:</strong> Granulare Zugriffsrechte beschränken sensible Finanz- oder Compliance-Skills auf berechtigte Service-Accounts.</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- Section 6: In-Loop Self-Correction & Fan-Out -->
+          <article class="neo-card">
+            <div class="section-label">Abschnitt 06 · Multi-Agenten-Swarms</div>
+            <h2 class="section-title">In-Loop-Selbstkorrektur & Paralleles Fan-Out (ParallelAgent)</h2>
+            <div class="prose">
+              <p>
+                Produktionsagenten dürfen keine ungeprüften Daten an Endnutzer ausgeben. Über den <strong>Single-Agent Tool Loop</strong> ruft der Orchestrator vor der finalen Ausgabe interne Validierungstools auf (z.B. Tag-Balance, Link-Prüfungen, mathematische Neuberechnung).
+              </p>
+              <p>
+                Wird eine Unstimmigkeit festgestellt, korrigiert sich der Agent selbstständig innerhalb des Loops.
+              </p>
+              <p>
+                Bei komplexen Abläufen nutzt Google ADK das <code>ParallelAgent</code> Fan-Out-Muster:
+              </p>
+              <ul>
+                <li>Unabhängige Subagenten arbeiten zeitgleich (z.B. Recherche-Agent, Preiskalkulator, Bestandsprüfer).</li>
+                <li>Die Gesamtlaufzeit sinkt um den Faktor 2,5 bis 3 gegenüber sequentiellen Ketten.</li>
+                <li>Alle Berechnungen laufen in reinem Python-Code — mathematische Halluzinationen sind vollständig ausgeschlossen.</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- Section 7: FAQ Section -->
+          <article class="neo-card">
+            <div class="section-label">Abschnitt 07 · Häufig gestellte Fragen</div>
+            <h2 class="section-title">Agent Skills in der Praxis: Enterprise FAQ</h2>
+            <div class="prose">
+              
+              <div class="faq-item">
+                <div class="faq-question">Wie unterscheiden sich Agent Skills von LangChain- oder CrewAI-Tools?</div>
+                <div class="faq-answer">Tools stellen die reine Ausführungsfähigkeit bereit (API-Aufruf oder Datenbankabfrage). Agent Skills definieren die strategische Methodik, Verbote, Schrittfolgen und Validierungsverträge, die dem Agenten vorgeben, <em>wann</em>, <em>warum</em> und <em>wie</em> er diese Tools sicher einsetzt.</div>
+              </div>
+
+              <div class="faq-item">
+                <div class="faq-question">Können Agent Skills über verschiedene Modelle hinweg (Gemini, Claude, GPT) geteilt werden?</div>
+                <div class="faq-answer">Ja. Da Skills auf standardisiertem Markdown (SKILL.md) und YAML-Frontmatter basieren, sind sie modellunabhängig. Dasselbe Skill-Repository kann sowohl Gemini 2.5 Flash auf Cloud Run als auch Claude Code lokal steuern.</div>
+              </div>
+
+              <div class="faq-item">
+                <div class="faq-question">Welches Swarm-Routing-Modell ist am kosteneffizientesten?</div>
+                <div class="faq-answer">In produktiven ADK-Swarms übernehmen schnelle Modelle wie <code>gemini-3.1-flash-lite</code> das Routing und die Tool-Zuweisung (Latenz unter 100ms). Leistungsstarke Thinking-Modelle werden nur für komplexe Synthesen zugeschaltet, was die Gesamtkosten pro Session unter 0,02 € hält.</div>
+              </div>
+
+              <div class="faq-item">
+                <div class="faq-question">Wie schützt Google Cloud IAM sensible Skills vor unbefugtem Zugriff?</div>
+                <div class="faq-answer">Jedem Skill im Register können spezifische IAM-Rollen zugewiesen werden. Ein einfacher Support-Agent kann ohne explizite IAM-Berechtigung keine Finanzbuchhaltungs- oder Datenbank-Änderungs-Skills aufrufen.</div>
+              </div>
+
+            </div>
+          </article>
+
+          <!-- Section 8: CTA Strip -->
+          <div class="cta-strip">
+            <div class="cta-content">
+              <h2>Möchten Sie skalierbare Multi-Agenten-Systeme in Ihrem Unternehmen einführen?</h2>
+              <p>Ich konzipiere und implementiere produktionsreife Google ADK-Architekturen, individuelle Agent Skills und serverlose Cloud Run-Agenten für Unternehmen im DACH-Raum.</p>
+            </div>
+            <a class="action-btn" href="https://calendly.com/azhyshchev/30min?utm_source=portfolio&utm_medium=website&utm_campaign=booking&utm_content=google-adk-agent-skills-multi-agents" target="_blank" rel="noopener noreferrer">30-Min. Strategiegespräch buchen →</a>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/nav.js"></script>
+  <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" defer></script>
+</body>
+</html>

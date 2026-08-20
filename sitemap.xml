@@ -56,6 +56,15 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/projects/ai-ads-management/"/>
   </url>
   <url>
+    <loc>https://azhyshchev.de/articles/google-adk-agent-skills-multi-agents/</loc>
+    <lastmod>2026-08-20</lastmod>
+    <priority>0.85</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="en" href="https://azhyshchev.de/articles/google-adk-agent-skills-multi-agents/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://azhyshchev.de/de/artikel/google-adk-agent-skills-multi-agents/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/articles/google-adk-agent-skills-multi-agents/"/>
+  </url>
+  <url>
     <loc>https://azhyshchev.de/articles/webmcp-agent-ready-web/</loc>
     <lastmod>2026-08-19</lastmod>
     <priority>0.85</priority>
