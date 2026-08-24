@@ -10,7 +10,7 @@ Technical documentation for azhyshchev.de. Keep this file up to date when adding
 | WebMCP Polyfill | JavaScript (`webmcp.js`) | GitHub Pages | `git push` auto-deploys |
 | ADK AI Consultant | Python + Google ADK + FastAPI | Google Cloud Run (`azhyshchev`) | `gcloud run deploy azhy-ai-consultant` |
 | Observability 4 Pillars | Cloud Logging + Trace + Metrics | Google Cloud Platform | Native GCP + `/api/metrics` |
-| Chat backend (legacy) | Node.js + Express | Railway (`azhyshchev.de` service) | `git push` same repo |
+| Chat backend (legacy, CRASHED) | Node.js + Express | Railway (`azhyshchev.de` service) | dead path: missing `GEMINI_API_KEY` since 2026-08-20, 502. Live chat is Cloud Run. Do not use for analytics |
 | AI Checker API | Python + FastAPI | Railway (`ai-readiness-api` service) | `cd portfolio/api && railway up` |
 | AI Checker DB | PostgreSQL | Railway (Postgres service, project `jubilant-tenderness`) | auto-managed |
 | Chat logs | Supabase (PostgreSQL) | Supabase cloud | — |
@@ -44,36 +44,37 @@ cd portfolio/api && railway up
 | `jubilant-tenderness` | `ai-readiness-api` | AI Checker FastAPI |
 | `jubilant-tenderness` | Postgres | AI Checker DB |
 
+## Analytics: do not use Railway
+
+Railway service `azhyshchev.de` (`azhyshchevde-production.up.railway.app`) is CRASHED since 2026-08-20: boot `exit 1` because `GEMINI_API_KEY` is missing. `/api/analytics`, `/api/gsc`, `/api/bing`, `/api/seo-insights` return 502. Live site chat uses Cloud Run (`azhy-ai-consultant-377331886416.europe-west3.run.app`), not this Node service.
+
 ## GA4 Analytics API
 
-Endpoint: `GET https://azhyshchevde-production.up.railway.app/api/analytics?range=7daysAgo`
-Auth: `X-Widget-Token: 3530a5f865dcb0cc6489f5999cb0bfcb`
-Returns: top pages (views, sessions, users, bounce rate) + top events for given date range.
+**How to pull a report:** from vault `google-analytics-mcp/`:
 
-**Service account:** `ga4-reader@azhyshchev.iam.gserviceaccount.com` (Viewer on GA4 + Restricted on GSC)
-**Env vars on Railway:** `GA4_CLIENT_EMAIL`, `GA4_PRIVATE_KEY`
+```powershell
+python query_traffic.py --range 30daysAgo
+```
+
+**Service account:** `ga4-reader@azhyshchev.iam.gserviceaccount.com` (Viewer on GA4)
+**Credentials file:** `C:\Users\Mikhail\OneDrive\nocode\CV_Azhy\google-analytics-mcp\gcp-service-account.json`
 **Property ID:** `513620625` (account `tappe-25b1a`, ID `375555359`)
-
-To get analytics report: call the endpoint directly via Bash — no need to open GA4 UI.
+Do not curl Railway. Do not open GA4 UI if the Data API answers.
 
 ## GSC Search Console API
 
-Endpoint: `GET https://azhyshchevde-production.up.railway.app/api/gsc?days=90`
-Auth: `X-Widget-Token: 3530a5f865dcb0cc6489f5999cb0bfcb`
-Returns: top queries (clicks, impressions, ctr, position) + top pages for given days range.
+Railway `/api/gsc` is a dead path. Since 2026-08-24 the GA4 service account is a Full user on `sc-domain:azhyshchev.de`. Pull queries without Railway:
 
-**Auth method:** OAuth2 refresh token (user account Azhischev1@gmail.com owns the GSC property).
-GSC UI doesn't accept service account emails — only regular Google accounts.
-**Env vars on Railway:** `GSC_CLIENT_ID`, `GSC_CLIENT_SECRET`, `GSC_REFRESH_TOKEN`
+```powershell
+python C:\Users\Mikhail\OneDrive\nocode\CV_Azhy\google-analytics-mcp\query_gsc.py --days 28
+```
+
 **Site property:** `sc-domain:azhyshchev.de`
-**Endpoint:** `GET /api/gsc` in `portfolio/backend/server.js`
+**Permission:** `siteFullUser` on `ga4-reader@azhyshchev.iam.gserviceaccount.com`
 
-## SEO Insights API (GSC + GA4 combined)
+## SEO Insights (GSC + GA4 combined)
 
-Endpoint: `GET https://azhyshchevde-production.up.railway.app/api/seo-insights?days=90`
-Auth: `X-Widget-Token: 3530a5f865dcb0cc6489f5999cb0bfcb`
-Joins GSC page metrics (clicks/impressions/ctr/position) with GA4 organic-only page metrics (sessions/bounceRate/conversions) by normalized page path, classifies each page into one of 5 buckets per Google's bubble-chart SEO triage method. See `.claude/skills/portfolio-analytics/SKILL.md` (in the CV_Azhy vault root) for thresholds and bucket meanings.
-**Endpoint:** `GET /api/seo-insights` in `portfolio/backend/server.js`
+Old join lived at Railway `GET /api/seo-insights`. Dead. Classify pages locally if needed: GA4 organic landings + GSC pages from the UI. Thresholds stay in `.claude/skills/portfolio-analytics/SKILL.md`.
 
 ## GA4 Events implemented
 
@@ -90,25 +91,49 @@ Joins GSC page metrics (clicks/impressions/ctr/position) with GA4 organic-only p
 | `cv_download` | CV.pdf click | /experience, /skills, /cv |
 | `linkedin_click` | sidebar LinkedIn | /experience |
 | `ai_checker_analyze` | Analyze button | page_language | /ai-checker/, /de/ki-checker/ |
+| `ai_checker_click` | Mint banner click | location: impact_banner | index.html, de/index.html |
+| `agent_demo_banner_click` | Yellow banner click (WebMCP demo) | location: impact_banner | index.html, de/index.html |
 | `email_click` | email link click | location | sidebar |
 | `modal_open` | article card click (preview) | article_name, page_language | /de/artikel/ |
 | `article_read_click` | "Artikel lesen →" click | article_name, page_language | /de/artikel/ |
 | `faq_open` | FAQ accordion open | question (60 chars), page_language | /ai-checker/, /de/ki-checker/ |
 | `lang_switch` | EN↔DE toggle | to, from | all DE/EN |
 
-**Key Events (конверсии) — уже помечены в GA4:** `book_call_click`, `chat_message_sent`
+**Key Events (конверсии) — уже помечены в GA4:** `book_call_click`, `chat_message_sent`, `agent_demo_banner_click`
 Добавить когда появятся: `cv_download`, `generate_lead`
 
 **Custom Dimensions — все 5 зарегистрированы в GA4 (2026-06-09):**
 - `project_name` (event-scoped) — `project_view`
-- `location` (event-scoped) — `cv_download`, `book_call_click`
+- `location` (event-scoped) — `cv_download`, `book_call_click`, `ai_checker_click`, `agent_demo_banner_click`
 - `article_name` (event-scoped) — `modal_open`, `article_read_click`
 - `question` (event-scoped) — `faq_open`
-- `page_language` (event-scoped) — `modal_open`, `article_read_click`, `faq_open`, `ai_checker_analyze`
+- `page_language` (event-scoped) — `modal_open`, `article_read_click`, `faq_open`, `ai_checker_analyze`, `agent_demo_banner_click`
 
 **UTM на Calendly ссылках:** `utm_source=portfolio&utm_campaign=booking&utm_content=<contact|ai_checker|chat_header>`
 
 **Data Retention:** 14 месяцев (уже настроено).
+
+---
+
+## Interactive B2B Showcase & Chat Widget Architecture
+
+### 1. Showcase Banners (`Selected impact` section on Homepage)
+- **Mint Banner (`.ai-checker-impact-banner`):** AI Readiness Checker (`/ai-checker/` and `/de/ki-checker/`).
+- **Yellow Banner (`.ai-agent-impact-banner`):** Live Multi-Agent WebMCP Demo (`[ 💬 Test AI Agent Live → ]`). Calls `window.openPortfolioChat()` to open floating drawer directly on page without navigation.
+
+### 2. Chat Widget State & Cross-Page Session Persistence (`js/chat-widget.js`)
+- **Global Function:** `window.openPortfolioChat = openDrawer;`
+- **Session Persistence (`sessionStorage`):**
+  - `portfolio_chat_ui_messages`: Array of `{ role, text }` rendered messages.
+  - `portfolio_chat_history`: Conversation history payload sent to Cloud Run API.
+  - `portfolio_chat_is_open`: Boolean flag ('true' / 'false').
+- **Seamless Page Transitions:** When user clicks in-chat links to case studies/articles, the chat widget automatically restores rendered messages and remains open on the new page.
+- **Contextual In-Chat Linking:** Backend prompt rules (`azhy-ai-consultant/config/prompts.py`) automatically weave markdown links to relevant case studies (Invoice Automation, RAG Sales Agent, B2B Lead Pipeline, ADK Architecture, Scoping Call).
+
+### 3. SEO & Entity Alignment
+- **Canonical Role:** `AI-Enabled Automation Engineer` (DE: `KI-Automatisierungsingenieur`).
+- **Schema.org JSON-LD:** Graph linking `Person`, `WebSite`, `WebPage`, and `Occupation` with `alternateName` and expanded `knowsAbout` (DSGVO, MCP, Prozessautomatisierung).
+- **`llms.txt`:** Manifest with `Core Competencies & Search Positioning` section for Perplexity, ChatGPT Search, Claude, and Exa.
 
 ---
 
