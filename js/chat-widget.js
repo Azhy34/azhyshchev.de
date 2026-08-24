@@ -10,23 +10,23 @@
   // Available Translations
   const translations = {
     de: {
-      title: "FAQ Chat",
+      title: "KI-Berater",
       langSelectTitle: "Wähle deine Sprache",
       langSelectSubtitle: "Wie möchtest du fortfahren?",
       placeholder: "Schreibe eine Nachricht...",
       send: "Senden",
-      welcome: "Hallo! Ich bin dein Portfolio-Assistent. Wie kann ich dir heute helfen? (Falls du ein personalisiertes B2B-Audit erhalten hast, nenne mir gerne die entsprechende E-Mail-Adresse, damit ich deine Ergebnisse abrufen und dir präziser helfen kann!)",
+      welcome: "Guten Tag! Ich bin Mikhails digitaler KI-Berater auf azhyshchev.de.\n\nFragen Sie mich gerne nach Mikhails Projekten, Multi-Agenten-Systemen (Google ADK & Cloud Run) oder testen Sie live, wie ein KI-Assistent Kundenanfragen für Ihr Unternehmen 24/7 beantwortet.\n\n💡 **Schnelle Fragen zum Testen:**\n• *«Wie spart ein KI-Agent meinem Unternehmen 15+ Stunden pro Woche?»*\n• *«Wie ist die DSGVO-Sicherheit und Datenschutz in Deutschland geregelt?»*\n• *«Was kostet die Implementierung im Vergleich zu Agenturen?»*",
       error429: "Zu viele Anfragen. Bitte versuche es später noch einmal oder wende dich direkt an azhyshchev@gmail.com.",
       error503: "Der Dienst ist derzeit nicht verfügbar. Bitte wende dich direkt an azhyshchev@gmail.com.",
       errorGeneric: "Ein Fehler ist aufgetreten. Bitte wende dich direkt an azhyshchev@gmail.com."
     },
     en: {
-      title: "FAQ Chat",
+      title: "AI Consultant",
       langSelectTitle: "Choose your language",
       langSelectSubtitle: "Select language to start chatting",
       placeholder: "Type a message...",
       send: "Send",
-      welcome: "Hello! I'm your portfolio assistant. How can I help you today? (If you received a personalized B2B audit, feel free to share the email address it was sent to so I can retrieve your results and assist you more precisely!)",
+      welcome: "Hello! I'm Mikhail's AI Digital Avatar & Lead Consultant.\n\nAsk me anything about Mikhail's projects, Multi-Agent architecture (Google ADK & Cloud Run), or test how I can handle sales & FAQ for your business (100% DSGVO-konform).\n\n💡 **Quick questions to try:**\n• *«How can an AI agent save my business 15+ hrs/week?»*\n• *«How does your zero-hallucination RAG architecture work?»*\n• *«How much does it cost vs hiring a classic agency?»*",
       error429: "Too many requests. Please try again later or email azhyshchev@gmail.com directly.",
       error503: "The service is temporarily unavailable. Please email azhyshchev@gmail.com directly.",
       errorGeneric: "An error occurred. Please email azhyshchev@gmail.com directly."
@@ -42,10 +42,21 @@
   };
 
   // State Management
-  let currentLang = null;
+  let currentLang = sessionStorage.getItem('portfolio_chat_lang') || null;
   let conversationHistory = []; // Limit: 8 messages total (4 rounds)
+  let uiMessages = []; // Rendered messages list
   let isWaitingResponse = false;
   let savedScrollY = 0;
+
+  // Restore history from sessionStorage if available
+  const savedHistory = sessionStorage.getItem('portfolio_chat_history');
+  if (savedHistory) {
+    try {
+      conversationHistory = JSON.parse(savedHistory) || [];
+    } catch(e) {
+      conversationHistory = [];
+    }
+  }
 
   // Retrieve or generate unique sessionId
   let sessionId = sessionStorage.getItem('portfolio_chat_session_id');
@@ -210,6 +221,7 @@
       const teaser = document.getElementById('nbw-proactive-teaser');
       if (teaser) teaser.remove();
       sessionStorage.setItem('portfolio_chat_teaser_dismissed', 'true');
+      sessionStorage.setItem('portfolio_chat_is_open', 'true');
 
       launcher.style.display = 'none';
       launcher.setAttribute('aria-expanded', 'true');
@@ -229,9 +241,26 @@
       if (savedLang && translations[savedLang]) {
         currentLang = savedLang;
         showScreen('chat');
+        
+        // Restore UI messages if available, or load initial welcome
+        const savedUi = sessionStorage.getItem('portfolio_chat_ui_messages');
+        if (savedUi) {
+          try {
+            const parsed = JSON.parse(savedUi);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              if (messagesBox.children.length === 0) {
+                uiMessages = [];
+                parsed.forEach(m => appendMessage(m.role, m.text, false));
+                uiMessages = [...parsed];
+              }
+              return;
+            }
+          } catch(e){}
+        }
+
         // Load initial assistant prompt if the messages container is empty
         if (messagesBox.children.length === 0) {
-          appendMessage('assistant', translations[currentLang].welcome);
+          appendMessage('assistant', translations[currentLang].welcome, true);
         }
       } else {
         showScreen('lang');
@@ -245,6 +274,7 @@
       const teaser = document.getElementById('nbw-proactive-teaser');
       if (teaser) teaser.remove();
       sessionStorage.setItem('portfolio_chat_teaser_dismissed', 'true');
+      sessionStorage.setItem('portfolio_chat_is_open', 'false');
 
       drawer.classList.add('closing');
       launcher.setAttribute('aria-expanded', 'false');
@@ -306,12 +336,16 @@
       return html;
     };
 
-    const appendMessage = (role, text) => {
+    const appendMessage = (role, text, save = true) => {
       const msg = document.createElement('div');
       msg.className = `nbw-msg nbw-msg-${role}`;
       msg.innerHTML = formatMarkdown(text);
       messagesBox.appendChild(msg);
       scrollToBottom();
+      if (save) {
+        uiMessages.push({ role, text });
+        sessionStorage.setItem('portfolio_chat_ui_messages', JSON.stringify(uiMessages));
+      }
     };
 
     const handleLanguageSelection = (lang) => {
@@ -320,17 +354,24 @@
         sessionStorage.setItem('portfolio_chat_lang', lang);
         trackEvent('chat_language_selected', { language: lang });
         conversationHistory = [];
+        uiMessages = [];
+        sessionStorage.removeItem('portfolio_chat_ui_messages');
+        sessionStorage.removeItem('portfolio_chat_history');
         messagesBox.innerHTML = '';
         
         showScreen('chat');
-        appendMessage('assistant', translations[lang].welcome);
+        appendMessage('assistant', translations[lang].welcome, true);
       }
     };
 
     const resetLanguage = () => {
       sessionStorage.removeItem('portfolio_chat_lang');
+      sessionStorage.removeItem('portfolio_chat_ui_messages');
+      sessionStorage.removeItem('portfolio_chat_history');
+      sessionStorage.removeItem('portfolio_chat_is_open');
       currentLang = null;
       conversationHistory = [];
+      uiMessages = [];
       messagesBox.innerHTML = '';
       showScreen('lang');
     };
@@ -344,7 +385,7 @@
       if (!sanitized) return;
 
       // 1. Append user message to UI immediately
-      appendMessage('user', sanitized);
+      appendMessage('user', sanitized, true);
       trackEvent('chat_message_sent', { language: currentLang });
       if (/[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/.test(sanitized)) {
         trackEvent('generate_lead', { method: 'chat_email' });
@@ -392,7 +433,7 @@
         const reply = data.reply || data.message || '';
 
         // 5. Append assistant reply to UI
-        appendMessage('assistant', reply);
+        appendMessage('assistant', reply, true);
 
         // 6. Push local messages to conversation history array (Limit: 8 messages / 4 rounds)
         conversationHistory.push({ role: 'user', parts: [{ text: sanitized }] });
@@ -401,6 +442,7 @@
         while (conversationHistory.length > 8) {
           conversationHistory.shift();
         }
+        sessionStorage.setItem('portfolio_chat_history', JSON.stringify(conversationHistory));
 
       } catch (err) {
         // Hide typing indicator
@@ -424,7 +466,7 @@
           errorMessage = translations[currentLang].errorGeneric;
         }
 
-        appendMessage('error', errorMessage);
+        appendMessage('error', errorMessage, true);
       }
     };
 
@@ -572,6 +614,11 @@
     };
 
     initProactiveTeaser();
+
+    // Auto-restore open chat state if user navigated between pages with open chat
+    if (sessionStorage.getItem('portfolio_chat_is_open') === 'true') {
+      openDrawer();
+    }
   };
 
   // 7. Page load trigger with a brief delay (500ms) for smoother rendering
