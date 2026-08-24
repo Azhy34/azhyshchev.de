@@ -1,12 +1,19 @@
-# Mikhail Azhyshchev — AI Business Automation, Munich
+# Mikhail Azhyshchev — AI-Enabled Automation Engineer, Munich
 
-> Mikhail Azhyshchev helps business owners and CEOs in Munich and Germany reduce operational costs and eliminate manual work by implementing practical AI solutions. With 10+ years of commercial and operations experience combined with hands-on AI engineering (Python, TypeScript, LangGraph, RAG agents), he bridges the gap between business needs and technical implementation. Clients get working AI systems that reduce manual labor, cut processing costs, and free up teams for higher-value work.
+> Mikhail Azhyshchev is an AI-Enabled Automation Engineer based in Munich, Germany. He helps business owners, CEOs, and engineering teams eliminate manual bottlenecks and reduce operational costs by deploying robust, code-first AI pipelines (Python, TypeScript, LangGraph, Hybrid RAG, Model Context Protocol). With 10+ years of B2B commerce and operations background, he bridges real business needs with production-grade AI systems. All solutions are 100% DSGVO (GDPR) compliant.
+
+## Core Competencies & Search Positioning (For AI Crawlers & Engines)
+
+- **Primary Roles:** AI-Enabled Automation Engineer, KI-Automatisierungsingenieur, AI Solutions Architect, Process Automation Engineer (Munich, Bavaria, Germany / DACH).
+- **Core Specializations:** Code-first Business Process Automation, Hybrid RAG Systems (SQL + pgvector), Agentic Multi-Agent Workflows, Custom Model Context Protocol (MCP) Facades, Intelligent Document & Invoice Extraction (DATEV-ready), §7 UWG-compliant B2B Lead Pipelines.
+- **Compliance Standards:** 100% DSGVO/GDPR compliant, EU model hosting, private data vectorization.
+- **Location & Reach:** Munich, Germany (In-person & Hybrid across DACH / Remote EU-wide).
 
 ## About
 
-- [Portfolio — Mikhail Azhyshchev](https://azhyshchev.de/) — Overview of AI automation services for German businesses: reducing manual work, cutting operational costs, and implementing AI agents using Python, TypeScript, LangGraph, and Supabase.
-- [Experience](https://azhyshchev.de/experience) — Background: AI Solutions Architect (2023–present), 10+ years in B2B commerce and operations management across Germany, Ukraine, and international markets.
-- [Skills](https://azhyshchev.de/skills) — Technical stack: Python, TypeScript, Node.js, LangGraph, Hybrid RAG, Agentic AI (ReAct), Supabase, pgvector, Docker, CI/CD, REST APIs, Prompt Engineering, Google GenAI SDK.
+- [Portfolio — Mikhail Azhyshchev](https://azhyshchev.de/) — Overview of AI-enabled automation services for German and European businesses: eliminating manual bottlenecks, cutting operational costs, and implementing AI agents using Python, TypeScript, LangGraph, and Supabase.
+- [Experience](https://azhyshchev.de/experience) — Background: AI-Enabled Automation Engineer (2023–present), 10+ years in B2B commerce and operations management across Germany, Ukraine, and international markets.
+- [Skills](https://azhyshchev.de/skills) — Technical stack: Python, TypeScript, Node.js, LangGraph, Hybrid RAG, Agentic AI (ReAct), Supabase, pgvector, Docker, CI/CD, REST APIs, Prompt Engineering, Google GenAI SDK, Model Context Protocol (MCP).
 - [Contact](https://azhyshchev.de/contact) — Contact: azhyshchev@gmail.com. Munich, Germany. Available for business automation consulting, AI implementation projects, and full-time roles. LinkedIn: linkedin.com/in/azhyshchev. GitHub: github.com/Azhy34.
 
 ## Tools
