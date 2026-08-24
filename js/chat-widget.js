@@ -238,6 +238,8 @@
       }
     };
 
+    window.openPortfolioChat = openDrawer;
+
     const closeDrawer = () => {
       // Remove proactive teaser if visible
       const teaser = document.getElementById('nbw-proactive-teaser');
