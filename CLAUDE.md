@@ -10,16 +10,15 @@ Technical documentation for azhyshchev.de. Keep this file up to date when adding
 | WebMCP Polyfill | JavaScript (`webmcp.js`) | GitHub Pages | `git push` auto-deploys |
 | ADK AI Consultant | Python + Google ADK + FastAPI | Google Cloud Run (`azhyshchev`) | `gcloud run deploy azhy-ai-consultant` |
 | Observability 4 Pillars | Cloud Logging + Trace + Metrics | Google Cloud Platform | Native GCP + `/api/metrics` |
-| Chat backend (legacy, CRASHED) | Node.js + Express | Railway (`azhyshchev.de` service) | dead path: missing `GEMINI_API_KEY` since 2026-08-20, 502. Live chat is Cloud Run. Do not use for analytics |
-| AI Checker API | Python + FastAPI | Railway (`ai-readiness-api` service) | `cd portfolio/api && railway up` |
-| AI Checker DB | PostgreSQL | Railway (Postgres service, project `jubilant-tenderness`) | auto-managed |
-| Chat logs | Supabase (PostgreSQL) | Supabase cloud | — |
+| AI Readiness Checker API | Python 3.12 + FastAPI (9-point audit) | Google Cloud Run (`europe-west3`) | `gcloud run deploy ai-readiness-api --source portfolio/api` |
+| AI Readiness DB | PostgreSQL | Railway (Postgres service, project `jubilant-tenderness`) | auto-managed |
+| Chat logs | Supabase (PostgreSQL) | Supabase cloud | - |
 | AI model | Google GenAI / Vertex AI Search | GCP Cloud Run | `gemini-3.1-flash-lite` |
 | Scheduling | Calendly | calendly.com | `calendly.com/azhyshchev/30min` |
 
 **Frontend + WebMCP:** one `git push` deploys to GitHub Pages.
 **ADK AI Consultant:** deploy via `gcloud run deploy azhy-ai-consultant` from `azhy-ai-consultant/` folder.
-**AI Checker API:** deploy separately via `cd portfolio/api && railway up` (must run from `api/` folder, not repo root).
+**AI Readiness Checker API:** deploy via `gcloud run deploy ai-readiness-api --source api --project=azhyshchev --region=europe-west3` from `portfolio/` folder. Live endpoint: `https://ai-readiness-api-377331886416.europe-west3.run.app`.
 
 ## Railway CLI
 
