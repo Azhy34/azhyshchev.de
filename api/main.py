@@ -217,11 +217,13 @@ def _check_agent_readable_content(html: str, is_csr: bool, consent_wall: bool) -
     if not main_node:
         return (0, 20, "No readable content found", "Structure content using <main> or <article>")
     word_count = len(main_node.get_text(separator=' ', strip=True).split())
-    if word_count >= 2000: return (20, 20, f"{word_count} words", None)
-    elif word_count >= 1000: return (15, 20, f"{word_count} words", "Expand content")
-    elif word_count >= 500: return (10, 20, f"{word_count} words", "Expand content")
-    elif word_count >= 200: return (5, 20, f"{word_count} words", "Expand content")
-    return (0, 20, f"Only {word_count} words", "Provide significantly more text")
+    if word_count >= 800:
+        return (20, 20, f"{word_count} words (Optimal)", None)
+    elif word_count >= 400:
+        return (16, 20, f"{word_count} words", "Consider expanding body content to 800+ words for deeper LLM grounding")
+    elif word_count >= 200:
+        return (10, 20, f"{word_count} words", "Expand semantic textual content for LLM ingestion")
+    return (0, 20, f"Only {word_count} words", "Provide significantly more readable text for AI engines")
 
 
 def _check_markdown_availability(base_url: str) -> tuple[int, int, str, str | None]:

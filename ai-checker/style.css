@@ -391,12 +391,18 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
   transition: transform 0.2s;
 }
 
 .check-card:hover {
   transform: translate(-3px, -3px);
   box-shadow: 9px 9px 0 var(--black);
+}
+
+.check-info {
+  flex: 1;
+  min-width: 0;
 }
 
 .check-title {
@@ -408,6 +414,7 @@ body {
 .check-detail {
   font-size: 0.8rem;
   opacity: 0.7;
+  word-break: break-word;
 }
 
 .check-recommendation {
@@ -418,12 +425,17 @@ body {
   padding: 4px 8px;
   display: inline-block;
   border: 1px solid var(--black);
+  word-break: break-word;
+  max-width: 100%;
 }
 
 .check-points {
   font-weight: 800;
   font-size: 1.4rem;
   flex-shrink: 0;
+  margin-left: auto;
+  text-align: right;
+  min-width: 60px;
 }
 
 .loading-section {
