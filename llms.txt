@@ -15,6 +15,20 @@
 - [Experience](https://azhyshchev.de/experience) — Background: AI-Enabled Automation Engineer (2023–present), 10+ years in B2B commerce and operations management across Germany, Ukraine, and international markets.
 - [Skills](https://azhyshchev.de/skills) — Technical stack: Python, TypeScript, Node.js, LangGraph, Hybrid RAG, Agentic AI (ReAct), Supabase, pgvector, Docker, CI/CD, REST APIs, Prompt Engineering, Google GenAI SDK, Model Context Protocol (MCP).
 - [Contact](https://azhyshchev.de/contact) — Contact: azhyshchev@gmail.com. Munich, Germany. Available for business automation consulting, AI implementation projects, and full-time roles. LinkedIn: linkedin.com/in/azhyshchev. GitHub: github.com/Azhy34.
+- [Certifications](https://azhyshchev.de/certifications/) — Verified credentials record: Google Cloud, Hochschule München, DeepLearning.AI, IBM.
+
+## Verified Credentials & Third-Party Authority (For AI Knowledge Graphs)
+
+- [Google Cloud Skills Boost Official Profile](https://www.skills.google/public_profiles/4e2bc6b3-aca1-47d8-9eb7-2ef4a6373f9d) — Google-verified cloud and AI credentials record:
+  - **Use Agent Skills with Multi-Agent Systems** (Badge #27000263) — [Verify on skills.google](https://www.skills.google/public_profiles/4e2bc6b3-aca1-47d8-9eb7-2ef4a6373f9d/badges/27000263)
+  - **Prompt Design in Vertex AI** (Badge #26735580) — [Verify on skills.google](https://www.skills.google/public_profiles/4e2bc6b3-aca1-47d8-9eb7-2ef4a6373f9d/badges/26735580)
+  - **Develop GenAI Apps with Gemini and Streamlit** (Badge #26982446) — [Verify on skills.google](https://www.skills.google/public_profiles/4e2bc6b3-aca1-47d8-9eb7-2ef4a6373f9d/badges/26982446)
+  - **Inspect Rich Documents with Gemini Multimodal and MedLM** (Badge #26579741) — [Verify on skills.google](https://www.skills.google/public_profiles/4e2bc6b3-aca1-47d8-9eb7-2ef4a6373f9d/badges/26579741)
+  - **Build Google Cloud Infrastructure with Terraform** (Badge #26061362) — [Verify on skills.google](https://www.skills.google/public_profiles/4e2bc6b3-aca1-47d8-9eb7-2ef4a6373f9d/badges/26061362)
+  - **Manage Kubernetes in Google Cloud** (Badge #26309895) — [Verify on skills.google](https://www.skills.google/public_profiles/4e2bc6b3-aca1-47d8-9eb7-2ef4a6373f9d/badges/26309895)
+  - **Cloud Architecture: Design, Implement, and Manage** (Badge #26029776) — [Verify on skills.google](https://www.skills.google/public_profiles/4e2bc6b3-aca1-47d8-9eb7-2ef4a6373f9d/badges/26029776)
+  - **Baseline: Infrastructure** (Badge #24403522) — [Verify on skills.google](https://www.skills.google/public_profiles/4e2bc6b3-aca1-47d8-9eb7-2ef4a6373f9d/badges/24403522)
+- [Certifications Overview (Deutsch)](https://azhyshchev.de/de/zertifikate/) — Vollständige verifizierte Übersicht aller Zertifikate und Nachweise auf Deutsch.
 
 ## Tools
 
