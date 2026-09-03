@@ -241,6 +241,39 @@ def _check_markdown_availability(base_url: str) -> tuple[int, int, str, str | No
     return (0, 5, "No Markdown endpoint (normal for most sites)", "Offer a Markdown variant of your content")
 
 
+def _check_schema_org(html: str) -> tuple[int, int, str, str | None]:
+    """Check for JSON-LD or Microdata Schema.org structured data (entity graphs for AI engines)."""
+    soup = BeautifulSoup(html, 'html.parser')
+    scripts = soup.find_all('script', type='application/ld+json')
+    types_found = set()
+    for s in scripts:
+        try:
+            content = json.loads(s.string or "{}")
+            if isinstance(content, dict):
+                if "@graph" in content and isinstance(content["@graph"], list):
+                    for node in content["@graph"]:
+                        if isinstance(node, dict) and "@type" in node:
+                            types_found.add(str(node["@type"]))
+                elif "@type" in content:
+                    types_found.add(str(content["@type"]))
+            elif isinstance(content, list):
+                for item in content:
+                    if isinstance(item, dict) and "@type" in item:
+                        types_found.add(str(item["@type"]))
+        except Exception:
+            pass
+
+    if types_found:
+        names = ", ".join(sorted(list(types_found))[:3])
+        return (10, 10, f"JSON-LD Schema detected ({names})", None)
+    
+    # Check microdata fallback
+    if soup.find(attrs={"itemscope": True}):
+        return (7, 10, "Microdata Schema detected (upgrade to JSON-LD)", "Switch to JSON-LD Schema.org format for better LLM parsing")
+
+    return (0, 10, "No Schema.org detected", "Add JSON-LD Schema.org markup (Organization, Product, FAQPage)")
+
+
 def _check_performance(elapsed_ms: float) -> tuple[int, int, str, str | None]:
     if elapsed_ms < 200: return (10, 10, f"{int(elapsed_ms)}ms (Very fast)", None)
     elif elapsed_ms < 500: return (7, 10, f"{int(elapsed_ms)}ms", "Optimize TTFB")
@@ -258,19 +291,19 @@ def _check_token_economics(text: str) -> tuple[int, int, str, str | None]:
 
 def _compute_score(breakdown: dict) -> int:
     """
-    BASE checks (6): ai_agent_access(15) + sitemap(10) + server_side_rendering(10)
-                     + agent_readable_content(20) + performance(10) + token_economics(15) = 80 max
+    BASE checks (7): ai_agent_access(15) + sitemap(10) + server_side_rendering(10)
+                     + agent_readable_content(20) + schema_org(10) + performance(10) + token_economics(15) = 90 max
     BONUS: llms_txt → up to 10; markdown_availability → up to 5.
-    score = min(100, round(base_points * 100 / 80) + llms_bonus + md_bonus)
+    score = min(100, round(base_points * 100 / 90) + llms_bonus + md_bonus)
     """
     base_keys = {
         "ai_agent_access", "sitemap", "server_side_rendering",
-        "agent_readable_content", "performance", "token_economics",
+        "agent_readable_content", "schema_org", "performance", "token_economics",
     }
     base_points = sum(breakdown[k]["points"] for k in base_keys if k in breakdown)
     llms_bonus = breakdown.get("llms_txt", {}).get("points", 0)
     md_bonus = breakdown.get("markdown_availability", {}).get("points", 0)
-    return min(100, round(base_points * 100 / 80) + llms_bonus + md_bonus)
+    return min(100, round(base_points * 100 / 90) + llms_bonus + md_bonus)
 
 
 def audit_ai_readiness(url: str) -> dict:
@@ -338,6 +371,7 @@ def audit_ai_readiness(url: str) -> dict:
             "sitemap": _check_sitemap(base_origin, robots_txt),
             "server_side_rendering": _check_ssr(html, is_csr, consent_wall),
             "agent_readable_content": _check_agent_readable_content(html, is_csr, consent_wall),
+            "schema_org": _check_schema_org(html),
             "performance": _check_performance(elapsed_ms),
             "token_economics": _check_token_economics(main_text),
         }
