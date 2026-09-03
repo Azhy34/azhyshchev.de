@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const errorMessage = document.getElementById('errorMessage');
     const breakdownGrid = document.getElementById('breakdownGrid');
     
-    // API Config
-    const API_BASE_URL = 'https://ai-readiness-api-production.up.railway.app'; 
+    // API Config (Google Cloud Run europe-west3 Frankfurt)
+    const API_BASE_URL = 'https://ai-readiness-api-377331886416.europe-west3.run.app'; 
     // const API_BASE_URL = 'http://localhost:8000'; 
 
     // Detect current page language
