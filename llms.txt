@@ -32,8 +32,8 @@
 
 ## Tools
 
-- [AI Readiness Checker](https://azhyshchev.de/ai-checker/) — Free tool that analyzes any website for AI/LLM visibility: checks server-side rendering, llms.txt presence, token economics, sitemap, bot access, and markdown availability. Returns a 0-100 score with actionable recommendations.
-- [KI-Sichtbarkeits-Checker (Deutsch)](https://azhyshchev.de/de/ki-checker/) — Kostenloser KI-SEO-Checker: analysiert ob ChatGPT, Perplexity und andere KI-Systeme Ihre Website finden und lesen konnen. Gibt Score 0-100 mit konkreten Empfehlungen.
+- [AI Readiness Checker](https://azhyshchev.de/ai-checker/) — Free AI SEO, GEO & LLM Visibility Audit Tool by Mikhail Azhyshchev: analyzes any website for ChatGPT, Claude, and Perplexity readiness (Server-Side Rendering, llms.txt presence, robots.txt AI bot directives, and sitemap coverage). Returns a free 0-100 score with actionable technical recommendations.
+- [KI-Sichtbarkeits-Checker (Deutsch)](https://azhyshchev.de/de/ki-checker/) — Kostenloses KI-SEO- und GEO-Audit-Tool von Mikhail Azhyshchev: prüft die Sichtbarkeit von Websites für ChatGPT, Perplexity und Claude (SSR, llms.txt, KI-Crawler-Zugang, Sitemap). Liefert einen Score von 0-100 mit konkreten Handlungsempfehlungen.
 
 ## Projects
 
