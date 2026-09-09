@@ -2,9 +2,11 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
+  <script src="/js/cookie-consent.js" defer></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zertifikate & Qualifikationen | Mikhail Azhyshchev — Google ADK, KI & Machine Learning</title>
-  <meta name="description" content="Verifizierte Zertifikate und Qualifikationen von Mikhail Azhyshchev: Google Cloud ADK & Multi-Agenten, Stanford / DeepLearning.AI Machine Learning, Hochschule München 6 ECTS, Advanced RAG und IBM GenAI.">
+  <title>Zertifikate &amp; Qualifikationen | Mikhail Azhyshchev — Google ADK, KI &amp; Machine Learning</title>
+  <meta name="description" content="Verifizierte Zertifikate und Qualifikationen von Mikhail Azhyshchev: Google Cloud ADK &amp; Multi-Agenten, Stanford / DeepLearning.AI Machine Learning, Hochschule München 6 ECTS, Advanced RAG und IBM GenAI.">
   <link rel="canonical" href="https://azhyshchev.de/de/zertifikate/">
   <link rel="alternate" hreflang="en" href="https://azhyshchev.de/certifications/">
   <link rel="alternate" hreflang="de" href="https://azhyshchev.de/de/zertifikate/">
@@ -452,12 +454,12 @@
       .certs-grid { grid-template-columns: 1fr; }
     }
   </style>
-  <link rel="stylesheet" href="../../mobile.css">
+  <link rel="stylesheet" href="/mobile.css">
 </head>
 <body>
   <div class="shell">
     <!-- SIDEBAR -->
-    <aside class="sidebar">
+    <aside class="sidebar" data-nosnippet>
       <a class="brand" href="/de/">
         <div class="brand-badge">&lt;/&gt;</div>
         <span>AZHYSHCHEV</span>
@@ -494,12 +496,20 @@
           <span>Zertifikate</span>
         </a>
         <a class="nav-item" href="/de/kontakt/">
-          <span class="icon-box">C</span>
+          <span class="icon-box">K</span>
           <span>Kontakt</span>
         </a>
       </nav>
 
       <div class="sidebar-bottom">
+        <a class="nav-item" href="/CV.pdf" download>
+          <span class="icon-box">&#8595;</span>
+          <span>CV herunterladen</span>
+        </a>
+        <a class="nav-item" href="mailto:azhyshchev@gmail.com">
+          <span class="icon-box">@</span>
+          <span>E-Mail</span>
+        </a>
         <div class="socials">
           <a class="social-link" href="https://linkedin.com/in/azhyshchev" target="_blank" rel="noopener noreferrer" title="LinkedIn">in</a>
           <a class="social-link" href="https://github.com/Azhy34" target="_blank" rel="noopener noreferrer" title="GitHub">gh</a>
@@ -991,6 +1001,50 @@
       </div>
     </main>
   </div>
+  <!-- MOBILE BOTTOM NAV -->
+  <nav class="mobile-bottom-nav" id="mobileBottomNav" data-nosnippet>
+    <a class="mbn-item" href="/de/">
+      <span class="mbn-icon">&lt;/&gt;</span>
+      <span class="mbn-label">Start</span>
+    </a>
+    <a class="mbn-item" href="/de/ki-checker/">
+      <span class="mbn-icon">🤖</span>
+      <span class="mbn-label">KI-Checker</span>
+    </a>
+    <a class="mbn-item" href="/de/erfahrung/">
+      <span class="mbn-icon">E</span>
+      <span class="mbn-label">Erfahrung</span>
+    </a>
+    <a class="mbn-item" href="/de/projekte/">
+      <span class="mbn-icon">P</span>
+      <span class="mbn-label">Projekte</span>
+    </a>
+    <a class="mbn-item" href="/de/artikel/">
+      <span class="mbn-icon">A</span>
+      <span class="mbn-label">Artikel</span>
+    </a>
+    <a class="mbn-item" href="/de/fahigkeiten/">
+      <span class="mbn-icon">S</span>
+      <span class="mbn-label">Fähigkeiten</span>
+    </a>
+    <a class="mbn-item active" href="/de/zertifikate/">
+      <span class="mbn-icon">🎓</span>
+      <span class="mbn-label">Zertifikate</span>
+    </a>
+    <a class="mbn-item" href="/de/kontakt/">
+      <span class="mbn-icon">K</span>
+      <span class="mbn-label">Kontakt</span>
+    </a>
+  </nav>
+  <footer data-nosnippet style="padding: 18px 12px 92px; text-align: center; font-size: 0.92rem; line-height: 1.8;">
+    <a href="/impressum">Impressum</a>
+    <span style="padding: 0 10px;">·</span>
+    <a href="/datenschutz">Datenschutzerklärung</a>
+    <span style="padding: 0 10px;">·</span>
+    <a href="/agb">AGB</a>
+    <span style="padding: 0 10px;">·</span>
+    <a href="/datenschutz#cookie-settings">Cookie-Einstellungen</a>
+  </footer>
 
   <script>
     // Interactive Category Filter
@@ -1010,7 +1064,7 @@
       });
     });
   </script>
-  <script src="../../js/chat-widget.js" defer></script>
-  <script src="../../mobile.js" defer></script>
+  <script src="/js/nav.js"></script>
+  <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" defer></script>
 </body>
 </html>

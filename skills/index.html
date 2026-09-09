@@ -8,13 +8,13 @@
   <meta name="description" content="Production tech stack of Munich-based AI Automation Engineer Mikhail Azhyshchev: Google ADK, Multi-Agent Systems, Claude &amp; Gemini Agents, MCP/WebMCP, Python, FastAPI, GCP Cloud Run, Secret Manager, Linux VPS, Supabase.">
   <meta name="keywords" content="AI automation engineer, Google ADK, Multi-Agent Systems, MCP, WebMCP, Claude Code, Gemini 2.5 Pro, Python, FastAPI, Pydantic, Pandas, Postman, Google Cloud Run, Secret Manager, Linux VPS, Hybrid RAG, LangGraph, Supabase, Docker, Munich Germany">
   <meta name="author" content="Mikhail Azhyshchev">
-  <link rel="canonical" href="https://azhyshchev.de/skills">
+  <link rel="canonical" href="https://azhyshchev.de/skills/">
   <link rel="alternate" hreflang="en" href="https://azhyshchev.de/skills/" />
   <link rel="alternate" hreflang="de" href="https://azhyshchev.de/de/fahigkeiten/" />
   <link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/skills/" />
   <meta property="og:title" content="Skills &amp; Tech Stack — Google ADK, Multi-Agent, Python, MCP | Mikhail Azhyshchev">
   <meta property="og:description" content="Production tech stack of Munich-based AI Automation Engineer Mikhail Azhyshchev: Google ADK, Multi-Agent Systems, Claude &amp; Gemini Agents, MCP/WebMCP, Python, FastAPI, GCP Cloud Run, Secret Manager, Linux VPS, Supabase.">
-  <meta property="og:url" content="https://azhyshchev.de/skills">
+  <meta property="og:url" content="https://azhyshchev.de/skills/">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://azhyshchev.de/Azhyschev.JPG">
   <meta property="og:locale" content="en_US">
@@ -29,15 +29,16 @@
     "@graph": [
       {
         "@type": "WebPage",
-        "@id": "https://azhyshchev.de/skills#webpage",
-        "url": "https://azhyshchev.de/skills",
+        "@id": "https://azhyshchev.de/skills/#webpage",
+        "url": "https://azhyshchev.de/skills/",
         "name": "Skills & Tech Stack — Google ADK, Multi-Agent, Python, MCP | Mikhail Azhyshchev",
         "description": "Production technical stack of Munich-based AI Automation Engineer Mikhail Azhyshchev: Google ADK, Multi-Agent Systems, Claude & Gemini Agents, MCP, WebMCP, Python, FastAPI, Pydantic, Pandas, Postman, GCP Cloud Run, Secret Manager, Linux VPS, Supabase pgvector, Docker.",
         "inLanguage": "en",
         "isPartOf": { "@id": "https://azhyshchev.de/#website" },
         "author": { "@id": "https://azhyshchev.de/#person" },
         "about": { "@id": "https://azhyshchev.de/#person" },
-        "dateModified": "2026-08-19"
+        "mainEntity": { "@id": "https://azhyshchev.de/#person" },
+        "dateModified": "2026-08-20"
       },
       {
         "@type": "Person",
@@ -224,9 +225,8 @@
 
     .page-title {
       font-size: clamp(1.8rem, 3vw, 2.8rem);
-      font-weight: 800; line-height: 0.95;
+      font-weight: 800; line-height: 1.1;
       letter-spacing: -0.05em;
-      white-space: nowrap;
     }
 
     .section-lead {
@@ -238,6 +238,25 @@
     .top-actions {
       display: flex; align-items: center;
       gap: 10px; flex-shrink: 0;
+    }
+
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border: 2px solid var(--black);
+      background: var(--cream);
+      box-shadow: 2px 2px 0 var(--black);
+      font-size: 0.78rem;
+      font-weight: 800;
+      cursor: pointer;
+      text-decoration: none;
+      color: var(--black);
+      transition: transform 0.15s, background 0.15s;
+    }
+    .action-btn:hover {
+      transform: translate(-1px, -1px);
     }
 
     /* ── TAGLINE STRIP ── */
@@ -282,10 +301,12 @@
     }
 
     .block-title {
+      margin: 0;
       font-size: 0.82rem;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.08em;
+      line-height: 1.2;
     }
 
     .block-body {
@@ -392,7 +413,7 @@
 <body>
   <div class="shell">
     <!-- SIDEBAR -->
-    <aside class="sidebar">
+    <aside class="sidebar" data-nosnippet>
       <a class="brand" href="/">
         <div class="brand-badge">&lt;/&gt;</div>
         <span>AZHYSHCHEV</span>
@@ -460,6 +481,10 @@
             <h1 class="page-title">Skills &amp; Stack</h1>
             <p class="section-lead">What I actually use in production — across AI pipelines, backend integrations, infrastructure, and business operations.</p>
           </div>
+          <div class="top-actions">
+            <a class="action-btn" href="/de/fahigkeiten/" title="Auf Deutsch anzeigen">🇩🇪 Deutsch</a>
+            <a class="action-btn" href="https://calendly.com/azhyshchev/30min" target="_blank" rel="noopener noreferrer" style="background:var(--pink);">📅 Book Call</a>
+          </div>
         </div>
 
         <!-- Tagline -->
@@ -471,10 +496,10 @@
         <div class="skills-grid">
 
           <!-- 1. Automation & AI Agents -->
-          <div class="skill-block block-ai">
+          <section class="skill-block block-ai">
             <div class="block-header">
               <div class="block-icon">AI</div>
-              <span class="block-title">Automation &amp; AI Agents</span>
+              <h2 class="block-title">Automation &amp; AI Agents</h2>
             </div>
             <div class="block-body">
               <span class="skill-tag primary">Google ADK (Agent Dev Kit)</span>
@@ -494,13 +519,13 @@
               <span class="skill-tag">Deterministic + LLM Pipelines</span>
               <span class="skill-tag">Business Process Automation</span>
             </div>
-          </div>
+          </section>
 
           <!-- 2. Multi-LLM Orchestration & Architecture -->
-          <div class="skill-block block-llm">
+          <section class="skill-block block-llm">
             <div class="block-header">
               <div class="block-icon">LLM</div>
-              <span class="block-title">Multi-LLM Orchestration</span>
+              <h2 class="block-title">Multi-LLM Orchestration</h2>
             </div>
             <div class="block-body">
               <span class="skill-tag primary" style="background:#ddf0ff;">Hierarchical Model Delegation</span>
@@ -514,13 +539,13 @@
               <span class="skill-tag" style="background:#eef7ff;">Structured Output &amp; Function Calling</span>
               <span class="skill-tag" style="background:#eef7ff;">Latency &amp; Token Budget Optimization</span>
             </div>
-          </div>
+          </section>
 
           <!-- 3. Backend, APIs & Data Engineering -->
-          <div class="skill-block block-dev">
+          <section class="skill-block block-dev">
             <div class="block-header">
               <div class="block-icon">DEV</div>
-              <span class="block-title">Backend, APIs &amp; Data</span>
+              <h2 class="block-title">Backend, APIs &amp; Data</h2>
             </div>
             <div class="block-body">
               <span class="skill-tag primary">Python 3.12+ (FastAPI, Asyncio)</span>
@@ -538,13 +563,13 @@
               <span class="skill-tag">Git / GitHub Actions CI/CD</span>
               <span class="skill-tag">Playwright (Headless Automation)</span>
             </div>
-          </div>
+          </section>
 
           <!-- 4. Cloud, Infrastructure & Deployment -->
-          <div class="skill-block block-infra">
+          <section class="skill-block block-infra">
             <div class="block-header">
               <div class="block-icon">OPS</div>
-              <span class="block-title">Cloud &amp; Infrastructure</span>
+              <h2 class="block-title">Cloud &amp; Infrastructure</h2>
             </div>
             <div class="block-body">
               <span class="skill-tag primary">Google Cloud (Cloud Run &amp; Build)</span>
@@ -560,13 +585,13 @@
               <span class="skill-tag">Redis (Caching &amp; Limits)</span>
               <span class="skill-tag">n8n &amp; Make.com</span>
             </div>
-          </div>
+          </section>
 
           <!-- 5. Business & Operations -->
-          <div class="skill-block block-biz">
+          <section class="skill-block block-biz">
             <div class="block-header">
               <div class="block-icon">BIZ</div>
-              <span class="block-title">Business &amp; Operations</span>
+              <h2 class="block-title">Business &amp; Operations</h2>
             </div>
             <div class="block-body">
               <span class="skill-tag primary">B2B Operations</span>
@@ -582,13 +607,13 @@
               <span class="skill-tag">Meta Ads</span>
               <span class="skill-tag">Google Analytics 4</span>
             </div>
-          </div>
+          </section>
 
           <!-- 6. Design & Frontend -->
-          <div class="skill-block block-design">
+          <section class="skill-block block-design">
             <div class="block-header">
               <div class="block-icon">UI</div>
-              <span class="block-title">Design &amp; Frontend</span>
+              <h2 class="block-title">Design &amp; Frontend</h2>
             </div>
             <div class="block-body">
               <span class="skill-tag primary">React 19</span>
@@ -601,13 +626,13 @@
               <span class="skill-tag">Content Creation</span>
               <span class="skill-tag">Reels / Carousels</span>
             </div>
-          </div>
+          </section>
 
           <!-- 7. Languages -->
-          <div class="skill-block block-lang">
+          <section class="skill-block block-lang">
             <div class="block-header">
               <div class="block-icon">LNG</div>
-              <span class="block-title">Languages</span>
+              <h2 class="block-title">Languages</h2>
             </div>
             <div class="block-body">
               <span class="skill-tag primary">English — Fluent (Professional)</span>
@@ -615,7 +640,7 @@
               <span class="skill-tag primary">Russian — Native</span>
               <span class="skill-tag primary">Ukrainian — Native</span>
             </div>
-          </div>
+          </section>
 
         </div>
 
@@ -632,7 +657,7 @@
     </main>
   </div>
   <!-- MOBILE BOTTOM NAV -->
-  <nav class="mobile-bottom-nav" id="mobileBottomNav">
+  <nav class="mobile-bottom-nav" id="mobileBottomNav" data-nosnippet>
     <a class="mbn-item" href="/">
       <span class="mbn-icon">&lt;/&gt;</span>
       <span class="mbn-label">Home</span>
@@ -657,8 +682,12 @@
       <span class="mbn-icon">S</span>
       <span class="mbn-label">Skills</span>
     </a>
+    <a class="mbn-item" href="/contact">
+      <span class="mbn-icon">C</span>
+      <span class="mbn-label">Contact</span>
+    </a>
   </nav>
-  <div style="padding: 18px 12px 92px; text-align: center; font-size: 0.92rem; line-height: 1.8;">
+  <footer data-nosnippet style="padding: 18px 12px 92px; text-align: center; font-size: 0.92rem; line-height: 1.8;">
     <a href="/impressum">Impressum</a>
     <span style="padding: 0 10px;">·</span>
     <a href="/datenschutz">Datenschutzerklärung</a>
@@ -666,7 +695,7 @@
     <a href="/agb">AGB</a>
     <span style="padding: 0 10px;">·</span>
     <a href="/datenschutz#cookie-settings">Cookie-Einstellungen</a>
-  </div>
+  </footer>
   <script src="/js/nav.js"></script>
   <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" defer></script>
   <script>

@@ -37,7 +37,8 @@
         "isPartOf": { "@id": "https://azhyshchev.de/#website" },
         "author": { "@id": "https://azhyshchev.de/#person" },
         "about": { "@id": "https://azhyshchev.de/#person" },
-        "dateModified": "2026-08-19"
+        "mainEntity": { "@id": "https://azhyshchev.de/#person" },
+        "dateModified": "2026-08-20"
       },
       {
         "@type": "Person",
@@ -220,9 +221,8 @@
 
     .page-title {
       font-size: clamp(1.8rem, 3vw, 2.8rem);
-      font-weight: 800; line-height: 0.95;
+      font-weight: 800; line-height: 1.1;
       letter-spacing: -0.05em;
-      white-space: nowrap;
     }
 
     .section-lead {
@@ -234,6 +234,25 @@
     .top-actions {
       display: flex; align-items: center;
       gap: 10px; flex-shrink: 0;
+    }
+
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border: 2px solid var(--black);
+      background: var(--cream);
+      box-shadow: 2px 2px 0 var(--black);
+      font-size: 0.78rem;
+      font-weight: 800;
+      cursor: pointer;
+      text-decoration: none;
+      color: var(--black);
+      transition: transform 0.15s, background 0.15s;
+    }
+    .action-btn:hover {
+      transform: translate(-1px, -1px);
     }
 
     .tagline-strip {
@@ -276,10 +295,12 @@
     }
 
     .block-title {
+      margin: 0;
       font-size: 0.82rem;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.08em;
+      line-height: 1.2;
     }
 
     .block-body {
@@ -382,7 +403,8 @@
 </head>
 <body>
   <div class="shell">
-    <aside class="sidebar">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" data-nosnippet>
       <a class="brand" href="/de/">
         <div class="brand-badge">&lt;/&gt;</div>
         <span>AZHYSHCHEV</span>
@@ -448,6 +470,10 @@
             <h1 class="page-title">Fähigkeiten &amp; Stack</h1>
             <p class="section-lead">Was ich tatsächlich in Produktion nutze — über KI-Pipelines, Backend-Integrationen, Cloud-Infrastruktur und operative Prozesse.</p>
           </div>
+          <div class="top-actions">
+            <a class="action-btn" href="/skills/" title="View in English">🇬🇧 English</a>
+            <a class="action-btn" href="https://calendly.com/azhyshchev/30min" target="_blank" rel="noopener noreferrer" style="background:var(--pink);">📅 Termin buchen</a>
+          </div>
         </div>
 
         <div class="tagline-strip">
@@ -457,10 +483,10 @@
         <div class="skills-grid">
 
           <!-- 1. Automatisierung & KI-Agenten -->
-          <div class="skill-block block-ai">
+          <section class="skill-block block-ai">
             <div class="block-header">
               <div class="block-icon">KI</div>
-              <span class="block-title">Automatisierung &amp; KI</span>
+              <h2 class="block-title">Automatisierung &amp; KI</h2>
             </div>
             <div class="block-body">
               <span class="skill-tag primary">Google ADK (Agent Dev Kit)</span>
@@ -473,40 +499,40 @@
               <span class="skill-tag primary">Hybrid-RAG-Architektur</span>
               <span class="skill-tag primary">Agent Memory &amp; State Management</span>
               <span class="skill-tag primary">Code-first Automatisierung</span>
-              <span class="skill-tag">IDE Control Plane Workflows</span>
+              <span class="skill-tag">IDE-as-Control-Plane Workflows</span>
               <span class="skill-tag">LangGraph</span>
               <span class="skill-tag">LangChain</span>
               <span class="skill-tag">Vertex AI Search &amp; RAG</span>
               <span class="skill-tag">Deterministische + LLM Pipelines</span>
-              <span class="skill-tag">Geschäftsprozessautomatisierung</span>
+              <span class="skill-tag">Geschäftsprozess-Automatisierung</span>
             </div>
-          </div>
+          </section>
 
-          <!-- 2. Multi-LLM-Orchestrierung & Architektur -->
-          <div class="skill-block block-llm">
+          <!-- 2. Multi-LLM Orchestrierung & Architektur -->
+          <section class="skill-block block-llm">
             <div class="block-header">
               <div class="block-icon">LLM</div>
-              <span class="block-title">Multi-LLM-Orchestrierung</span>
+              <h2 class="block-title">Multi-LLM Orchestrierung</h2>
             </div>
             <div class="block-body">
               <span class="skill-tag primary" style="background:#ddf0ff;">Hierarchische Modell-Delegation</span>
-              <span class="skill-tag primary" style="background:#ddf0ff;">Stufenweises Routing: Architekt → Coder → Evaluator</span>
+              <span class="skill-tag primary" style="background:#ddf0ff;">Tiered Routing: Architekt → Coder → Evaluator</span>
               <span class="skill-tag primary" style="background:#ddf0ff;">Multi-Provider-Routing &amp; Fallbacks (OpenRouter)</span>
-              <span class="skill-tag primary" style="background:#ddf0ff;">Kostenoptimierte Inferenz (~90% Kostensenkung)</span>
-              <span class="skill-tag primary" style="background:#ddf0ff;">Modellagnostisches Systemdesign</span>
-              <span class="skill-tag" style="background:#eef7ff;">Claude + Gemini Multi-Agenten-Zusammenarbeit</span>
+              <span class="skill-tag primary" style="background:#ddf0ff;">Kostenbewusste Inferenz (~90% API-Kosten gesenkt)</span>
+              <span class="skill-tag primary" style="background:#ddf0ff;">Modell-agnostisches Systemdesign</span>
+              <span class="skill-tag" style="background:#eef7ff;">Claude + Gemini Multi-Agenten Kollaboration</span>
               <span class="skill-tag" style="background:#eef7ff;">Lokale &amp; Edge-Inferenz (Ollama / vLLM)</span>
               <span class="skill-tag" style="background:#eef7ff;">Multimodale Verarbeitung (Vision, Audio, Dokumente)</span>
               <span class="skill-tag" style="background:#eef7ff;">Strukturierte Ausgaben &amp; Function Calling</span>
-              <span class="skill-tag" style="background:#eef7ff;">Latenz- &amp; Token-Budget-Optimierung</span>
+              <span class="skill-tag" style="background:#eef7ff;">Latenz- &amp; Token-Budget Optimierung</span>
             </div>
-          </div>
+          </section>
 
-          <!-- 3. Backend, APIs & Daten -->
-          <div class="skill-block block-dev">
+          <!-- 3. Backend, APIs & Data Engineering -->
+          <section class="skill-block block-dev">
             <div class="block-header">
               <div class="block-icon">DEV</div>
-              <span class="block-title">Backend, APIs &amp; Daten</span>
+              <h2 class="block-title">Backend, APIs &amp; Data</h2>
             </div>
             <div class="block-body">
               <span class="skill-tag primary">Python 3.12+ (FastAPI, Asyncio)</span>
@@ -515,22 +541,22 @@
               <span class="skill-tag primary">Vektordatenbanken &amp; Embeddings</span>
               <span class="skill-tag primary">Sentence-Transformers &amp; HuggingFace</span>
               <span class="skill-tag primary">Pydantic (Strikte Validierung)</span>
-              <span class="skill-tag primary">Pandas &amp; Daten-Pipelines</span>
+              <span class="skill-tag primary">Pandas &amp; Datenpipelines</span>
               <span class="skill-tag primary">Postman (API Testing &amp; Mocks)</span>
               <span class="skill-tag primary">TypeScript &amp; Node.js</span>
               <span class="skill-tag">REST APIs &amp; Webhooks</span>
               <span class="skill-tag">SQL-Migrationen &amp; Optimierung</span>
-              <span class="skill-tag">System-Integrationen</span>
+              <span class="skill-tag">Systemintegrationen</span>
               <span class="skill-tag">Git / GitHub Actions CI/CD</span>
-              <span class="skill-tag">Playwright (Headless Automation)</span>
+              <span class="skill-tag">Playwright (Headless-Automatisierung)</span>
             </div>
-          </div>
+          </section>
 
           <!-- 4. Cloud, Infrastruktur & Deployment -->
-          <div class="skill-block block-infra">
+          <section class="skill-block block-infra">
             <div class="block-header">
               <div class="block-icon">OPS</div>
-              <span class="block-title">Cloud &amp; Infrastruktur</span>
+              <h2 class="block-title">Cloud &amp; Infrastruktur</h2>
             </div>
             <div class="block-body">
               <span class="skill-tag primary">Google Cloud (Cloud Run &amp; Build)</span>
@@ -540,27 +566,27 @@
               <span class="skill-tag primary">Docker &amp; Containerisierung</span>
               <span class="skill-tag primary">GitHub Actions CI/CD</span>
               <span class="skill-tag">Nginx &amp; SSL / Reverse Proxy</span>
-              <span class="skill-tag">GCP MCP Server</span>
+              <span class="skill-tag">GCP MCP Servers</span>
               <span class="skill-tag">Google GenAI SDK</span>
               <span class="skill-tag">Railway / Vercel</span>
-              <span class="skill-tag">Redis (Caching &amp; Limits)</span>
+              <span class="skill-tag">Redis (Caching &amp; Rate Limits)</span>
               <span class="skill-tag">n8n &amp; Make.com</span>
             </div>
-          </div>
+          </section>
 
-          <!-- 5. Geschäft & Operations -->
-          <div class="skill-block block-biz">
+          <!-- 5. Business & Operations -->
+          <section class="skill-block block-biz">
             <div class="block-header">
               <div class="block-icon">BIZ</div>
-              <span class="block-title">Geschäft &amp; Operations</span>
+              <h2 class="block-title">Business &amp; Operations</h2>
             </div>
             <div class="block-body">
               <span class="skill-tag primary">B2B-Operations</span>
-              <span class="skill-tag primary">Business x Tech Brücke</span>
+              <span class="skill-tag primary">Business × Tech Brücke</span>
               <span class="skill-tag primary">Prozessoptimierung</span>
               <span class="skill-tag primary">Deutsche Compliance &amp; GoBD</span>
-              <span class="skill-tag">Lieferkette</span>
-              <span class="skill-tag">Beschaffung</span>
+              <span class="skill-tag">Supply Chain</span>
+              <span class="skill-tag">Procurement</span>
               <span class="skill-tag">Stakeholder-Management</span>
               <span class="skill-tag">P&amp;L-Verantwortung</span>
               <span class="skill-tag">Kundenverhandlungen</span>
@@ -568,13 +594,13 @@
               <span class="skill-tag">Meta Ads</span>
               <span class="skill-tag">Google Analytics 4</span>
             </div>
-          </div>
+          </section>
 
           <!-- 6. Design & Frontend -->
-          <div class="skill-block block-design">
+          <section class="skill-block block-design">
             <div class="block-header">
               <div class="block-icon">UI</div>
-              <span class="block-title">Design &amp; Frontend</span>
+              <h2 class="block-title">Design &amp; Frontend</h2>
             </div>
             <div class="block-body">
               <span class="skill-tag primary">React 19</span>
@@ -582,18 +608,18 @@
               <span class="skill-tag">Canvas API</span>
               <span class="skill-tag">Vite</span>
               <span class="skill-tag">HTML / CSS</span>
-              <span class="skill-tag">UI/UX Denken</span>
-              <span class="skill-tag">Videobearbeitung</span>
+              <span class="skill-tag">UI/UX Thinking</span>
+              <span class="skill-tag">Video Editing</span>
               <span class="skill-tag">Content Creation</span>
-              <span class="skill-tag">Reels / Karussells</span>
+              <span class="skill-tag">Reels / Carousels</span>
             </div>
-          </div>
+          </section>
 
           <!-- 7. Sprachen -->
-          <div class="skill-block block-lang">
+          <section class="skill-block block-lang">
             <div class="block-header">
               <div class="block-icon">LNG</div>
-              <span class="block-title">Sprachen</span>
+              <h2 class="block-title">Sprachen</h2>
             </div>
             <div class="block-body">
               <span class="skill-tag primary">Englisch — Verhandlungssicher (Professionell)</span>
@@ -601,7 +627,7 @@
               <span class="skill-tag primary">Russisch — Muttersprache</span>
               <span class="skill-tag primary">Ukrainisch — Muttersprache</span>
             </div>
-          </div>
+          </section>
 
         </div>
 
@@ -618,7 +644,7 @@
   </div>
 
   <!-- MOBILE BOTTOM NAV -->
-  <nav class="mobile-bottom-nav" id="mobileBottomNav">
+  <nav class="mobile-bottom-nav" id="mobileBottomNav" data-nosnippet>
     <a class="mbn-item" href="/de/">
       <span class="mbn-icon">&lt;/&gt;</span>
       <span class="mbn-label">Start</span>
@@ -649,7 +675,7 @@
     </a>
   </nav>
 
-  <div style="padding: 18px 12px 92px; text-align: center; font-size: 0.92rem; line-height: 1.8;">
+  <footer data-nosnippet style="padding: 18px 12px 92px; text-align: center; font-size: 0.92rem; line-height: 1.8;">
     <a href="/impressum">Impressum</a>
     <span style="padding: 0 10px;">·</span>
     <a href="/datenschutz">Datenschutzerklärung</a>
@@ -657,7 +683,7 @@
     <a href="/agb">AGB</a>
     <span style="padding: 0 10px;">·</span>
     <a href="/datenschutz#cookie-settings">Cookie-Einstellungen</a>
-  </div>
+  </footer>
 
   <script src="/js/nav.js"></script>
   <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" defer></script>

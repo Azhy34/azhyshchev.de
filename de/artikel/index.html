@@ -928,7 +928,7 @@
       <span class="mbn-label">Kontakt</span>
     </a>
   </nav>
-  <div style="padding: 18px 12px 92px; text-align: center; font-size: 0.92rem; line-height: 1.8;">
+  <footer data-nosnippet style="padding: 18px 12px 92px; text-align: center; font-size: 0.92rem; line-height: 1.8;">
     <a href="/impressum">Impressum</a>
     <span style="padding: 0 10px;">·</span>
     <a href="/datenschutz">Datenschutzerklärung</a>
@@ -936,8 +936,104 @@
     <a href="/agb">AGB</a>
     <span style="padding: 0 10px;">·</span>
     <a href="/datenschutz#cookie-settings">Cookie-Einstellungen</a>
-  </div>
+  </footer>
   <!-- ── MODALS ── -->
+
+  <!-- Modal: Google ADK Agent Skills & Multi-Agenten-Systeme -->
+  <div class="modal-overlay" id="modal-google-adk-agent-skills-de" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-section-label">Agenten-Architektur · Google ADK · Multi-Agenten-Swarms</div>
+          <h2 class="modal-title">Google ADK Agent Skills: Wie man produktionsreife Skills für KI-Agenten baut</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-google-adk-agent-skills-de')">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="modal-section-label">Das Architektur-Problem: 5.000-Zeilen-Monolithen</div>
+          <div class="modal-text">
+            <p>Monolithische System-Prompts verschwenden Kontext-Budgets, verwässern die Attention und führen zu unzuverlässigen Tool-Aufrufen. Produktionsreife Multi-Agenten-Systeme erfordern Progressive Disclosure und modulare Skill-Pakete.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">3-Tier Agent Skills &amp; Two-Layer Shields</div>
+          <div class="modal-text">
+            <p>Unsere Architektur trennt Skill-Metadaten (YAML für Zero-Token-Routing), Anweisungen (präzise SKILL.md-Verträge) und isolierte Python-Tools. Tool-Ausgaben durchlaufen deterministische Pydantic-Validierungs-Shields mit In-Loop-Selbstkorrektur.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Enterprise Cloud Skill Registry</div>
+          <div class="modal-text">
+            <p>Skills werden in einer zentralen Google Cloud Skill Registry verwaltet. Subagenten laden dynamisch nur die für die Aufgabe relevanten Skills – für 80% weniger Token-Overhead auf Google Cloud Run.</p>
+          </div>
+          <div class="modal-stack">
+            <span class="stack-chip">Google ADK</span>
+            <span class="stack-chip">Python 3.12</span>
+            <span class="stack-chip">Two-Layer Shields</span>
+            <span class="stack-chip">Cloud Run</span>
+            <span class="stack-chip">Secret Manager</span>
+            <span class="stack-chip">Pydantic</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center;">
+        <p style="font-size: 0.82rem; font-weight: 700; opacity: 0.85;">📖 Vollständiger Schritt-für-Schritt-Artikel mit Architektur-Details:</p>
+        <div style="display: flex; gap: 10px; width: 100%; justify-content: center; align-items: center;">
+          <a class="action-btn dark" href="/de/artikel/google-adk-agent-skills-multi-agents/" style="font-size: 0.92rem; padding: 12px 24px; font-weight: 800;">Vollständigen Artikel lesen →</a>
+          <button class="mini-btn" onclick="closeModal('modal-google-adk-agent-skills-de')">Schließen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: WebMCP & KI-Agenten -->
+  <div class="modal-overlay" id="modal-webmcp-agent-ready-web-de" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-section-label">KI Agenten · WebMCP · Model Context Protocol</div>
+          <h2 class="modal-title">KI Agenten &amp; WebMCP: Warum autonome KI-Agenten klassisches SEO ablösen</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-webmcp-agent-ready-web-de')">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="modal-section-label">Paradigmenwechsel: Von Klicks zu Agenten-Entscheidungen</div>
+          <div class="modal-text">
+            <p>B2B-Einkaufsprozesse verlagern sich rasant zu autonomen KI-Agenten. Klassische Keyword-Optimierung reicht nicht mehr aus, wenn Einkäufer-Agenten strukturierte APIs, Nachweise und maschinenlesbare Manifeste prüfen.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Google Cloud WebMCP Standard</div>
+          <div class="modal-text">
+            <p>WebMCP ermöglicht Tool-ausführbare DOMs und browser-native MCP-Funktionen. Statt fehleranfälligem Web-Scraping entdecken externe Agenten Tools, rufen Aktionen auf und verarbeiten strukturierte Schemas direkt über window.modelContext.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Live Google Cloud Run Setup (Frankfurt)</div>
+          <div class="modal-text">
+            <p>Implementiert mit /.well-known/agent-card.json, A2A v0.3.0, Vertex AI Search RAG-Vektorisierung, Firestore Lead-Erfassung und sofortigen Telegram-Alerts.</p>
+          </div>
+          <div class="modal-stack">
+            <span class="stack-chip">WebMCP</span>
+            <span class="stack-chip">A2A-Protokoll</span>
+            <span class="stack-chip">Google ADK</span>
+            <span class="stack-chip">Vertex AI Search</span>
+            <span class="stack-chip">Google Cloud Run</span>
+            <span class="stack-chip">Model Context Protocol</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center;">
+        <p style="font-size: 0.82rem; font-weight: 700; opacity: 0.85;">📖 Vollständiger Schritt-für-Schritt-Artikel mit Architektur-Details:</p>
+        <div style="display: flex; gap: 10px; width: 100%; justify-content: center; align-items: center;">
+          <a class="action-btn dark" href="/de/artikel/webmcp-agent-ready-web/" style="font-size: 0.92rem; padding: 12px 24px; font-weight: 800;">Vollständigen Artikel lesen →</a>
+          <button class="mini-btn" onclick="closeModal('modal-webmcp-agent-ready-web-de')">Schließen</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Modal: Agent SEO & A2A-Protokoll -->
   <div class="modal-overlay" id="modal-agent-seo-a2a-protokoll" role="dialog" aria-modal="true">
