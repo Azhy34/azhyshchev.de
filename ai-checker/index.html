@@ -26,7 +26,7 @@
 <body>
     <div class="shell">
         <!-- SIDEBAR -->
-        <aside class="sidebar">
+        <aside class="sidebar" data-nosnippet>
             <a class="brand" href="/">
                 <div class="brand-badge">&lt;/&gt;</div>
                 <span>AZHYSHCHEV</span>
@@ -207,7 +207,7 @@
                 </section>
 
                 <!-- SEO ARTICLE — always visible, indexed by AI crawlers -->
-                <section class="seo-article">
+                <article class="seo-article">
                     <div class="seo-label">AI VISIBILITY GUIDE</div>
 
                     <h2 class="seo-h2">What is AI Visibility and Why Does Your Website Need It?</h2>
@@ -245,13 +245,13 @@
                             <div class="faq-a">Um Ihre Website fur KI-Suche (ChatGPT, Perplexity, Google AI Overviews) zu optimieren, sind drei Schritte entscheidend: (1) Serverseitiges Rendering (SSR) statt reinem JavaScript-Rendering, damit KI-Crawler Ihre Inhalte lesen koennen. (2) Eine llms.txt-Datei, die KI-Systemen einen strukturierten Uberblick uber Ihre Website gibt. (3) Eine offene robots.txt, die GPTBot, ClaudeBot und PerplexityBot erlaubt. Nutzen Sie den kostenlosen AI-Checker auf dieser Seite, um zu sehen, wo Ihre Website steht.</div>
                         </div>
                     </div>
-                </section>
+                </article>
             </div>
         </main>
     </div>
 
     <!-- MOBILE BOTTOM NAV -->
-    <nav class="mobile-bottom-nav" id="mobileBottomNav">
+    <nav class="mobile-bottom-nav" id="mobileBottomNav" data-nosnippet>
         <a class="mbn-item" href="/">
             <span class="mbn-icon">&lt;/&gt;</span>
             <span class="mbn-label">Home</span>
@@ -277,6 +277,16 @@
             <span class="mbn-label">Contact</span>
         </a>
     </nav>
+
+    <footer data-nosnippet style="padding: 18px 12px 92px; text-align: center; font-size: 0.92rem; line-height: 1.8;">
+        <a href="/impressum">Impressum</a>
+        <span style="padding: 0 10px;">·</span>
+        <a href="/datenschutz">Datenschutzerklärung</a>
+        <span style="padding: 0 10px;">·</span>
+        <a href="/agb">AGB</a>
+        <span style="padding: 0 10px;">·</span>
+        <a href="/datenschutz#cookie-settings">Cookie-Einstellungen</a>
+    </footer>
 
     <script type="application/ld+json">
     {

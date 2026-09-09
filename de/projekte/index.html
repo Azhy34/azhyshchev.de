@@ -45,11 +45,26 @@
         "description": "Portfolio produktiver KI-Automatisierungssysteme für deutsche und europäische Unternehmen.",
         "url": "https://azhyshchev.de/de/projekte/",
         "inLanguage": "de",
-        "numberOfItems": 6,
+        "numberOfItems": 7,
         "itemListElement": [
           {
             "@type": "ListItem",
             "position": 1,
+            "item": {
+              "@type": "SoftwareApplication",
+              "@id": "https://azhyshchev.de/projects/ai-ads-management/#project",
+              "name": "Individuelle MCP-Server für Google Ads & Pinterest",
+              "description": "Technischer Praxisfall: Entwicklung zweier Python MCP-Server über Google Ads API v23 (18 Tools) und Pinterest Ads API v5 (9 Tools). Abbildung der Kampagnenhierarchie mit Laufzeit-Guardrails und Protobuf-Feldmasken.",
+              "applicationCategory": "DeveloperApplication",
+              "operatingSystem": "Web",
+              "inLanguage": "de",
+              "author": { "@id": "https://azhyshchev.de/#person" },
+              "keywords": "MCP, Model Context Protocol, Google Ads API v23, Pinterest Ads API v5, Protobuf, Python, KI Agent Tooling, Werbeautomatisierung"
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
             "item": {
               "@type": "SoftwareApplication",
               "@id": "https://azhyshchev.de/de/projekte/#web-verkaufsassistent",
@@ -64,7 +79,7 @@
           },
           {
             "@type": "ListItem",
-            "position": 2,
+            "position": 3,
             "item": {
               "@type": "SoftwareApplication",
               "@id": "https://azhyshchev.de/de/projekte/#rechnungsautomatisierung",
@@ -441,7 +456,7 @@
 <body>
   <div class="shell">
     <!-- SIDEBAR -->
-    <aside class="sidebar">
+    <aside class="sidebar" data-nosnippet>
       <a class="brand" href="/de/">
         <div class="brand-badge">&lt;/&gt;</div>
         <span>AZHYSHCHEV</span>
@@ -519,8 +534,32 @@
 
         <section class="projects-grid">
 
+          <!-- Card 0: AI-Managed Ad Account (Google Ads + Pinterest) -->
+          <article class="project-card" data-modal="modal-adsmcp">
+            <div class="card-accent" style="background: var(--mint);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">MCP-Server-Design · Agent Tooling · Werbeplattformen</span>
+                <span class="card-readtime">Produktiv</span>
+              </div>
+              <h2 class="card-title">Individuelle MCP-Server für Google Ads &amp; Pinterest</h2>
+              <p class="card-excerpt">Praxisfall: Design einer Agent-Tool-Oberfläche aus offiziellen API-Referenzen: Verdichtung langer Endpunkt-Listen zu fachlichen Operationen und Einbettung von Invarianten, die APIs selbst nicht prüfen.</p>
+              <div class="card-tags">
+                <span class="tag">Python</span>
+                <span class="tag">MCP</span>
+                <span class="tag">Google Ads API v23</span>
+                <span class="tag">Pinterest Ads API v5</span>
+                <span class="tag">Protobuf</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Design: <span>27 Tools über 2 offizielle APIs · 3-Ebenen-Fassade</span></div>
+              <a class="read-link" href="/projects/ai-ads-management/">Vollständige Seite →</a>
+            </div>
+          </article>
+
           <!-- Card 1: AI Music SaaS -->
-          <div class="project-card" data-modal="modal-hitdlaciebie">
+          <article class="project-card" data-modal="modal-hitdlaciebie">
             <div class="card-accent" style="background: var(--coral);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -541,10 +580,10 @@
               <div class="metric-pill">Ergebnis: <span>14-Tage Launch · 100% Auto-Verkäufe</span></div>
               <a class="read-link" href="/projects/ai-music-saas/">Vollständige Seite →</a>
             </div>
-          </div>
+          </article>
 
           <!-- Card 2: Web Sales Assistant -->
-          <div class="project-card" data-modal="modal-agent">
+          <article class="project-card" data-modal="modal-agent">
             <div class="card-accent" style="background: var(--yellow);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -565,10 +604,10 @@
               <div class="metric-pill">Ergebnis: <span>90% Supportkosten ↓ · 2 Sek Antworten</span></div>
               <a class="read-link" href="/projects/ai-sales-agent-rag/">Vollständige Seite →</a>
             </div>
-          </div>
+          </article>
 
           <!-- Card 3: Invoice Automation -->
-          <div class="project-card" data-modal="modal-invoice">
+          <article class="project-card" data-modal="modal-invoice">
             <div class="card-accent" style="background: var(--blue);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -588,10 +627,10 @@
               <div class="metric-pill">Ergebnis: <span>120 Std/Monat gespart · Null Eingabe</span></div>
               <a class="read-link" href="/projects/invoice-automation-germany/">Vollständige Seite →</a>
             </div>
-          </div>
+          </article>
 
           <!-- Card 4: AI Image Composer -->
-          <div class="project-card" data-modal="modal-image">
+          <article class="project-card" data-modal="modal-image">
             <div class="card-accent" style="background: var(--pink);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -612,10 +651,10 @@
               <div class="metric-pill">Ergebnis: <span>75% Designer-Routine ↓ · 30 Sek Mockups</span></div>
               <a class="read-link" href="/projects/ai-image-automation/">Vollständige Seite →</a>
             </div>
-          </div>
+          </article>
 
           <!-- Card 5: B2B Lead Pipeline -->
-          <div class="project-card" data-modal="modal-b2b">
+          <article class="project-card" data-modal="modal-b2b">
             <div class="card-accent" style="background: var(--mint);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -636,10 +675,10 @@
               <div class="metric-pill">Ergebnis: <span>100+ Leads in 15 Min · 0 Vertriebsmitarbeiter</span></div>
               <a class="read-link" href="/projects/b2b-lead-generation-germany/">Vollständige Seite →</a>
             </div>
-          </div>
+          </article>
 
           <!-- Card 6: Virtual Wallpaper Try-On -->
-          <div class="project-card" data-modal="modal-wallpaper">
+          <article class="project-card" data-modal="modal-wallpaper">
             <div class="card-accent" style="background: var(--coral);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -660,10 +699,10 @@
               <div class="metric-pill">Ergebnis: <span>75% Handarbeit ↓ · 2 Min Visuals</span></div>
               <a class="read-link" href="/projects/wallpaper-visualization-automation/">Vollständige Seite →</a>
             </div>
-          </div>
+          </article>
 
           <!-- Card 7: LinkedIn CTA -->
-          <div class="project-card project-card--linkedin" onclick="window.open('https://www.linkedin.com/in/azhyshchev/recent-activity/all/','_blank')">
+          <article class="project-card project-card--linkedin" onclick="window.open('https://www.linkedin.com/in/azhyshchev/recent-activity/all/','_blank')">
             <div class="card-accent" style="background: var(--sky);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -680,7 +719,7 @@
               <div class="metric-pill">6+ veröffentlichte Artikel</div>
               <span class="read-link">LinkedIn offnen →</span>
             </div>
-          </div>
+          </article>
 
         </section>
 
@@ -1173,7 +1212,7 @@
     })();
   </script>
   <!-- MOBILE BOTTOM NAV -->
-  <nav class="mobile-bottom-nav" id="mobileBottomNav">
+  <nav class="mobile-bottom-nav" id="mobileBottomNav" data-nosnippet>
     <a class="mbn-item" href="/de/">
       <span class="mbn-icon">&lt;/&gt;</span>
       <span class="mbn-label">Start</span>
@@ -1199,7 +1238,7 @@
       <span class="mbn-label">Kontakt</span>
     </a>
   </nav>
-  <div style="padding: 18px 12px 92px; text-align: center; font-size: 0.92rem; line-height: 1.8;">
+  <footer data-nosnippet style="padding: 18px 12px 92px; text-align: center; font-size: 0.92rem; line-height: 1.8;">
     <a href="/impressum">Impressum</a>
     <span style="padding: 0 10px;">·</span>
     <a href="/datenschutz">Datenschutzerklärung</a>
@@ -1207,7 +1246,7 @@
     <a href="/agb">AGB</a>
     <span style="padding: 0 10px;">·</span>
     <a href="/datenschutz#cookie-settings">Cookie-Einstellungen</a>
-  </div>
+  </footer>
   <script src="/js/nav.js"></script>
   <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" defer></script>
 </body>

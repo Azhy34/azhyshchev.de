@@ -53,11 +53,25 @@
         "name": "AI Automation Projects — Mikhail Azhyshchev",
         "description": "Portfolio of production AI automation systems built for German and European businesses.",
         "url": "https://azhyshchev.de/projects",
-        "numberOfItems": 6,
+        "numberOfItems": 7,
         "itemListElement": [
           {
             "@type": "ListItem",
             "position": 1,
+            "item": {
+              "@type": "SoftwareApplication",
+              "@id": "https://azhyshchev.de/projects/ai-ads-management/#project",
+              "name": "Custom MCP Servers for Google Ads & Pinterest",
+              "description": "Engineering case: custom MCP servers in Python exposing 18 tools over Google Ads API v23 and 9 tools over Pinterest Ads API v5. Tools mirror the advertising hierarchy of campaign, ad group and ad with runtime guardrails and protobuf field masks.",
+              "applicationCategory": "DeveloperApplication",
+              "operatingSystem": "Web",
+              "author": { "@id": "https://azhyshchev.de/#person" },
+              "keywords": "MCP, Model Context Protocol, Google Ads API v23, Pinterest Ads API v5, Protobuf, Python, AI agent tooling, ad automation"
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
             "item": {
               "@type": "SoftwareApplication",
               "@id": "https://azhyshchev.de/projects#web-sales-assistant",
@@ -71,7 +85,7 @@
           },
           {
             "@type": "ListItem",
-            "position": 2,
+            "position": 3,
             "item": {
               "@type": "SoftwareApplication",
               "@id": "https://azhyshchev.de/projects#invoice-automation",
@@ -85,7 +99,7 @@
           },
           {
             "@type": "ListItem",
-            "position": 3,
+            "position": 4,
             "item": {
               "@type": "SoftwareApplication",
               "@id": "https://azhyshchev.de/projects#ai-image-composer",
@@ -99,7 +113,7 @@
           },
           {
             "@type": "ListItem",
-            "position": 4,
+            "position": 5,
             "item": {
               "@type": "SoftwareApplication",
               "@id": "https://azhyshchev.de/projects#b2b-lead-pipeline",
@@ -113,7 +127,7 @@
           },
           {
             "@type": "ListItem",
-            "position": 5,
+            "position": 6,
             "item": {
               "@type": "SoftwareApplication",
               "@id": "https://azhyshchev.de/projects#wallpaper-tryon",
@@ -127,7 +141,7 @@
           },
           {
             "@type": "ListItem",
-            "position": 6,
+            "position": 7,
             "item": {
               "@type": "SoftwareApplication",
               "@id": "https://azhyshchev.de/projects#ai-music-saas",
@@ -511,7 +525,7 @@
 <body>
   <div class="shell">
     <!-- SIDEBAR -->
-    <aside class="sidebar">
+    <aside class="sidebar" data-nosnippet>
       <a class="brand" href="/">
         <div class="brand-badge">&lt;/&gt;</div>
         <span>AZHYSHCHEV</span>
@@ -593,7 +607,7 @@
         <section class="projects-grid">
 
           <!-- Card 0: AI-Managed Ad Account (Google Ads + Pinterest) -->
-          <div class="project-card" data-modal="modal-adsmcp">
+          <article class="project-card" data-modal="modal-adsmcp">
             <div class="card-accent" style="background: var(--mint);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -615,10 +629,10 @@
               <!-- Full project page for SEO indexing, keeps modal UX intact -->
               <a class="read-link" href="/projects/ai-ads-management/">Open full page →</a>
             </div>
-          </div>
+          </article>
 
           <!-- Card 1: hitdlaciebie.pl AI Music SaaS -->
-          <div class="project-card" data-modal="modal-hitdlaciebie">
+          <article class="project-card" data-modal="modal-hitdlaciebie">
             <div class="card-accent" style="background: var(--coral);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -640,10 +654,10 @@
               <!-- Full project page for SEO indexing — keeps modal UX intact -->
               <a class="read-link" href="/projects/ai-music-saas/">Open full page →</a>
             </div>
-          </div>
+          </article>
 
           <!-- Card 3: Web Sales Assistant / da-vinchi -->
-          <div class="project-card" data-modal="modal-agent">
+          <article class="project-card" data-modal="modal-agent">
             <div class="card-accent" style="background: var(--yellow);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -665,10 +679,10 @@
               <!-- Full project page for SEO indexing — keeps modal UX intact -->
               <a class="read-link" href="/projects/ai-sales-agent-rag/">Open full page →</a>
             </div>
-          </div>
+          </article>
 
           <!-- Card 2: Invoice Automation -->
-          <div class="project-card" data-modal="modal-invoice">
+          <article class="project-card" data-modal="modal-invoice">
             <div class="card-accent" style="background: var(--blue);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -689,10 +703,10 @@
               <!-- Full project page for SEO indexing — keeps modal UX intact -->
               <a class="read-link" href="/projects/invoice-automation-germany/">Open full page →</a>
             </div>
-          </div>
+          </article>
 
           <!-- Card 3: AI Image Composer / Wallpaper Try-On -->
-          <div class="project-card" data-modal="modal-image">
+          <article class="project-card" data-modal="modal-image">
             <div class="card-accent" style="background: var(--pink);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -714,10 +728,10 @@
               <!-- Full project page for SEO indexing — keeps modal UX intact -->
               <a class="read-link" href="/projects/ai-image-automation/">Open full page →</a>
             </div>
-          </div>
+          </article>
 
           <!-- Card 4: B2B Lead Pipeline -->
-          <div class="project-card" data-modal="modal-b2b">
+          <article class="project-card" data-modal="modal-b2b">
             <div class="card-accent" style="background: var(--mint);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -739,10 +753,10 @@
               <!-- Full project page for SEO indexing — keeps modal UX intact -->
               <a class="read-link" href="/projects/b2b-lead-generation-germany/">Open full page →</a>
             </div>
-          </div>
+          </article>
 
           <!-- Card 5: Virtual Wallpaper Try-On -->
-          <div class="project-card" data-modal="modal-wallpaper">
+          <article class="project-card" data-modal="modal-wallpaper">
             <div class="card-accent" style="background: var(--coral);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -764,10 +778,10 @@
               <!-- Full project page for SEO indexing — keeps modal UX intact -->
               <a class="read-link" href="/projects/wallpaper-visualization-automation/">Open full page →</a>
             </div>
-          </div>
+          </article>
 
           <!-- Card 7: LinkedIn CTA -->
-          <div class="project-card project-card--linkedin" onclick="window.open('https://www.linkedin.com/in/azhyshchev/recent-activity/all/','_blank')">
+          <article class="project-card project-card--linkedin" onclick="window.open('https://www.linkedin.com/in/azhyshchev/recent-activity/all/','_blank')">
             <div class="card-accent" style="background: var(--sky);"></div>
             <div class="card-body">
               <div class="card-meta">
@@ -784,7 +798,7 @@
               <div class="metric-pill">6+ published articles</div>
               <span class="read-link">Open LinkedIn →</span>
             </div>
-          </div>
+          </article>
 
         </section>
 
@@ -1362,7 +1376,7 @@
     })();
   </script>
   <!-- MOBILE BOTTOM NAV -->
-  <nav class="mobile-bottom-nav" id="mobileBottomNav">
+  <nav class="mobile-bottom-nav" id="mobileBottomNav" data-nosnippet>
     <a class="mbn-item" href="/">
       <span class="mbn-icon">&lt;/&gt;</span>
       <span class="mbn-label">Home</span>
@@ -1388,7 +1402,7 @@
       <span class="mbn-label">Contact</span>
     </a>
   </nav>
-  <div style="padding: 18px 12px 92px; text-align: center; font-size: 0.92rem; line-height: 1.8;">
+  <footer data-nosnippet style="padding: 18px 12px 92px; text-align: center; font-size: 0.92rem; line-height: 1.8;">
     <a href="/impressum">Impressum</a>
     <span style="padding: 0 10px;">·</span>
     <a href="/datenschutz">Datenschutzerklärung</a>
@@ -1396,7 +1410,7 @@
     <a href="/agb">AGB</a>
     <span style="padding: 0 10px;">·</span>
     <a href="/datenschutz#cookie-settings">Cookie-Einstellungen</a>
-  </div>
+  </footer>
   <script src="/js/nav.js"></script>
   <script src="/js/webmcp.js" defer></script>
   <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" defer></script>
