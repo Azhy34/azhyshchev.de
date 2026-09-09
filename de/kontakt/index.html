@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8">
@@ -35,8 +35,10 @@
         "description": "Kontakt zu Mikhail Azhyshchev - KI-Automatisierungsingenieur in München. Verfügbar für KI-Automatisierungsprojekte, RAG-Agenten-Entwicklung, Geschäftsprozessautomatisierung und B2B-Workflow-Engineering in Deutschland und EU.",
         "inLanguage": "de",
         "isPartOf": { "@id": "https://azhyshchev.de/#website" },
+        "author": { "@id": "https://azhyshchev.de/#person" },
         "about": { "@id": "https://azhyshchev.de/#person" },
-        "dateModified": "2026-06-09"
+        "mainEntity": { "@id": "https://azhyshchev.de/#person" },
+        "dateModified": "2026-08-20"
       },
       {
         "@type": "Person",
@@ -345,7 +347,7 @@
 </head>
 <body>
   <div class="shell">
-    <aside class="sidebar">
+    <aside class="sidebar" data-nosnippet>
       <a class="brand" href="/de/">
         <div class="brand-badge">&lt;/&gt;</div>
         <span>AZHYSHCHEV</span>
@@ -410,6 +412,10 @@
           <div>
             <h1 class="page-title">Kontakt</h1>
             <p class="section-lead">Offen für hybride Stellen in München und ausgewählte Remote-Möglichkeiten. Wenn Sie für KI-Automatisierung, Workflow-Systeme, interne Tools oder Geschäftsprozessverbesserung einstellen, ist dies der schnellste Weg, mich zu erreichen.</p>
+          </div>
+          <div class="top-actions">
+            <a class="action-btn" href="/contact/" title="View in English">🇬🇧 English</a>
+            <a class="action-btn" href="https://calendly.com/azhyshchev/30min" target="_blank" rel="noopener noreferrer" style="background:var(--pink);">📅 Termin buchen</a>
           </div>
         </div>
 
@@ -486,7 +492,7 @@
     </main>
   </div>
   <!-- MOBILE BOTTOM NAV -->
-  <nav class="mobile-bottom-nav" id="mobileBottomNav">
+  <nav class="mobile-bottom-nav" id="mobileBottomNav" data-nosnippet>
     <a class="mbn-item" href="/de/">
       <span class="mbn-icon">&lt;/&gt;</span>
       <span class="mbn-label">Start</span>
@@ -507,12 +513,16 @@
       <span class="mbn-icon">A</span>
       <span class="mbn-label">Artikel</span>
     </a>
-    <a class="mbn-item" href="/de/kontakt/">
+    <a class="mbn-item" href="/de/fahigkeiten/">
+      <span class="mbn-icon">S</span>
+      <span class="mbn-label">Fähigkeiten</span>
+    </a>
+    <a class="mbn-item active" href="/de/kontakt/">
       <span class="mbn-icon">K</span>
       <span class="mbn-label">Kontakt</span>
     </a>
   </nav>
-  <div style="padding: 18px 12px 92px; text-align: center; font-size: 0.92rem; line-height: 1.8;">
+  <footer data-nosnippet style="padding: 18px 12px 92px; text-align: center; font-size: 0.92rem; line-height: 1.8;">
     <a href="/impressum">Impressum</a>
     <span style="padding: 0 10px;">·</span>
     <a href="/datenschutz">Datenschutzerklärung</a>
@@ -520,7 +530,7 @@
     <a href="/agb">AGB</a>
     <span style="padding: 0 10px;">·</span>
     <a href="/datenschutz#cookie-settings">Cookie-Einstellungen</a>
-  </div>
+  </footer>
   <script src="/js/nav.js"></script>
   <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" defer></script>
   <script>
