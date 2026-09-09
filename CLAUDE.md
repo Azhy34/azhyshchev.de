@@ -252,8 +252,18 @@ Site is fully bilingual since 2026-06-09. Every EN page has a `/de/` counterpart
 - Style: neobrutalist — 2-3px solid borders, offset box-shadows (`4px 4px 0 black`)
 
 ### Pages — shared layout pattern
-Every page: sidebar nav (desktop) + `.mobile-bottom-nav` (mobile, fixed bottom, z-index 999)
-Mobile breakpoint: `mobile.css` at ≤820px
+- **Structure:** Desktop sidebar (`<aside class="sidebar" data-nosnippet>`) + Main content (`<main class="main">`) + Mobile bottom nav (`<nav class="mobile-bottom-nav" data-nosnippet>`).
+- **Mobile breakpoint:** `/mobile.css` at ≤820px.
+- **Header & Footer:** `<header class="page-header">` at top of main, `<footer class="site-footer" data-nosnippet>` at bottom.
+
+### Semantic Layout & RAG Shielding Standards (Googlebot & Vertex AI Search)
+1. **`data-nosnippet` on Nav/Footer:** Always add `data-nosnippet` to `<aside class="sidebar">`, `<nav class="mobile-bottom-nav">`, and `<footer class="site-footer">` to prevent boilerplate text from polluting Google Search snippets and Vertex AI Search RAG vector embeddings.
+2. **Typography & CSS Constraints:** Never apply `white-space: nowrap;` to `.page-title`, `.hero-title`, or headings `h1`-`h3`. It breaks responsive layout on mobile screens (<600px).
+3. **Card-Modal Pairing Rule:**
+   - Any card with `data-modal="modal-ID"` (articles or projects) **MUST** have the matching `<div class="modal-overlay" id="modal-ID" role="dialog" aria-modal="true">` inside `<!-- ── MODALS ── -->`.
+   - Never leave orphan cards without modals on `/articles/`, `/de/artikel/`, `/projects/`, `/de/projekte/`.
+4. **CSS/JS Linking:** Use absolute paths (`/mobile.css`, `/js/nav.js`, `/js/chat-widget.js`).
+5. **Language Switcher:** Ensure topbar/header contains `.lang-toggle` calling `switchLang()` on pages with both EN/DE versions.
 
 ### Adding a project card (`projects/index.html`)
 1. Add `<div class="project-card" data-modal="modal-ID">` with card-meta, card-title, card-excerpt, card-tags, card-footer
