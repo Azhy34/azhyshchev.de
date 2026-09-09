@@ -737,6 +737,79 @@
 
   <!-- ── MODALS ── -->
 
+  <!-- Modal: AI-Managed Ad Account (MCP Google Ads + Pinterest) -->
+  <div class="overlay" id="modal-adsmcp">
+    <div class="modal">
+      <div class="modal-accent" style="background:var(--mint);"></div>
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">Individuelle MCP-Server für Werbeplattformen</div>
+          <div class="modal-meta">MCP-Server-Design · Agent Tooling · Google Ads + Pinterest</div>
+        </div>
+        <button class="modal-close" aria-label="Schliessen">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <h3 style="font-size:1rem;font-weight:800;margin-bottom:10px;letter-spacing:-0.02em;">Das Entwurfsproblem</h3>
+          <p>Ein Standard-MCP-Server spiegelt lediglich die Werbe-API wider: viele Low-Level-Methoden ohne Verständnis für korrekte Kampagnenstrukturen. Der Agent meldete stets Erfolg, solange die API einen Aufruf akzeptierte. Die Lösung bestand darin, eine neue Tool-Oberfläche aus offiziellen API-Referenzen zu entwickeln, die Invarianten selbst absichert.</p>
+        </div>
+        <div class="modal-metrics">
+          <div class="metric-box">
+            <strong>18 + 9 Tools</strong>
+            <span>Google Ads API v23 und Pinterest Ads API v5, zwei lokale Python MCP-Server.</span>
+          </div>
+          <div class="metric-box">
+            <strong>3-Ebenen-Fassade</strong>
+            <span>Tool-Oberfläche spiegelt Kampagne, Anzeigengruppe und Anzeige statt roher Endpunkte wider.</span>
+          </div>
+          <div class="metric-box">
+            <strong>Eingebaute Invarianten</strong>
+            <span>Feldmasken, Creative-Standards und kampagnenübergreifende Validierung durch das Tool.</span>
+          </div>
+          <div class="metric-box">
+            <strong>Standardmäßig pausiert</strong>
+            <span>Alles, was Budget verbraucht, wird inaktiv erstellt und wartet auf menschliche Freigabe.</span>
+          </div>
+        </div>
+        <div class="modal-cols">
+          <div class="modal-section">
+            <h3>Entwurfsmethode</h3>
+            <ul>
+              <li>Inventarisierung aller Endpunkte und Schemas aus den offiziellen Referenzen.</li>
+              <li>Definition der tatsächlichen Account-Operationen in klarer Geschäftssprache.</li>
+              <li>Zuordnung von Intentionen zu Endpunkten: Chains, Feldselektion und Payload-Erstellung auf Serverebene.</li>
+              <li>Ein Tool pro Geschäftsabsicht (Intent).</li>
+            </ul>
+          </div>
+          <div class="modal-section">
+            <h3>Praxisbeispiele</h3>
+            <ul>
+              <li>Pinterest Analytics filtert 9 Reporting-Spalten und rechnet Micro-Units in Währung um, bevor der Agent die Daten sieht.</li>
+              <li>Jeder Google Ads Write-Path baut eine Protobuf-Feldmaske auf, um Gebotsrücksetzungen auf 0,01 EUR zu verhindern.</li>
+              <li>Kampagnenübergreifende Duplikaterkennung, die kein einzelner API-Endpunkt abbilden kann.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="modal-section">
+          <h3>Tech Stack</h3>
+          <div class="modal-chips">
+            <span class="modal-chip">Python</span>
+            <span class="modal-chip">MCP</span>
+            <span class="modal-chip">Google Ads API v23</span>
+            <span class="modal-chip">Pinterest Ads API v5</span>
+            <span class="modal-chip">Protobuf Field Masks</span>
+            <span class="modal-chip">Obsidian</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="modal-btn light" href="/CV.pdf" download>CV herunterladen</a>
+        <a class="modal-btn light" href="/articles/ai-google-ads-management/">Business Case</a>
+        <a class="modal-btn" href="/projects/ai-ads-management/">Engineering Case lesen</a>
+      </div>
+    </div>
+  </div>
+
   <!-- Modal: Web Sales Assistant -->
   <div class="overlay" id="modal-agent">
     <div class="modal">
