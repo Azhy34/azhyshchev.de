@@ -20,6 +20,23 @@ Technical documentation for azhyshchev.de. Keep this file up to date when adding
 **ADK AI Consultant:** deploy via `gcloud run deploy azhy-ai-consultant` from `azhy-ai-consultant/` folder.
 **AI Readiness Checker API:** deploy via `gcloud run deploy ai-readiness-api --source api --project=azhyshchev --region=europe-west3` from `portfolio/` folder. Live endpoint: `https://ai-readiness-api-377331886416.europe-west3.run.app`.
 
+## Vertex AI Search RAG & Instant Recrawl Pipeline
+
+The site is indexed into Google Cloud Discovery Engine (`azhyshchev-portfolio-knowledge`) for the AI Consultant's RAG grounding.
+
+### 1. Instant Recrawl Pipeline
+Whenever you deploy a new or modified page to `azhyshchev.de`, trigger immediate re-indexing by Google's crawler:
+```powershell
+python scripts/recrawl_vertex_search.py https://azhyshchev.de/articles/<slug>/ https://azhyshchev.de/de/artikel/<slug>/
+```
+Uses `discoveryengine.googleapis.com/v1/.../siteSearchEngine:recrawlUris` with GCP ADC auth.
+
+### 2. HTML RAG Standards (Zero Noise)
+- **Noise Isolation:** `<aside class="sidebar" data-nosnippet>`, `<nav class="mobile-bottom-nav" data-nosnippet>`, and `<footer>` MUST have `data-nosnippet` so menus and legal links do not pollute vector embeddings.
+- **Hierarchy:** Exactly one `<h1>` per page. Subsections use `<h2>` and `<h3>` (Google Discovery Engine chunks documents by heading boundaries).
+- **Static HTML (SSG):** Pure static HTML rendered on the wire (no client JS framework hydration required for Googlebot to read content).
+- **Card-to-Modal Pairing:** Every `<article class="article-card" data-modal="ID">` MUST pair with `<div class="modal-overlay" id="ID">` (or `<div class="overlay" id="ID">` on projects).
+
 ## Railway CLI
 
 Already authenticated as `azhischev1@gmail.com`. Use directly from terminal.

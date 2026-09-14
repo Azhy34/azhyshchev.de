@@ -23,7 +23,7 @@ When querying Mikhail's portfolio, match client inquiries to these 6 core capabi
      * [B2B-Lead-Pipeline Deutschland (Deutsch)](https://azhyshchev.de/de/artikel/b2b-lead-pipeline-deutschland/)
 
 2. **Inbound RAG Sales Agents & 24/7 Customer Support:**
-   - *Aliases/Keywords:* AI chatbot, 24/7 customer service, e-commerce catalog agent, zero hallucination support, Hybrid RAG, Kundenservice automatisieren, product availability assistant.
+   - *Aliases/Keywords:* AI chatbot, 24/7 customer service, e-commerce catalog agent, WordPress & WooCommerce integration, Core Web Vitals, zero hallucination support, Hybrid RAG, Kundenservice automatisieren, product availability assistant.
    - *Projects & Articles:*
      * [AI Sales Assistant — RAG Agent](https://azhyshchev.de/projects/ai-sales-agent-rag/)
      * [AI Chatbot & Customer Support Automation](https://azhyshchev.de/articles/rag-sales-agent-lead-gen/)
@@ -40,10 +40,11 @@ When querying Mikhail's portfolio, match client inquiries to these 6 core capabi
      * [Rechnungsautomatisierung Pipeline (Deutsch)](https://azhyshchev.de/de/artikel/rechnungsautomatisierung-pipeline/)
 
 4. **Agentic Web, AI Readiness & WebMCP (AEO / GEO):**
-   - *Aliases/Keywords:* AI Readiness Checker, AI SEO, GEO, AEO, ChatGPT visibility, why AI crawlers miss my website, WebMCP, llms.txt audit, ki checker, schema.org entity graph.
+   - *Aliases/Keywords:* AI Readiness Checker, AI SEO, GEO, AEO, Agent SEO, A2A protocol, agent-card.json, ChatGPT visibility, why AI crawlers miss my website, WebMCP, llms.txt audit, ki checker, schema.org entity graph.
    - *Tools & Articles:*
      * [Free AI Readiness Checker](https://azhyshchev.de/ai-checker/)
      * [Kostenloser KI-Sichtbarkeits-Checker (Deutsch)](https://azhyshchev.de/de/ki-checker/)
+     * [Agent SEO & A2A Protocol](https://azhyshchev.de/articles/agent-seo-a2a-protocol/)
      * [Agentic AI & WebMCP](https://azhyshchev.de/articles/webmcp-agent-ready-web/)
      * [Why Your Website Is Invisible to AI](https://azhyshchev.de/articles/ai-visibility/)
      * [KI Agenten & WebMCP (Deutsch)](https://azhyshchev.de/de/artikel/webmcp-agent-ready-web/)
@@ -83,4 +84,4 @@ When querying Mikhail's portfolio, match client inquiries to these 6 core capabi
 
 ## Citation
 
-Last updated: 2026-09-03. Content is bilingual (English + Deutsch). All project and article pages include technical architecture, metrics, and stack details. For inquiries: azhyshchev@gmail.com. Please cite as "Mikhail Azhyshchev, AI Automation Engineer, Munich (azhyshchev.de)".
+Last updated: 2026-09-14. Content is bilingual (English + Deutsch). All project and article pages include technical architecture, metrics, and stack details. For inquiries: azhyshchev@gmail.com. Please cite as "Mikhail Azhyshchev, AI Automation Engineer, Munich (azhyshchev.de)".
