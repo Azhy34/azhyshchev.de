@@ -22,7 +22,7 @@
   <meta name="agent-url" content="https://azhy-ai-consultant-377331886416.europe-west3.run.app">
   <meta name="agent-package" content="de.azhyshchev.azhy_ai_consultant">
 
-  <meta property="og:title" content="Enterprise Production RAG with Vertex AI Search: No Heavy Models in Production | Mikhail Azhyshchev">
+  <meta property="og:title" content="Enterprise Production RAG with Vertex AI Search — No Heavy Models in Production | Mikhail Azhyshchev">
   <meta property="og:description" content="Why running custom vector DBs is an operational trap. How to build Enterprise RAG using Google Cloud Vertex AI Search, Google ADK Multi-Agents, and sub-second retrieval.">
   <meta property="og:url" content="https://azhyshchev.de/articles/rag-sales-agent-ecommerce/">
   <meta property="og:type" content="article">
@@ -32,7 +32,7 @@
   <meta name="twitter:title" content="Enterprise RAG with Google Vertex AI Search — Production Architecture">
   <meta name="twitter:description" content="Stop dragging models into production: how managed Vertex AI Search delivers sub-second grounding, zero GPU bloat, and 90% cost reduction.">
 
-  <title>Enterprise Production RAG with Google Cloud Vertex AI Search | Mikhail Azhyshchev</title>
+  <title>Enterprise Production RAG with Vertex AI Search — No Heavy Models in Production</title>
 
   <script type="application/ld+json">
   {
@@ -41,7 +41,7 @@
       {
         "@type": "Article",
         "@id": "https://azhyshchev.de/articles/rag-sales-agent-ecommerce/#article",
-        "headline": "Enterprise Production RAG with Vertex AI Search: Why You Shouldn't Drag Models into Production",
+        "headline": "Enterprise Production RAG with Vertex AI Search — No Heavy Models in Production",
         "description": "Production architecture for enterprise RAG using Google Cloud Vertex AI Search (Discovery Engine), Google ADK Multi-Agents, noise isolation with data-nosnippet, and serverless Cloud Run deployment.",
         "author": { "@id": "https://azhyshchev.de/#person" },
         "publisher": { "@id": "https://azhyshchev.de/#person" },
@@ -56,7 +56,7 @@
         "@type": "WebPage",
         "@id": "https://azhyshchev.de/articles/rag-sales-agent-ecommerce/#webpage",
         "url": "https://azhyshchev.de/articles/rag-sales-agent-ecommerce/",
-        "name": "Enterprise Production RAG with Vertex AI Search: Why You Shouldn't Drag Models into Production",
+        "name": "Enterprise Production RAG with Vertex AI Search — No Heavy Models in Production",
         "isPartOf": { "@id": "https://azhyshchev.de/#website" },
         "author": { "@id": "https://azhyshchev.de/#person" },
         "dateModified": "2026-09-14",
@@ -125,7 +125,7 @@
   <style>
     :root { --sky: #61b5e8; --mint: #b9ddb7; --cream: #f8f0dc; --yellow: #f5c84b; --pink: #efb2d5; --blue: #d8ebff; --peach: #f7d4b1; --coral: #ff9a77; --rose: #ecb0c4; --black: #111111; --white: #ffffff; --accent: var(--mint); }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { min-height: 100vh; font-family: 'JetBrains Mono', monospace; color: var(--black); background: linear-gradient(120deg, var(--sky) 0 34%, var(--peach) 34% 55%, var(--coral) 55% 72%, var(--rose) 72% 100%); padding: 48px 24px; }
+    body { min-height: 100vh; font-family: 'JetBrains Mono', monospace; color: var(--black); background: linear-gradient(120deg, var(--mint) 0 34%, var(--blue) 34% 60%, var(--peach) 60% 100%); padding: 48px 24px; }
     a { color: inherit; text-decoration: none; }
     .shell { width: min(1320px, 100%); margin: 0 auto; border: 3px solid var(--black); box-shadow: 12px 12px 0 var(--black); background: var(--mint); display: grid; grid-template-columns: 250px 1fr; min-height: 820px; overflow: hidden; }
     .sidebar { border-right: 3px solid var(--black); padding: 20px 18px; display: flex; flex-direction: column; gap: 22px; }
@@ -147,8 +147,8 @@
     .breadcrumb a:hover { opacity: 1; text-decoration: underline; }
     .article-hero { border: 3px solid var(--black); background: var(--accent); box-shadow: 6px 6px 0 var(--black); padding: 28px 24px; }
     .article-type { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; margin-bottom: 12px; }
-    .article-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.04em; margin-bottom: 16px; }
-    .article-lead { font-size: 0.95rem; line-height: 1.65; max-width: 76ch; }
+    .article-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.04em; margin-bottom: 16px; }
+    .article-lead { font-size: 0.95rem; line-height: 1.65; max-width: 72ch; }
     .metrics-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
     .metric-box { border: 2px solid var(--black); background: rgba(255,255,255,0.75); padding: 14px 12px; }
     .metric-box strong { display: block; font-size: 1.3rem; line-height: 1; margin-bottom: 6px; }
@@ -156,32 +156,34 @@
     .article-body { display: flex; flex-direction: column; gap: 24px; }
     .neo-card { border: 3px solid var(--black); background: var(--white); box-shadow: 6px 6px 0 var(--black); padding: 24px; }
     .section-label { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.45; margin-bottom: 10px; }
-    .section-title { font-size: 1.15rem; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.02em; }
+    .section-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.02em; }
     .prose { display: flex; flex-direction: column; gap: 14px; }
     .prose p { font-size: 0.88rem; line-height: 1.75; }
     .prose h3 { font-size: 0.95rem; font-weight: 800; margin-top: 8px; letter-spacing: -0.02em; }
     .prose ul { padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
     .prose li { font-size: 0.88rem; line-height: 1.65; }
     .prose code { background: var(--cream); border: 1px solid var(--black); padding: 1px 5px; font-size: 0.82rem; }
-    .arch-diagram { border: 2px solid var(--black); background: var(--cream); padding: 18px 20px; font-size: 0.82rem; line-height: 2; font-weight: 700; margin: 16px 0; overflow-x: auto; white-space: pre; }
-    .code-block { border: 2px solid var(--black); background: #1a1a1a; color: #f8f8f2; padding: 16px; font-size: 0.8rem; line-height: 1.5; overflow-x: auto; margin: 14px 0; border-radius: 0; }
-    .code-block .keyword { color: #ff79c6; font-weight: 700; }
-    .code-block .string { color: #f1fa8c; }
-    .code-block .comment { color: #6272a4; font-style: italic; }
-    .code-block .function { color: #50fa7b; }
+    .pipeline-diagram { border: 2px solid var(--black); background: var(--cream); padding: 18px 22px; font-size: 0.84rem; line-height: 2.4; font-weight: 700; margin: 16px 0; overflow-x: auto; }
+    .pipeline-step { display: inline-block; border: 2px solid var(--black); padding: 4px 10px; background: var(--white); box-shadow: 2px 2px 0 var(--black); }
+    .pipeline-arrow { opacity: 0.5; margin: 0 6px; }
     .highlight-box { border: 3px solid var(--black); background: var(--yellow); box-shadow: 4px 4px 0 var(--black); padding: 18px 20px; }
     .highlight-box h3 { font-size: 0.9rem; font-weight: 800; margin-bottom: 10px; }
     .highlight-box p { font-size: 0.84rem; line-height: 1.65; }
-    .grid-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
-    .compare-card { border: 2px solid var(--black); padding: 16px; }
-    .compare-card.bad { background: #ffe6e6; }
-    .compare-card.good { background: #e6f9e6; }
-    .compare-title { font-size: 0.85rem; font-weight: 800; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
     .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-    .tool-list { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
-    .tool-item { border: 2px solid var(--black); background: var(--cream); padding: 12px 14px; }
-    .tool-name { font-size: 0.82rem; font-weight: 800; margin-bottom: 4px; }
-    .tool-desc { font-size: 0.78rem; line-height: 1.55; opacity: 0.8; }
+    .layer-block { border: 2px solid var(--black); padding: 16px; margin-bottom: 14px; }
+    .layer-title { font-size: 0.82rem; font-weight: 800; margin-bottom: 8px; }
+    .layer-desc { font-size: 0.8rem; line-height: 1.6; opacity: 0.85; }
+    .dedup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+    .dedup-card { border: 2px solid var(--black); padding: 14px; background: var(--cream); }
+    .dedup-card strong { display: block; font-size: 0.82rem; margin-bottom: 6px; font-weight: 800; }
+    .dedup-card span { font-size: 0.76rem; line-height: 1.55; opacity: 0.85; }
+    .step-list { display: flex; flex-direction: column; gap: 12px; counter-reset: steps; }
+    .step-item { border: 2px solid var(--black); padding: 14px 16px; display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: start; }
+    .step-num { width: 36px; height: 36px; border: 2px solid var(--black); background: var(--yellow); display: grid; place-items: center; font-size: 0.9rem; font-weight: 800; box-shadow: 2px 2px 0 var(--black); }
+    .step-content strong { display: block; font-size: 0.84rem; font-weight: 800; margin-bottom: 4px; }
+    .step-content p { font-size: 0.78rem; line-height: 1.6; opacity: 0.85; }
+    .code-neo { border: 2px solid var(--black); background: var(--cream); padding: 16px; font-size: 0.8rem; line-height: 1.6; overflow-x: auto; margin: 14px 0; }
+    .code-header { font-size: 0.7rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; opacity: 0.6; }
     .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
     .chip { padding: 6px 10px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); font-size: 0.72rem; font-weight: 700; }
     .faq { display: flex; flex-direction: column; gap: 16px; }
@@ -202,8 +204,8 @@
     .back-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 2px solid var(--black); background: var(--white); box-shadow: 4px 4px 0 var(--black); font-size: 0.82rem; font-weight: 700; transition: transform 0.15s; align-self: flex-start; }
     .back-link:hover { transform: translate(-2px,-2px); }
     @media (max-width: 1100px) { .shell { grid-template-columns: 220px 1fr; } .metrics-row { grid-template-columns: repeat(2,1fr); } }
-    @media (max-width: 820px) { body { padding: 10px 8px 72px; } .shell { grid-template-columns: 1fr; box-shadow: 6px 6px 0 var(--black); min-height: unset; } .sidebar { border-right: none; border-bottom: 3px solid var(--black); padding: 10px 14px; flex-direction: row; align-items: center; justify-content: space-between; } .brand { font-size: clamp(0.95rem,2.5vw,1.6rem); } .nav { display: none; } .sidebar-bottom { display: none; } .main { padding: 14px; } .two-col { grid-template-columns: 1fr; } .grid-compare { grid-template-columns: 1fr; } }
-    @media (max-width: 520px) { .metrics-row { grid-template-columns: 1fr; } .article-title { font-size: 1.45rem; } }
+    @media (max-width: 820px) { body { padding: 10px 8px 72px; } .shell { grid-template-columns: 1fr; box-shadow: 6px 6px 0 var(--black); min-height: unset; } .sidebar { border-right: none; border-bottom: 3px solid var(--black); padding: 10px 14px; flex-direction: row; align-items: center; justify-content: space-between; } .brand { font-size: clamp(0.95rem,2.5vw,1.6rem); } .nav { display: none; } .sidebar-bottom { display: none; } .main { padding: 14px; } .two-col { grid-template-columns: 1fr; } .dedup-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 520px) { .metrics-row { grid-template-columns: 1fr; } .article-title { font-size: 1.5rem; } }
   </style>
   <link rel="stylesheet" href="/mobile.css">
   <link rel="stylesheet" href="../../mobile.css">
@@ -239,30 +241,30 @@
         <nav class="breadcrumb" aria-label="Breadcrumb">
           <a href="/">Home</a><span>→</span>
           <a href="/articles">Articles</a><span>→</span>
-          <span>Enterprise RAG Architecture with Vertex AI Search</span>
+          <span>Enterprise RAG with Vertex AI Search</span>
         </nav>
 
         <div class="article-hero">
-          <div class="article-type">Production Blueprint · GCP Vertex AI Search · Google ADK Multi-Agent · Enterprise RAG</div>
-          <h1 class="article-title">Building Enterprise Production RAG: Why You Shouldn't Drag Model Weights into Production</h1>
+          <div class="article-type">Enterprise Architecture · GCP Vertex AI Search · Multi-Agent RAG</div>
+          <h1 class="article-title">Enterprise Production RAG with Vertex AI Search — No Heavy Models in Production</h1>
           <p class="article-lead">Most RAG tutorials teach you to spin up Chroma, Milvus, or self-hosted pgvector, run a Python container with heavy Sentence-Transformers on an expensive GPU node, and pray the vector database doesn't crash during traffic spikes. In enterprise production, this is an operational trap. Here is how we engineered a zero-overhead, multi-tenant Enterprise RAG system using Google Cloud Vertex AI Search & Discovery Engine — deployed on Cloud Run with sub-second retrieval, 90% token cost reduction, and zero model weight bloat.</p>
           <div class="metrics-row">
-            <div class="metric-box"><strong>&lt; 800ms</strong><span>Sub-second retrieval & grounding latency</span></div>
+            <div class="metric-box"><strong>0 MB</strong><span>Model weights in production container</span></div>
+            <div class="metric-box"><strong>&lt; 800ms</strong><span>Sub-second grounding & search latency</span></div>
             <div class="metric-box"><strong>90%</strong><span>LLM token cost reduction vs context stuffing</span></div>
-            <div class="metric-box"><strong>0 MB</strong><span>Model/GPU weight footprint in container</span></div>
-            <div class="metric-box"><strong>100%</strong><span>GDPR & Enterprise DPA compliant (Frankfurt)</span></div>
+            <div class="metric-box"><strong>100%</strong><span>GDPR & Enterprise DPA (Frankfurt europe-west3)</span></div>
           </div>
         </div>
 
         <div class="article-body">
 
-          <!-- Section 1: The Anti-Pattern -->
+          <!-- Section 1: The Problem -->
           <div class="neo-card">
-            <div class="section-label">The Operational Reality</div>
+            <div class="section-label">The problem</div>
             <h2 class="section-title">The "Naive RAG" Trap: Why Self-Hosted Vector DBs Fail at Scale</h2>
             <div class="prose">
               <p>Almost every company starting with AI falls into the same prototype setup: an engineer spins up a custom vector database pod (Chroma, Milvus, or standalone Qdrant), packages an embedding model like <code>all-MiniLM-L6-v2</code> inside a Docker container, and runs semantic search on incoming queries.</p>
-              <p>In a local Jupyter notebook, this looks great. But once pushed to real production, the operational tax hits:</p>
+              <p>In a local Jupyter notebook, this looks fine. But once pushed to real production, the operational tax hits:</p>
               <ul>
                 <li><strong>Heavy Container Bloat:</strong> Packaging PyTorch, transformers, and model weights balloons Docker images to 3–6 GB. Cold starts on serverless platforms become unbearable.</li>
                 <li><strong>The GPU Infrastructure Tax:</strong> Keeping GPU or high-RAM instances running 24/7 just to compute embeddings incurs a fixed $500–$2,000/month infrastructure cost — even when traffic is zero.</li>
@@ -270,66 +272,53 @@
                 <li><strong>Zero Enterprise SLA:</strong> When a custom vector DB pod crashes due to an out-of-memory error during peak load, customer support and sales halt completely.</li>
               </ul>
             </div>
-
-            <div class="grid-compare">
-              <div class="compare-card bad">
-                <div class="compare-title">❌ The Naive Hobby RAG Setup</div>
-                <p style="font-size:0.8rem; line-height:1.6;">Self-hosted Chroma / Milvus / pgvector + local embedding models inside Docker. Heavy 4GB+ containers, $1,500/mo GPU servers, manual chunking scripts, frequent OOM crashes, and zero high-availability SLAs.</p>
-              </div>
-              <div class="compare-card good">
-                <div class="compare-title">✅ Enterprise Managed RAG (Vertex AI Search)</div>
-                <p style="font-size:0.8rem; line-height:1.6;">Serverless Google Cloud Discovery Engine. Application container is ultra-lean (&lt;150MB) on Cloud Run. Zero GPU maintenance, managed hybrid lexical + dense semantic ranker, 99.9% Google SLA, and sub-second recall.</p>
-              </div>
-            </div>
           </div>
 
-          <!-- Section 2: Core Principle -->
+          <!-- Highlight Box -->
           <div class="highlight-box">
             <h3>The Golden Rule of Enterprise Architecture: Do Not Drag Models into Production</h3>
             <p>An application microservice should be a fast, stateless, deterministic orchestration layer. You should never drag heavy model weights, GPU runtime dependencies, or brittle vector index files into your production API pods. Offload the vectorization and hybrid retrieval to a dedicated, enterprise-grade managed platform (Google Vertex AI Search), and let your agent orchestrate cleanly via secure IAM service accounts.</p>
           </div>
 
-          <!-- Section 3: Architecture Diagram -->
+          <!-- Section 2: Architecture Pipeline Diagram -->
           <div class="neo-card">
-            <div class="section-label">System Blueprint</div>
-            <h2 class="section-title">Production Architecture: Multi-Agent Orchestrator + Managed Data Store</h2>
+            <div class="section-label">Architecture</div>
+            <h2 class="section-title">How the Managed Vertex AI Search Pipeline Operates</h2>
             <div class="prose">
-              <p>This exact architecture powers the live AI Sales Consultant running on <code>azhyshchev.de</code>. It decouples high-level reasoning, data retrieval, and data ingestion into clean, independent tiers:</p>
+              <p>The system decouples high-level reasoning, data retrieval, and data ingestion into clean, independent tiers. No vector database cluster to manage, and no model weight footprint in your application container:</p>
             </div>
 
-            <div class="arch-diagram">[ 🌐 User Browser / Chat Widget ]
-                │  (HTTPS POST /api/chat with X-Widget-Token)
-                ▼
-┌─────────────────────────────────────────────────────────────┐
-│ 🛡️ TWO-LAYER INGRESS SHIELD (Cloud Run europe-west3)         │
-│  • Layer 1: Ingress Auth Guard (hmac.compare_digest)       │
-│  • Layer 2: Pydantic Contract (XSS Sanitization & Bounds)    │
-└──────────────────────────────┬──────────────────────────────┘
-                               │ Validated Payload
-                               ▼
-┌─────────────────────────────────────────────────────────────┐
-│ 🧠 GOOGLE ADK MULTI-AGENT ORCHESTRATOR                      │
-│  • Master Coordinator (src/agent.py)                        │
-│  • Specialized Sub-Agents (Skills, Case Studies, Lead Qual) │
-└──────────────────────────────┬──────────────────────────────┘
-                               │ IAM ADC (roles/discoveryengine.viewer)
-                               ▼
-┌─────────────────────────────────────────────────────────────┐
-│ ⚡ GOOGLE VERTEX AI SEARCH (Discovery Engine Data Store)     │
-│  • Hybrid Dense Vector Embeddings + BM25 Lexical Keyword    │
-│  • Google Deep Semantic Ranker (PageRank / RankBrain-level) │
-│  • Automated Ingestion with data-nosnippet Noise Isolation   │
-└──────────────────────────────┬──────────────────────────────┘
-                               │ Verified Grounded Chunks (&lt;800ms)
-                               ▼
-[ 📝 Synthesized Markdown Response with Verified Citations ] ──► (Zero Hallucinations)</div>
+            <div class="pipeline-diagram">
+              <span class="pipeline-step">1. Ingress Shield (HMAC + Pydantic)</span>
+              <span class="pipeline-arrow">→</span>
+              <span class="pipeline-step">2. ADK Multi-Agent Coordinator</span>
+              <span class="pipeline-arrow">→</span>
+              <span class="pipeline-step">3. Vertex AI Search (Dense + Lexical)</span>
+              <span class="pipeline-arrow">→</span>
+              <span class="pipeline-step">4. Grounded Synthesis (&lt;800ms)</span>
+            </div>
 
-            <div class="prose">
-              <p>Notice what is missing: <strong>there is no vector database server to manage, no GPU pod running PyTorch, and no raw ungrounded LLM guessing answers.</strong></p>
+            <div class="dedup-grid">
+              <div class="dedup-card">
+                <strong>Ingress Auth & Security Layer</strong>
+                <span>Two-layer shield on Cloud Run (Frankfurt): HMAC signature check blocks bots before LLM execution; Pydantic sanitizes all input strings against prompt injection.</span>
+              </div>
+              <div class="dedup-card">
+                <strong>Google ADK Multi-Agent Core</strong>
+                <span>Coordinator routes specialized intent to sub-agents (Skills, Case Studies, Lead Qual) with strict deterministic boundaries.</span>
+              </div>
+              <div class="dedup-card">
+                <strong>Managed Hybrid Retrieval</strong>
+                <span>Vertex AI Search fuses dense semantic vectors with BM25 keyword matching and Google's deep semantic ranker for instant precision.</span>
+              </div>
+              <div class="dedup-card">
+                <strong>Zero-Hallucination Grounding</strong>
+                <span>The model is forbidden from guessing facts. Answers are strictly synthesized from retrieved extractive snippets with clickable source citations.</span>
+              </div>
             </div>
           </div>
 
-          <!-- Section 4: Ingestion & Noise Isolation -->
+          <!-- Section 3: Ingestion & Noise Isolation -->
           <div class="neo-card">
             <div class="section-label">Data Engineering</div>
             <h2 class="section-title">What We Vectorize & How: The Critical Role of <code>data-nosnippet</code></h2>
@@ -348,9 +337,9 @@
             </div>
           </div>
 
-          <!-- Section 4b: Enterprise Document Ingestion & Sensitive Data -->
+          <!-- Section 4: Enterprise Document Ingestion & Sensitive Data -->
           <div class="neo-card">
-            <div class="section-label">Enterprise Document Ingestion</div>
+            <div class="section-label">Document Ingestion</div>
             <h2 class="section-title">Beyond Websites: Vectorizing Sensitive Documents (PDFs, Contracts & Internal Vaults)</h2>
             <div class="prose">
               <p>Web crawling is only the tip of the iceberg. In real enterprise environments, <strong>over 80% of valuable corporate knowledge lives inside unstructured documents</strong>: contracts, vendor agreements, financial audits, technical PDFs, standard operating procedures (SOPs), and internal presentations.</p>
@@ -364,29 +353,25 @@
                 <li><strong>Direct Cloud Storage Ingestion:</strong> Connects directly to Google Cloud Storage (GCS) buckets, Microsoft SharePoint, or internal S3 archives — automatically synchronizing new revisions.</li>
               </ul>
 
-              <h3>2. Why This is the ONLY Compliant Choice for Sensitive Enterprise Data</h3>
-              <p>For organizations handling proprietary trade secrets, customer PII, or financial records (banks, healthcare, insurance, SaaS), Vertex AI Search provides a zero-leak security perimeter:</p>
+              <h3>2. The 4 Security Shields for Sensitive Enterprise Data</h3>
             </div>
 
-            <div class="grid-compare" style="margin-top:16px;">
-              <div class="compare-card good" style="background:#f0f7ff;">
-                <div class="compare-title">🔒 Document-Level Access Control (ACLs & RBAC)</div>
-                <p style="font-size:0.8rem; line-height:1.6;">Integrated directly with Google Workspace and Microsoft Entra ID (Azure AD). When an employee queries the agent, search results are strictly filtered by their personal security clearance. A support rep will <strong>never</strong> see executive payroll files, even if both live in the same index.</p>
+            <div class="dedup-grid">
+              <div class="dedup-card" style="background: var(--blue);">
+                <strong>🔒 Document-Level Access Control (ACLs & RBAC)</strong>
+                <span>Integrated with Google Workspace and Microsoft Entra ID (Azure AD). Search results are strictly filtered by user clearance. A support rep will never see executive payroll files, even in the same index.</span>
               </div>
-              <div class="compare-card good" style="background:#f0fdf4;">
-                <div class="compare-title">🔑 Customer-Managed Encryption Keys (CMEK)</div>
-                <p style="font-size:0.8rem; line-height:1.6;">You hold the encryption keys via Cloud KMS. Documents at rest, vector indexes, and transit channels are encrypted with your own keys. Even Google infrastructure administrators cannot view the raw document content or embeddings.</p>
+              <div class="dedup-card" style="background: var(--mint);">
+                <strong>🔑 Customer-Managed Encryption Keys (CMEK)</strong>
+                <span>You hold the encryption keys via Cloud KMS. Documents at rest and in transit are encrypted with your own keys. Even Google administrators cannot view raw documents or embeddings.</span>
               </div>
-            </div>
-
-            <div class="grid-compare" style="margin-top:8px;">
-              <div class="compare-card good" style="background:#fffaf0;">
-                <div class="compare-title">🛡️ VPC Service Controls (VPC-SC)</div>
-                <p style="font-size:0.8rem; line-height:1.6;">Documents and vector search endpoints reside within a strictly isolated VPC security perimeter. Zero public internet exposure eliminates data exfiltration and MITM risks.</p>
+              <div class="dedup-card" style="background: var(--yellow);">
+                <strong>🛡️ VPC Service Controls (VPC-SC)</strong>
+                <span>Document buckets and search endpoints reside within an isolated VPC perimeter. Zero public internet exposure eliminates data exfiltration and MITM risks.</span>
               </div>
-              <div class="compare-card good" style="background:#fdf4ff;">
-                <div class="compare-title">⚖️ Zero Training Guarantee & EU Sovereignty</div>
-                <p style="font-size:0.8rem; line-height:1.6;">Backed by Google's legally binding Enterprise Data Protection Agreement (DPA). Proprietary contracts and customer data are <strong>never</strong> used to train foundation models, hosted 100% locally in Frankfurt (<code>europe-west3</code>).</p>
+              <div class="dedup-card" style="background: var(--pink);">
+                <strong>⚖️ Zero Training Guarantee & EU Sovereignty</strong>
+                <span>Backed by Google's legally binding Enterprise Data Protection Agreement (DPA). Proprietary contracts are never used to train foundation models, hosted 100% locally in Frankfurt (europe-west3).</span>
               </div>
             </div>
           </div>
@@ -399,27 +384,29 @@
               <p>Below is the production Python tool used by our Google ADK sub-agents. It connects via Application Default Credentials (ADC) without any hardcoded API keys:</p>
             </div>
 
-            <div class="code-block"><span class="keyword">from</span> google.cloud <span class="keyword">import</span> discoveryengine_v1 <span class="keyword">as</span> discoveryengine
-<span class="keyword">from</span> typing <span class="keyword">import</span> List, Dict, Any
+            <div class="code-neo">
+              <div class="code-header">Python 3.12 · google-cloud-discoveryengine</div>
+              <pre><code>from google.cloud import discoveryengine_v1 as discoveryengine
+from typing import List, Dict, Any
 
-<span class="comment"># Zero API keys: Authenticates natively via GCP IAM Service Account</span>
+# Zero API keys: Authenticates natively via GCP IAM Service Account
 CLIENT = discoveryengine.SearchServiceClient()
 DATA_STORE_PATH = CLIENT.data_store_path(
-    project=<span class="string">"azhyshchev"</span>,
-    location=<span class="string">"global"</span>,
-    collection=<span class="string">"default_collection"</span>,
-    data_store=<span class="string">"azhyshchev-portfolio-knowledge"</span>
+    project="azhyshchev",
+    location="global",
+    collection="default_collection",
+    data_store="azhyshchev-portfolio-knowledge"
 )
 
-<span class="keyword">def</span> <span class="function">search_enterprise_knowledge</span>(query: str, page_size: int = 3) -&gt; List[Dict[str, Any]]:
-    <span class="string">"""Queries the managed Vertex AI Search engine using hybrid retrieval."""</span>
+def search_enterprise_knowledge(query: str, page_size: int = 3) -> List[Dict[str, Any]]:
+    """Queries the managed Vertex AI Search engine using hybrid retrieval."""
     request = discoveryengine.SearchRequest(
-        serving_config=f<span class="string">"{DATA_STORE_PATH}/servingConfigs/default_search"</span>,
+        serving_config=f"{DATA_STORE_PATH}/servingConfigs/default_search",
         query=query,
         page_size=page_size,
         content_search_spec=discoveryengine.SearchRequest.ContentSearchSpec(
             snippet_spec=discoveryengine.SearchRequest.ContentSearchSpec.SnippetSpec(
-                return_snippet=<span class="keyword">True</span>
+                return_snippet=True
             ),
             extractive_content_spec=discoveryengine.SearchRequest.ContentSearchSpec.ExtractiveContentSpec(
                 max_extractive_answer_count=1
@@ -429,21 +416,22 @@ DATA_STORE_PATH = CLIENT.data_store_path(
     
     response = CLIENT.search(request)
     results = []
-    <span class="keyword">for</span> r <span class="keyword">in</span> response.results:
+    for r in response.results:
         doc = r.document
         results.append({
-            <span class="string">"title"</span>: doc.struct_data.get(<span class="string">"title"</span>),
-            <span class="string">"url"</span>: doc.struct_data.get(<span class="string">"url"</span>),
-            <span class="string">"snippet"</span>: r.document.derived_struct_data.get(<span class="string">"snippets"</span>, [{}])[0].get(<span class="string">"snippet"</span>)
+            "title": doc.struct_data.get("title"),
+            "url": doc.struct_data.get("url"),
+            "snippet": r.document.derived_struct_data.get("snippets", [{}])[0].get("snippet")
         })
-    <span class="keyword">return</span> results</div>
+    return results</code></pre>
+            </div>
 
             <div class="prose">
               <p>The retrieved snippets are passed directly into the Agent's system context. If the query yields zero matching snippets, the agent's guardrail triggers a polite fallback instead of letting the model hallucinate an answer.</p>
             </div>
           </div>
 
-          <!-- Section 6: Security, GDPR & Governance -->
+          <!-- Section 6: Security & Observability Two-Col -->
           <div class="two-col">
             <div class="neo-card">
               <div class="section-label">Security & Compliance</div>
@@ -452,23 +440,23 @@ DATA_STORE_PATH = CLIENT.data_store_path(
                 <p>For European enterprises (especially in Germany), data privacy is non-negotiable:</p>
                 <ul>
                   <li><strong>Frankfurt Deployment (<code>europe-west3</code>):</strong> All data remains strictly within EU borders.</li>
-                  <li><strong>Enterprise DPA (Data Processing Agreement):</strong> Google does not use customer queries or data store content to train Gemini or public models.</li>
-                  <li><strong>Zero Raw API Keys:</strong> Identity is governed entirely via GCP IAM roles (<code>roles/discoveryengine.viewer</code> and <code>roles/aiplatform.user</code>).</li>
+                  <li><strong>Enterprise DPA:</strong> Google does not use customer queries or data store content to train Gemini or public models.</li>
+                  <li><strong>Zero Raw API Keys:</strong> Identity is governed entirely via GCP IAM roles (<code>roles/discoveryengine.viewer</code>).</li>
                   <li><strong>Automated PII Redaction:</strong> Sensitive customer data (IBANs, names) passes through Cloud DLP before processing.</li>
                 </ul>
               </div>
             </div>
 
             <div class="neo-card">
-              <div class="section-label">Observability & Eval</div>
-              <h2 class="section-title">Continuous Quality: Vertex AI Evaluation Service & Automated Benchmarks</h2>
+              <div class="section-label">Continuous Quality</div>
+              <h2 class="section-title">Vertex AI Evaluation Service</h2>
               <div class="prose">
                 <p>Enterprise production demands proving that answers are accurate and grounded before reaching users:</p>
                 <ul>
-                  <li><strong>Vertex AI Search Preview:</strong> Visual console interface to test semantic retrieval, inspect extractive snippets, and verify chunk relevance before any code is deployed.</li>
-                  <li><strong>Vertex AI Evaluation Service:</strong> Automated evaluation pipeline scoring responses on <code>groundedness</code> (verifying answers are 100% supported by retrieved vectors) and <code>question_answering_relevance</code>.</li>
-                  <li><strong>Vertex AI Grounding Attribution:</strong> Every response returns <code>grounding_metadata</code> linking generated statements directly to cited source vectors.</li>
-                  <li><strong>4 Pillars of Production Observability:</strong> Cloud Logging (structured JSON), Cloud Trace (distributed latency waterfall), <code>/api/metrics</code> (real-time KPIs), and Golden Dataset regression tests (<code>eval_runner.py</code>).</li>
+                  <li><strong>Vertex AI Search Preview:</strong> Visual console interface to test semantic retrieval and verify chunk relevance before deployment.</li>
+                  <li><strong>Vertex AI Evaluation Service:</strong> Automated scoring on <code>groundedness</code> (100% support by retrieved vectors) and <code>question_answering_relevance</code>.</li>
+                  <li><strong>Grounding Attribution:</strong> Returns <code>grounding_metadata</code> linking generated statements to cited source vectors.</li>
+                  <li><strong>4 Observability Pillars:</strong> Cloud Logging (JSON), Cloud Trace (waterfall), <code>/api/metrics</code> (KPIs), and <code>eval_runner.py</code>.</li>
                 </ul>
               </div>
             </div>
@@ -476,9 +464,17 @@ DATA_STORE_PATH = CLIENT.data_store_path(
 
           <!-- Section 7: FAQ -->
           <div class="neo-card">
-            <div class="section-label">Enterprise FAQ</div>
-            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="section-label">FAQ</div>
+            <h2 class="section-title">Common questions about Enterprise RAG & Vertex AI Search</h2>
             <div class="faq">
+              <div class="faq-item">
+                <div class="faq-q">Why is this the superior choice for Enterprise over running our own vectorization models?</div>
+                <div class="faq-a">Self-hosting embedding models (Sentence-Transformers, HuggingFace TEI) inside your production microservices drags heavy PyTorch runtimes (3–6GB container images), introduces GPU cold-start delays, and creates single-point-of-failure compute bottlenecks. With Vertex AI Search, embedding generation and hybrid index retrieval are completely managed by Google's serverless infrastructure. Your application remains a lightweight, stateless container (&lt;150MB) deployed on standard Cloud Run CPU instances with zero GPU operational cost.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">How does this architecture prevent internal enterprise VPC congestion?</div>
+                <div class="faq-a">In self-hosted RAG architectures, every user query triggers heavy vector embeddings and dense tensor transfers across internal VPC network interfaces. When hundreds of concurrent users or automated agents query the system, internal VPC bandwidth saturates, leading to packet queuing, API throttling, and latency spikes across adjacent microservices. Vertex AI Search processes ingestion, embedding indexing, and semantic retrieval over Google's optimized internal API backbone without congesting tenant VPC subnet throughput, while VPC Service Controls (VPC-SC) ensure complete private isolation without public internet egress.</div>
+              </div>
               <div class="faq-item">
                 <div class="faq-q">Why choose Vertex AI Search over a custom pgvector database?</div>
                 <div class="faq-a">pgvector is great for simple relational filtering, but it lacks deep semantic ranking, auto-tuning, spelling correction, synonym expansion, and automatic chunking out of the box. Building those features on top of pgvector requires months of engineering and ongoing cluster tuning. Vertex AI Search gives you Google-grade search infrastructure out of the box with zero cluster management.</div>
@@ -491,21 +487,13 @@ DATA_STORE_PATH = CLIENT.data_store_path(
                 <div class="faq-q">How quickly does the search index update when documentation changes?</div>
                 <div class="faq-a">Vertex AI Search Data Stores support both on-demand crawling schedules and direct real-time document streaming via API. In our site-to-agent synchronization pipeline, new case studies and articles are re-indexed into the data store within minutes of deployment.</div>
               </div>
-              <div class="faq-item">
-                <div class="faq-q">Why is this the superior choice for Enterprise over running our own vectorization models?</div>
-                <div class="faq-a">Self-hosting embedding models (Sentence-Transformers, HuggingFace TEI) inside your production microservices drags heavy PyTorch runtimes (3–6GB container images), introduces GPU cold-start delays, and creates single-point-of-failure compute bottlenecks. With Vertex AI Search, embedding generation and hybrid index retrieval are completely managed by Google's serverless infrastructure. Your application remains a lightweight, stateless container (&lt;150MB) deployed on standard Cloud Run CPU instances with zero GPU operational cost.</div>
-              </div>
-              <div class="faq-item">
-                <div class="faq-q">How does this architecture prevent internal enterprise VPC congestion?</div>
-                <div class="faq-a">In self-hosted RAG architectures, every user query triggers heavy vector embeddings and dense tensor transfers across internal VPC network interfaces. When hundreds of concurrent users or automated agents query the system, internal VPC bandwidth saturates, leading to packet queuing, API throttling, and latency spikes across adjacent microservices. Vertex AI Search processes ingestion, embedding indexing, and semantic retrieval over Google's optimized internal API backbone without congesting tenant VPC subnet throughput, while VPC Service Controls (VPC-SC) ensure complete private isolation without public internet egress.</div>
-              </div>
             </div>
           </div>
 
           <!-- Section 8: Tech Stack Chips -->
           <div class="neo-card">
-            <div class="section-label">Production Stack</div>
-            <h2 class="section-title">Enterprise Technologies Deployed</h2>
+            <div class="section-label">Tech stack</div>
+            <h2 class="section-title">Tools used</h2>
             <div class="chips">
               <span class="chip">Google Cloud Vertex AI Search</span>
               <span class="chip">Vertex AI Evaluation Service</span>
@@ -530,7 +518,7 @@ DATA_STORE_PATH = CLIENT.data_store_path(
               <p>I design and deploy production-grade RAG pipelines and multi-agent systems for enterprise clients: Google Cloud Vertex AI, multi-tenant RBAC knowledge layers, and zero-hallucination support agents. Based in Munich, delivering across Germany and Europe.</p>
             </div>
             <div style="display:flex;gap:10px;flex-wrap:wrap;">
-              <a class="cta-btn yellow" href="https://calendly.com/azhyshchev/30min?utm_source=portfolio&utm_medium=website&utm_campaign=booking&utm_content=enterprise_rag_article" target="_blank" rel="noreferrer">Book a 30-min strategy call</a>
+              <a class="cta-btn yellow" href="https://calendly.com/azhyshchev/30min?utm_source=portfolio&utm_medium=website&utm_campaign=booking&utm_content=enterprise_rag_article" target="_blank" rel="noreferrer">Book a free call</a>
               <a class="cta-btn outline" href="mailto:azhyshchev@gmail.com">Send an email</a>
             </div>
           </div>
