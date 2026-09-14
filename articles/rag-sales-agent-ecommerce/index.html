@@ -14,6 +14,14 @@
   <link rel="alternate" hreflang="de" href="https://azhyshchev.de/de/artikel/rag-kundenservice-ecommerce/" />
   <link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/articles/rag-sales-agent-ecommerce/" />
 
+  <!-- WebMCP & A2A Discovery Protocols -->
+  <link rel="model-context" type="application/json" href="/.well-known/agent-card.json">
+  <link rel="agent-card" type="application/json" href="/.well-known/agent-card.json">
+  <meta name="agent-ready" content="true">
+  <meta name="agent-protocol" content="WebMCP/0.3, A2A/1.0">
+  <meta name="agent-url" content="https://azhy-ai-consultant-377331886416.europe-west3.run.app">
+  <meta name="agent-package" content="de.azhyshchev.azhy_ai_consultant">
+
   <meta property="og:title" content="Enterprise Production RAG with Vertex AI Search: No Heavy Models in Production | Mikhail Azhyshchev">
   <meta property="og:description" content="Why running custom vector DBs is an operational trap. How to build Enterprise RAG using Google Cloud Vertex AI Search, Google ADK Multi-Agents, and sub-second retrieval.">
   <meta property="og:url" content="https://azhyshchev.de/articles/rag-sales-agent-ecommerce/">
@@ -87,6 +95,22 @@
             "acceptedAnswer": {
               "@type": "Answer",
               "text": "No. Under the Google Cloud Enterprise Data Protection Agreement (DPA) and GDPR/DSGVO compliance standards in Frankfurt (europe-west3), enterprise data stores, customer queries, and generated embeddings are strictly isolated to your tenant and are never used to train global base models."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why is Vertex AI Search the superior choice for Enterprise over self-hosting embedding models?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Self-hosting embedding models inside production microservices drags heavy PyTorch runtimes (3-6GB images), incurs continuous GPU infrastructure fees ($500-$2,000/mo), and creates single points of failure. Managed Vertex AI Search eliminates model weight bloat from your containers, keeps application containers under 150MB on Cloud Run, and handles auto-scaling and hybrid ranking serverlessly."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does this architecture prevent internal enterprise VPC congestion?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "In self-hosted RAG, every concurrent query transfers dense vector embeddings and tensor streams across internal VPC interfaces, saturating subnet throughput and causing latency spikes across adjacent microservices. Vertex AI Search processes vector indexing and semantic retrieval over Google's global distributed backbone, scaling to thousands of QPS with zero VPC compute contention, while VPC Service Controls (VPC-SC) maintain strict private perimeter isolation."
             }
           }
         ]
@@ -181,6 +205,7 @@
     @media (max-width: 820px) { body { padding: 10px 8px 72px; } .shell { grid-template-columns: 1fr; box-shadow: 6px 6px 0 var(--black); min-height: unset; } .sidebar { border-right: none; border-bottom: 3px solid var(--black); padding: 10px 14px; flex-direction: row; align-items: center; justify-content: space-between; } .brand { font-size: clamp(0.95rem,2.5vw,1.6rem); } .nav { display: none; } .sidebar-bottom { display: none; } .main { padding: 14px; } .two-col { grid-template-columns: 1fr; } .grid-compare { grid-template-columns: 1fr; } }
     @media (max-width: 520px) { .metrics-row { grid-template-columns: 1fr; } .article-title { font-size: 1.45rem; } }
   </style>
+  <link rel="stylesheet" href="/mobile.css">
   <link rel="stylesheet" href="../../mobile.css">
 </head>
 <body>
@@ -466,6 +491,14 @@ DATA_STORE_PATH = CLIENT.data_store_path(
                 <div class="faq-q">How quickly does the search index update when documentation changes?</div>
                 <div class="faq-a">Vertex AI Search Data Stores support both on-demand crawling schedules and direct real-time document streaming via API. In our site-to-agent synchronization pipeline, new case studies and articles are re-indexed into the data store within minutes of deployment.</div>
               </div>
+              <div class="faq-item">
+                <div class="faq-q">Why is this the superior choice for Enterprise over running our own vectorization models?</div>
+                <div class="faq-a">Self-hosting embedding models (Sentence-Transformers, HuggingFace TEI) inside your production microservices drags heavy PyTorch runtimes (3–6GB container images), introduces GPU cold-start delays, and creates single-point-of-failure compute bottlenecks. With Vertex AI Search, embedding generation and hybrid index retrieval are completely managed by Google's serverless infrastructure. Your application remains a lightweight, stateless container (&lt;150MB) deployed on standard Cloud Run CPU instances with zero GPU operational cost.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">How does this architecture prevent internal enterprise VPC congestion?</div>
+                <div class="faq-a">In self-hosted RAG architectures, every user query triggers heavy vector embeddings and dense tensor transfers across internal VPC network interfaces. When hundreds of concurrent users or automated agents query the system, internal VPC bandwidth saturates, leading to packet queuing, API throttling, and latency spikes across adjacent microservices. Vertex AI Search processes ingestion, embedding indexing, and semantic retrieval over Google's optimized internal API backbone without congesting tenant VPC subnet throughput, while VPC Service Controls (VPC-SC) ensure complete private isolation without public internet egress.</div>
+              </div>
             </div>
           </div>
 
@@ -518,6 +551,7 @@ DATA_STORE_PATH = CLIENT.data_store_path(
     <a class="mbn-item" href="/contact"><span class="mbn-icon">C</span><span class="mbn-label">Contact</span></a>
   </nav>
   <script src="/js/nav.js"></script>
+  <script src="/js/webmcp.js" defer></script>
   <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" defer></script>
   <script>
     (function () {
