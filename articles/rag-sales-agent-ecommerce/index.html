@@ -323,6 +323,49 @@
             </div>
           </div>
 
+          <!-- Section 4b: Enterprise Document Ingestion & Sensitive Data -->
+          <div class="neo-card">
+            <div class="section-label">Enterprise Document Ingestion</div>
+            <h2 class="section-title">Beyond Websites: Vectorizing Sensitive Documents (PDFs, Contracts & Internal Vaults)</h2>
+            <div class="prose">
+              <p>Web crawling is only the tip of the iceberg. In real enterprise environments, <strong>over 80% of valuable corporate knowledge lives inside unstructured documents</strong>: contracts, vendor agreements, financial audits, technical PDFs, standard operating procedures (SOPs), and internal presentations.</p>
+              <p>Dragging raw documents into public cloud LLMs or basic vector databases is a compliance nightmare. Here is how Google Cloud Vertex AI Search solves document vectorization for regulated enterprise clients:</p>
+
+              <h3>1. Multi-Format Ingestion with Layout & Table Preservation</h3>
+              <p>Standard naive chunkers (like simple LangChain character splitters) ruin documents: they split sentences mid-table, cut numbers away from their currency symbols, and detach headers from rows. Vertex AI Search uses native <strong>Google Document AI Layout Parsers</strong>:</p>
+              <ul>
+                <li><strong>Complex PDFs & Scans:</strong> Native OCR and layout analysis recognizes multi-column pages, diagrams, and scanned forms without manual pre-processing.</li>
+                <li><strong>Table Structure Preservation:</strong> Financial statements, price lists, and contract terms retain their tabular integrity as coherent semantic units.</li>
+                <li><strong>Direct Cloud Storage Ingestion:</strong> Connects directly to Google Cloud Storage (GCS) buckets, Microsoft SharePoint, or internal S3 archives — automatically synchronizing new revisions.</li>
+              </ul>
+
+              <h3>2. Why This is the ONLY Compliant Choice for Sensitive Enterprise Data</h3>
+              <p>For organizations handling proprietary trade secrets, customer PII, or financial records (banks, healthcare, insurance, SaaS), Vertex AI Search provides a zero-leak security perimeter:</p>
+            </div>
+
+            <div class="grid-compare" style="margin-top:16px;">
+              <div class="compare-card good" style="background:#f0f7ff;">
+                <div class="compare-title">🔒 Document-Level Access Control (ACLs & RBAC)</div>
+                <p style="font-size:0.8rem; line-height:1.6;">Integrated directly with Google Workspace and Microsoft Entra ID (Azure AD). When an employee queries the agent, search results are strictly filtered by their personal security clearance. A support rep will <strong>never</strong> see executive payroll files, even if both live in the same index.</p>
+              </div>
+              <div class="compare-card good" style="background:#f0fdf4;">
+                <div class="compare-title">🔑 Customer-Managed Encryption Keys (CMEK)</div>
+                <p style="font-size:0.8rem; line-height:1.6;">You hold the encryption keys via Cloud KMS. Documents at rest, vector indexes, and transit channels are encrypted with your own keys. Even Google infrastructure administrators cannot view the raw document content or embeddings.</p>
+              </div>
+            </div>
+
+            <div class="grid-compare" style="margin-top:8px;">
+              <div class="compare-card good" style="background:#fffaf0;">
+                <div class="compare-title">🛡️ VPC Service Controls (VPC-SC)</div>
+                <p style="font-size:0.8rem; line-height:1.6;">Documents and vector search endpoints reside within a strictly isolated VPC security perimeter. Zero public internet exposure eliminates data exfiltration and MITM risks.</p>
+              </div>
+              <div class="compare-card good" style="background:#fdf4ff;">
+                <div class="compare-title">⚖️ Zero Training Guarantee & EU Sovereignty</div>
+                <p style="font-size:0.8rem; line-height:1.6;">Backed by Google's legally binding Enterprise Data Protection Agreement (DPA). Proprietary contracts and customer data are <strong>never</strong> used to train foundation models, hosted 100% locally in Frankfurt (<code>europe-west3</code>).</p>
+              </div>
+            </div>
+          </div>
+
           <!-- Section 5: Python Code Implementation -->
           <div class="neo-card">
             <div class="section-label">Code Implementation</div>
