@@ -73,18 +73,58 @@
           },
           {
             "@type": "Question",
-            "name": "What happens if a German data protection authority (BayLDA/BfDI) issues a formal Auskunftsersuchen?",
+            "name": "What are the legal risks during a German regulatory audit (BayLDA / BfDI)?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Under Article 58 GDPR and recent German court precedents (VG Berlin), companies cannot refuse to answer data protection audit requests. With a DLP Proxy architecture, the company provides verified audit logs demonstrating that no customer PII or banking data ever leaves the local VPC perimeter, turning a high-risk GDPR audit into a clean, compliant verification."
+              "text": "Under Article 58 GDPR and Section 40 BDSG, German supervisory authorities (such as BayLDA in Bavaria or BfDI at the federal level) have sweeping powers to issue binding disclosure requests (Auskunftsersuchen). German administrative court rulings (VG Berlin) establish that companies have no right to remain silent (kein Schweigerecht). Companies must disclose full architectural details of their AI data pipelines within weeks. The DLP proxy provides verified audit logs proving raw customer data was never transferred."
             }
           },
           {
             "@type": "Question",
-            "name": "Why is system prompt engineering insufficient for GDPR compliance?",
+            "name": "What financial penalties does Article 83 GDPR impose for unauthorized AI data transfers?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Instructing an LLM with 'Please do not reveal customer personal data' is not a security control. Prompt injections, indirect context leaks, and accidental memory caching can easily bypass textual guidelines. True compliance requires deterministic, code-level de-identification and network-layer perimeter isolation."
+              "text": "Violations of core GDPR principles—such as unlawful third-country data transfers without adequate safeguards—carry administrative fines up to €20,000,000 or 4% of total worldwide annual turnover, whichever is greater. Companies also risk civil damage claims under Article 82 GDPR and mandatory processing injunctions from European regulators."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why is system prompt engineering ('Do not reveal customer data') insufficient for compliance?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Instructing an LLM with textual prompts like 'Please do not reveal customer personal data' is an aspirational guideline, not a verifiable technical control. LLMs remain vulnerable to jailbreaks, prompt injection, and indirect context leakage. True GDPR compliance requires deterministic code-level tokenization and network-level egress blocks (VPC-SC) before payload transmission."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does this architecture satisfy the EU AI Act transparency and risk management mandates?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The EU AI Act requires rigorous risk management, data governance, and auditable transparency for enterprise AI deployments. By decoupling customer data via a dedicated DLP proxy, organizations maintain tamper-proof audit trails, trace data lineage, prevent unvetted data ingestion, and enforce deterministic human-in-the-loop policies for critical operations."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Are commercial LLMs (like Gemini, Claude, or OpenAI) trained on enterprise customer data?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Under enterprise agreements (such as Google Vertex AI or Azure Enterprise OpenAI), vendors contractually guarantee zero data retention for model retraining. However, European Data Protection Officers demand technical prevention over contractual trust. The DLP proxy mathematically guarantees that third-party LLMs never ingest real customer PII or banking credentials in the first place."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can the DLP Proxy integrate into existing CRMs, ERPs, and ticketing systems without redevelopment?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. The DLP Proxy acts as a high-performance middleware (adding only 15–35ms of latency) between your communication channels (email, webchat, WhatsApp, Zendesk, Salesforce, HubSpot) and internal business systems running on Google Cloud Run, Kubernetes, or AWS."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does Level 2 Network Ring-Fencing (VPC Service Controls) stop data exfiltration if an agent is compromised?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "If an adversary exploits an agent container vulnerability via remote code execution, standard application-level controls fail. VPC Service Controls enforce a cryptographic hypervisor perimeter with default-deny egress, making it physically impossible for compromised containers to exfiltrate database records or credentials to external webhooks or public internet endpoints."
             }
           }
         ]
@@ -142,6 +182,59 @@
     .cta-btn { border: 2px solid var(--white); background: var(--coral); color: var(--black); padding: 14px 24px; font-weight: 800; font-size: 1rem; box-shadow: 4px 4px 0 var(--white); }
 
     .back-link { font-weight: 800; text-decoration: underline; margin-top: 10px; display: inline-block; }
+
+    /* FAQ ACCORDION DROPDOWNS */
+    details.faq-item {
+      border: 2px solid var(--black);
+      background: var(--cream);
+      box-shadow: 3px 3px 0 var(--black);
+      margin-bottom: 12px;
+      transition: background 0.18s ease;
+    }
+
+    details.faq-item[open] {
+      background: var(--white);
+    }
+
+    summary.faq-question {
+      padding: 14px 16px;
+      font-size: 0.92rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      list-style: none;
+      user-select: none;
+    }
+
+    summary.faq-question::-webkit-details-marker {
+      display: none;
+    }
+
+    summary.faq-question:hover {
+      background: rgba(0,0,0,0.03);
+    }
+
+    .faq-icon {
+      font-size: 1.2rem;
+      font-weight: 800;
+      transition: transform 0.2s ease;
+      line-height: 1;
+    }
+
+    details[open] .faq-icon {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      padding: 0 16px 16px 16px;
+      font-size: 0.86rem;
+      line-height: 1.65;
+      color: #333;
+      border-top: 1px dashed rgba(0,0,0,0.15);
+      padding-top: 12px;
+    }
 
     @media (max-width: 900px) { .shell { grid-template-columns: 1fr; } .sidebar { border-right: none; border-bottom: 3px solid var(--black); } }
   </style>
@@ -233,20 +326,77 @@
             </div>
           </div>
 
-          <div class="neo-card">
-            <div class="section-label">Compliance FAQ</div>
+          <article class="neo-card">
+            <div class="section-label">Section 04 · Enterprise Compliance FAQ</div>
             <h2 class="section-title">Frequently Asked Questions for Business Leaders</h2>
             <div class="prose">
-              <h3>Does this architecture satisfy European AI Act and GDPR requirements?</h3>
-              <p>Yes. By separating business logic from raw personal data via DLP de-identification, your AI pipelines operate on synthetic tokens. When a regulator issues an inquiry, you can prove that no customer personal data or biometric information was transferred to third-party model providers.</p>
 
-              <h3>Can this be integrated into existing CRM and ERP systems?</h3>
-              <p>Absolutely. The DLP Proxy acts as a lightweight middleware between your communication channels (email, webchat, WhatsApp, HubSpot, Salesforce) and your backend microservices deployed on Google Cloud Run or AWS.</p>
+              <details class="faq-item">
+                <summary class="faq-question">
+                  <span>How does a DLP Privacy Proxy prevent GDPR violations when using LLMs?</span>
+                  <span class="faq-icon">+</span>
+                </summary>
+                <div class="faq-answer">The DLP Privacy Proxy sits inside your private cloud perimeter before prompts reach external LLM endpoints. It detects personal identifiable information (names, emails, IBANs, phone numbers, addresses) and replaces them with cryptographic synthetic tokens. The external AI model only processes anonymized placeholders, ensuring raw personal data is never transmitted to or stored on third-party LLM servers.</div>
+              </details>
 
-              <h3>Are commercial LLM models trained on our data?</h3>
-              <p>When deploying via enterprise cloud providers (like Google Vertex AI or Azure Enterprise OpenAI) with zero-data retention agreements, your prompts are not used for model retraining. Our DLP proxy adds a second mathematical guarantee on top of that contractual promise.</p>
+              <details class="faq-item">
+                <summary class="faq-question">
+                  <span>What are the legal risks during a German regulatory audit (BayLDA / BfDI)?</span>
+                  <span class="faq-icon">+</span>
+                </summary>
+                <div class="faq-answer">Under Article 58 GDPR and Section 40 BDSG, German supervisory authorities (such as BayLDA in Bavaria or BfDI at the federal level) have sweeping powers to issue binding disclosure requests (<em>Auskunftsersuchen</em>). German administrative court rulings (VG Berlin) establish that companies have <strong>no right to remain silent (kein Schweigerecht)</strong>. Companies must disclose full architectural details of their AI data pipelines within weeks. The DLP proxy provides verified audit logs proving raw customer data was never transferred.</div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-question">
+                  <span>What financial penalties does Article 83 GDPR impose for unauthorized AI data transfers?</span>
+                  <span class="faq-icon">+</span>
+                </summary>
+                <div class="faq-answer">Violations of core GDPR principles—such as unlawful third-country data transfers without adequate safeguards—carry administrative fines up to <strong>€20,000,000 or 4% of total worldwide annual turnover</strong>, whichever is greater. Companies also risk civil damage claims under Article 82 GDPR and mandatory processing injunctions from European regulators.</div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-question">
+                  <span>Why is system prompt engineering ("Do not reveal customer data") insufficient for compliance?</span>
+                  <span class="faq-icon">+</span>
+                </summary>
+                <div class="faq-answer">Instructing an LLM with textual prompts like <em>"Please do not reveal customer personal data"</em> is an aspirational guideline, not a verifiable technical control. LLMs remain vulnerable to jailbreaks, prompt injection, and indirect context leakage. True GDPR compliance requires deterministic code-level tokenization and network-level egress blocks (VPC-SC) before payload transmission.</div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-question">
+                  <span>How does this architecture satisfy the EU AI Act transparency and risk management mandates?</span>
+                  <span class="faq-icon">+</span>
+                </summary>
+                <div class="faq-answer">The EU AI Act requires rigorous risk management, data governance, and auditable transparency for enterprise AI deployments. By decoupling customer data via a dedicated DLP proxy, organizations maintain tamper-proof audit trails, trace data lineage, prevent unvetted data ingestion, and enforce deterministic human-in-the-loop policies for critical operations.</div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-question">
+                  <span>Are commercial LLMs (like Gemini, Claude, or OpenAI) trained on enterprise customer data?</span>
+                  <span class="faq-icon">+</span>
+                </summary>
+                <div class="faq-answer">Under enterprise agreements (such as Google Vertex AI or Azure Enterprise OpenAI), vendors contractually guarantee zero data retention for model retraining. However, European Data Protection Officers demand technical prevention over contractual trust. The DLP proxy mathematically guarantees that third-party LLMs never ingest real customer PII or banking credentials in the first place.</div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-question">
+                  <span>Can the DLP Proxy integrate into existing CRMs, ERPs, and ticketing systems without redevelopment?</span>
+                  <span class="faq-icon">+</span>
+                </summary>
+                <div class="faq-answer">Yes. The DLP Proxy acts as a high-performance middleware (adding only 15–35ms of latency) between your communication channels (email, webchat, WhatsApp, Zendesk, Salesforce, HubSpot) and internal business systems running on Google Cloud Run, Kubernetes, or AWS.</div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-question">
+                  <span>How does Level 2 Network Ring-Fencing (VPC Service Controls) stop data exfiltration if an agent is compromised?</span>
+                  <span class="faq-icon">+</span>
+                </summary>
+                <div class="faq-answer">If an adversary exploits an agent container vulnerability via remote code execution, standard application-level controls fail. VPC Service Controls enforce a cryptographic hypervisor perimeter with default-deny egress, making it physically impossible for compromised containers to exfiltrate database records or credentials to external webhooks or public internet endpoints.</div>
+              </details>
+
             </div>
-          </div>
+          </article>
 
           <div class="cta-strip">
             <div>

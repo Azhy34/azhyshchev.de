@@ -65,18 +65,66 @@
         "mainEntity": [
           {
             "@type": "Question",
-            "name": "Wie verhindert ein DLP-Proxy Verstöße gegen die DSGVO beim Einsatz von KI-Modellen?",
+            "name": "Wie verhindert ein DLP-Privacy-Proxy Verstöße gegen die DSGVO beim Einsatz von LLMs?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Der DLP-Proxy befindet sich innerhalb Ihrer privaten Cloud-Umgebung vor den externen KI-Endpunkten. Er erkennt personenbezogene Daten (Namen, E-Mails, IBAN, Adressen) und ersetzt sie in Echtzeit durch synthetische Token. Das externe KI-Modell verarbeitet ausschließlich anonymisierte Platzhalter, sodass niemals echte Kundendaten auf externe Server gelangen."
+              "text": "Der DLP-Privacy-Proxy sitzt innerhalb Ihrer geschützten Unternehmens-VPC vor den externen KI-Endpunkten. Er erkennt personenbezogene Daten (Namen, E-Mails, deutsche IBANs, Telefonnummern, Wohnadressen) deterministisch und ersetzt sie durch kryptografische synthetische Token. Das externe Sprachmodell erhält und verarbeitet ausschließlich anonymisierte Platzhalter. Erst bei der Ausführung interner Tool-Aufrufe re-identifiziert der Proxy die Werte lokal innerhalb Ihrer privaten Cloud."
             }
           },
           {
             "@type": "Question",
-            "name": "Was passiert bei einem Auskunftsersuchen der Datenschutzaufsichtsbehörde (z. B. BayLDA oder BfDI)?",
+            "name": "Welche rechtlichen Risiken drohen bei einem Prüfverfahren deutscher Aufsichtsbehörden (BayLDA / BfDI)?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Nach Art. 58 DSGVO und ständiger Rechtsprechung (u. a. VG Berlin) haben Unternehmen kein Aussageverweigerungsrecht. Mit der DLP-Proxy-Architektur legen Sie lückenlose Audit-Logs vor, die belegen, dass zu keinem Zeitpunkt PII oder Bankdaten an Drittanbieter übertragen wurden."
+              "text": "Nach Art. 58 DSGVO und § 40 BDSG verfügen Landesdatenschutzbeauftragte (wie das BayLDA in Bayern oder der Bundesbeauftragte BfDI) über weitreichende Auskunftsrechte. Urteile deutscher Verwaltungsgerichte (u. a. VG Berlin) stellen klar: Unternehmen haben bei DSGVO-Auskunftsersuchen kein Aussageverweigerungsrecht (kein Schweigerecht). Mit dem DLP-Proxy weisen Sie auditfest nach, dass keine PII an Drittanbieter-LLMs übertragen wurden."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Welche Bußgelder drohen nach Art. 83 DSGVO bei unzulässiger Datenübermittlung an KI-Dienste?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Bei Verstößen gegen die Grundsätze der DSGVO – etwa unzulässige Drittlandübermittlungen ohne angemessene Garantien – drohen Geldbußen von bis zu 20.000.000 € oder bis zu 4 % des gesamten weltweiten Jahresumsatzes. Zudem drohen Schadensersatzansprüche nach Art. 82 DSGVO und behördliche Verarbeitungsverbote."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Warum reicht einfaches Prompt-Engineering ('Gib keine Kundendaten weiter') nicht aus?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Textuelle System-Prompts sind lediglich Verhaltensrichtlinien für stochastische Modelle, keine technischen Sicherheitskontrollen. LLMs sind anfällig für Prompt Injections, Roleplay-Jailbreaks und unbeabsichtigtes Kontext-Leaking. Echte DSGVO-Konformität erfordert deterministische, codebasierte Pseudonymisierung und Netzwerk-Egress-Sperren (VPC Service Controls)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Wie erfüllt diese Architektur die Vorgaben des EU AI Act bezüglich Transparenz und Risikomanagement?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Der EU AI Act fordert für Unternehmens-KI ein strukturiertes Risikomanagement, Datenprovenienz und Nachvollziehbarkeit. Durch die Zwischenschaltung des Proxys entstehen revisionssichere Audit-Trails aller Prompts und Antworten, automatisierte Filter gegen unzulässige Datennutzung sowie definierte Human-in-the-Loop-Freigaben für geschäftskritische Datenbankoperationen."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Werden kommerzielle KI-Modelle (wie Gemini, OpenAI oder Claude) mit unseren Kundendaten trainiert?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Enterprise-Cloud-Vereinbarungen (etwa bei Google Vertex AI oder Azure OpenAI) schließen das Training von Basismodellen mit Kunden-Prompts vertraglich aus. Der DLP-Proxy garantiert mathematisch, dass echte Klardaten die Unternehmensgrenze gar nicht erst überschreiten."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Lässt sich der DLP-Proxy ohne Neuentwicklung in bestehende CRM-, ERP- und Ticketsysteme einbinden?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ja. Der DLP-Proxy agiert als extrem performante Middleware (mit Latenzen von lediglich 15–35 ms) zwischen Ihren Eingangskanälen (E-Mail, Webchat, WhatsApp Business, Zendesk, Salesforce, HubSpot) und Ihren Microservices auf Google Cloud Run, Kubernetes oder AWS."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Wie verhindert Level-2-Netzwerk-Ring-Fencing (VPC Service Controls) Datenabfluss bei Agenten-Kompromittierung?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sollte ein Angreifer über eine Zero-Day-Schwachstelle in den Agenten-Container eindringen, erzwingen VPC Service Controls eine netzwerkseitige Perimeter-Isolation (Default-Deny Egress). Datenabflüsse zu externen Webhooks oder fremden Cloud-Speichern sind auf Hypervisor-Ebene technisch unmöglich."
             }
           }
         ]
@@ -134,6 +182,59 @@
     .cta-btn { border: 2px solid var(--white); background: var(--coral); color: var(--black); padding: 14px 24px; font-weight: 800; font-size: 1rem; box-shadow: 4px 4px 0 var(--white); }
 
     .back-link { font-weight: 800; text-decoration: underline; margin-top: 10px; display: inline-block; }
+
+    /* FAQ ACCORDION DROPDOWNS */
+    details.faq-item {
+      border: 2px solid var(--black);
+      background: var(--cream);
+      box-shadow: 3px 3px 0 var(--black);
+      margin-bottom: 12px;
+      transition: background 0.18s ease;
+    }
+
+    details.faq-item[open] {
+      background: var(--white);
+    }
+
+    summary.faq-question {
+      padding: 14px 16px;
+      font-size: 0.92rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      list-style: none;
+      user-select: none;
+    }
+
+    summary.faq-question::-webkit-details-marker {
+      display: none;
+    }
+
+    summary.faq-question:hover {
+      background: rgba(0,0,0,0.03);
+    }
+
+    .faq-icon {
+      font-size: 1.2rem;
+      font-weight: 800;
+      transition: transform 0.2s ease;
+      line-height: 1;
+    }
+
+    details[open] .faq-icon {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      padding: 0 16px 16px 16px;
+      font-size: 0.86rem;
+      line-height: 1.65;
+      color: #333;
+      border-top: 1px dashed rgba(0,0,0,0.15);
+      padding-top: 12px;
+    }
 
     @media (max-width: 900px) { .shell { grid-template-columns: 1fr; } .sidebar { border-right: none; border-bottom: 3px solid var(--black); } }
   </style>
@@ -224,20 +325,77 @@
             </div>
           </div>
 
-          <div class="neo-card">
-            <div class="section-label">Häufig gestellte Fragen</div>
-            <h2 class="section-title">Häufige Fragen für Entscheider</h2>
+          <article class="neo-card">
+            <div class="section-label">Sektion 04 · Enterprise Compliance FAQ</div>
+            <h2 class="section-title">Häufige Fragen für Entscheider (FAQ)</h2>
             <div class="prose">
-              <h3>Erfüllt diese Architektur die Anforderungen der DSGVO und des EU AI Act?</h3>
-              <p>Ja. Da vor dem Modellaufruf alle personenbezogenen Daten durch synthetische Token ersetzt werden, fließen keine Klardaten an Dritte. Bei einem behördlichen Auskunftsersuchen können Sie nachweisen, dass keine unbefugte Datenverarbeitung außerhalb Ihres Kontrollbereichs stattfindet.</p>
 
-              <h3>Lässt sich der DLP-Proxy in bestehende Systeme einbinden?</h3>
-              <p>Ja. Der Proxy fungiert als schlanke Middleware zwischen Ihren Eingangskanälen (E-Mail, Webchat, WhatsApp, Ticketsystem) und Ihren Backend-Systemen auf Google Cloud Run oder AWS.</p>
+              <details class="faq-item">
+                <summary class="faq-question">
+                  <span>Wie verhindert ein DLP-Privacy-Proxy Verstöße gegen die DSGVO beim Einsatz von LLMs?</span>
+                  <span class="faq-icon">+</span>
+                </summary>
+                <div class="faq-answer">Der DLP-Privacy-Proxy sitzt innerhalb Ihrer geschützten Unternehmens-VPC vor den externen KI-Endpunkten. Er erkennt personenbezogene Daten (Namen, E-Mails, deutsche IBANs, Telefonnummern, Wohnadressen) deterministisch und ersetzt sie durch kryptografische synthetische Token (z. B. <code>[IBAN_REF_4412]</code>). Das externe Sprachmodell erhält und verarbeitet ausschließlich anonymisierte Platzhalter. Erst bei der Ausführung interner Tool-Aufrufe (z. B. CRM- oder Datenbank-Updates) re-identifiziert der Proxy die Werte lokal innerhalb Ihrer privaten Cloud.</div>
+              </details>
 
-              <h3>Werden Modelle mit unseren Unternehmensdaten trainiert?</h3>
-              <p>Über Enterprise-Cloud-Vereinbarungen (z. B. Google Vertex AI) wird vertraglich garantiert, dass Kundendaten nicht zum Modelltraining genutzt werden. Der DLP-Proxy bietet eine zusätzliche mathematische Garantie, da das Modell die sensiblen Originaldaten gar nicht erst erhält.</p>
+              <details class="faq-item">
+                <summary class="faq-question">
+                  <span>Welche rechtlichen Risiken drohen bei einem Prüfverfahren deutscher Aufsichtsbehörden (BayLDA / BfDI)?</span>
+                  <span class="faq-icon">+</span>
+                </summary>
+                <div class="faq-answer">Nach Art. 58 DSGVO und § 40 BDSG verfügen Landesdatenschutzbeauftragte (wie das BayLDA in Bayern oder der Bundesbeauftragte BfDI) über weitreichende Auskunftsrechte. Urteile deutscher Verwaltungsgerichte (u. a. VG Berlin) stellen klar: Unternehmen haben bei DSGVO-Auskunftsersuchen <strong>kein Aussageverweigerungsrecht (kein Schweigerecht)</strong>. Sie sind gesetzlich verpflichtet, Datenflüsse und KI-Verarbeitungen innerhalb gesetzter Fristen lückenlos offenzulegen. Mit dem DLP-Proxy weisen Sie auditfest nach, dass keine PII an Drittanbieter-LLMs übertragen wurden.</div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-question">
+                  <span>Welche Bußgelder drohen nach Art. 83 DSGVO bei unzulässiger Datenübermittlung an KI-Dienste?</span>
+                  <span class="faq-icon">+</span>
+                </summary>
+                <div class="faq-answer">Bei Verstößen gegen die Grundsätze der DSGVO – etwa unzulässige Drittlandübermittlungen ohne angemessene Garantien – drohen Geldbußen von bis zu <strong>20.000.000 € oder bis zu 4 % des gesamten weltweiten Jahresumsatzes</strong> des vorangegangenen Geschäftsjahrs. Zudem drohen Schadensersatzansprüche nach Art. 82 DSGVO und behördliche Verarbeitungsverbote.</div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-question">
+                  <span>Warum reicht einfaches Prompt-Engineering („Gib keine Kundendaten weiter“) nicht aus?</span>
+                  <span class="faq-icon">+</span>
+                </summary>
+                <div class="faq-answer">Textuelle System-Prompts sind lediglich Verhaltensrichtlinien für stochastische Modelle, keine technischen Sicherheitskontrollen. LLMs sind anfällig für Prompt Injections, Roleplay-Jailbreaks und unbeabsichtigtes Kontext-Leaking. Echte DSGVO-Konformität erfordert deterministische, codebasierte Pseudonymisierung und Netzwerk-Egress-Sperren (VPC Service Controls), bevor Datenpakete das Unternehmensnetzwerk verlassen.</div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-question">
+                  <span>Wie erfüllt diese Architektur die Vorgaben des EU AI Act bezüglich Transparenz und Risikomanagement?</span>
+                  <span class="faq-icon">+</span>
+                </summary>
+                <div class="faq-answer">Der EU AI Act fordert für Unternehmens-KI ein strukturiertes Risikomanagement, Datenprovenienz und Nachvollziehbarkeit. Durch die Zwischenschaltung des Proxys entstehen revisionssichere Audit-Trails aller Prompts und Antworten, automatisierte Filter gegen unzulässige Datennutzung sowie definierte Human-in-the-Loop-Freigaben für geschäftskritische Datenbankoperationen.</div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-question">
+                  <span>Werden kommerzielle KI-Modelle (wie Gemini, OpenAI oder Claude) mit unseren Kundendaten trainiert?</span>
+                  <span class="faq-icon">+</span>
+                </summary>
+                <div class="faq-answer">Enterprise-Cloud-Vereinbarungen (etwa bei Google Vertex AI oder Azure OpenAI) schließen das Training von Basismodellen mit Kunden-Prompts vertraglich aus. Datenschutzbeauftragte fordern jedoch technische Garantien statt reinem Vertrauen. Der DLP-Proxy garantiert mathematisch, dass echte Klardaten die Unternehmensgrenze gar nicht erst überschreiten.</div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-question">
+                  <span>Lässt sich der DLP-Proxy ohne Neuentwicklung in bestehende CRM-, ERP- und Ticketsysteme einbinden?</span>
+                  <span class="faq-icon">+</span>
+                </summary>
+                <div class="faq-answer">Ja. Der DLP-Proxy agiert als extrem performante Middleware (mit Latenzen von lediglich 15–35 ms) zwischen Ihren Eingangskanälen (E-Mail, Webchat, WhatsApp Business, Zendesk, Salesforce, HubSpot) und Ihren Microservices auf Google Cloud Run, Kubernetes oder AWS.</div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-question">
+                  <span>Wie verhindert Level-2-Netzwerk-Ring-Fencing (VPC Service Controls) Datenabfluss bei Agenten-Kompromittierung?</span>
+                  <span class="faq-icon">+</span>
+                </summary>
+                <div class="faq-answer">Sollte ein Angreifer über eine Zero-Day-Schwachstelle in den Agenten-Container eindringen, erzwingen VPC Service Controls eine netzwerkseitige Perimeter-Isolation (Default-Deny Egress). Datenabflüsse zu externen Webhooks oder fremden Cloud-Speichern sind auf Hypervisor-Ebene technisch unmöglich.</div>
+              </details>
+
             </div>
-          </div>
+          </article>
 
           <div class="cta-strip">
             <div>
