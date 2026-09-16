@@ -524,6 +524,30 @@
         <!-- Article grid -->
         <div class="articles-grid">
 
+          <!-- Card: DSGVO-konforme KI-Agenten & DLP Privacy Proxy (DE) -->
+          <article class="article-card" data-modal="modal-dsgvo-dlp-ki-agenten-de">
+            <div class="card-accent" style="background: var(--coral);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">Enterprise KI-Sicherheit · DSGVO &amp; EU AI Act · DLP-Proxy</span>
+                <span class="card-readtime">5 Min Lesezeit</span>
+              </div>
+              <h2 class="card-title">DSGVO-konforme KI-Agenten: Kundendaten &amp; IBAN mit DLP-Proxys schützen</h2>
+              <p class="card-excerpt">Wie Unternehmen Kundenprozesse rechtssicher mit KI automatisieren: Cloud DLP maskiert PII und IBAN in Echtzeit vor dem Modellaufruf, abgesichert durch Zero-Trust VPC-Perimeter.</p>
+              <div class="card-tags">
+                <span class="tag">DSGVO</span>
+                <span class="tag">Cloud DLP</span>
+                <span class="tag">Zero-Trust</span>
+                <span class="tag">VPC-SC</span>
+                <span class="tag">BayLDA-sicher</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Ergebnis: <span>100% PII De-Id · Keine Klardaten an LLMs · Audit-Ready</span></div>
+              <a class="read-link" href="/de/artikel/dsgvo-konforme-ki-agenten-dlp-zero-trust/">Artikel lesen →</a>
+            </div>
+          </article>
+
           <!-- Card: Google ADK Agent Skills & Multi-Agenten-Systeme (DE) -->
           <article class="article-card" data-modal="modal-google-adk-agent-skills-de">
             <div class="card-accent" style="background: var(--sky);"></div>
@@ -910,6 +934,53 @@
   </div>
 
   <!-- ── MODALS ── -->
+
+  <!-- Modal: DSGVO-konforme KI-Agenten & DLP Privacy Proxy (DE) -->
+  <div class="modal-overlay" id="modal-dsgvo-dlp-ki-agenten-de" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-section-label">Enterprise KI-Sicherheit · DSGVO &amp; EU AI Act · DLP-Proxy</div>
+          <h2 class="modal-title">DSGVO-konforme KI-Agenten: Kundendaten &amp; IBAN mit DLP-Proxys schützen</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-dsgvo-dlp-ki-agenten-de')">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="modal-section-label">Das Problem: KI-Einsatz vs. DSGVO-Bußgelder</div>
+          <div class="modal-text">
+            <p>Wenn KI-Agenten Kundenanfragen mit Namen, Adressen oder IBAN-Nummern im Klartext an externe LLM-APIs senden, drohen nach Art. 83 DSGVO Bußgelder von bis zu 20 Mio. € oder 4% des weltweiten Jahresumsatzes.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Die Lösung: Cloud DLP Privacy Proxy</div>
+          <div class="modal-text">
+            <p>Unser DLP-Proxy maskiert personenbezogene Daten in Echtzeit vor Verlassen Ihres privaten Netzwerks in synthetische Token ([PERSON_REF], [IBAN_REF]). Das externe Modell verarbeitet nur Token – echte Daten werden erst beim internen Tool-Aufruf in Ihrem VPC wieder aufgelöst.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Rechtssicherheit &amp; Behörden-Audit (BayLDA &amp; BfDI)</div>
+          <div class="modal-text">
+            <p>Bei behördlichen Auskunftsersuchen weisen Sie über lückenlose Audit-Logs nach, dass zu keinem Zeitpunkt PII die kontrollierte Umgebung verlassen haben. Zero-Trust VPC-Perimeter blockieren unautorisierte Datenabflüsse physisch.</p>
+          </div>
+          <div class="modal-stack">
+            <span class="stack-chip">Cloud DLP</span>
+            <span class="stack-chip">VPC Service Controls</span>
+            <span class="stack-chip">PII-Maskierung</span>
+            <span class="stack-chip">DSGVO-Audit</span>
+            <span class="stack-chip">Google ADK</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center;">
+        <p style="font-size: 0.82rem; font-weight: 700; opacity: 0.85;">📖 Ausführliche Architektur-Fallstudie auf der Artikelseite:</p>
+        <div style="display: flex; gap: 10px; width: 100%; justify-content: center; align-items: center;">
+          <a class="action-btn dark" href="/de/artikel/dsgvo-konforme-ki-agenten-dlp-zero-trust/" style="font-size: 0.92rem; padding: 12px 24px; font-weight: 800;">Vollständigen Artikel lesen →</a>
+          <button class="mini-btn" onclick="closeModal('modal-dsgvo-dlp-ki-agenten-de')">Schließen</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Modal: Google ADK Agent Skills & Multi-Agenten-Systeme -->
   <div class="modal-overlay" id="modal-google-adk-agent-skills-de" role="dialog" aria-modal="true">

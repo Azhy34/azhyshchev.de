@@ -609,6 +609,30 @@
         <!-- Article grid -->
         <div class="articles-grid" id="articlesGrid">
 
+          <!-- Card: GDPR-Compliant AI Agents & DLP Privacy Proxy -->
+          <article class="article-card" data-tags="ai-agents security" data-modal="modal-gdpr-dlp-ai-agents">
+            <div class="card-accent" style="background: var(--coral);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">Enterprise AI Security · GDPR / DSGVO · DLP Proxy</span>
+                <span class="card-readtime">5 min read</span>
+              </div>
+              <h2 class="card-title">GDPR-Compliant AI Agents: How to Protect Customer Data & IBAN with DLP Proxies</h2>
+              <p class="card-excerpt">Automating customer operations with AI without violating European data protection laws. How Cloud DLP proxies de-identify PII and IBAN in real time before prompts hit LLMs, backed by Zero-Trust VPC perimeters.</p>
+              <div class="card-tags">
+                <span class="tag">GDPR / DSGVO</span>
+                <span class="tag">Cloud DLP</span>
+                <span class="tag">Zero-Trust</span>
+                <span class="tag">VPC-SC</span>
+                <span class="tag">Google ADK</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Key result: <span>100% PII De-Id · Zero Raw Data to LLMs · BayLDA/BfDI Audit-Ready</span></div>
+              <a class="read-link" href="/articles/gdpr-compliant-ai-agents-dlp-zero-trust/">Read full article →</a>
+            </div>
+          </article>
+
           <!-- Card: Google ADK Agent Skills & Multi-Agent Systems -->
           <article class="article-card" data-tags="ai-agents automation" data-modal="modal-google-adk-agent-skills">
             <div class="card-accent" style="background: var(--sky);"></div>
@@ -1104,6 +1128,53 @@
   </div>
 
   <!-- ── MODALS ── -->
+
+  <!-- Modal: GDPR-Compliant AI Agents & DLP Privacy Proxy -->
+  <div class="modal-overlay" id="modal-gdpr-dlp-ai-agents" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-section-label">Enterprise AI Security · GDPR &amp; DSGVO · DLP Proxy</div>
+          <h2 class="modal-title">GDPR-Compliant AI Agents: How to Protect Customer Data &amp; IBAN with DLP Proxies</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-gdpr-dlp-ai-agents')">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="modal-section-label">The Problem: AI Ingestion vs. EU Privacy Laws</div>
+          <div class="modal-text">
+            <p>Deploying AI agents on customer support, CRM, or invoice data introduces severe compliance liabilities. If customer names, addresses, or German IBAN numbers are sent in raw prompts to external LLM APIs, companies face penalties up to €20M or 4% of annual global turnover under Article 83 GDPR.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">The Solution: In-Perimeter Cloud DLP Privacy Proxy</div>
+          <div class="modal-text">
+            <p>Our architecture intercepts prompts before external dispatch. Google Cloud Sensitive Data Protection (DLP) tokenizes names, banking details, and contact info into synthetic references ([PERSON_REF], [IBAN_REF]). The model reasons solely over tokens; re-identification happens only when executing verified tools inside your private VPC.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Zero-Trust &amp; Audit Readiness (BayLDA / BfDI)</div>
+          <div class="modal-text">
+            <p>VPC Service Controls ring-fences your agent runtime, severing public data exfiltration routes. When German regulatory authorities issue formal Auskunftsersuchen, your team can prove that zero customer PII ever left your private perimeter.</p>
+          </div>
+          <div class="modal-stack">
+            <span class="stack-chip">Cloud DLP</span>
+            <span class="stack-chip">VPC Service Controls</span>
+            <span class="stack-chip">PII De-Id</span>
+            <span class="stack-chip">Google ADK</span>
+            <span class="stack-chip">Audit-Ready</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center;">
+        <p style="font-size: 0.82rem; font-weight: 700; opacity: 0.85;">📖 Full architectural case study and compliance breakdown available on the article page:</p>
+        <div style="display: flex; gap: 10px; width: 100%; justify-content: center; align-items: center;">
+          <a class="action-btn dark" href="/articles/gdpr-compliant-ai-agents-dlp-zero-trust/" style="font-size: 0.92rem; padding: 12px 24px; font-weight: 800;">Read Full Article Page →</a>
+          <button class="mini-btn" onclick="closeModal('modal-gdpr-dlp-ai-agents')">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Modal: Google ADK Agent Skills & Multi-Agent Systems -->
   <div class="modal-overlay" id="modal-google-adk-agent-skills" role="dialog" aria-modal="true">
