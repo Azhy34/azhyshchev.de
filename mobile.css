@@ -24,6 +24,11 @@ a.brand {
    MOBILE ≤ 820px
 ════════════════════════════════ */
 @media (max-width: 820px) {
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+  }
+
   body {
     padding: 10px 8px 72px; /* space for bottom nav */
   }
@@ -33,6 +38,8 @@ a.brand {
     grid-template-columns: 1fr;
     box-shadow: 6px 6px 0 var(--black);
     min-height: unset !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
   }
 
   /* ── SIDEBAR → slim top bar ── */
@@ -67,11 +74,15 @@ a.brand {
   /* ── MAIN ── */
   .main {
     padding: 10px;
+    min-width: 0 !important;
+    max-width: 100% !important;
   }
 
   .panel {
     padding: 12px;
     gap: 16px;
+    min-width: 0 !important;
+    max-width: 100% !important;
   }
 
   .topbar {
@@ -280,6 +291,22 @@ a.brand {
     padding: 16px 14px !important;
   }
 
+  .article-shell,
+  .article-body,
+  .neo-card,
+  .highlight-box,
+  .problem-item,
+  .prose {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .two-col,
+  .dedup-grid {
+    grid-template-columns: 1fr !important;
+  }
+
   .neo-card {
     padding: 16px !important;
   }
@@ -297,20 +324,45 @@ a.brand {
     display: block !important;
   }
 
+  /* Tables inside articles must scroll horizontally */
+  table,
+  .api-table,
   .compare-table {
-    display: block;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    white-space: nowrap !important;
+    box-sizing: border-box !important;
   }
 
-  .arch-diagram {
-    overflow-x: auto;
-    font-size: 0.75rem;
-    -webkit-overflow-scrolling: touch;
+  /* Diagrams, code blocks, and pre elements */
+  .arch-diagram,
+  .pipeline-diagram,
+  .code-block,
+  .code-neo,
+  pre {
+    display: block !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    box-sizing: border-box !important;
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+    font-size: 0.75rem !important;
+  }
+
+  pre code {
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
   }
 
   .metrics-row {
-    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
 
   /* ── PROJECTS PAGE ── */
