@@ -238,13 +238,32 @@ a.brand {
   }
 
   /* ── FIX PAGE TITLE WRAPPING ON MOBILE ── */
-  .page-title {
+  .page-title,
+  .article-title {
     white-space: normal !important;
+    word-break: break-word !important;
   }
 
-  /* ── FIX CARD FOOTER FLEX WRAP ON MOBILE ── */
+  /* ── FIX CARD FOOTER & METRIC PILL ON MOBILE ── */
   .card-footer {
     flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+
+  .metric-pill {
+    flex-wrap: wrap !important;
+    max-width: 100% !important;
+  }
+
+  .metric-pill span {
+    word-break: break-word !important;
+    white-space: normal !important;
+    max-width: 100% !important;
+  }
+
+  .article-card {
+    min-width: 0 !important;
+    max-width: 100% !important;
   }
 
   /* ── HIDE reviews section on mobile (index.html) ── */
