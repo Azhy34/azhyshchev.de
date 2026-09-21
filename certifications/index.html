@@ -31,6 +31,8 @@
       "url": "https://azhyshchev.de",
       "knowsAbout": [
         "Google Agent Development Kit (ADK)",
+        "Google Cloud Model Armor",
+        "AI Security & Governance",
         "Multi-Agent Systems",
         "Retrieval-Augmented Generation (RAG)",
         "Vector Databases",
@@ -51,6 +53,13 @@
           "credentialCategory": "badge",
           "recognizedBy": { "@type": "Organization", "name": "Google Cloud" },
           "url": "https://www.skills.google/public_profiles/4e2bc6b3-aca1-47d8-9eb7-2ef4a6373f9d/badges/26735580"
+        },
+        {
+          "@type": "EducationalOccupationalCredential",
+          "name": "Model Armor: Securing AI Deployments",
+          "credentialCategory": "badge",
+          "recognizedBy": { "@type": "Organization", "name": "Google Cloud" },
+          "url": "https://www.skills.google/public_profiles/4e2bc6b3-aca1-47d8-9eb7-2ef4a6373f9d/badges/28154846"
         },
         {
           "@type": "EducationalOccupationalCredential",
@@ -334,6 +343,7 @@
     }
 
     .card-accent.google { background: var(--sky); }
+    .card-accent.security { background: var(--coral); }
     .card-accent.academic { background: var(--pink); }
     .card-accent.rag { background: var(--yellow); }
     .card-accent.lang { background: var(--mint); }
@@ -416,6 +426,7 @@
 
     .verify-btn.academic { background: var(--pink); }
     .verify-btn.rag { background: var(--mint); }
+    .verify-btn.security { background: var(--coral); }
 
     /* ── XP SKILL BARS ── */
     .xp-bar-wrap {
@@ -545,10 +556,11 @@
         <!-- FILTER STRIP -->
         <div class="filter-strip" role="toolbar" aria-label="Filter certificates by category">
           <span class="filter-label">Category:</span>
-          <button class="filter-btn active" data-filter="all">All (22)</button>
-          <button class="filter-btn" data-filter="google">Google Cloud & ADK (10)</button>
-          <button class="filter-btn" data-filter="academic">Academic & ML (3)</button>
-          <button class="filter-btn" data-filter="rag">RAG & GenAI (5)</button>
+          <button class="filter-btn active" data-filter="all">All (23)</button>
+          <button class="filter-btn" data-filter="security">AI Security &amp; Governance (2)</button>
+          <button class="filter-btn" data-filter="google">Google Cloud &amp; ADK (11)</button>
+          <button class="filter-btn" data-filter="academic">Academic &amp; ML (3)</button>
+          <button class="filter-btn" data-filter="rag">RAG &amp; GenAI (5)</button>
           <button class="filter-btn" data-filter="xp">Skill XP (4)</button>
         </div>
 
@@ -576,9 +588,30 @@
             </div>
           </article>
 
-          <!-- 2. Google: Agent Governance and Security -->
-          <article class="cert-card" data-category="google">
-            <div class="card-accent google"></div>
+          <!-- 2. Google: Model Armor: Securing AI Deployments -->
+          <article class="cert-card" data-category="google security">
+            <div class="card-accent security"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-issuer">Google Cloud Skills Boost</span>
+                <span class="card-tag">Badge #28154846</span>
+              </div>
+              <h2 class="card-title">Model Armor: Securing AI Deployments</h2>
+              <p class="card-desc">
+                Enterprise AI security with Google Cloud Model Armor: prompt injection &amp; jailbreak prevention, PII masking &amp; DLP sanitization, automated LLM safety templates, and real-time inference guardrails.
+              </p>
+              <div class="card-footer">
+                <span style="font-size:0.72rem; opacity:0.6; font-weight:700;">Skills Boost</span>
+                <a class="verify-btn security" href="https://www.skills.google/public_profiles/4e2bc6b3-aca1-47d8-9eb7-2ef4a6373f9d/badges/28154846" target="_blank" rel="noopener noreferrer">
+                  Verify Badge ↗
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 3. Google: Agent Governance and Security -->
+          <article class="cert-card" data-category="google security">
+            <div class="card-accent security"></div>
             <div class="card-body">
               <div class="card-meta">
                 <span class="card-issuer">Google Cloud Skills Boost</span>
@@ -590,7 +623,7 @@
               </p>
               <div class="card-footer">
                 <span style="font-size:0.72rem; opacity:0.6; font-weight:700;">Skills Boost</span>
-                <a class="verify-btn" href="https://www.skills.google/public_profiles/4e2bc6b3-aca1-47d8-9eb7-2ef4a6373f9d/badges/28022836" target="_blank" rel="noopener noreferrer">
+                <a class="verify-btn security" href="https://www.skills.google/public_profiles/4e2bc6b3-aca1-47d8-9eb7-2ef4a6373f9d/badges/28022836" target="_blank" rel="noopener noreferrer">
                   Verify Badge ↗
                 </a>
               </div>
@@ -1083,7 +1116,8 @@
         const filter = btn.getAttribute('data-filter');
         const cards = document.querySelectorAll('.cert-card');
         cards.forEach(card => {
-          if (filter === 'all' || card.getAttribute('data-category') === filter) {
+          const cats = (card.getAttribute('data-category') || '').split(' ');
+          if (filter === 'all' || cats.includes(filter)) {
             card.style.display = 'flex';
           } else {
             card.style.display = 'none';
