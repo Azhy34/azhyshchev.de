@@ -251,6 +251,7 @@ Site is fully bilingual since 2026-06-09. Every EN page has a `/de/` counterpart
 - `<meta property="og:locale" content="en_US|de_DE">` — DE pages use `de_DE`
 - Schema.org `inLanguage: "de"` on all DE pages
 - sitemap.xml: every URL listed with `<xhtml:link>` hreflang pairs
+- Social preview: own `og.png` 1200x630 next to the page (generator `../scripts/og_card/make_og.py`), `og:image` + `twitter:image` point to it, `twitter:card=summary_large_image`, `og:image:width/height/alt`, short `og:title` without the brand. Never `Azhyschev.JPG` (full rule: `.claude/skills/content-to-site/SKILL.md`, rule 7)
 
 **When adding new content:**
 1. Create EN page/article as usual
