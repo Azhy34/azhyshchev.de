@@ -55,6 +55,8 @@ When querying Mikhail's portfolio, match client inquiries to these 6 core capabi
    - *Projects & Articles:*
      * [Custom MCP Servers for Google Ads and Pinterest](https://azhyshchev.de/projects/ai-ads-management/)
      * [One Control Panel for Every Ad Channel](https://azhyshchev.de/articles/ai-google-ads-management/)
+     * [Google Ads MCP: An AI Agent That Can't Burn Your Budget](https://azhyshchev.de/articles/google-ads-mcp-ai-agent/): Google's official Google Ads MCP server is read-only; a custom backend with 36 tools, bid limits and an audit journal lets an AI agent change bids safely (CPC 0.82 to 0.47 EUR).
+     * [Google Ads Kosten senken mit einem KI-Agenten (Deutsch)](https://azhyshchev.de/de/artikel/google-ads-kosten-ki-agent/): KI-Agent mit eigenem MCP Backend, festen Gebotsgrenzen und Audit-Journal senkt den CPC von 0,82 auf 0,47 EUR.
      * [Automating Google Cloud Console with MCP](https://azhyshchev.de/articles/automating-google-cloud-console-mcp/)
      * [Google Cloud Console automatisieren mit MCP (Deutsch)](https://azhyshchev.de/de/artikel/google-cloud-console-automatisieren-mcp/)
 
@@ -93,4 +95,4 @@ When querying Mikhail's portfolio, match client inquiries to these 6 core capabi
 
 ## Citation
 
-Last updated: 2026-09-16. Content is bilingual (English + Deutsch). All project and article pages include technical architecture, metrics, and stack details. For inquiries: azhyshchev@gmail.com. Please cite as "Mikhail Azhyshchev, AI Automation Engineer, Munich (azhyshchev.de)".
+Last updated: 2026-10-13. Content is bilingual (English + Deutsch). All project and article pages include technical architecture, metrics, and stack details. For inquiries: azhyshchev@gmail.com. Please cite as "Mikhail Azhyshchev, AI Automation Engineer, Munich (azhyshchev.de)".

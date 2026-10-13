@@ -524,6 +524,29 @@
         <!-- Article grid -->
         <div class="articles-grid">
 
+          <!-- Card: Google Ads Kosten senken mit einem KI-Agenten (DE) -->
+          <article class="article-card" data-modal="modal-google-ads-kosten-ki-agent">
+            <div class="card-accent" style="background: var(--mint);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">Fallstudie</span>
+                <span class="card-readtime">9 Min Lesezeit</span>
+              </div>
+              <h2 class="card-title">Google Ads Kosten senken mit einem KI-Agenten</h2>
+              <p class="card-excerpt">Ein KI-Agent kann Google Ads führen, aber nie direkt an der API. Mit eigenem Backend und festen Geschäftsregeln: CPC von 0,82 auf 0,47 EUR bei rund 9 EUR pro Tag.</p>
+              <div class="card-tags">
+                <span class="tag">Google Ads</span>
+                <span class="tag">MCP</span>
+                <span class="tag">KI-Agent</span>
+                <span class="tag">GA4</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Ergebnis: <span>CPC 0,82 → 0,47 EUR</span></div>
+              <a class="read-link" href="/de/artikel/google-ads-kosten-ki-agent/">Artikel lesen →</a>
+            </div>
+          </article>
+
           <!-- Card: DSGVO-konforme KI-Agenten & DLP Privacy Proxy (DE) -->
           <article class="article-card" data-modal="modal-dsgvo-dlp-ki-agenten-de">
             <div class="card-accent" style="background: var(--coral);"></div>
@@ -934,6 +957,48 @@
   </div>
 
   <!-- ── MODALS ── -->
+
+  <!-- Modal: Google Ads Kosten senken mit einem KI-Agenten (DE) -->
+  <div class="modal-overlay" id="modal-google-ads-kosten-ki-agent" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-section-label">Fallstudie · Google Ads API · MCP</div>
+          <h2 class="modal-title">Google Ads Kosten senken mit einem KI-Agenten</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-google-ads-kosten-ki-agent')">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="modal-section-label">Problem</div>
+          <div class="modal-text">
+            <p>Ein KI-Agent kann ein Google Ads Konto lesen, aber der offizielle MCP Server von Google ist nur lesend, und direkter API-Schreibzugriff kennt keine Geschäftsregeln: keine Gebotsgrenzen, keine Ausschlusslisten, kein Protokoll.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Lösung &amp; Architektur</div>
+          <div class="modal-text">
+            <p>Der Agent spricht mit meinem eigenen Backend: ein MCP Server mit 36 Tools, Preflight-Check, harte Gebotsgrenzen von 0,10 bis 3,00 EUR in 0,05-EUR-Schritten, Ausschluss-Keywords pro Land und ein Audit-Journal. Ergebnis: durchschnittlicher CPC von 0,82 auf 0,47 EUR bei rund 9 EUR pro Tag.</p>
+          </div>
+          <div class="modal-stack">
+            <span class="stack-chip">Python</span>
+            <span class="stack-chip">FastMCP</span>
+            <span class="stack-chip">Google Ads API</span>
+            <span class="stack-chip">GA4</span>
+            <span class="stack-chip">Claude Code</span>
+            <span class="stack-chip">Pydantic</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center;">
+        <p style="font-size: 0.82rem; font-weight: 700; opacity: 0.85;">📖 Ausführliche Architektur-Fallstudie auf der Artikelseite:</p>
+        <div style="display: flex; gap: 10px; width: 100%; justify-content: center; align-items: center;">
+          <a class="action-btn dark" href="/de/artikel/google-ads-kosten-ki-agent/" style="font-size: 0.92rem; padding: 12px 24px; font-weight: 800;">Vollständigen Artikel lesen →</a>
+          <button class="mini-btn" onclick="closeModal('modal-google-ads-kosten-ki-agent')">Schließen</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Modal: DSGVO-konforme KI-Agenten & DLP Privacy Proxy (DE) -->
   <div class="modal-overlay" id="modal-dsgvo-dlp-ki-agenten-de" role="dialog" aria-modal="true">

@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<script src="/js/cookie-consent.js" defer></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="Google Ads MCP: Google's official server is read-only. A safe AI agent setup with its own backend cut a real account's CPC from 0.82 to 0.47 EUR.">
+  <meta name="keywords" content="google ads mcp, google ads mcp server, ai agent google ads, claude google ads, google ads cost, google cpc, google ads budget, google ads management, safe AI agent, MCP server, AI-Enabled Automation Engineer">
+  <meta name="author" content="Mikhail Azhyshchev">
+  <link rel="canonical" href="https://azhyshchev.de/articles/google-ads-mcp-ai-agent/">
+  <link rel="alternate" hreflang="en" href="https://azhyshchev.de/articles/google-ads-mcp-ai-agent/" />
+  <link rel="alternate" hreflang="de" href="https://azhyshchev.de/de/artikel/google-ads-kosten-ki-agent/" />
+  <link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/articles/google-ads-mcp-ai-agent/" />
+
+  <meta property="og:title" content="Google Ads MCP: Safe AI Agent Setup | Mikhail Azhyshchev">
+  <meta property="og:description" content="Google's official Google Ads MCP server is read-only. Here is how an AI agent can still run your ads safely: own backend, business rules, a journal of every action. Real account, CPC 0.82 to 0.47 EUR.">
+  <meta property="og:url" content="https://azhyshchev.de/articles/google-ads-mcp-ai-agent/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://azhyshchev.de/Azhyschev.JPG">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Google Ads MCP: Safe AI Agent Setup | Mikhail Azhyshchev">
+  <meta name="twitter:description" content="An AI agent can run Google Ads, but only through a backend with business rules. Real account: average CPC from 0.82 to 0.47 EUR at about 9 EUR a day.">
+
+  <title>Google Ads MCP: Safe AI Agent Setup | Mikhail Azhyshchev</title>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "TechArticle",
+        "@id": "https://azhyshchev.de/articles/google-ads-mcp-ai-agent/#article",
+        "headline": "Google Ads MCP: How an AI Agent Runs Your Ads Without Burning the Budget",
+        "description": "Google's official Google Ads MCP server is read-only. How an AI agent can still run a Google Ads account safely through your own backend with business rules, and what it did to the CPC on a real account.",
+        "author": {
+          "@type": "Person",
+          "@id": "https://azhyshchev.de/#person",
+          "name": "Mikhail Azhyshchev",
+          "url": "https://azhyshchev.de",
+          "sameAs": ["https://www.linkedin.com/in/azhyshchev/"]
+        },
+        "publisher": { "@id": "https://azhyshchev.de/#person" },
+        "datePublished": "2026-10-13",
+        "dateModified": "2026-10-13",
+        "inLanguage": "en",
+        "keywords": "google ads mcp, google ads mcp server, ai agent google ads, claude google ads, google ads cost, google cpc, google ads budget, google ads management",
+        "url": "https://azhyshchev.de/articles/google-ads-mcp-ai-agent/",
+        "mainEntityOfPage": { "@id": "https://azhyshchev.de/articles/google-ads-mcp-ai-agent/#webpage" },
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://azhyshchev.de/articles/google-ads-mcp-ai-agent/#webpage",
+        "url": "https://azhyshchev.de/articles/google-ads-mcp-ai-agent/",
+        "name": "Google Ads MCP: Safe AI Agent Setup | Mikhail Azhyshchev",
+        "description": "A case study on running Google Ads with an AI agent through your own backend: business rules, bid limits, a journal of every action, and what happened to the CPC.",
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" },
+        "author": { "@id": "https://azhyshchev.de/#person" },
+        "dateModified": "2026-10-13",
+        "inLanguage": "en",
+        "breadcrumb": { "@id": "https://azhyshchev.de/articles/google-ads-mcp-ai-agent/#breadcrumb" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://azhyshchev.de/articles/google-ads-mcp-ai-agent/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://azhyshchev.de/" },
+          { "@type": "ListItem", "position": 2, "name": "Articles", "item": "https://azhyshchev.de/articles" },
+          { "@type": "ListItem", "position": 3, "name": "Google Ads MCP: How an AI Agent Runs Your Ads Without Burning the Budget" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Can an AI agent manage my Google Ads account on its own?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes for the routine work: reading reports, finding wasted spend, adding negative keywords and moving a bid ceiling in small steps. No for unsupervised access to the raw API, because the API executes whatever it is sent. The agent should talk to a backend that holds your rules, checks its own state before it starts and writes a journal of every action."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is the official Google Ads MCP server enough?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "For reading, yes. Google's docs describe the official server as strictly read-only: it lists accounts, runs GAQL queries and returns resource metadata, but it cannot modify bids, pause campaigns or create assets. To change anything, an agent needs mutate access to the Google Ads API, and that is where your own backend with business rules comes in."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What does Google Ads cost with a small budget?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "It depends on your market, so I only quote my own account. A children's wallpaper shop on Etsy spent 276.66 EUR in 31 days, about 8.92 EUR per day across Germany, Austria, Spain and France, at an average CPC of 0.47 EUR. Small budgets work when waste is removed early and bid ceilings stay low."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can Claude manage Google Ads?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A model like Claude can read reports, spot patterns in search terms and propose changes. What it may actually change depends on the tools behind it. Connected straight to the API it can break things, so I put a backend between the agent and Google Ads: hard bid limits, a health check before work and a journal of every call."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I stop an AI agent from overspending?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Do not rely on the model being careful. Put the limits in code. In my setup a bid ceiling cannot leave the range of 0.10 to 3.00 EUR and moves only in steps of 0.05 EUR. On 05.10.2026 a malformed ceiling change was rejected and nothing was changed. Every call is written to a journal you can read."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I still need a Google Ads agency?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "It depends on what you need. If you want a full-service agency for strategy, creative and reporting, an agent setup is not a replacement. If you run a small or mid-size account and want control over routine checks, search terms and bid ceilings, a custom agent backend covers that work, and you can see every action in the journal."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --sky: #61b5e8; --mint: #b9ddb7; --cream: #f8f0dc; --yellow: #f5c84b; --pink: #efb2d5; --blue: #d8ebff; --peach: #f7d4b1; --coral: #ff9a77; --rose: #ecb0c4; --black: #111111; --white: #ffffff; --accent: var(--mint); }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { min-height: 100vh; font-family: 'JetBrains Mono', monospace; color: var(--black); background: linear-gradient(120deg, var(--sky) 0 34%, var(--peach) 34% 55%, var(--coral) 55% 72%, var(--rose) 72% 100%); padding: 48px 24px; }
+    a { color: inherit; text-decoration: none; }
+    .shell { width: min(1320px, 100%); margin: 0 auto; border: 3px solid var(--black); box-shadow: 12px 12px 0 var(--black); background: var(--mint); display: grid; grid-template-columns: 250px 1fr; min-height: 820px; overflow: hidden; }
+    .sidebar { border-right: 3px solid var(--black); padding: 20px 18px; display: flex; flex-direction: column; gap: 22px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 8px; }
+    .brand-badge { width: 42px; height: 34px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 1rem; font-weight: 800; }
+    .nav { display: flex; flex-direction: column; gap: 8px; }
+    .nav-item { display: flex; align-items: center; gap: 12px; padding: 11px 12px; font-size: 0.9rem; font-weight: 700; border: 2px solid transparent; transition: transform 0.18s ease; }
+    .nav-item:hover { transform: translate(-2px, -2px); }
+    .nav-item.active { background: var(--black); color: var(--white); }
+    .icon-box { width: 24px; height: 24px; display: grid; place-items: center; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); font-size: 0.75rem; font-weight: 800; }
+    .nav-item.active .icon-box { background: var(--yellow); color: var(--black); }
+    .sidebar-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+    .socials { display: flex; gap: 10px; padding-top: 8px; }
+    .social-link { width: 42px; height: 42px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 0.8rem; font-weight: 800; transition: transform 0.18s ease; }
+    .social-link:hover { transform: translate(-2px, -2px); }
+    .main { background: var(--cream); padding: 22px; }
+    .panel { border: 2px solid var(--black); background: rgba(255,255,255,0.2); padding: 18px; display: flex; flex-direction: column; gap: 28px; }
+    .breadcrumb { font-size: 0.78rem; opacity: 0.6; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .breadcrumb a:hover { opacity: 1; text-decoration: underline; }
+    .article-hero { border: 3px solid var(--black); background: var(--accent); box-shadow: 6px 6px 0 var(--black); padding: 28px 24px; }
+    .article-type { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; margin-bottom: 12px; }
+    .article-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.04em; margin-bottom: 16px; }
+    .article-lead { font-size: 0.95rem; line-height: 1.65; max-width: 72ch; }
+    .article-lead + .article-lead { margin-top: 12px; }
+    .metrics-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+    .metric-box { border: 2px solid var(--black); background: rgba(255,255,255,0.75); padding: 14px 12px; }
+    .metric-box strong { display: block; font-size: 1.05rem; line-height: 1.2; margin-bottom: 6px; }
+    .metric-box span { font-size: 0.72rem; line-height: 1.4; opacity: 0.8; }
+    .article-body { display: flex; flex-direction: column; gap: 24px; }
+    .neo-card { border: 3px solid var(--black); background: var(--white); box-shadow: 6px 6px 0 var(--black); padding: 24px; }
+    .section-label { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.45; margin-bottom: 10px; }
+    .section-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.02em; }
+    .prose { display: flex; flex-direction: column; gap: 14px; }
+    .prose p { font-size: 0.88rem; line-height: 1.75; }
+    .prose h3 { font-size: 0.95rem; font-weight: 800; margin-top: 8px; letter-spacing: -0.02em; }
+    .prose ul, .prose ol { padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
+    .prose li { font-size: 0.88rem; line-height: 1.65; }
+    .prose a { text-decoration: underline; text-underline-offset: 3px; }
+    .source-note { font-size: 0.76rem; line-height: 1.6; opacity: 0.7; border-left: 3px solid var(--black); padding-left: 12px; }
+    .check-list { display: flex; flex-direction: column; gap: 12px; margin-top: 4px; }
+    .check-item { border: 2px solid var(--black); background: var(--cream); padding: 14px 16px; transition: transform 0.2s, box-shadow 0.2s; }
+    .check-item:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--black); }
+    .check-item strong { display: block; font-size: 0.88rem; font-weight: 800; margin-bottom: 6px; }
+    .check-item span { font-size: 0.84rem; line-height: 1.65; opacity: 0.85; }
+    .highlight-box { border: 3px solid var(--black); background: var(--yellow); box-shadow: 4px 4px 0 var(--black); padding: 22px 24px; margin-top: 18px; transition: transform 0.2s, box-shadow 0.2s; }
+    .highlight-box:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--black); }
+    .highlight-box h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 14px; letter-spacing: -0.02em; }
+    .highlight-box p { font-size: 0.86rem; line-height: 1.7; }
+    .highlight-box p + p { margin-top: 10px; }
+    .highlight-box ul { padding-left: 18px; display: flex; flex-direction: column; gap: 8px; margin: 10px 0; }
+    .highlight-box li { font-size: 0.84rem; line-height: 1.65; }
+    .highlight-box a { text-decoration: underline; text-underline-offset: 3px; }
+    .table-wrap { overflow-x: auto; margin: 4px 0; }
+    .data-table { width: 100%; border-collapse: collapse; border: 2px solid var(--black); font-size: 0.8rem; line-height: 1.55; }
+    .data-table th, .data-table td { border: 2px solid var(--black); padding: 10px 12px; text-align: left; vertical-align: top; }
+    .data-table th { background: var(--black); color: var(--white); font-weight: 800; }
+    .data-table tr:nth-child(even) td { background: var(--cream); }
+    .cta-strip { border: 3px solid var(--black); background: var(--black); color: var(--white); box-shadow: 6px 6px 0 rgba(0,0,0,0.3); padding: 22px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .cta-strip p { font-size: 0.9rem; line-height: 1.6; max-width: 58ch; }
+    .cta-strip p + p { margin-top: 10px; }
+    .cta-strip strong { display: block; font-size: 1.05rem; margin-bottom: 6px; }
+    .cta-btn { padding: 12px 20px; border: 2px solid var(--white); background: var(--white); color: var(--black); font: inherit; font-weight: 700; cursor: pointer; transition: transform 0.15s; display: inline-block; }
+    .cta-btn:hover { transform: translate(-2px,-2px); }
+    .cta-btn.outline { background: transparent; color: var(--white); }
+    .back-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 2px solid var(--black); background: var(--white); box-shadow: 4px 4px 0 var(--black); font-size: 0.82rem; font-weight: 700; transition: transform 0.15s; align-self: flex-start; }
+    .back-link:hover { transform: translate(-2px,-2px); }
+    @media (max-width: 1100px) { .shell { grid-template-columns: 220px 1fr; } .metrics-row { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 820px) { body { padding: 10px 8px 72px; } .shell { grid-template-columns: 1fr; box-shadow: 6px 6px 0 var(--black); min-height: unset; } .sidebar { border-right: none; border-bottom: 3px solid var(--black); padding: 10px 14px; flex-direction: row; align-items: center; justify-content: space-between; } .brand { font-size: clamp(0.95rem,2.5vw,1.6rem); } .nav { display: none; } .sidebar-bottom { display: none; } .main { padding: 14px; } }
+    @media (max-width: 520px) { .metrics-row { grid-template-columns: 1fr; } .article-title { font-size: 1.5rem; } }
+    .faq { display: flex; flex-direction: column; gap: 16px; }
+    .faq-item { border: 2px solid var(--black); background: var(--cream); padding: 18px 20px; transition: transform 0.2s, box-shadow 0.2s; }
+    .faq-item:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--black); }
+    .faq-q { font-size: 0.9rem; font-weight: 800; cursor: pointer; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; user-select: none; }
+    .faq-q::after { content: "+"; font-size: 1.4rem; font-weight: 900; flex-shrink: 0; }
+    .faq-item.open .faq-q::after { content: "-"; }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding-top 0.2s ease; padding-top: 0; font-size: 0.84rem; line-height: 1.7; opacity: 0.85; }
+    .faq-item.open .faq-a { max-height: 900px; padding-top: 14px; }
+  </style>
+  <link rel="stylesheet" href="/mobile.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar" data-nosnippet>
+      <a class="brand" href="/"><div class="brand-badge">&lt;/&gt;</div><span>AZHYSHCHEV</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">&#9776;</button>
+      <nav class="nav">
+        <a class="nav-item" href="/"><span class="icon-box">H</span><span>Home</span></a>
+        <a class="nav-item" href="/ai-checker"><span class="icon-box">🤖</span><span>AI Checker</span></a>
+        <a class="nav-item" href="/experience"><span class="icon-box">E</span><span>Experience</span></a>
+        <a class="nav-item" href="/projects"><span class="icon-box">P</span><span>Projects</span></a>
+        <a class="nav-item active" href="/articles"><span class="icon-box">A</span><span>Articles</span></a>
+        <a class="nav-item" href="/skills"><span class="icon-box">S</span><span>Skills</span></a>
+
+        <a class="nav-item" href="/certifications">
+          <span class="icon-box">🎓</span>
+          <span>Certificates</span>
+        </a>
+        <a class="nav-item" href="/contact"><span class="icon-box">C</span><span>Contact</span></a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a class="nav-item" href="/CV.pdf" download><span class="icon-box">CV</span><span>Download CV</span></a>
+        <a class="nav-item" href="mailto:azhyshchev@gmail.com"><span class="icon-box">@</span><span>Email</span></a>
+        <div class="socials">
+          <a class="social-link" href="https://www.linkedin.com/in/azhyshchev/" target="_blank" rel="noreferrer">in</a>
+          <a class="social-link" href="https://github.com/Azhy34" target="_blank" rel="noreferrer">gh</a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="panel">
+
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Home</a><span>→</span>
+          <a href="/articles">Articles</a><span>→</span>
+          <span>Google Ads MCP: Safe AI Agent Setup</span>
+        </nav>
+
+        <div class="article-hero">
+          <div class="article-type">Case Study · Google Ads · AI Agent</div>
+          <h1 class="article-title">Google Ads MCP: How an AI Agent Runs Your Ads Without Burning the Budget</h1>
+          <p class="article-lead">An AI agent can run Google Ads, but Google's official Google Ads MCP server is read-only, so safe changes need your own backend with business rules. On a real account, the average CPC went from 0.82 EUR (July) to 0.47 EUR (August to September 2026) at about 9 EUR a day.</p>
+          <p class="article-lead">I am Mikhail Azhyshchev, an AI-Enabled Automation Engineer in Munich. This page shows what I built, what the numbers on a real small-budget account look like, and why the agent never talks to the Google Ads API directly.</p>
+          <div class="metrics-row">
+            <div class="metric-box"><strong>0.82 → 0.47 EUR</strong><span>Average CPC, windows and campaign counts in the results table</span></div>
+            <div class="metric-box"><strong>~8.92 EUR</strong><span>Spend per day across 4 countries (DE, AT, ES, FR)</span></div>
+            <div class="metric-box"><strong>909</strong><span>Real search queries reviewed in one 30 day audit</span></div>
+            <div class="metric-box"><strong>22.07 EUR</strong><span>Leak found and stopped: 11 clicks, 0 sales</span></div>
+          </div>
+        </div>
+
+        <div class="article-body">
+
+          <div class="neo-card">
+            <div class="section-label">The need</div>
+            <h2 class="section-title">What businesses actually want from Google Ads automation</h2>
+            <div class="prose">
+              <p>Nobody I talk to asks for an "AI agent". They describe a problem, and it is almost always one of these four:</p>
+              <ul>
+                <li><strong>Paying more per click than the market asks.</strong> A bid ceiling set once and never revisited quietly drifts above what the clicks are worth.</li>
+                <li><strong>Budget leaking into searches that were never meant for you.</strong> The ad shows for a product you do not sell, and every click is paid at full price.</li>
+                <li><strong>Nobody has time to read the search terms report.</strong> It is the most useful page in the account and the one that gets opened least.</li>
+                <li><strong>Small budgets rarely fit an agency retainer.</strong> A Google Ads budget of a few euros a day rarely justifies a full-service retainer.</li>
+              </ul>
+              <p>An AI agent is a reasonable answer to all four, because the recurring work is reading, comparing and making small adjustments. That is exactly what software does well. The open question is not whether an agent can do it. The open question is what stands between the agent and your money.</p>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">The risk</div>
+            <h2 class="section-title">Why you should not plug an AI agent straight into Google Ads</h2>
+            <div class="prose">
+              <p>Start with what Google itself says. Google's official Google Ads MCP server is read-only in the current release. Its documentation calls it "strictly read-only" and states that it cannot modify bids, pause campaigns or create new assets. It offers three tools: list the accessible accounts, run a query in Google's query language (GAQL) and read resource metadata. That is useful for reports and audits, and nothing more.</p>
+              <p>So the moment you want the agent to change something, it needs write access to the Google Ads API itself. Two facts from Google's developer documentation matter here:</p>
+              <ul>
+                <li>The API has no object locking. If two edits hit the same object at the same time, the API answers with a CONCURRENT_MODIFICATION_ERROR instead of protecting you.</li>
+                <li>Google recommends that you use test accounts, prefer read-only requests where possible, set validate_only on change requests, and review the change history afterwards.</li>
+              </ul>
+              <p>Read between the lines: the API executes what it is sent. It does not know that a bid is absurd for the product you sell. It does not know your business.</p>
+              <h3>What can go wrong in plain words</h3>
+              <ul>
+                <li>The agent raises a bid ceiling by a large jump because a report looked good for two days.</li>
+                <li>The agent enables a campaign that you paused on purpose.</li>
+                <li>The agent edits the wrong field and overwrites a setting you never meant to touch.</li>
+              </ul>
+              <p>None of these are exotic. They are what happens when a capable tool has permission and no rules. A generic Google Ads MCP server with write access gives the agent the permission. It cannot give it your rules, because it has never seen your business.</p>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">The setup</div>
+            <h2 class="section-title">What a safe Google Ads MCP setup looks like</h2>
+            <div class="prose">
+              <p>The agent never touches the Google Ads API. It talks to my backend: a custom MCP server with business logic in front of the API. The backend decides what is allowed, and the API only ever sees requests that passed. In practice this means five rules, written in plain words:</p>
+            </div>
+            <div class="check-list">
+              <div class="check-item">
+                <strong>1. A health check before any work</strong>
+                <span>Before the agent may use a single ad tool, it must pass a check of the tooling, of changes made outside the agent, and of the process state. If something looks off, the owner has to confirm before work continues.</span>
+              </div>
+              <div class="check-item">
+                <strong>2. Hard bid limits and small steps</strong>
+                <span>A bid ceiling has a floor and a ceiling that live in code, and it can only move in small steps. A big jump is not something the agent can talk its way into.</span>
+              </div>
+              <div class="check-item">
+                <strong>3. Negative keyword lists per country, plus duplicate detection</strong>
+                <span>Each country has its own list of searches you never want to pay for. The backend also finds keywords that compete against each other across your own campaigns.</span>
+              </div>
+              <div class="check-item">
+                <strong>4. Change only the named field</strong>
+                <span>Every change says exactly which setting it touches. Everything else in the campaign stays as it was.</span>
+              </div>
+              <div class="check-item">
+                <strong>5. A journal of every action</strong>
+                <span>Every call is written down with the time, the tool, whether it only read or really changed something, the result and a trace ID. You can answer "what happened and why" weeks later without asking anyone.</span>
+              </div>
+            </div>
+            <div class="highlight-box">
+              <h3>For the technical reader</h3>
+              <p>The backend is a Python MCP server built on FastMCP. The facts, as of 13.10.2026:</p>
+              <ul>
+                <li>36 tools: reports, search term mining, negative keywords, bid ceiling steps, ad rotation, change history, observability.</li>
+                <li>Preflight gate: until the health check passes, every ad tool answers PREFLIGHT_REQUIRED. In the state ATTENTION the owner confirms before work continues. The journal shows 3 such refusals in October.</li>
+                <li>Bid ceiling hard limits in code: 0.10 to 3.00 EUR, moving only in steps of 0.05 EUR. On 05.10.2026 the validation layer rejected a malformed ceiling change and nothing was changed.</li>
+                <li>Every change sends an explicit update mask, so only the named field changes.</li>
+                <li>Audit journal, 01.10-13.10.2026: 229 entries, 208 reads, 21 changes. Each entry has timestamp, tool, READ or MUTATION, result, latency and trace ID.</li>
+              </ul>
+              <p><a href="/projects/ai-ads-management/?utm_source=portfolio&amp;utm_medium=internal&amp;utm_campaign=google-ads-mcp-ai-agent&amp;utm_content=engineering_case_link"><strong>Read the engineering deep dive: the Google Ads MCP server →</strong></a></p>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Cost per click</div>
+            <h2 class="section-title">Google Ads cost: buying clicks at the low end of the market</h2>
+            <div class="prose">
+              <p>The account is a real one: MoonBloom, an Etsy shop for children's wallpapers, with campaigns in Germany, Austria, Spain and France. The bid strategy is Maximize clicks with a CPC ceiling per campaign. In plain terms: Google may buy as many clicks as the budget allows, but never above the price I set for each campaign.</p>
+              <p>Here is how the average Google CPC moved:</p>
+              <ul>
+                <li>0.82 EUR before the cleanup (120.03 EUR for 147 clicks, 05.07-04.08.2026, 2 campaigns).</li>
+                <li>0.53 EUR for the same 2 campaigns once the cleanup had started (21.07-04.08.2026).</li>
+                <li>0.47 EUR across all 6 spending campaigns (276.66 EUR for 592 clicks, 18.08-17.09.2026). Per campaign the range was 0.45 to 0.55 EUR.</li>
+              </ul>
+              <p>The Google Ads budget behind this is small: 276.66 EUR in 31 days, about 8.92 EUR per day across 4 countries.</p>
+              <h3>A conscious trade-off, not a bidding war</h3>
+              <p>In September the impression share was 10 to 20 percent, and the share lost to ad rank was 63 to 80 percent (18.08-17.09). That looks bad until you know the plan. The plan said: do not chase the maximum bid, take 10 percent impression share with a CPC in range instead.</p>
+              <p>The audit also showed why. Raising the ceiling without improving the landing pages would only burn money. We do not pay for top positions, and a low ad rank is a useful signal: it tells us where the landing pages need work before more money goes in.</p>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Traffic quality</div>
+            <h2 class="section-title">Google Ads plus GA4: see what the traffic does</h2>
+            <div class="prose">
+              <p>Clicks are only half of the picture. I join Google Ads with GA4, so the agent sees not just what a click cost, but what the visitor did afterwards. For 05.07-04.08.2026 the join shows 235 sessions from google/cpc, 72 percent of them engaged, with an average of 1m30s on the site.</p>
+              <p>The same join catches leaks that a cost report alone never shows. The agent reviewed 909 real search queries from 30 days (mid-July to 15.08.2026), and a negative keyword shield of 21 terms went live for the DE and AT campaigns. What the review found:</p>
+              <ul>
+                <li><strong>A wrong-product leak.</strong> Searches for "Wandtattoo" and "Wandsticker" are a different product than wallpaper. On 04.08.2026 they had cost 22.07 EUR for 11 clicks and 0 sales, which is 18.4 percent of the 30 day spend. That ad group was paused the same day.</li>
+                <li><strong>36 duplicate keywords</strong> that competed with each other were paused (04.08.2026). Your own keywords should not compete against each other.</li>
+                <li><strong>3 broad keywords</strong> that had cost 44.85 EUR in 30 days were paused.</li>
+              </ul>
+              <p>No single item here is dramatic. Together they are the difference between an account that drifts and one that is looked after every day.</p>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">The numbers</div>
+            <h2 class="section-title">The results, honestly</h2>
+            <div class="prose">
+              <p>Every figure below comes from the account, with its time window. I did not round them differently and I did not add benchmarks from elsewhere.</p>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr><th>Metric</th><th>Value</th><th>Window</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Average CPC, 2 campaigns, before cleanup</td><td>0.82 EUR (120.03 EUR / 147 clicks)</td><td>05.07-04.08.2026</td></tr>
+                  <tr><td>Average CPC, same 2 campaigns, cleanup started</td><td>0.53 EUR</td><td>21.07-04.08.2026</td></tr>
+                  <tr><td>Average CPC, all 6 spending campaigns</td><td>0.47 EUR (276.66 EUR / 592 clicks), 0.45 to 0.55 EUR per campaign</td><td>18.08-17.09.2026</td></tr>
+                  <tr><td>Spend per day, 4 countries</td><td>about 8.92 EUR (276.66 EUR in 31 days)</td><td>18.08-17.09.2026</td></tr>
+                  <tr><td>Impression share / share lost to ad rank</td><td>10 to 20 percent / 63 to 80 percent</td><td>18.08-17.09.2026</td></tr>
+                  <tr><td>Sessions from google/cpc in GA4</td><td>235 sessions, 72 percent engaged, average 1m30s</td><td>05.07-04.08.2026</td></tr>
+                  <tr><td>Search queries reviewed</td><td>909, plus 21 negative terms for DE and AT</td><td>30 days, mid-July to 15.08.2026</td></tr>
+                  <tr><td>Wrong-product leak stopped</td><td>22.07 EUR, 11 clicks, 0 sales (18.4 percent of 30 day spend)</td><td>paused 04.08.2026</td></tr>
+                  <tr><td>Duplicate keywords paused</td><td>36</td><td>04.08.2026</td></tr>
+                  <tr><td>Broad keywords paused</td><td>3, which had cost 44.85 EUR</td><td>30 days before the pause</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="prose" style="margin-top:14px;">
+              <p class="source-note">The two CPC windows before and after use different campaign counts, 2 campaigns and then 6, so read the drop as a direction, not as a controlled experiment. Sales for this shop happen on Etsy, so Google Ads does not attribute them. That is why I measure cost per click, waste removed and engaged traffic, and why I make no claims about sales or return on ad spend.</p>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">The honest part</div>
+            <h2 class="section-title">Why this is engineering work, not a plugin, and who it suits</h2>
+            <div class="prose">
+              <p>You cannot install safe Google Ads management as a plugin. The value sits in the rules: how high a bid may go, how fast it may move, which searches you never want, and who has to confirm when something looks off. Those rules are different in every business, so somebody has to write them down and build them into the tooling. That is the engineering work I do.</p>
+              <p>It suits you if:</p>
+              <ul>
+                <li>You spend roughly 5-50 EUR a day in the DACH region and want control over where it goes.</li>
+                <li>You want routine Google Ads management done every day, not whenever somebody has a free hour.</li>
+                <li>You want to see what was changed and why, in a journal you can read yourself.</li>
+              </ul>
+              <p>It does not suit you if you want a full-service agency that also handles strategy, creative and client meetings. For that, hire an agency. If the business-side question is where your money leaks across all channels, start with the article <a href="/articles/ai-google-ads-management/?utm_source=portfolio&amp;utm_medium=internal&amp;utm_campaign=google-ads-mcp-ai-agent&amp;utm_content=related_article">One control panel for every ad channel you run</a>.</p>
+            </div>
+          </div>
+
+          <div class="cta-strip">
+            <div>
+              <strong>Want to know what your own account is leaking?</strong>
+              <p>In 30 minutes we look at your search terms and your bid ceilings and decide whether an agent backend makes sense for you. If it does not, you still leave with a list of what to block.</p>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a class="cta-btn" href="https://calendly.com/azhyshchev/30min?utm_source=portfolio&amp;utm_medium=website&amp;utm_campaign=booking&amp;utm_content=google_ads_mcp_ai_agent" target="_blank" rel="noreferrer">Book a 30 min call</a>
+              <a class="cta-btn outline" href="mailto:azhyshchev@gmail.com">Email me instead</a>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">FAQ</div>
+            <h2 class="section-title">Questions people ask before letting an AI agent touch their ads</h2>
+            <div class="faq">
+              <div class="faq-item">
+                <div class="faq-q">Can an AI agent manage my Google Ads account on its own?</div>
+                <div class="faq-a">Yes for the routine work: reading reports, finding wasted spend, adding negative keywords and moving a bid ceiling in small steps. No for unsupervised access to the raw API, because the API executes whatever it is sent. The agent should talk to a backend that holds your rules, checks its own state before it starts and writes a journal of every action.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">Is the official Google Ads MCP server enough?</div>
+                <div class="faq-a">For reading, yes. Google's docs describe the official server as strictly read-only: it lists accounts, runs GAQL queries and returns resource metadata, but it cannot modify bids, pause campaigns or create assets. To change anything, an agent needs mutate access to the Google Ads API, and that is where your own backend with business rules comes in.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">What does Google Ads cost with a small budget?</div>
+                <div class="faq-a">It depends on your market, so I only quote my own account. A children's wallpaper shop on Etsy spent 276.66 EUR in 31 days, about 8.92 EUR per day across Germany, Austria, Spain and France, at an average CPC of 0.47 EUR. Small budgets work when waste is removed early and bid ceilings stay low.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">Can Claude manage Google Ads?</div>
+                <div class="faq-a">A model like Claude can read reports, spot patterns in search terms and propose changes. What it may actually change depends on the tools behind it. Connected straight to the API it can break things, so I put a backend between the agent and Google Ads: hard bid limits, a health check before work and a journal of every call.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">How do I stop an AI agent from overspending?</div>
+                <div class="faq-a">Do not rely on the model being careful. Put the limits in code. In my setup a bid ceiling cannot leave the range of 0.10 to 3.00 EUR and moves only in steps of 0.05 EUR. On 05.10.2026 a malformed ceiling change was rejected and nothing was changed. Every call is written to a journal you can read.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">Do I still need a Google Ads agency?</div>
+                <div class="faq-a">It depends on what you need. If you want a full-service agency for strategy, creative and reporting, an agent setup is not a replacement. If you run a small or mid-size account and want control over routine checks, search terms and bid ceilings, a custom agent backend covers that work, and you can see every action in the journal.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cta-strip">
+            <div>
+              <strong>Let an agent do the routine, keep the decisions</strong>
+              <p>Tell me your daily budget and your countries. We check whether a safe agent setup is worth it for your account.</p>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a class="cta-btn" href="https://calendly.com/azhyshchev/30min?utm_source=portfolio&amp;utm_medium=website&amp;utm_campaign=booking&amp;utm_content=google_ads_mcp_ai_agent" target="_blank" rel="noreferrer">Book a 30 min call</a>
+              <a class="cta-btn outline" href="mailto:azhyshchev@gmail.com">Email me instead</a>
+            </div>
+          </div>
+
+          <a class="back-link" href="/articles">← Back to articles</a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <nav class="mobile-bottom-nav" id="mobileBottomNav" data-nosnippet>
+    <a class="mbn-item" href="/"><span class="mbn-icon">&lt;/&gt;</span><span class="mbn-label">Home</span></a>
+    <a class="mbn-item" href="/ai-checker"><span class="mbn-icon">🤖</span><span class="mbn-label">AI Checker</span></a>
+    <a class="mbn-item" href="/experience"><span class="mbn-icon">E</span><span class="mbn-label">Experience</span></a>
+    <a class="mbn-item" href="/projects"><span class="mbn-icon">P</span><span class="mbn-label">Projects</span></a>
+    <a class="mbn-item active" href="/articles"><span class="mbn-icon">A</span><span class="mbn-label">Articles</span></a>
+    <a class="mbn-item" href="/contact"><span class="mbn-icon">C</span><span class="mbn-label">Contact</span></a>
+  </nav>
+  <script src="/js/nav.js"></script>
+  <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" defer></script>
+<script>
+document.querySelectorAll(".faq-q").forEach(function(q) {
+  q.addEventListener("click", function() {
+    var item = q.closest(".faq-item");
+    var isOpen = item.classList.toggle("open");
+    if (isOpen && typeof gtag === "function") {
+      gtag("event", "faq_open", { question: q.textContent.trim().substring(0, 60), page_language: document.documentElement.lang || "en" });
+    }
+  });
+});
+</script>
+<script>
+  (function () {
+    document.querySelectorAll('a[href*="calendly"]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (window.gtag) gtag('event', 'book_call_click', { location: 'google_ads_mcp_ai_agent' });
+      });
+    });
+    document.querySelectorAll('a[href^="mailto:"]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (window.gtag) gtag('event', 'email_click', { location: 'google_ads_mcp_ai_agent' });
+      });
+    });
+  })();
+</script>
+</body>
+</html>

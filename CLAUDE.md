@@ -102,17 +102,17 @@ Old join lived at Railway `GET /api/seo-insights`. Dead. Classify pages locally 
 | `chat_language_selected` | language pick | widget |
 | `chat_message_sent` | message sent | widget |
 | `generate_lead` | email detected in chat | widget |
-| `book_call_click` | Calendly button click | contact, ai-checker, widget |
+| `book_call_click` | Calendly button click | contact, ai-checker, widget, location: google_ads_mcp_ai_agent, google_ads_kosten_ki_agent |
 | `project_view` | modal open | /projects |
 | `cv_download` | CV.pdf click | /experience, /skills, /cv |
 | `linkedin_click` | sidebar LinkedIn | /experience |
 | `ai_checker_analyze` | Analyze button | page_language | /ai-checker/, /de/ki-checker/ |
 | `ai_checker_click` | Mint banner click | location: impact_banner | index.html, de/index.html |
 | `agent_demo_banner_click` | Yellow banner click (WebMCP demo) | location: impact_banner | index.html, de/index.html |
-| `email_click` | email link click | location | sidebar |
+| `email_click` | email link click | location | sidebar, location: google_ads_mcp_ai_agent, google_ads_kosten_ki_agent |
 | `modal_open` | article card click (preview) | article_name, page_language | /de/artikel/ |
 | `article_read_click` | "Artikel lesen →" click | article_name, page_language | /de/artikel/ |
-| `faq_open` | FAQ accordion open | question (60 chars), page_language | /ai-checker/, /de/ki-checker/ |
+| `faq_open` | FAQ accordion open | question (60 chars), page_language | /ai-checker/, /de/ki-checker/, /articles/google-ads-mcp-ai-agent/ (location: google_ads_mcp_ai_agent), /de/artikel/google-ads-kosten-ki-agent/ (location: google_ads_kosten_ki_agent) |
 | `lang_switch` | EN↔DE toggle | to, from | all DE/EN |
 
 **Key Events (конверсии) — уже помечены в GA4:** `book_call_click`, `chat_message_sent`, `agent_demo_banner_click`
@@ -163,6 +163,7 @@ portfolio/
 ├── skills/index.html           # Skills overview
 ├── articles/index.html         # LinkedIn articles
 │   ├── ai-google-ads-management/index.html # AI-managed ad account case study (Google Ads + Pinterest MCP)
+│   ├── google-ads-mcp-ai-agent/index.html # Google Ads MCP case study: agent behind own backend, CPC 0.82 to 0.47 EUR (EN, 2026-10-13)
 │   ├── ai-visibility/index.html    # AI Visibility guide
 │   ├── automated-keyword-research/index.html # Keyword extractor guide
 │   └── agent-skill-trigger/index.html # Claude Code/Cursor skill trigger table pattern
@@ -180,6 +181,7 @@ portfolio/
 │   ├── ki-checker/index.html   # /de/ki-checker/ — KI Checker (DE) — added 2026-06-09
 │   └── artikel/
 │       ├── index.html          # /de/artikel/ — Artikel Hub
+│       ├── google-ads-kosten-ki-agent/index.html # DE counterpart of google-ads-mcp-ai-agent (2026-10-13)
 │       ├── ki-sichtbarkeit-website/index.html
 │       ├── ki-musik-saas/index.html
 │       ├── rag-kundenservice-ecommerce/index.html

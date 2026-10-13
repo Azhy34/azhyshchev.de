@@ -612,6 +612,29 @@
         <!-- Article grid -->
         <div class="articles-grid" id="articlesGrid">
 
+          <!-- Card: Google Ads MCP: An AI Agent That Can't Burn Your Budget -->
+          <article class="article-card" data-tags="automation ads mcp" data-modal="modal-google-ads-mcp-ai-agent">
+            <div class="card-accent" style="background: var(--mint);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">Case Study</span>
+                <span class="card-readtime">9 min read</span>
+              </div>
+              <h2 class="card-title">Google Ads MCP: An AI Agent That Can't Burn Your Budget</h2>
+              <p class="card-excerpt">Google's official Google Ads MCP server is read-only. To let an AI agent change bids safely, it needs your own backend with business rules. Real account: CPC 0.82 to 0.47 EUR.</p>
+              <div class="card-tags">
+                <span class="tag">Google Ads</span>
+                <span class="tag">MCP</span>
+                <span class="tag">AI Agent</span>
+                <span class="tag">GA4</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Result: <span>CPC 0.82 → 0.47 EUR</span></div>
+              <a class="read-link" href="/articles/google-ads-mcp-ai-agent/">Read full article →</a>
+            </div>
+          </article>
+
           <!-- Card: GDPR-Compliant AI Agents & DLP Privacy Proxy -->
           <article class="article-card" data-tags="ai-agents security" data-modal="modal-gdpr-dlp-ai-agents">
             <div class="card-accent" style="background: var(--coral);"></div>
@@ -1131,6 +1154,48 @@
   </div>
 
   <!-- ── MODALS ── -->
+
+  <!-- Modal: Google Ads MCP: An AI Agent That Can't Burn Your Budget -->
+  <div class="modal-overlay" id="modal-google-ads-mcp-ai-agent" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-section-label">Case Study · Google Ads API · MCP</div>
+          <h2 class="modal-title">Google Ads MCP: An AI Agent That Can't Burn Your Budget</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-google-ads-mcp-ai-agent')">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="modal-section-label">Problem</div>
+          <div class="modal-text">
+            <p>An AI agent can read a Google Ads account, but Google's official MCP server is read-only, and raw API write access has no business rules: no bid limits, no negative keyword policy, no journal.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Solution &amp; Architecture</div>
+          <div class="modal-text">
+            <p>The agent talks to my own backend: a custom MCP server with 36 tools, a preflight health check, hard bid limits of 0.10 to 3.00 EUR in 0.05 EUR steps, per-country negative keyword lists and an audit journal. Result on a small e-commerce account: average CPC from 0.82 to 0.47 EUR at about 9 EUR a day.</p>
+          </div>
+          <div class="modal-stack">
+            <span class="stack-chip">Python</span>
+            <span class="stack-chip">FastMCP</span>
+            <span class="stack-chip">Google Ads API</span>
+            <span class="stack-chip">GA4</span>
+            <span class="stack-chip">Claude Code</span>
+            <span class="stack-chip">Pydantic</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center;">
+        <p style="font-size: 0.82rem; font-weight: 700; opacity: 0.85;">📖 Full architecture breakdown with real numbers on the article page:</p>
+        <div style="display: flex; gap: 10px; width: 100%; justify-content: center; align-items: center;">
+          <a class="action-btn dark" href="/articles/google-ads-mcp-ai-agent/" style="font-size: 0.92rem; padding: 12px 24px; font-weight: 800;">Read full article →</a>
+          <button class="mini-btn" onclick="closeModal('modal-google-ads-mcp-ai-agent')">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Modal: GDPR-Compliant AI Agents & DLP Privacy Proxy -->
   <div class="modal-overlay" id="modal-gdpr-dlp-ai-agents" role="dialog" aria-modal="true">
