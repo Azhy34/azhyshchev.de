@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+<script src="/js/cookie-consent.js" defer></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="Eigener Google Ads MCP Server mit FastMCP in Python: 36 Tools, Geschäftsregeln im Code, Preflight-Check und Tracing mit Journal.">
+  <meta name="keywords" content="google ads mcp server, mcp server, fastmcp, google ads api, mcp server erstellen, mcp server python, custom mcp server, ki agent google ads, geschäftsregeln ki agent, tracing ki agent">
+  <meta name="author" content="Mikhail Azhyshchev">
+  <link rel="canonical" href="https://azhyshchev.de/de/projekte/google-ads-mcp-server/">
+  <link rel="alternate" hreflang="de" href="https://azhyshchev.de/de/projekte/google-ads-mcp-server/" />
+  <link rel="alternate" hreflang="en" href="https://azhyshchev.de/projects/ai-ads-management/" />
+  <link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/projects/ai-ads-management/" />
+
+  <meta property="og:site_name" content="Mikhail Azhyshchev">
+  <meta property="og:title" content="Eigener Google Ads MCP Server: Geschäftslogik für KI-Agenten">
+  <meta property="og:description" content="36 Tools, Pydantic-Regeln und Preflight-Check zwischen Claude Code und der Google Ads API, mit Tracing.">
+  <meta property="og:url" content="https://azhyshchev.de/de/projekte/google-ads-mcp-server/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://azhyshchev.de/de/projekte/google-ads-mcp-server/og.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Eigener Google Ads MCP Server: Geschäftslogik für KI-Agenten">
+  <meta property="og:locale" content="de_DE">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Eigener Google Ads MCP Server: Geschäftslogik für KI-Agenten">
+  <meta name="twitter:description" content="36 Tools, Pydantic-Regeln und Preflight-Check zwischen Claude Code und der Google Ads API, mit Tracing.">
+  <meta name="twitter:image" content="https://azhyshchev.de/de/projekte/google-ads-mcp-server/og.png">
+  <meta name="twitter:image:alt" content="Eigener Google Ads MCP Server: Geschäftslogik für KI-Agenten">
+
+  <title>Eigener Google Ads MCP Server in Python | Mikhail Azhyshchev</title>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "@id": "https://azhyshchev.de/de/projekte/google-ads-mcp-server/#article",
+      "headline": "Eigener Google Ads MCP Server: Geschäftslogik zwischen KI-Agent und Google Ads API",
+      "description": "Eigener Google Ads MCP Server mit FastMCP in Python: 36 Tools, Geschäftsregeln im Code, Preflight-Check und Tracing mit Journal.",
+      "inLanguage": "de",
+      "image": "https://azhyshchev.de/de/projekte/google-ads-mcp-server/og.png",
+      "dateModified": "2026-10-13",
+      "author": {
+        "@type": "Person",
+        "name": "Mikhail Azhyshchev",
+        "url": "https://azhyshchev.de",
+        "sameAs": [
+          "https://www.linkedin.com/in/azhyshchev/"
+        ]
+      },
+      "mainEntityOfPage": {
+        "@id": "https://azhyshchev.de/de/projekte/google-ads-mcp-server/#webpage"
+      },
+      "keywords": "google ads mcp server, mcp server, fastmcp, google ads api, mcp server erstellen, mcp server python"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://azhyshchev.de/de/projekte/google-ads-mcp-server/#webpage",
+      "url": "https://azhyshchev.de/de/projekte/google-ads-mcp-server/",
+      "name": "Eigener Google Ads MCP Server in Python",
+      "isPartOf": {
+        "@id": "https://azhyshchev.de/#website"
+      },
+      "inLanguage": "de",
+      "dateModified": "2026-10-13",
+      "breadcrumb": {
+        "@id": "https://azhyshchev.de/de/projekte/google-ads-mcp-server/#breadcrumb"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://azhyshchev.de/de/projekte/google-ads-mcp-server/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Startseite",
+          "item": "https://azhyshchev.de/de/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Projekte",
+          "item": "https://azhyshchev.de/de/projekte/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Eigener Google Ads MCP Server",
+          "item": "https://azhyshchev.de/de/projekte/google-ads-mcp-server/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Was ist ein Google Ads MCP Server?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ein MCP Server stellt einem KI-Agenten wie Claude Code Tools über das Model Context Protocol bereit. Ein Google Ads MCP Server legt diese Tools über die Google Ads API. Googles offizielle Variante bietet nur lesende Tools. Mein eigener Server hat 36 Tools, davon 12 schreibend, und prüft jede Änderung gegen Regeln im Code."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Warum nicht den offiziellen Google Ads MCP Server von Google nutzen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Weil er in der aktuellen Version nur lesend ist: list_accessible_customers, search (GAQL) und get_resource_metadata. Laut Google kann er keine Gebote ändern und keine Kampagnen pausieren. Für Änderungen müsste man die Mutate-Methoden der API direkt aufrufen, und die führen aus, was man ihnen schickt. Meine Regeln brauchen deshalb eine eigene Schicht."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Wie verhindere ich, dass ein KI-Agent in Google Ads zu viel ausgibt?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Mit harten Grenzen im Code statt Bitten im Prompt. Bei mir darf die CPC-Obergrenze nur in Schritten von ±0,05 EUR zwischen 0,10 und 3,00 EUR wandern, das Tagesbudget liegt zwischen 1,00 und 100,00 EUR. Außerhalb dieser Bereiche wird abgelehnt, und es geht nichts an Google. Dazu kommt ein Preflight-Check vor jedem Lauf."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Wie verfolge ich, was ein KI-Agent getan hat?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Jeder Tool-Aufruf erzeugt einen Trace (OpenTelemetry, Cloud Trace) und eine JSON-Zeile im Journal mit Trace-ID, Tool, Argumenten, Erfolg und Latenz. Secrets werden vorher geschwärzt. Nach dem Lauf gleicht verify_changes_logged die Change History von Google mit dem Journal ab, sodass Änderungen am Agenten vorbei auffallen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Wie erstelle ich einen MCP Server in Python mit FastMCP?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Mit FastMCP aus dem offiziellen MCP SDK registrieren Sie Python-Funktionen als Tools. Bei mir übernimmt das ein Decorator mcp_tool() in server.py, der Transport ist stdio. Der Agent, hier Claude Code, kennt den Server über die .mcp.json. Die eigentliche Arbeit liegt davor: Eingabe mit Pydantic validieren, Regeln prüfen, erst dann die API aufrufen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kann Claude Code Google Ads verwalten?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja, mit Schreibzugriff über einen eigenen Server. Vom 01.10. bis 13.10.2026 liefen 237 Aufrufe in 15 Sitzungen: 216 lesend, 21 Änderungen. Eine Änderung lehnte das Prüfschild ab. Die Regeln und Prüfungen liegen im Server, nicht im Modell. Strategie und Angebot bleiben meine Entscheidung."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --sky: #61b5e8; --mint: #b9ddb7; --cream: #f8f0dc; --yellow: #f5c84b; --pink: #efb2d5; --blue: #d8ebff; --peach: #f7d4b1; --coral: #ff9a77; --rose: #ecb0c4; --black: #111111; --white: #ffffff; --accent: var(--blue); }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { min-height: 100vh; font-family: 'JetBrains Mono', monospace; color: var(--black); background: linear-gradient(120deg, var(--sky) 0 34%, var(--peach) 34% 55%, var(--coral) 55% 72%, var(--rose) 72% 100%); padding: 48px 24px; }
+    a { color: inherit; text-decoration: none; }
+    .shell { width: min(1320px, 100%); margin: 0 auto; border: 3px solid var(--black); box-shadow: 12px 12px 0 var(--black); background: var(--mint); display: grid; grid-template-columns: 250px 1fr; min-height: 820px; overflow: hidden; }
+    .sidebar { border-right: 3px solid var(--black); padding: 20px 18px; display: flex; flex-direction: column; gap: 22px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 8px; }
+    .brand-badge { width: 42px; height: 34px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 1rem; font-weight: 800; }
+    .nav { display: flex; flex-direction: column; gap: 8px; }
+    .nav-item { display: flex; align-items: center; gap: 12px; padding: 11px 12px; font-size: 0.9rem; font-weight: 700; border: 2px solid transparent; transition: transform 0.18s ease; }
+    .nav-item:hover { transform: translate(-2px, -2px); }
+    .nav-item.active { background: var(--black); color: var(--white); }
+    .icon-box { width: 24px; height: 24px; display: grid; place-items: center; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); font-size: 0.75rem; font-weight: 800; }
+    .nav-item.active .icon-box { background: var(--yellow); color: var(--black); }
+    .sidebar-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+    .socials { display: flex; gap: 10px; padding-top: 8px; }
+    .social-link { width: 42px; height: 42px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 0.8rem; font-weight: 800; transition: transform 0.18s ease; }
+    .social-link:hover { transform: translate(-2px, -2px); }
+    .main { background: var(--cream); padding: 22px; min-width: 0; }
+    .panel { border: 2px solid var(--black); background: rgba(255,255,255,0.2); padding: 18px; display: flex; flex-direction: column; gap: 28px; }
+    .breadcrumb { font-size: 0.78rem; opacity: 0.6; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .breadcrumb a:hover { opacity: 1; text-decoration: underline; }
+    .project-hero { border: 3px solid var(--black); background: var(--accent); box-shadow: 6px 6px 0 var(--black); padding: 24px; }
+    .project-type { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; margin-bottom: 12px; }
+    .project-title { font-size: clamp(1.5rem, 3vw, 2.3rem); font-weight: 800; line-height: 1.08; letter-spacing: -0.04em; margin-bottom: 16px; overflow-wrap: break-word; }
+    .project-lead { font-size: 0.95rem; line-height: 1.65; max-width: 72ch; margin-bottom: 20px; }
+    .metrics-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+    .metric-box { border: 2px solid var(--black); background: rgba(255,255,255,0.75); padding: 14px 12px; }
+    .metric-box strong { display: block; font-size: 1.2rem; line-height: 1.15; margin-bottom: 6px; }
+    .metric-box span { font-size: 0.72rem; line-height: 1.4; opacity: 0.8; }
+    .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .neo-card { border: 3px solid var(--black); background: var(--white); box-shadow: 6px 6px 0 var(--black); padding: 24px; min-width: 0; }
+    .neo-card.main-section { background: #fffbea; }
+    .section-label { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.45; margin-bottom: 10px; }
+    .section-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.02em; overflow-wrap: break-word; }
+    .prose { display: flex; flex-direction: column; gap: 14px; }
+    .prose p { font-size: 0.88rem; line-height: 1.75; }
+    .prose h3 { font-size: 0.95rem; font-weight: 800; margin-top: 10px; letter-spacing: -0.02em; }
+    .prose ul, .prose ol { padding-left: 18px; display: flex; flex-direction: column; gap: 10px; }
+    .prose li { font-size: 0.88rem; line-height: 1.65; }
+    .prose code { background: var(--cream); border: 1px solid var(--black); padding: 1px 5px; font-size: 0.8rem; word-break: break-word; }
+    .arch-diagram { border: 2px solid var(--black); background: var(--cream); padding: 16px 20px; font-size: 0.82rem; line-height: 2; font-weight: 700; margin: 16px 0; overflow-x: auto; }
+    .arch-diagram code { background: rgba(255,255,255,0.7); border: 1px solid var(--black); padding: 1px 5px; font-size: 0.78rem; }
+    .highlight-box { border: 3px solid var(--black); background: var(--yellow); box-shadow: 4px 4px 0 var(--black); padding: 18px 20px; transition: transform 0.2s, box-shadow 0.2s; }
+    .highlight-box:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--black); }
+    .highlight-box h2 { font-size: 0.9rem; font-weight: 800; margin-bottom: 10px; }
+    .highlight-box p { font-size: 0.84rem; line-height: 1.65; }
+    .highlight-box code { background: rgba(255,255,255,0.6); border: 1px solid var(--black); padding: 1px 5px; font-size: 0.78rem; }
+    .table-scroll { overflow-x: auto; border: 2px solid var(--black); background: var(--white); margin: 6px 0; }
+    table.compare { border-collapse: collapse; width: 100%; min-width: 780px; font-size: 0.78rem; }
+    table.compare th, table.compare td { border: 1px solid var(--black); padding: 12px 14px; text-align: left; vertical-align: top; line-height: 1.55; }
+    table.compare thead th { background: var(--accent); font-weight: 800; }
+    table.compare tbody th { background: var(--cream); font-weight: 800; width: 17%; }
+    table.compare td code { background: var(--cream); border: 1px solid var(--black); padding: 1px 4px; font-size: 0.72rem; word-break: break-word; }
+    table.compare td.risk { background: rgba(245,200,75,0.28); }
+    .code-block { margin: 6px 0; }
+    .code-block figcaption { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.02em; background: var(--black); color: var(--white); border: 3px solid var(--black); border-bottom: 0; padding: 6px 12px; }
+    .code-block pre { border: 3px solid var(--black); box-shadow: 6px 6px 0 var(--black); background: #fffdf5; padding: 14px 16px; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; line-height: 1.6; overflow-x: auto; white-space: pre; tab-size: 4; margin-bottom: 8px; }
+    .code-block pre code { background: none; border: 0; padding: 0; font-size: inherit; word-break: normal; }
+    ol.timeline { list-style: none; padding-left: 18px; border-left: 3px solid var(--black); display: flex; flex-direction: column; gap: 16px; }
+    ol.timeline li { position: relative; font-size: 0.86rem; line-height: 1.65; }
+    ol.timeline li::before { content: ""; position: absolute; left: -27px; top: 6px; width: 12px; height: 12px; background: var(--yellow); border: 2px solid var(--black); }
+    ol.timeline li strong { display: block; font-size: 0.8rem; margin-bottom: 2px; }
+    ol.timeline li em { display: block; font-style: normal; margin-top: 4px; padding: 6px 10px; background: var(--cream); border: 1px solid var(--black); font-size: 0.8rem; }
+    .faq { display: flex; flex-direction: column; gap: 14px; }
+    details.faq-item { border: 2px solid var(--black); background: var(--cream); transition: transform 0.2s, box-shadow 0.2s; }
+    details.faq-item:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--black); }
+    details.faq-item summary { padding: 16px 18px; font-size: 0.9rem; font-weight: 800; cursor: pointer; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; list-style: none; user-select: none; }
+    details.faq-item summary::-webkit-details-marker { display: none; }
+    details.faq-item summary::after { content: "+"; font-size: 1.4rem; font-weight: 900; line-height: 1; flex-shrink: 0; }
+    details.faq-item[open] summary::after { content: "-"; }
+    details.faq-item .faq-a { padding: 0 18px 16px; font-size: 0.84rem; line-height: 1.7; opacity: 0.9; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+    .chip { padding: 6px 10px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); font-size: 0.72rem; font-weight: 700; }
+    .cta-strip { border: 3px solid var(--black); background: var(--black); color: var(--white); box-shadow: 6px 6px 0 rgba(0,0,0,0.3); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .cta-strip p { font-size: 0.9rem; line-height: 1.5; max-width: 60ch; }
+    .cta-strip strong { display: block; font-size: 1rem; margin-bottom: 4px; }
+    .cta-btn { padding: 12px 20px; border: 2px solid var(--white); background: var(--white); color: var(--black); font: inherit; font-weight: 700; cursor: pointer; white-space: nowrap; transition: transform 0.15s; display: inline-block; }
+    .cta-btn:hover { transform: translate(-2px,-2px); }
+    .cta-btn.outline { background: transparent; color: var(--white); }
+    .back-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 2px solid var(--black); background: var(--white); box-shadow: 4px 4px 0 var(--black); font-size: 0.82rem; font-weight: 700; transition: transform 0.15s; align-self: flex-start; }
+    .back-link:hover { transform: translate(-2px,-2px); }
+    @media (max-width: 1100px) { .shell { grid-template-columns: 220px 1fr; } .metrics-row { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 820px) { body { padding: 10px 8px 72px; } .shell { grid-template-columns: 1fr; box-shadow: 6px 6px 0 var(--black); min-height: unset; } .sidebar { border-right: none; border-bottom: 3px solid var(--black); padding: 10px 14px; flex-direction: row; align-items: center; justify-content: space-between; } .brand { font-size: clamp(0.95rem, 2.5vw, 1.6rem); } .nav { display: none; } .sidebar-bottom { display: none; } .main { padding: 14px; } .content-grid { grid-template-columns: 1fr; } .neo-card { padding: 18px; } }
+    @media (max-width: 520px) { .metrics-row { grid-template-columns: 1fr; } .project-title { font-size: 1.45rem; } }
+  </style>
+  <link rel="stylesheet" href="/mobile.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar" data-nosnippet>
+      <a class="brand" href="/de/"><div class="brand-badge">&lt;/&gt;</div><span>AZHYSHCHEV</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Navigation umschalten">&#9776;</button>
+      <nav class="nav">
+        <a class="nav-item" href="/de/"><span class="icon-box">H</span><span>Start</span></a>
+        <a class="nav-item" href="/de/ki-checker/"><span class="icon-box">🤖</span><span>KI-Checker</span></a>
+        <a class="nav-item" href="/de/erfahrung/"><span class="icon-box">E</span><span>Erfahrung</span></a>
+        <a class="nav-item active" href="/de/projekte/"><span class="icon-box">P</span><span>Projekte</span></a>
+        <a class="nav-item" href="/de/artikel/"><span class="icon-box">A</span><span>Artikel</span></a>
+        <a class="nav-item" href="/de/fahigkeiten/"><span class="icon-box">S</span><span>Fähigkeiten</span></a>
+        <a class="nav-item" href="/de/zertifikate/">
+          <span class="icon-box">🎓</span>
+          <span>Zertifikate</span>
+        </a>
+        <a class="nav-item" href="/de/kontakt/"><span class="icon-box">C</span><span>Kontakt</span></a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a class="nav-item" href="/CV.pdf" download onclick="gtag('event','cv_download',{location:'sidebar'})"><span class="icon-box">CV</span><span>CV herunterladen</span></a>
+        <a class="nav-item" href="mailto:azhyshchev@gmail.com" onclick="gtag('event','email_click',{location:'sidebar'})"><span class="icon-box">@</span><span>Kontakt</span></a>
+        <div class="socials">
+          <a class="social-link" href="https://www.linkedin.com/in/azhyshchev/" target="_blank" rel="noreferrer" onclick="gtag('event','linkedin_click',{location:'sidebar'})">in</a>
+          <a class="social-link" href="https://github.com/Azhy34" target="_blank" rel="noreferrer" onclick="gtag('event','github_click',{location:'sidebar'})">gh</a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="panel">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/de/">Startseite</a><span>→</span>
+          <a href="/de/projekte/">Projekte</a><span>→</span>
+          <span>Eigener Google Ads MCP Server</span>
+        </nav>
+
+        <div class="project-hero">
+          <div class="project-type">Engineering Case · MCP Server · Google Ads API</div>
+          <h1 class="project-title">Eigener Google Ads MCP Server: Geschäftslogik zwischen KI-Agent und Google Ads API</h1>
+          <p class="project-lead">
+            Ein eigener Google Ads MCP Server mit FastMCP: 36 Tools in Python zwischen Claude Code und der Google Ads API, gebaut für die Geschäftslogik meines Etsy-Shops. Jede Änderung läuft durch Pydantic-Regeln, einen Preflight-Check und ein Journal mit Tracing. Der offizielle Google Ads MCP Server ist nur lesend.
+          </p>
+          <div class="metrics-row">
+            <div class="metric-box"><strong>36 Tools</strong><span>24 lesend · 12 schreibend</span></div>
+            <div class="metric-box"><strong>0,10-3,00 EUR</strong><span>CPC-Obergrenze, Schritte ±0,05 EUR</span></div>
+            <div class="metric-box"><strong>237 Aufrufe</strong><span>mit Trace und Journal, 01.10.-13.10.2026</span></div>
+            <div class="metric-box"><strong>0,82 → 0,47 EUR</strong><span>Ø CPC, Juli vs. Aug.-Sep. 2026</span></div>
+          </div>
+        </div>
+
+        <div class="neo-card">
+          <div class="section-label">Ausgangslage</div>
+          <h2 class="section-title">Warum nicht der offizielle Google Ads MCP Server</h2>
+          <div class="prose">
+            <p>Der offizielle Google Ads MCP Server von Google ist in der aktuellen Version nur lesend. Er bietet drei Tools: <code>list_accessible_customers</code>, <code>search</code> (GAQL) und <code>get_resource_metadata</code>. Laut Google-Dokumentation (Stand 13.10.2026) kann er keine Gebote ändern, keine Kampagnen pausieren und keine neuen Assets anlegen.</p>
+            <p>Schreibzugriff heißt, die Mutate-Methoden der Google Ads API direkt aufzurufen. Die API führt aus, was man ihr schickt. Sie kennt keine Objektsperren: Gleichzeitige Änderungen enden in einem <code>CONCURRENT_MODIFICATION_ERROR</code>. Google empfiehlt für sichere Änderungen selbst Testkonten, Validierungsläufe und die Change History.</p>
+            <p>Meine Schlussfolgerung: Die Regeln meines Geschäfts gehören in eine Schicht, die ich besitze. Wie weit darf sich ein Gebot bewegen? Welche Suchanfragen sind nie erwünscht? Wie viele Anzeigen dürfen laufen? Auf keine dieser Fragen kann ein allgemeiner Server eine Antwort haben.</p>
+            <p>Das Projekt ist ein eigenes Werkzeug für meinen Etsy-Shop MoonBloom (Kinder-Tapeten, Google-Ads-Kampagnen in DE, AT, ES und FR). Der Code ist privat. Ich zeige deshalb nur kurze Fragmente und keine Repository-Verlinkung.</p>
+          </div>
+        </div>
+
+        <div class="neo-card">
+          <div class="section-label">Architektur</div>
+          <h2 class="section-title">Wie ich den MCP Server erstellt habe: ein Tool-Aufruf von Anfang bis Ende</h2>
+          <div class="prose">
+            <p>Der Stack: Python, FastMCP aus dem offiziellen MCP SDK (mcp 1.28.1) mit stdio-Transport, die google-ads-Clientbibliothek 31.0.0, Pydantic 2.13 sowie OpenTelemetry mit Cloud-Trace-Exporter, gRPC-Instrumentierung und Google Cloud Logging. Der Agent ist Claude Code; den Server trage ich in der <code>.mcp.json</code> des Projekts ein. Der Weg eines einzelnen Tool-Aufrufs:</p>
+          </div>
+          <div class="arch-diagram">
+            Claude Code ruft ein MCP-Tool auf<br>
+            &nbsp;&nbsp;↓ <code>mcp_tool()</code> registriert das Tool bei FastMCP<br>
+            Eingabeschild (Pydantic): <code>build_request()</code> prüft jede Schreibanfrage<br>
+            &nbsp;&nbsp;↓ Regel verletzt: <code>REQUEST_REJECTED</code>, Google wird nie aufgerufen<br>
+            Preflight-Gate: <code>refusal_for()</code><br>
+            &nbsp;&nbsp;↓ Gate zu: <code>PREFLIGHT_REQUIRED</code>, Google wird nie aufgerufen<br>
+            Geschäftslogik in <code>tools/*.py</code><br>
+            &nbsp;&nbsp;↓ Google-Ads-Client mit gRPC-Interceptor (<code>core/client.py</code>)<br>
+            Ergebnis + Telemetrie: <code>append_audit_log</code><br>
+            &nbsp;&nbsp;↓ <code>logs/audit.jsonl</code>, Cloud Logging, Cloud Trace
+          </div>
+          <div class="prose">
+            <ol>
+              <li><strong>Tool-Aufruf.</strong> Ein Decorator <code>mcp_tool()</code> in <code>server.py</code> registriert jedes Tool bei FastMCP und versieht den Aufruf mit dem Tool-Namen.</li>
+              <li><strong>Eingabeschild.</strong> Bei Schreibzugriffen baut <code>build_request()</code> ein Pydantic-Modell (<code>shield/models_*.py</code>). Verletzt eine Regel die Vorgaben, landet der Aufruf als <code>REQUEST_REJECTED</code> im Journal und Google wird nie aufgerufen. Lesende Tools validieren IDs (<code>IdArguments</code>: nur Ziffern).</li>
+              <li><strong>Preflight-Gate.</strong> <code>refusal_for()</code> in <code>shield/preflight.py</code>: Bis die Log-Prüfung der Sitzung bestanden ist, liefert jedes nicht ausgenommene Tool <code>PREFLIGHT_REQUIRED</code>. Auch das wird im Journal vermerkt, Google bleibt unberührt.</li>
+              <li><strong>Geschäftslogik.</strong> Sie liegt in <code>tools/*.py</code>, getrennt nach campaign, adgroup, rsa, asset, negative, history, observability, eval und preflight.</li>
+              <li><strong>Google-Ads-Client.</strong> Ein gRPC-Interceptor in <code>core/client.py</code> protokolliert jeden RPC und wiederholt nur lesende Methoden: 2 Wiederholungen, nach 1 s und 2 s plus bis zu 0,5 s Jitter. Schreibzugriffe wiederholt der Client nie automatisch.</li>
+              <li><strong>Ergebnis und Telemetrie.</strong> <code>append_audit_log</code> schwärzt Secrets und schreibt nach <code>logs/audit.jsonl</code>. Die Zeile wird nach Cloud Logging gespiegelt, der Span geht an Cloud Trace.</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="neo-card">
+          <div class="section-label">Tool-Katalog</div>
+          <h2 class="section-title">Tool-Katalog: 36 Tools über der Google Ads API</h2>
+          <div class="prose">
+            <p>Insgesamt sind es 36 Tools, 24 lesend und 12 schreibend. Neben den Tools für Kampagnen, Anzeigen und Assets stehen 7 Tools für Preflight, Journal und Auswertung, denn der Agent soll sein eigenes Verhalten prüfen können.</p>
+          </div>
+          <div class="table-scroll">
+            <table class="compare">
+              <thead>
+                <tr>
+                  <th scope="col">Gruppe</th>
+                  <th scope="col">Anzahl</th>
+                  <th scope="col">Alle Tools der Gruppe</th>
+                  <th scope="col">Davon schreibend</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Preflight, Journal, Observability</th>
+                  <td>7</td>
+                  <td><code>preflight_log_check</code>, <code>get_change_history</code>, <code>verify_changes_logged</code>, <code>get_cloud_logs</code>, <code>get_cloud_trace</code>, <code>analyze_tool_health</code>, <code>evaluate_agent_process</code></td>
+                  <td>keines, alle lesend</td>
+                </tr>
+                <tr>
+                  <th scope="row">Kampagnen, Budgets, Gebote</th>
+                  <td>10</td>
+                  <td><code>get_campaigns</code>, <code>get_campaign_details</code>, <code>toggle_campaign_status</code>, <code>set_campaign_daily_budget</code>, <code>get_campaign_targeting_overview</code>, <code>get_ad_groups</code>, <code>step_bid_threshold</code>, <code>set_ad_group_cpc_bid</code>, <code>get_ad_group_keywords</code>, <code>set_keyword_status</code></td>
+                  <td class="risk"><code>toggle_campaign_status</code>, <code>set_campaign_daily_budget</code>, <code>step_bid_threshold</code>, <code>set_ad_group_cpc_bid</code>, <code>set_keyword_status</code></td>
+                </tr>
+                <tr>
+                  <th scope="row">Anzeigen</th>
+                  <td>2</td>
+                  <td><code>get_campaign_ads</code>, <code>deploy_golden_rsa</code></td>
+                  <td class="risk"><code>deploy_golden_rsa</code></td>
+                </tr>
+                <tr>
+                  <th scope="row">Assets</th>
+                  <td>7</td>
+                  <td><code>get_assets_associations</code>, <code>get_assets_performance</code>, <code>get_assets_diversity</code>, <code>link_asset_to_entity</code>, <code>unlink_asset_from_entity</code>, <code>get_campaign_images</code>, <code>get_campaign_assets_overview</code></td>
+                  <td class="risk"><code>link_asset_to_entity</code>, <code>unlink_asset_from_entity</code></td>
+                </tr>
+                <tr>
+                  <th scope="row">Suchbegriffe, Negative, Audits, Empfehlungen</th>
+                  <td>10</td>
+                  <td><code>apply_negative_shield</code>, <code>add_negative_keywords</code>, <code>remove_negative_keyword</code>, <code>mine_search_terms_and_harvest_negatives</code>, <code>audit_campaign_4level_shield</code>, <code>get_daily_performance</code>, <code>get_impression_share_loss</code>, <code>auto_fix_collisions_and_dupes</code>, <code>fetch_google_ai_recommendations</code>, <code>search_keyword_ideas</code></td>
+                  <td class="risk"><code>apply_negative_shield</code>, <code>add_negative_keywords</code>, <code>remove_negative_keyword</code>, <code>auto_fix_collisions_and_dupes</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="neo-card">
+          <div class="section-label">Leitplanken</div>
+          <h2 class="section-title">Geschäftsregeln im Code, nicht im Prompt</h2>
+          <div class="prose">
+            <p>Ein Prompt kann ein Modell bitten, sich an eine Grenze zu halten. Code kann den Aufruf verweigern. Alle Regeln unten liegen deshalb im Server, nicht in einer Anweisung an den Agenten.</p>
+          </div>
+          <div class="table-scroll">
+            <table class="compare">
+              <thead>
+                <tr>
+                  <th scope="col">Regel</th>
+                  <th scope="col">Wo im Code</th>
+                  <th scope="col">Was sie festlegt und was bei einem Verstoß passiert</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Preflight-Gate</th>
+                  <td><code>shield/preflight.py</code>, <code>tools/preflight_tools.py</code></td>
+                  <td>Antwort <code>PREFLIGHT_REQUIRED</code>, kein Google-Aufruf. Geprüft werden TOOL_HEALTH, OUTSIDE_CHANGES und AGENT_PROCESS über die letzten 7 Tage oder seit dem letzten akzeptierten Checkpoint (maximal 30). OK öffnet das Gate. ATTENTION hält es zu, bis der Besitzer "weiter" sagt und der Agent mit <code>acknowledge=True</code> erneut prüft.</td>
+                </tr>
+                <tr>
+                  <th scope="row">CPC-Obergrenze (Maximize Clicks)</th>
+                  <td><code>tools/campaign_tools.py</code></td>
+                  <td>Bewegt sich nur in Schritten von ±0,05 EUR und muss zwischen 0,10 und 3,00 EUR bleiben. Gilt nur für TARGET_SPEND-Kampagnen und verweigert Kampagnen ohne Obergrenze ("refusing to guess a starting value"). Außerhalb des Bereichs wird abgelehnt, es wird nichts gesendet.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Tagesbudget</th>
+                  <td><code>shield/models_campaign.py</code>, <code>core/client.py</code></td>
+                  <td>1,00-100,00 EUR. Beträge werden auf ganze Cent gerundet, weil <code>int(4.10 * 1_000_000) == 4099999</code> ergibt, was die API ablehnt.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Gebot der Anzeigengruppe</th>
+                  <td><code>shield/models_adgroup.py</code></td>
+                  <td>0,05-3,00 EUR, nur für MANUAL_CPC-Kampagnen.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Responsive Suchanzeigen ("golden RSA")</th>
+                  <td><code>shield/models_ad.py</code>, <code>tools/rsa_tools.py</code></td>
+                  <td>Genau 15 Headlines und 4 Beschreibungen. Headline 1 muss die Dynamic-Keyword-Insertion-Headline sein, Headlines höchstens 30 Zeichen, Beschreibungen höchstens 90. Die Ziel-URL muss den Gutschein-Parameter des Shops tragen. Pro Anzeigengruppe sind höchstens 3 RSAs aktiv: Die neue Anzeige wird angelegt und die älteste im selben Mutate-Request pausiert (atomar).</td>
+                </tr>
+                <tr>
+                  <th scope="row">Negativ-Keyword-Listen</th>
+                  <td><code>tools/negative_tools.py</code></td>
+                  <td>Je Sprache eine Liste: DE 58, FR 40, ES 39 Wörter. Bereits vorhandene Wörter werden übersprungen, gesendet wird in Blöcken zu 500.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Duplikate über Kampagnen</th>
+                  <td><code>tools/negative_tools.py</code></td>
+                  <td>Keywords, die auch in der High-Intent-Kampagne existieren, werden in den anderen Kampagnen pausiert (<code>auto_fix_collisions_and_dupes</code>).</td>
+                </tr>
+                <tr>
+                  <th scope="row">Sparse Update Masks</th>
+                  <td>7 Schreibpfade</td>
+                  <td>Jedes Update sendet eine explizite Feldmaske, sodass nur das genannte Feld geändert wird.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Änderungen von außen</th>
+                  <td><code>tools/history_tools.py</code></td>
+                  <td>Googles change_event-Historie wird mit den MUTATION-Zeilen des Journals abgeglichen. Was ein Skript, ein anderer Agent oder ein Mensch in der Oberfläche geändert hat, erscheint als OUTSIDE_CHANGES.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Wiederholungen</th>
+                  <td><code>core/client.py</code></td>
+                  <td>Nur lesend. Schreibzugriffe wiederholt der Client nie.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="prose">
+            <h3>Die CPC-Obergrenze: ein Schritt, drei Prüfungen</h3>
+            <p>Dieses Fragment ist der Kern des Gebotstools. Es prüft den Gebotstyp, verweigert den Schritt bei fehlender Obergrenze, statt einen Startwert zu raten, und lehnt jedes Ergebnis außerhalb von 0,10-3,00 EUR ab.</p>
+          </div>
+          <figure class="code-block">
+            <figcaption>tools/campaign_tools.py</figcaption>
+<pre><code>if c.bidding_strategy_type.name != "TARGET_SPEND":
+    raise ValueError(f"Campaign '{c.name}' uses {c.bidding_strategy_type.name}, not TARGET_SPEND (Maximize Clicks); it has no CPC ceiling to step.")
+
+curr_micros = c.target_spend.cpc_bid_ceiling_micros
+if not curr_micros:
+    raise ValueError(f"Campaign '{c.name}' has no CPC ceiling set (uncapped); refusing to guess a starting value.")
+
+step_micros = 50_000 if req.direction == "+0.05" else -50_000
+new_micros = curr_micros + step_micros
+if not CEILING_MIN_MICROS &lt;= new_micros &lt;= CEILING_MAX_MICROS:
+    raise ValueError(f"New ceiling {new_micros / 1e6:.2f} EUR is outside the 0.10-3.00 EUR safeguard.")</code></pre>
+          </figure>
+          <div class="prose">
+            <h3>Budgets in ganzen Cent</h3>
+            <p>Ein klassischer Gleitkommafehler: <code>int(4.10 * 1_000_000)</code> ergibt 4099999, und die API lehnt das als Betrag ab, der kein Vielfaches von 0,01 EUR ist. Die Umrechnung läuft deshalb zentral im Client und rundet auf ganze Cent.</p>
+          </div>
+          <figure class="code-block">
+            <figcaption>core/client.py</figcaption>
+<pre><code>def eur_to_micros(amount_eur: float) -> int:
+    """
+    Converts EUR to micros rounded to whole cents.
+    int(4.10 * 1_000_000) == 4099999, which the API rejects as not a multiple of 0.01 EUR.
+    """
+    return int(round(amount_eur * 100)) * 10_000</code></pre>
+          </figure>
+          <div class="prose">
+            <h3>Das Gate vor allen Tools</h3>
+            <p>Die Funktion ist bewusst klein. Sie gibt den Ablehnungstext zurück, solange das Gate geschlossen ist und das Tool nicht ausgenommen wurde, sonst nichts. Alles Weitere, also was geprüft wird und wann das Gate aufgeht, steckt im Preflight-Check weiter unten.</p>
+          </div>
+          <figure class="code-block">
+            <figcaption>shield/preflight.py</figcaption>
+<pre><code>def refusal_for(function: str) -> Optional[str]:
+    """The refusal text when `function` must not run yet, else None."""
+    if not required() or is_open() or function in PREFLIGHT_EXEMPT:
+        return None
+    return REFUSAL</code></pre>
+          </figure>
+        </div>
+
+        <div class="neo-card main-section">
+          <div class="section-label">Kernstück</div>
+          <h2 class="section-title">Tracing und Analyse nach dem Agentenlauf: der geschlossene Kreislauf</h2>
+          <div class="prose">
+            <p>Leitplanken vor dem Aufruf reichen nicht. Ich will auch nach dem Lauf wissen, was der Agent getan hat, wie gut die Tools liefen und ob jemand am Agenten vorbei etwas geändert hat. Das Ergebnis dieser Prüfungen steuert den nächsten Lauf. So schließt sich der Kreislauf:</p>
+          </div>
+          <div class="arch-diagram">
+            Preflight-Check liest das Journal und die Auswertungen<br>
+            &nbsp;&nbsp;↓ OK öffnet das Gate<br>
+            Der Agent arbeitet über die Tools<br>
+            &nbsp;&nbsp;↓ jeder Aufruf wird getraced und im Journal vermerkt<br>
+            Auswertung nach dem Lauf: Tool-Gesundheit, Prozess-Evaluierung, Abgleich mit der Change History<br>
+            &nbsp;&nbsp;↓ die Ergebnisse stehen im Journal<br>
+            Der nächste Preflight-Check liest die Auswertungen
+          </div>
+          <div class="prose">
+            <h3>Jeder Tool-Aufruf ist ein Trace</h3>
+            <p>Ein OpenTelemetry-TracerProvider mit Cloud-Trace-Exporter (<code>shield/cloud_sink.py</code>) erzeugt pro Tool-Aufruf einen Span mit dem Namen <code>tools/call &lt;tool&gt;</code> und dem Attribut <code>gen_ai.tool.name</code>. Die gRPC-Instrumentierung hängt für jeden Google-Ads-RPC darin einen Kind-Span an, gefiltert auf Aufrufe an Google Ads. Der Agent kann einen Trace selbst mit <code>get_cloud_trace</code> öffnen.</p>
+
+            <h3>Strukturierte Logs, mit Traces verknüpft</h3>
+            <p>Jeder Aufruf schreibt eine JSON-Zeile: Zeitstempel, Tool, <code>action_type</code> (READ oder MUTATION), Argumente, Erfolg, <code>error_code</code>, <code>latency_ms</code>, <code>sla_status</code>, <code>google_ads_api</code> (Aufrufe, Millisekunden, fehlgeschlagen, wiederholt, Methoden), Request-IDs, Trace-ID und Span-ID, <code>session_id</code> und Operator. Secrets werden vor dem Schreiben geschwärzt. Die Zeilen werden nach Cloud Logging gespiegelt: NOTICE für eine erfolgreiche Änderung, WARNING für eine Ablehnung durch das Eingabeschild, ERROR für einen Fehler auf Googles Seite. Mit <code>get_cloud_logs</code> liest der Agent seine eigenen Logs.</p>
+
+            <h3>Nach dem Lauf: Tool-Gesundheit</h3>
+            <p><code>analyze_tool_health</code> markiert ein Tool als langsam, wenn p95 über 2500 ms liegt und mindestens 3 Messwerte vorliegen. Einen Fehlersprung meldet es bei mindestens 3 Fehlern, mindestens dem Doppelten des vorherigen Fensters und mindestens 10 Prozent Fehlerrate. Jeder Aufruf über 2500 ms wird als DEGRADED markiert.</p>
+
+            <h3>Nach dem Lauf: deterministische Prozess-Evaluierung (4 Regeln)</h3>
+            <p><code>evaluate_agent_process</code> ist eine deterministische Guardrail-Evaluierung über das Journal, ohne LLM als Richter. Vier Regeln:</p>
+            <ul>
+              <li><strong>READ_FIRST:</strong> Die Sitzung muss <code>get_change_history</code> lesen, bevor sie die erste Änderung macht.</li>
+              <li><strong>ONE_LEVER:</strong> Pro Testreihe nur eine Art von Änderung (Änderungen innerhalb von 10 Minuten bilden eine Reihe), damit Ergebnisse zuordenbar bleiben.</li>
+              <li><strong>AUTO_FIX_ALONE:</strong> <code>auto_fix_collisions_and_dupes</code> pausiert Keywords ohne Probelauf und darf deshalb nie zusammen mit anderen Änderungen laufen.</li>
+              <li><strong>VERIFY_AFTER:</strong> <code>verify_changes_logged</code> muss zwischen 15 Minuten und 24 Stunden nach der letzten Änderung laufen, weil Googles Change History etwa 15 Minuten nachläuft.</li>
+            </ul>
+
+            <h3>Änderungen am Agenten vorbei</h3>
+            <p><code>verify_changes_logged</code> gleicht Googles change_event-Historie mit den MUTATION-Zeilen des Journals ab. Eine Änderung ohne passenden MCP-Aufruf wird gemeldet, egal ob sie von einem Skript, einem anderen Agenten oder einem Menschen in der Oberfläche stammt.</p>
+
+            <h3>Vor dem nächsten Lauf: der Preflight-Check</h3>
+            <p><code>preflight_log_check</code> führt TOOL_HEALTH, OUTSIDE_CHANGES und AGENT_PROCESS aus. Bei OK öffnet sich das Gate. Bei ATTENTION bleibt jedes Anzeigen-Tool geschlossen, bis ich die Befunde geprüft habe. Damit entscheidet das Ergebnis der letzten Auswertung, ob der Agent überhaupt etwas ändern darf.</p>
+
+            <h3>Ein echter Befund vom 05.10.2026</h3>
+            <p>Zwei der drei Prüfungen lasen das Cloud-Journal (Beginn 05.10.), die dritte das lokale Journal (Beginn 01.10.). Dadurch übersah AGENT_PROCESS fünf Verstöße. Die Korrektur: Alle drei Prüfungen wählen die Journal-Quelle jetzt auf dieselbe Weise.</p>
+
+            <h3>Journal-Schnappschuss 01.10.-13.10.2026</h3>
+            <p>Stand 13:12 UTC am 13.10.2026:</p>
+          </div>
+          <div class="table-scroll">
+            <table class="compare">
+              <thead>
+                <tr>
+                  <th scope="col">Kennzahl</th>
+                  <th scope="col">Wert</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">Aufrufe</th><td>237 in 15 Sitzungen</td></tr>
+                <tr><th scope="row">Lesend / Änderungen</th><td>216 lesend, 21 Änderungen</td></tr>
+                <tr><th scope="row">Mit Trace-ID</th><td>236 von 237</td></tr>
+                <tr><th scope="row">Vom Schild abgelehnte Änderung</th><td>1</td></tr>
+                <tr><th scope="row">Latenz</th><td>Median 1,3 s, p95 5,6 s (37 Aufrufe als DEGRADED markiert)</td></tr>
+                <tr><th scope="row">Wiederholungen</th><td>0</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="neo-card">
+          <div class="section-label">Zeitleiste</div>
+          <h2 class="section-title">Vorfälle, die die Leitplanken abgefangen haben</h2>
+          <div class="prose">
+            <p>Manche dieser Vorfälle hat ein Schutz abgefangen, andere waren Fehler in meinem eigenen Code. Jeder hat eine Regel hinterlassen.</p>
+          </div>
+          <ol class="timeline">
+            <li><strong>04.08.2026</strong>Ein Helfer für Feldmasken verwarf still ein Feld mit dem Wert False. Google akzeptierte ein Update, das nichts änderte. Aufgefallen ist es beim manuellen Zurücklesen, das Update ging erneut raus, diesmal mit expliziter Maske.<em>Regel: Sparse Update Masks auf allen Schreibpfaden.</em></li>
+            <li><strong>01.10.2026</strong>Der RSA-Deploy pausierte alle Anzeigen, sobald 2 oder mehr existierten, und konnte die erste Headline verlieren.<em>Regel: Headline 1 ist die DKI-Headline, höchstens 3 aktive RSAs, die älteste wird im selben Request pausiert.</em></li>
+            <li><strong>01.10.2026</strong>Das Gebotstool änderte Gebote der Anzeigengruppe, die Maximize Clicks ignoriert.<em>Regel: Es steuert jetzt die CPC-Obergrenze der Kampagne.</em></li>
+            <li><strong>05.10.2026</strong>Eine Änderung der Obergrenze mit fehlerhafter Richtung lehnte das Pydantic-Schild als <code>REQUEST_REJECTED</code> ab. Google wurde nie aufgerufen.<em>Regel: bestätigt, das Eingabeschild hält.</em></li>
+            <li><strong>05.10.2026</strong>Eine nicht numerische Kampagnen-ID erreichte eine GAQL-Abfrage (BAD_NUMBER).<em>Regel: Ein ID-Validator (nur Ziffern) läuft vor jedem lesenden Aufruf.</em></li>
+            <li><strong>05.10.2026</strong>Die Abweichung der Journal-Quelle im Preflight (siehe oben).<em>Regel: Alle drei Prüfungen wählen die Quelle gleich.</em></li>
+            <li><strong>05.10. bis 12.10.2026</strong>Drei PREFLIGHT_REQUIRED-Ablehnungen: Das Gate stoppte die Tools, bis die Log-Prüfung bestanden war.<em>Regel: bestätigt, das Gate hält.</em></li>
+            <li><strong>13.10.2026</strong>Das Keyword-Tool lehnte eine Anfrage mit 25 Keywords (Limit 20) und einem nicht unterstützten Ländercode ab, bevor es Google aufrief.<em>Regel: bestätigt, das Eingabeschild hält.</em></li>
+          </ol>
+        </div>
+
+        <div class="neo-card">
+          <div class="section-label">Ergebnisse</div>
+          <h2 class="section-title">Ergebnisse im Live-Konto</h2>
+          <div class="prose">
+            <p>Alle Zahlen stammen aus dem Google-Ads-Konto von MoonBloom, jeweils mit ihrem Zeitfenster. Die beiden CPC-Fenster sind nicht deckungsgleich: Im ersten liefen 2 Kampagnen, im zweiten alle 6 ausgabenwirksamen.</p>
+          </div>
+          <div class="table-scroll">
+            <table class="compare">
+              <thead>
+                <tr>
+                  <th scope="col">Kennzahl</th>
+                  <th scope="col">Wert</th>
+                  <th scope="col">Zeitfenster oder Bezug</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">Durchschnittlicher CPC, vorher</th><td>0,82 EUR</td><td>05.07.-04.08.2026, 2 Kampagnen</td></tr>
+                <tr><th scope="row">Durchschnittlicher CPC, nachher</th><td>0,47 EUR (276,66 EUR bei 592 Klicks)</td><td>18.08.-17.09.2026, alle 6 ausgabenwirksamen Kampagnen</td></tr>
+                <tr><th scope="row">Tagesausgaben</th><td>etwa 8,92 EUR pro Tag über DE, AT, ES und FR</td><td>18.08.-17.09.2026</td></tr>
+                <tr><th scope="row">Analysierte Suchanfragen</th><td>909</td><td>Befund aus der Kontoprüfung</td></tr>
+                <tr><th scope="row">Gefundener Verlust</th><td>22,07 EUR (11 Klicks, 0 Verkäufe), Anzeigengruppe pausiert</td><td>04.08.2026</td></tr>
+                <tr><th scope="row">Doppelte Keywords</th><td>36 pausiert</td><td>Befund aus der Kontoprüfung</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="prose">
+            <p>Die Verkäufe laufen über Etsy, Google Ads rechnet sie deshalb nicht zu. Ich mache hier keine Aussagen zu ROAS oder Umsatz, sondern nur zu Klickpreis und entfernter Verschwendung.</p>
+            <p><a href="/de/artikel/google-ads-kosten-ki-agent/?utm_source=portfolio&amp;utm_medium=internal&amp;utm_campaign=google-ads-mcp-server&amp;utm_content=business_artikel"><strong>Die Sicht ohne Code: Google Ads Kosten senken mit einem KI-Agenten →</strong></a></p>
+          </div>
+        </div>
+
+        <div class="neo-card">
+          <div class="section-label">FAQ</div>
+          <h2 class="section-title">Häufige Fragen</h2>
+          <div class="faq">
+            <details class="faq-item">
+              <summary class="faq-q">Was ist ein Google Ads MCP Server?</summary>
+              <div class="faq-a">Ein MCP Server stellt einem KI-Agenten wie Claude Code Tools über das Model Context Protocol bereit. Ein Google Ads MCP Server legt diese Tools über die Google Ads API. Googles offizielle Variante bietet nur lesende Tools. Mein eigener Server hat 36 Tools, davon 12 schreibend, und prüft jede Änderung gegen Regeln im Code.</div>
+            </details>
+            <details class="faq-item">
+              <summary class="faq-q">Warum nicht den offiziellen Google Ads MCP Server von Google nutzen?</summary>
+              <div class="faq-a">Weil er in der aktuellen Version nur lesend ist: list_accessible_customers, search (GAQL) und get_resource_metadata. Laut Google kann er keine Gebote ändern und keine Kampagnen pausieren. Für Änderungen müsste man die Mutate-Methoden der API direkt aufrufen, und die führen aus, was man ihnen schickt. Meine Regeln brauchen deshalb eine eigene Schicht.</div>
+            </details>
+            <details class="faq-item">
+              <summary class="faq-q">Wie verhindere ich, dass ein KI-Agent in Google Ads zu viel ausgibt?</summary>
+              <div class="faq-a">Mit harten Grenzen im Code statt Bitten im Prompt. Bei mir darf die CPC-Obergrenze nur in Schritten von ±0,05 EUR zwischen 0,10 und 3,00 EUR wandern, das Tagesbudget liegt zwischen 1,00 und 100,00 EUR. Außerhalb dieser Bereiche wird abgelehnt, und es geht nichts an Google. Dazu kommt ein Preflight-Check vor jedem Lauf.</div>
+            </details>
+            <details class="faq-item">
+              <summary class="faq-q">Wie verfolge ich, was ein KI-Agent getan hat?</summary>
+              <div class="faq-a">Jeder Tool-Aufruf erzeugt einen Trace (OpenTelemetry, Cloud Trace) und eine JSON-Zeile im Journal mit Trace-ID, Tool, Argumenten, Erfolg und Latenz. Secrets werden vorher geschwärzt. Nach dem Lauf gleicht verify_changes_logged die Change History von Google mit dem Journal ab, sodass Änderungen am Agenten vorbei auffallen.</div>
+            </details>
+            <details class="faq-item">
+              <summary class="faq-q">Wie erstelle ich einen MCP Server in Python mit FastMCP?</summary>
+              <div class="faq-a">Mit FastMCP aus dem offiziellen MCP SDK registrieren Sie Python-Funktionen als Tools. Bei mir übernimmt das ein Decorator mcp_tool() in server.py, der Transport ist stdio. Der Agent, hier Claude Code, kennt den Server über die .mcp.json. Die eigentliche Arbeit liegt davor: Eingabe mit Pydantic validieren, Regeln prüfen, erst dann die API aufrufen.</div>
+            </details>
+            <details class="faq-item">
+              <summary class="faq-q">Kann Claude Code Google Ads verwalten?</summary>
+              <div class="faq-a">Ja, mit Schreibzugriff über einen eigenen Server. Vom 01.10. bis 13.10.2026 liefen 237 Aufrufe in 15 Sitzungen: 216 lesend, 21 Änderungen. Eine Änderung lehnte das Prüfschild ab. Die Regeln und Prüfungen liegen im Server, nicht im Modell. Strategie und Angebot bleiben meine Entscheidung.</div>
+            </details>
+          </div>
+        </div>
+
+        <div class="neo-card">
+          <div class="section-label">Tech-Stack</div>
+          <h2 class="section-title">Verwendete Tools</h2>
+          <div class="chips">
+            <span class="chip">Python</span>
+            <span class="chip">FastMCP</span>
+            <span class="chip">MCP SDK 1.28.1</span>
+            <span class="chip">stdio</span>
+            <span class="chip">google-ads 31.0.0</span>
+            <span class="chip">Google Ads API</span>
+            <span class="chip">Pydantic 2.13</span>
+            <span class="chip">OpenTelemetry</span>
+            <span class="chip">Cloud Trace</span>
+            <span class="chip">Google Cloud Logging</span>
+            <span class="chip">gRPC</span>
+            <span class="chip">Claude Code</span>
+          </div>
+        </div>
+
+        <div class="cta-strip">
+          <div>
+            <strong>Soll ein KI-Agent sicher an Ihrem Produktivsystem arbeiten?</strong>
+            <p>Ich entwerfe Tool-Oberflächen für KI-Agenten, die gegen echte APIs arbeiten. Der interessante Teil ist, welche Operationen man freigibt und welche Regeln im Code stehen. Gern spreche ich Ihr System mit Ihnen durch.</p>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <a class="cta-btn" href="https://calendly.com/azhyshchev/30min?utm_source=portfolio&amp;utm_medium=website&amp;utm_campaign=booking&amp;utm_content=google_ads_mcp_server_de" target="_blank" rel="noreferrer">30-Min Gespräch buchen →</a>
+            <a class="cta-btn outline" href="mailto:azhyshchev@gmail.com">Lieber per E-Mail</a>
+            <a class="cta-btn outline" href="/de/projekte/">Alle Projekte</a>
+          </div>
+        </div>
+
+        <a class="back-link" href="/de/projekte/">← Zurück zu Projekten</a>
+      </div>
+    </main>
+  </div>
+
+  <nav class="mobile-bottom-nav" id="mobileBottomNav" data-nosnippet>
+    <a class="mbn-item" href="/de/"><span class="mbn-icon">&lt;/&gt;</span><span class="mbn-label">Start</span></a>
+    <a class="mbn-item" href="/de/ki-checker/"><span class="mbn-icon">🤖</span><span class="mbn-label">KI-Check</span></a>
+    <a class="mbn-item" href="/de/erfahrung/"><span class="mbn-icon">E</span><span class="mbn-label">Erfahrung</span></a>
+    <a class="mbn-item active" href="/de/projekte/"><span class="mbn-icon">P</span><span class="mbn-label">Projekte</span></a>
+    <a class="mbn-item" href="/de/artikel/"><span class="mbn-icon">A</span><span class="mbn-label">Artikel</span></a>
+    <a class="mbn-item" href="/de/kontakt/"><span class="mbn-icon">K</span><span class="mbn-label">Kontakt</span></a>
+  </nav>
+  <div style="padding: 18px 12px 92px; text-align: center; font-size: 0.92rem; line-height: 1.8;">
+    <a href="/impressum">Impressum</a>
+    <span style="padding: 0 10px;">·</span>
+    <a href="/datenschutz">Datenschutzerklärung</a>
+    <span style="padding: 0 10px;">·</span>
+    <a href="/agb">AGB</a>
+    <span style="padding: 0 10px;">·</span>
+    <a href="/datenschutz#cookie-settings">Cookie-Einstellungen</a>
+  </div>
+  <script src="/js/nav.js"></script>
+  <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" defer></script>
+<script>
+document.querySelectorAll("details.faq-item").forEach(function (item) {
+  item.addEventListener("toggle", function () {
+    if (item.open && typeof gtag === "function") {
+      var q = item.querySelector("summary");
+      gtag("event", "faq_open", { question: q.textContent.trim().substring(0, 60), page_language: "de" });
+    }
+  });
+});
+</script>
+<script>
+  (function () {
+    document.querySelectorAll('a[href*="calendly"]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (window.gtag) gtag('event', 'book_call_click', { location: 'google_ads_mcp_server_de', page_language: 'de' });
+      });
+    });
+    document.querySelectorAll('a[href^="mailto:"]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (window.gtag) gtag('event', 'email_click', { location: 'google_ads_mcp_server_de', page_language: 'de' });
+      });
+    });
+  })();
+</script>
+</body>
+</html>

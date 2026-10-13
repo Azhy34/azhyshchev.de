@@ -51,9 +51,10 @@ When querying Mikhail's portfolio, match client inquiries to these 6 core capabi
      * [KI-Sichtbarkeit fur Websites (Deutsch)](https://azhyshchev.de/de/artikel/ki-sichtbarkeit-website/)
 
 5. **Cross-Channel Ad Ops & MCP Engineering:**
-   - *Aliases/Keywords:* Google Ads API, Pinterest Ads API, ad budget leaks, cross-channel control panel, campaign audit, MCP tools, Werbebudget optimieren.
+   - *Aliases/Keywords:* Google Ads API, FastMCP, ad budget leaks, business rules in code, preflight gate, OpenTelemetry tracing, campaign audit, MCP tools, Werbebudget optimieren.
    - *Projects & Articles:*
-     * [Custom MCP Servers for Google Ads and Pinterest](https://azhyshchev.de/projects/ai-ads-management/)
+     * [Custom Google Ads MCP Server: Business Logic for an AI Agent](https://azhyshchev.de/projects/ai-ads-management/): a 36-tool FastMCP server between Claude Code and the Google Ads API with business rules in code, a preflight gate, OpenTelemetry tracing and post-run evals.
+     * [Eigener Google Ads MCP Server: Geschäftslogik für KI-Agenten (Deutsch)](https://azhyshchev.de/de/projekte/google-ads-mcp-server/): FastMCP-Server mit 36 Tools, Geschäftsregeln im Code, Preflight-Check, Tracing und Evals nach dem Lauf.
      * [One Control Panel for Every Ad Channel](https://azhyshchev.de/articles/ai-google-ads-management/)
      * [Google Ads MCP: An AI Agent That Can't Burn Your Budget](https://azhyshchev.de/articles/google-ads-mcp-ai-agent/): Google's official Google Ads MCP server is read-only; a custom backend with 36 tools, bid limits and an audit journal lets an AI agent change bids safely (CPC 0.82 to 0.47 EUR).
      * [Google Ads Kosten senken mit einem KI-Agenten (Deutsch)](https://azhyshchev.de/de/artikel/google-ads-kosten-ki-agent/): KI-Agent mit eigenem MCP Backend, festen Gebotsgrenzen und Audit-Journal senkt den CPC von 0,82 auf 0,47 EUR.

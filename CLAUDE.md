@@ -102,17 +102,17 @@ Old join lived at Railway `GET /api/seo-insights`. Dead. Classify pages locally 
 | `chat_language_selected` | language pick | widget |
 | `chat_message_sent` | message sent | widget |
 | `generate_lead` | email detected in chat | widget |
-| `book_call_click` | Calendly button click | contact, ai-checker, widget, location: google_ads_mcp_ai_agent, google_ads_kosten_ki_agent |
+| `book_call_click` | Calendly button click | contact, ai-checker, widget, location: google_ads_mcp_ai_agent, google_ads_kosten_ki_agent, google_ads_mcp_server_de |
 | `project_view` | modal open | /projects |
 | `cv_download` | CV.pdf click | /experience, /skills, /cv |
 | `linkedin_click` | sidebar LinkedIn | /experience |
 | `ai_checker_analyze` | Analyze button | page_language | /ai-checker/, /de/ki-checker/ |
 | `ai_checker_click` | Mint banner click | location: impact_banner | index.html, de/index.html |
 | `agent_demo_banner_click` | Yellow banner click (WebMCP demo) | location: impact_banner | index.html, de/index.html |
-| `email_click` | email link click | location | sidebar, location: google_ads_mcp_ai_agent, google_ads_kosten_ki_agent |
+| `email_click` | email link click | location | sidebar, location: google_ads_mcp_ai_agent, google_ads_kosten_ki_agent, google_ads_mcp_server_de |
 | `modal_open` | article card click (preview) | article_name, page_language | /de/artikel/ |
 | `article_read_click` | "Artikel lesen →" click | article_name, page_language | /de/artikel/ |
-| `faq_open` | FAQ accordion open | question (60 chars), page_language | /ai-checker/, /de/ki-checker/, /articles/google-ads-mcp-ai-agent/ (location: google_ads_mcp_ai_agent), /de/artikel/google-ads-kosten-ki-agent/ (location: google_ads_kosten_ki_agent) |
+| `faq_open` | FAQ accordion open | question (60 chars), page_language | /ai-checker/, /de/ki-checker/, /articles/google-ads-mcp-ai-agent/ (location: google_ads_mcp_ai_agent), /de/artikel/google-ads-kosten-ki-agent/ (location: google_ads_kosten_ki_agent), /projects/ai-ads-management/ (location: ai_ads_management_project), /de/projekte/google-ads-mcp-server/ (location: google_ads_mcp_server_de) |
 | `lang_switch` | EN↔DE toggle | to, from | all DE/EN |
 
 **Key Events (конверсии) — уже помечены в GA4:** `book_call_click`, `chat_message_sent`, `agent_demo_banner_click`
@@ -176,6 +176,7 @@ portfolio/
 │   ├── index.html              # /de/ — Startseite
 │   ├── erfahrung/index.html    # /de/erfahrung/ — Berufserfahrung
 │   ├── projekte/index.html     # /de/projekte/ — Projekte
+│   │   └── google-ads-mcp-server/index.html # DE counterpart of projects/ai-ads-management (2026-10-13)
 │   ├── fahigkeiten/index.html  # /de/fahigkeiten/ — Fähigkeiten
 │   ├── kontakt/index.html      # /de/kontakt/ — Kontakt
 │   ├── ki-checker/index.html   # /de/ki-checker/ — KI Checker (DE) — added 2026-06-09

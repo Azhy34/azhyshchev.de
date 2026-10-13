@@ -95,7 +95,7 @@
             "name": "Kann ein KI-Agent mein Google Ads Konto selbst verwalten?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Ja, die tägliche Routine kann er übernehmen: Berichte lesen, Verschwendung in den Suchbegriffen finden, Gebotsobergrenzen anpassen und negative Keywords ergänzen. Bedingung sind Leitplanken. In meinem Setup spricht der Agent nur mit einem eigenen Backend, das Grenzen und Prüfungen erzwingt. Vom 01.10. bis 13.10.2026 gab es 229 Einträge im Protokoll, davon 21 Änderungen. Strategie und Angebot bleiben Ihre Entscheidung."
+              "text": "Ja, die tägliche Routine kann er übernehmen: Berichte lesen, Verschwendung in den Suchbegriffen finden, Gebotsobergrenzen anpassen und negative Keywords ergänzen. Bedingung sind Leitplanken. In meinem Setup spricht der Agent nur mit einem eigenen Backend, das Grenzen und Prüfungen erzwingt. Vom 01.10. bis 13.10.2026 gab es 237 Einträge im Protokoll, davon 21 Änderungen. Strategie und Angebot bleiben Ihre Entscheidung."
             }
           },
           {
@@ -327,7 +327,7 @@
               </div>
               <div class="check-item">
                 <strong>5. Ein Protokoll für jeden Aufruf</strong>
-                <span>Zeitstempel, Werkzeug, Lesen oder Änderung, Ergebnis, Laufzeit und Trace-ID werden festgehalten. Vom 01.10. bis 13.10.2026 waren es 229 Einträge: 208 Lesezugriffe und 21 Änderungen.</span>
+                <span>Zeitstempel, Werkzeug, Lesen oder Änderung, Ergebnis, Laufzeit und Trace-ID werden festgehalten. Vom 01.10. bis 13.10.2026 waren es 237 Einträge: 216 Lesezugriffe und 21 Änderungen.</span>
               </div>
             </div>
           </div>
@@ -335,7 +335,7 @@
           <div class="highlight-box">
             <h3>Für technische Leser</h3>
             <p>Das Backend ist ein MCP Server in Python mit FastMCP. Jeder Aufruf läuft durch ein Preflight-Gate und eine Validierungsschicht, bevor eine Mutation die Google Ads API erreicht. Gebote laufen über die Strategie Maximize clicks (TARGET_SPEND) mit einer CPC-Obergrenze je Kampagne. Das Journal unterscheidet READ und MUTATION und speichert die Trace-ID.</p>
-            <p><a href="/projects/ai-ads-management/?utm_source=portfolio&amp;utm_medium=internal&amp;utm_campaign=google-ads-kosten-ki-agent&amp;utm_content=technische_leser_box">Zur technischen Fallstudie des MCP Servers (Englisch) →</a></p>
+            <p><a href="/de/projekte/google-ads-mcp-server/?utm_source=portfolio&amp;utm_medium=internal&amp;utm_campaign=google-ads-kosten-ki-agent&amp;utm_content=technische_leser_box">Eigener Google Ads MCP Server: Geschäftslogik, Tracing und Evals nach dem Lauf →</a></p>
           </div>
 
           <div class="neo-card">
@@ -389,7 +389,7 @@
                   <tr><td>Anzeigenanteil / durch Anzeigenrang verloren</td><td>10 bis 20 Prozent / 63 bis 80 Prozent</td><td>18.08. bis 17.09.2026</td></tr>
                   <tr><td>Traffic aus google/cpc in GA4</td><td>235 Sitzungen, 72 Prozent engaged, 1m30s</td><td>05.07. bis 04.08.2026</td></tr>
                   <tr><td>Verschwendung durch Wandtattoo / Wandsticker</td><td>22,07 EUR, 11 Klicks, 0 Verkäufe</td><td>Entdeckt am 04.08.2026, 30 Tage</td></tr>
-                  <tr><td>Backend-Protokoll</td><td>229 Einträge: 208 Lesezugriffe, 21 Änderungen</td><td>01.10. bis 13.10.2026</td></tr>
+                  <tr><td>Backend-Protokoll</td><td>237 Einträge: 216 Lesezugriffe, 21 Änderungen</td><td>01.10. bis 13.10.2026</td></tr>
                 </tbody>
               </table>
             </div>
@@ -430,7 +430,7 @@
               </div>
               <div class="faq-item">
                 <div class="faq-q">Kann ein KI-Agent mein Google Ads Konto selbst verwalten?</div>
-                <div class="faq-a">Ja, die tägliche Routine kann er übernehmen: Berichte lesen, Verschwendung in den Suchbegriffen finden, Gebotsobergrenzen anpassen und negative Keywords ergänzen. Bedingung sind Leitplanken. In meinem Setup spricht der Agent nur mit einem eigenen Backend, das Grenzen und Prüfungen erzwingt. Vom 01.10. bis 13.10.2026 gab es 229 Einträge im Protokoll, davon 21 Änderungen. Strategie und Angebot bleiben Ihre Entscheidung.</div>
+                <div class="faq-a">Ja, die tägliche Routine kann er übernehmen: Berichte lesen, Verschwendung in den Suchbegriffen finden, Gebotsobergrenzen anpassen und negative Keywords ergänzen. Bedingung sind Leitplanken. In meinem Setup spricht der Agent nur mit einem eigenen Backend, das Grenzen und Prüfungen erzwingt. Vom 01.10. bis 13.10.2026 gab es 237 Einträge im Protokoll, davon 21 Änderungen. Strategie und Angebot bleiben Ihre Entscheidung.</div>
               </div>
               <div class="faq-item">
                 <div class="faq-q">Reicht der offizielle Google Ads MCP Server?</div>

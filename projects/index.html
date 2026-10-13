@@ -61,12 +61,12 @@
             "item": {
               "@type": "SoftwareApplication",
               "@id": "https://azhyshchev.de/projects/ai-ads-management/#project",
-              "name": "Custom MCP Servers for Google Ads & Pinterest",
-              "description": "Engineering case: custom MCP servers in Python exposing 18 tools over Google Ads API v23 and 9 tools over Pinterest Ads API v5. Tools mirror the advertising hierarchy of campaign, ad group and ad with runtime guardrails and protobuf field masks.",
+              "name": "Custom Google Ads MCP Server: Business Logic for an AI Agent",
+              "description": "Engineering case: a custom FastMCP server with 36 tools between Claude Code and the Google Ads API. Business rules in code, a preflight gate, OpenTelemetry tracing and post-run evals.",
               "applicationCategory": "DeveloperApplication",
               "operatingSystem": "Web",
               "author": { "@id": "https://azhyshchev.de/#person" },
-              "keywords": "MCP, Model Context Protocol, Google Ads API v23, Pinterest Ads API v5, Protobuf, Python, AI agent tooling, ad automation"
+              "keywords": "MCP, Model Context Protocol, FastMCP, Google Ads API, Pydantic, OpenTelemetry, Python, AI agent tooling, ad automation"
             }
           },
           {
@@ -606,26 +606,26 @@
         <!-- Projects grid -->
         <section class="projects-grid">
 
-          <!-- Card 0: AI-Managed Ad Account (Google Ads + Pinterest) -->
+          <!-- Card 0: Custom Google Ads MCP Server (business logic, tracing, evals) -->
           <article class="project-card" data-modal="modal-adsmcp">
             <div class="card-accent" style="background: var(--mint);"></div>
             <div class="card-body">
               <div class="card-meta">
-                <span class="card-type">MCP Server Design · Agent Tooling · Ad Platforms</span>
+                <span class="card-type">MCP Server · Business Logic · Tracing</span>
                 <span class="card-readtime">Production</span>
               </div>
-              <h2 class="card-title">Custom MCP Servers for Google Ads &amp; Pinterest</h2>
-              <p class="card-excerpt">Engineering case on designing an agent tool surface from official API references: collapsing a long endpoint list into business-shaped operations, and encoding the invariants the advertising APIs do not enforce themselves.</p>
+              <h2 class="card-title">Custom Google Ads MCP Server: Business Logic for an AI Agent</h2>
+              <p class="card-excerpt">36-tool FastMCP server between Claude Code and the Google Ads API: business rules in code, a preflight gate, every call traced and evaluated after the run.</p>
               <div class="card-tags">
                 <span class="tag">Python</span>
-                <span class="tag">MCP</span>
-                <span class="tag">Google Ads API v23</span>
-                <span class="tag">Pinterest Ads API v5</span>
-                <span class="tag">Protobuf</span>
+                <span class="tag">FastMCP</span>
+                <span class="tag">Google Ads API</span>
+                <span class="tag">Pydantic</span>
+                <span class="tag">OpenTelemetry</span>
               </div>
             </div>
             <div class="card-footer">
-              <div class="metric-pill">Design: <span>27 tools over 2 official APIs · 3-level facade</span></div>
+              <div class="metric-pill">Design: <span>36 tools · rules in code</span></div>
               <!-- Full project page for SEO indexing, keeps modal UX intact -->
               <a class="read-link" href="/projects/ai-ads-management/">Open full page →</a>
             </div>
@@ -818,74 +818,60 @@
   <!-- ── MODALS ── -->
 
   <!-- Modal: Web Sales Assistant -->
-  <!-- Modal: AI-Managed Ad Account -->
+  <!-- Modal: Custom Google Ads MCP Server -->
   <div class="overlay" id="modal-adsmcp">
     <div class="modal">
       <div class="modal-accent" style="background:var(--mint);"></div>
       <div class="modal-header">
         <div>
-          <div class="modal-title">Custom MCP Servers for Ad Platforms</div>
-          <div class="modal-meta">MCP Server Design · Agent Tooling · Google Ads + Pinterest</div>
+          <div class="modal-title">Custom Google Ads MCP Server</div>
+          <div class="modal-meta">MCP Server · Business Logic · Tracing</div>
         </div>
         <button class="modal-close" aria-label="Close">&times;</button>
       </div>
       <div class="modal-body">
         <div class="modal-section">
-          <h3 style="font-size:1rem;font-weight:800;margin-bottom:10px;letter-spacing:-0.02em;">The design problem</h3>
-          <p>An off-the-shelf MCP server mirrors the advertising API: many low level methods named after the mutations they wrap, and no opinion about what a correct campaign looks like. Running an account that way, the agent kept reporting success, because the only signal available to it was whether the API accepted a call. The fix was to design a different tool surface, working from the official endpoint references rather than from the existing wrapper.</p>
+          <h3 style="font-size:1rem;font-weight:800;margin-bottom:10px;letter-spacing:-0.02em;">The problem</h3>
+          <p>Google's official Google Ads MCP server is read-only. Raw Google Ads API write access has no business rules: nothing stops an agent from setting a bid above what the business can afford.</p>
+        </div>
+        <div class="modal-section">
+          <h3 style="font-size:1rem;font-weight:800;margin-bottom:10px;letter-spacing:-0.02em;">What I built</h3>
+          <p>In my setup the agent does not call the API directly. It calls my FastMCP server, which sits between Claude Code and the Google Ads API and holds the business rules of my Etsy shop in code: Pydantic models reject an invalid call before it reaches the API, and every call is traced and journaled.</p>
         </div>
         <div class="modal-metrics">
           <div class="metric-box">
-            <strong>18 + 9 tools</strong>
-            <span>Google Ads API v23 and Pinterest Ads API v5, two local Python MCP servers.</span>
+            <strong>36 tools</strong>
+            <span>24 read · 12 write.</span>
           </div>
           <div class="metric-box">
-            <strong>3-level facade</strong>
-            <span>Tool surface mirrors campaign, ad group and ad instead of the endpoint list.</span>
+            <strong>0.10-3.00 EUR</strong>
+            <span>CPC ceiling, changed in ±0.05 EUR steps.</span>
           </div>
           <div class="metric-box">
-            <strong>Invariants inside</strong>
-            <span>Field masks, creative standards and cross-campaign checks enforced by the tool.</span>
+            <strong>Preflight gate</strong>
+            <span>Tools stay shut until the log check passes.</span>
           </div>
           <div class="metric-box">
-            <strong>Paused by default</strong>
-            <span>Anything able to spend money is created inert and waits for human approval.</span>
-          </div>
-        </div>
-        <div class="modal-cols">
-          <div class="modal-section">
-            <h3>Design method</h3>
-            <ul>
-              <li>Inventory endpoints and their exact request and response schemas from the official references.</li>
-              <li>List the operations actually performed on the account in plain language.</li>
-              <li>Map intents onto endpoints: some are one call, some a chain, many endpoints map to nothing needed.</li>
-              <li>Expose one tool per intent, keep chains, field selection and payload assembly server side.</li>
-            </ul>
-          </div>
-          <div class="modal-section">
-            <h3>Worked examples</h3>
-            <ul>
-              <li>Pinterest analytics pins nine reporting columns instead of forwarding the whole catalogue, and converts micro units to currency before the agent sees them.</li>
-              <li>Every Google Ads write path builds a protobuf field mask, which blocks a platform behaviour that otherwise resets a bid to the 0.01 EUR minimum without raising an error.</li>
-              <li>Cross-campaign duplicate detection, a check no single endpoint can express.</li>
-            </ul>
+            <strong>Traced + evaluated</strong>
+            <span>OpenTelemetry spans, structured logs, post-run process eval.</span>
           </div>
         </div>
         <div class="modal-section">
           <h3>Tech stack</h3>
           <div class="modal-chips">
             <span class="modal-chip">Python</span>
-            <span class="modal-chip">MCP</span>
-            <span class="modal-chip">Google Ads API v23</span>
-            <span class="modal-chip">Pinterest Ads API v5</span>
-            <span class="modal-chip">Protobuf field masks</span>
-            <span class="modal-chip">Obsidian</span>
+            <span class="modal-chip">FastMCP</span>
+            <span class="modal-chip">Google Ads API</span>
+            <span class="modal-chip">Pydantic</span>
+            <span class="modal-chip">OpenTelemetry</span>
+            <span class="modal-chip">Cloud Trace</span>
+            <span class="modal-chip">Claude Code</span>
           </div>
         </div>
       </div>
       <div class="modal-footer">
         <a class="modal-btn light" href="../CV.pdf" download>Download CV</a>
-        <a class="modal-btn light" href="/articles/ai-google-ads-management/">Business side</a>
+        <a class="modal-btn light" href="/articles/google-ads-mcp-ai-agent/">Business side</a>
         <a class="modal-btn" href="/projects/ai-ads-management/">Read engineering case</a>
       </div>
     </div>

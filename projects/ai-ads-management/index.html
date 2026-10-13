@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -6,65 +6,126 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta name="description" content="Building a custom MCP server from official API endpoints: how the Google Ads and Pinterest Ads references were analysed and collapsed into 27 business-shaped tools, with worked examples of column selection and protobuf field masks.">
-  <meta name="keywords" content="mcp server, model context protocol, google ads mcp server, custom mcp server, mcp server design, ai agent tools, google ads api, pinterest ads api v5, protobuf field mask, api facade pattern, ai agent guardrails, agent tool design, python mcp, KI Agenten Werkzeuge">
+  <meta name="description" content="Google Ads MCP Server in Python: 36 FastMCP tools, business rules enforced in code, a preflight gate and OpenTelemetry tracing for an AI agent.">
+  <meta name="keywords" content="google ads mcp server, mcp server, fastmcp, google ads api, custom mcp server, mcp server python, mcp server in python, ai agent guardrails, opentelemetry, cloud trace, claude code, agent observability">
   <meta name="author" content="Mikhail Azhyshchev">
   <link rel="canonical" href="https://azhyshchev.de/projects/ai-ads-management/">
   <link rel="alternate" hreflang="en" href="https://azhyshchev.de/projects/ai-ads-management/" />
-  <link rel="alternate" hreflang="de" href="https://azhyshchev.de/de/projekte/ki-werbeverwaltung/" />
+  <link rel="alternate" hreflang="de" href="https://azhyshchev.de/de/projekte/google-ads-mcp-server/" />
   <link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/projects/ai-ads-management/" />
 
-  <meta property="og:title" content="Designing a Custom MCP Server from Official Ad API Endpoints | Mikhail Azhyshchev">
-  <meta property="og:description" content="Why an off-the-shelf MCP server was replaced with a purpose-built facade: endpoint analysis, business-shaped tools, and invariants the API itself does not enforce.">
+  <meta property="og:site_name" content="Mikhail Azhyshchev">
+  <meta property="og:title" content="Custom Google Ads MCP Server: Business Logic for an AI Agent">
+  <meta property="og:description" content="36 tools, business rules enforced in code, every call traced. The Google Ads MCP server I built for my shop.">
   <meta property="og:url" content="https://azhyshchev.de/projects/ai-ads-management/">
   <meta property="og:type" content="article">
-  <meta property="og:image" content="https://azhyshchev.de/Azhyschev.JPG">
+  <meta property="og:image" content="https://azhyshchev.de/projects/ai-ads-management/og.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Custom Google Ads MCP Server: Business Logic for an AI Agent">
   <meta property="og:locale" content="en_US">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Designing a Custom MCP Server from Official Ad API Endpoints">
-  <meta name="twitter:description" content="Endpoint analysis to tool surface: 27 tools over Google Ads API v23 and Pinterest Ads API v5, with guardrails built into the tools.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Custom Google Ads MCP Server: Business Logic for an AI Agent">
+  <meta name="twitter:description" content="36 tools, business rules enforced in code, every call traced. The Google Ads MCP server I built for my shop.">
+  <meta name="twitter:image" content="https://azhyshchev.de/projects/ai-ads-management/og.png">
+  <meta name="twitter:image:alt" content="Custom Google Ads MCP Server: Business Logic for an AI Agent">
 
-  <title>Custom MCP Server Design from Official Ad API Endpoints</title>
+  <title>Custom Google Ads MCP Server in Python | Mikhail Azhyshchev</title>
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
       {
+        "@type": "TechArticle",
+        "@id": "https://azhyshchev.de/projects/ai-ads-management/#article",
+        "headline": "Custom Google Ads MCP Server: The Business Logic Between an AI Agent and the Ads API",
+        "description": "Engineering case: a 36-tool Google Ads MCP server in Python on FastMCP, with business rules enforced in code, a preflight gate and OpenTelemetry tracing of every tool call.",
+        "image": "https://azhyshchev.de/projects/ai-ads-management/og.png",
+        "dateModified": "2026-10-13",
+        "inLanguage": "en",
+        "keywords": "google ads mcp server, mcp server, fastmcp, google ads api, custom mcp server, mcp server python, ai agent guardrails, opentelemetry, cloud trace, claude code",
+        "mainEntityOfPage": { "@id": "https://azhyshchev.de/projects/ai-ads-management/#webpage" },
+        "author": {
+          "@type": "Person",
+          "name": "Mikhail Azhyshchev",
+          "url": "https://azhyshchev.de",
+          "sameAs": ["https://www.linkedin.com/in/azhyshchev/"]
+        },
+        "about": { "@type": "Thing", "name": "Google Ads MCP Server built with FastMCP in Python" }
+      },
+      {
         "@type": "WebPage",
         "@id": "https://azhyshchev.de/projects/ai-ads-management/#webpage",
         "url": "https://azhyshchev.de/projects/ai-ads-management/",
-        "name": "Custom MCP Server Design from Official Ad API Endpoints",
+        "name": "Custom Google Ads MCP Server in Python | Mikhail Azhyshchev",
         "isPartOf": { "@id": "https://azhyshchev.de/#website" },
-        "author": { "@id": "https://azhyshchev.de/#person" },
-        "dateModified": "2026-08-15",
-        "description": "Engineering case: analysing the official Google Ads and Pinterest Ads API references and designing a custom MCP server whose tools mirror the advertising hierarchy rather than the endpoint list.",
         "inLanguage": "en",
-        "breadcrumb": {
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://azhyshchev.de/" },
-            { "@type": "ListItem", "position": 2, "name": "Projects", "item": "https://azhyshchev.de/projects" },
-            { "@type": "ListItem", "position": 3, "name": "Custom MCP Server for Ad Platforms" }
-          ]
-        }
+        "dateModified": "2026-10-13",
+        "breadcrumb": { "@id": "https://azhyshchev.de/projects/ai-ads-management/#breadcrumb" }
       },
       {
-        "@type": "SoftwareApplication",
-        "@id": "https://azhyshchev.de/projects/ai-ads-management/#project",
-        "name": "Custom MCP Servers for Google Ads and Pinterest Ads",
-        "description": "Two purpose-built MCP servers in Python exposing 18 tools over Google Ads API v23 and 9 tools over Pinterest Ads API v5. Tools are shaped around the advertising hierarchy of campaign, ad group and ad, with validation, protobuf field masks and a paused-by-default write policy enforced inside the server.",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "Web",
-        "author": { "@id": "https://azhyshchev.de/#person" },
-        "keywords": "mcp server, model context protocol, google ads mcp server, custom mcp server, api facade, protobuf field mask, ai agent tool design, google ads api, pinterest ads api",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "EUR",
-          "availability": "https://schema.org/InStock",
-          "description": "Custom development, contact for pricing"
-        }
+        "@type": "BreadcrumbList",
+        "@id": "https://azhyshchev.de/projects/ai-ads-management/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://azhyshchev.de/" },
+          { "@type": "ListItem", "position": 2, "name": "Projects", "item": "https://azhyshchev.de/projects" },
+          { "@type": "ListItem", "position": 3, "name": "Custom Google Ads MCP Server: The Business Logic Between an AI Agent and the Ads API" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is a Google Ads MCP server?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "It is a program that exposes Google Ads operations as tools an AI agent can call over the Model Context Protocol. Google ships an official one that only reads. Mine is a custom MCP server in Python with 36 tools, 24 to read and 12 to change an account, and it holds my business rules, so an agent such as Claude Code cannot send arbitrary API calls."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why not use Google's official Google Ads MCP server?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Google's documentation describes it as read-only: it lists accounts, runs GAQL queries and returns resource metadata. It cannot modify bids, pause campaigns or create assets. Writing means calling the Google Ads API mutate methods directly, and the API executes what it is sent. So the rules about how far a bid may move or how many ads may run have to live in a layer I own."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do you stop an AI agent from overspending in Google Ads?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "I put the limits in code instead of the prompt. A campaign CPC ceiling moves only in steps of 0.05 EUR and must stay within 0.10 to 3.00 EUR, the daily budget within 1.00 to 100.00 EUR, and a request outside the range is refused before Google is called. A preflight gate also blocks every ad tool until the log check has passed."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do you trace what an AI agent did?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Every tool call creates an OpenTelemetry span named tools/call plus the tool name, exported to Cloud Trace, with a child span for each Google Ads RPC. The same call writes one structured JSON log line with the trace id, mirrored to Cloud Logging, and secrets are redacted. After the run, analyze_tool_health and evaluate_agent_process read that journal."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do you build an MCP server in Python with FastMCP?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "I use FastMCP from the official MCP SDK over stdio. A small decorator, mcp_tool(), registers each function as a tool and tags the call with its name. Pydantic models validate every write before any business logic runs, and Claude Code finds the server through the project's .mcp.json. The hard part is not the protocol but the rules behind each tool."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can Claude Code manage Google Ads?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "It can with a server behind it. In my setup Claude Code reads campaigns, search terms and change history, then changes budgets, CPC ceilings, negative keywords and ads through the 12 write tools. In my setup it has no direct API access, only the server. Every call passes the Pydantic rules and the preflight gate and lands in a traced journal. 237 calls were logged from 01.10 to 13.10.2026."
+            }
+          }
+        ]
       }
     ]
   }
@@ -92,22 +153,23 @@
     .socials { display: flex; gap: 10px; padding-top: 8px; }
     .social-link { width: 42px; height: 42px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 0.8rem; font-weight: 800; transition: transform 0.18s ease; }
     .social-link:hover { transform: translate(-2px, -2px); }
-    .main { background: var(--cream); padding: 22px; }
+    .main { background: var(--cream); padding: 22px; min-width: 0; }
     .panel { border: 2px solid var(--black); background: rgba(255,255,255,0.2); padding: 18px; display: flex; flex-direction: column; gap: 28px; }
-    .breadcrumb { font-size: 0.78rem; opacity: 0.6; display: flex; align-items: center; gap: 8px; }
+    .breadcrumb { font-size: 0.78rem; opacity: 0.6; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .breadcrumb a:hover { opacity: 1; text-decoration: underline; }
     .project-hero { border: 3px solid var(--black); background: var(--accent); box-shadow: 6px 6px 0 var(--black); padding: 24px; }
     .project-type { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; margin-bottom: 12px; }
-    .project-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.04em; margin-bottom: 16px; }
+    .project-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.04em; margin-bottom: 16px; overflow-wrap: break-word; }
     .project-lead { font-size: 0.95rem; line-height: 1.65; max-width: 72ch; margin-bottom: 20px; }
     .metrics-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
     .metric-box { border: 2px solid var(--black); background: rgba(255,255,255,0.75); padding: 14px 12px; }
-    .metric-box strong { display: block; font-size: 1.2rem; line-height: 1.15; margin-bottom: 6px; }
+    .metric-box strong { display: block; font-size: 1.2rem; line-height: 1.15; margin-bottom: 6px; overflow-wrap: anywhere; }
     .metric-box span { font-size: 0.72rem; line-height: 1.4; opacity: 0.8; }
     .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-    .neo-card { border: 3px solid var(--black); background: var(--white); box-shadow: 6px 6px 0 var(--black); padding: 24px; }
+    .content-grid > * { min-width: 0; }
+    .neo-card { border: 3px solid var(--black); background: var(--white); box-shadow: 6px 6px 0 var(--black); padding: 24px; min-width: 0; }
     .section-label { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.45; margin-bottom: 10px; }
-    .section-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.02em; }
+    .section-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.02em; overflow-wrap: break-word; }
     .prose { display: flex; flex-direction: column; gap: 14px; }
     .prose p { font-size: 0.88rem; line-height: 1.75; }
     .prose h3 { font-size: 0.95rem; font-weight: 800; margin-top: 8px; letter-spacing: -0.02em; }
@@ -119,14 +181,28 @@
     .highlight-box:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--black); }
     .highlight-box h2 { font-size: 0.9rem; font-weight: 800; margin-bottom: 10px; }
     .highlight-box p { font-size: 0.84rem; line-height: 1.65; }
-    .highlight-box code { background: rgba(255,255,255,0.6); border: 1px solid var(--black); padding: 1px 5px; font-size: 0.78rem; }
+    .highlight-box code { background: rgba(255,255,255,0.6); border: 1px solid var(--black); padding: 1px 5px; font-size: 0.78rem; word-break: break-word; }
     .table-scroll { overflow-x: auto; border: 2px solid var(--black); background: var(--white); }
     table.compare { border-collapse: collapse; width: 100%; min-width: 780px; font-size: 0.78rem; }
     table.compare th, table.compare td { border: 1px solid var(--black); padding: 12px 14px; text-align: left; vertical-align: top; line-height: 1.55; }
     table.compare thead th { background: var(--accent); font-weight: 800; }
     table.compare tbody th { background: var(--cream); font-weight: 800; width: 17%; }
-    table.compare td code { background: var(--cream); border: 1px solid var(--black); padding: 1px 4px; font-size: 0.72rem; word-break: break-word; }
+    table.compare td code { background: var(--cream); border: 1px solid var(--black); padding: 1px 4px; font-size: 0.72rem; word-break: break-word; display: inline-block; margin: 1px 0; }
     table.compare td.risk { background: rgba(245,200,75,0.28); }
+    .code-block { margin: 18px 0 8px; }
+    .code-cap { font-size: 0.7rem; font-weight: 800; letter-spacing: 0.04em; margin-bottom: 8px; opacity: 0.75; }
+    .code-block pre { border: 3px solid var(--black); background: var(--white); box-shadow: 4px 4px 0 var(--black); padding: 14px 16px; overflow-x: auto; max-width: 100%; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; line-height: 1.6; tab-size: 4; }
+    .code-block pre code { background: none; border: 0; padding: 0; font: inherit; word-break: normal; white-space: pre; }
+    .stack-list li { font-size: 0.84rem; }
+    .timeline li { padding-left: 4px; }
+    .faq { display: flex; flex-direction: column; gap: 16px; }
+    details.faq-item { border: 2px solid var(--black); background: var(--cream); padding: 18px 20px; transition: transform 0.2s, box-shadow 0.2s; }
+    details.faq-item:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--black); }
+    details.faq-item summary { font-size: 0.9rem; font-weight: 800; cursor: pointer; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; user-select: none; list-style: none; }
+    details.faq-item summary::-webkit-details-marker { display: none; }
+    details.faq-item summary::after { content: "+"; font-size: 1.4rem; font-weight: 900; flex-shrink: 0; line-height: 1; }
+    details.faq-item[open] summary::after { content: "-"; }
+    details.faq-item .faq-a { padding-top: 14px; font-size: 0.84rem; line-height: 1.7; }
     .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
     .chip { padding: 6px 10px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); font-size: 0.72rem; font-weight: 700; }
     .cta-strip { border: 3px solid var(--black); background: var(--black); color: var(--white); box-shadow: 6px 6px 0 rgba(0,0,0,0.3); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
@@ -138,7 +214,7 @@
     .back-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 2px solid var(--black); background: var(--white); box-shadow: 4px 4px 0 var(--black); font-size: 0.82rem; font-weight: 700; transition: transform 0.15s; align-self: flex-start; }
     .back-link:hover { transform: translate(-2px,-2px); }
     @media (max-width: 1100px) { .shell { grid-template-columns: 220px 1fr; } .metrics-row { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 820px) { body { padding: 10px 8px 72px; } .shell { grid-template-columns: 1fr; box-shadow: 6px 6px 0 var(--black); min-height: unset; } .sidebar { border-right: none; border-bottom: 3px solid var(--black); padding: 10px 14px; flex-direction: row; align-items: center; justify-content: space-between; } .brand { font-size: clamp(0.95rem, 2.5vw, 1.6rem); } .nav { display: none; } .sidebar-bottom { display: none; } .main { padding: 14px; } .content-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 820px) { body { padding: 10px 8px 72px; } .shell { grid-template-columns: 1fr; box-shadow: 6px 6px 0 var(--black); min-height: unset; } .sidebar { border-right: none; border-bottom: 3px solid var(--black); padding: 10px 14px; flex-direction: row; align-items: center; justify-content: space-between; } .brand { font-size: clamp(0.95rem, 2.5vw, 1.6rem); } .nav { display: none; } .sidebar-bottom { display: none; } .main { padding: 14px; } .content-grid { grid-template-columns: 1fr; } .neo-card { padding: 18px; } }
     @media (max-width: 520px) { .metrics-row { grid-template-columns: 1fr; } .project-title { font-size: 1.5rem; } }
   </style>
   <link rel="stylesheet" href="/mobile.css">
@@ -155,7 +231,7 @@
         <a class="nav-item active" href="/projects"><span class="icon-box">P</span><span>Projects</span></a>
         <a class="nav-item" href="/articles"><span class="icon-box">A</span><span>Articles</span></a>
         <a class="nav-item" href="/skills"><span class="icon-box">S</span><span>Skills</span></a>
-        
+
         <a class="nav-item" href="/certifications">
           <span class="icon-box">🎓</span>
           <span>Certificates</span>
@@ -177,168 +253,111 @@
         <nav class="breadcrumb" aria-label="Breadcrumb">
           <a href="/">Home</a><span>→</span>
           <a href="/projects">Projects</a><span>→</span>
-          <span>Custom MCP Server for Ad Platforms</span>
+          <span>Custom Google Ads MCP Server</span>
         </nav>
 
         <div class="project-hero">
-          <div class="project-type">Engineering Case · MCP Server Design · Google Ads + Pinterest · Production</div>
-          <h1 class="project-title">Designing a Custom MCP Server from Official Ad API Endpoints</h1>
+          <div class="project-type">Engineering Case · MCP Server · Google Ads API</div>
+          <h1 class="project-title">Custom Google Ads MCP Server: The Business Logic Between an AI Agent and the Ads API</h1>
           <p class="project-lead">
-            Two purpose-built MCP servers that let an AI agent operate a live advertising account. The interesting work was not wiring up the protocol, which is straightforward. It was deciding what the tools should be: reading the official Google Ads and Pinterest API references end to end, working out which operations an agent genuinely needs, and collapsing a long endpoint list into a short set of tools that carry the account's own rules inside them.
+            I built a Google Ads MCP Server in Python: 36 tools on FastMCP between Claude Code and the Google Ads API, shaped around the business logic of my Etsy shop. Every write passes Pydantic rules, a preflight gate and a traced journal. Google's official MCP server is read-only.
           </p>
           <div class="metrics-row">
-            <div class="metric-box"><strong>18 tools</strong><span>Google Ads MCP server over API v23</span></div>
-            <div class="metric-box"><strong>9 tools</strong><span>Pinterest Ads MCP server over API v5</span></div>
-            <div class="metric-box"><strong>3 levels</strong><span>Tool surface mirrors campaign, ad group, ad</span></div>
-            <div class="metric-box"><strong>2 references</strong><span>Official API docs analysed to design the surface</span></div>
-          </div>
-        </div>
-
-        <div class="content-grid">
-          <div class="neo-card">
-            <div class="section-label">Starting point</div>
-            <h2 class="section-title">An off-the-shelf MCP server mirrors the API</h2>
-            <div class="prose">
-              <p>The first version of this setup used a publicly available MCP server for Google Ads. It works, and for a general audience its design is the correct one: it exposes the advertising API more or less as it is, one tool per operation, each taking the platform's native request objects.</p>
-              <p>That means the agent receives a long list of low level methods named after the mutations they wrap, and has to compose the right sequence itself on every task. It also means the server has no opinion about what a good campaign looks like, because it cannot have one.</p>
-              <p>Running an account that way surfaced the real problem quickly. The agent reported success consistently, because the only signal available to it was whether the API accepted a call.</p>
-            </div>
-          </div>
-
-          <div class="neo-card">
-            <div class="section-label">Method</div>
-            <h2 class="section-title">Working from the endpoint reference</h2>
-            <div class="prose">
-              <p>The design work started in the official documentation for both platforms rather than in code:</p>
-              <ol>
-                <li>Inventory the endpoints and their exact request and response schemas, including the reporting fields each one accepts.</li>
-                <li>List the operations that actually get performed on the account in a normal week, in plain language.</li>
-                <li>Map the second list onto the first. Some intents map to one endpoint. Several map to a chain of calls. Many endpoints map to nothing anyone needs.</li>
-                <li>Expose one tool per intent, and keep the chains, the field selection and the payload assembly inside the server.</li>
-              </ol>
-              <p>The mismatch between those two lists is the whole design. An API is organised by resource, because that is the sane way to publish one. Work is organised by intent.</p>
-            </div>
+            <div class="metric-box"><strong>36 tools</strong><span>24 read · 12 write</span></div>
+            <div class="metric-box"><strong>0.10-3.00 EUR</strong><span>CPC ceiling, ±0.05 EUR steps</span></div>
+            <div class="metric-box"><strong>237 calls</strong><span>traced and journaled, 01.10-13.10.2026</span></div>
+            <div class="metric-box"><strong>0.82 → 0.47 EUR</strong><span>average CPC, Jul vs Aug-Sep 2026</span></div>
           </div>
         </div>
 
         <div class="neo-card">
-          <div class="section-label">Design rule</div>
-          <h2 class="section-title">The tool surface mirrors the ad hierarchy, not the endpoint list</h2>
+          <div class="section-label">Starting point</div>
+          <h2 class="section-title">Why not the official Google Ads MCP server</h2>
           <div class="prose">
-            <p>An advertising account has a natural shape: campaigns contain ad groups, ad groups contain ads and keywords. Every real task lands on one of those levels. Shaping the tools the same way means the agent never has to translate between two different mental models, and it makes the surface small enough to reason about.</p>
-          </div>
-          <div class="arch-diagram">
-            Campaign level<br>
-            &nbsp;&nbsp;↓ audit against the quality checklist, budget, targeting, bid ceiling, impression share<br>
-            Ad group level<br>
-            &nbsp;&nbsp;↓ keywords, negative shields, collision detection across the whole account<br>
-            Ad level<br>
-            &nbsp;&nbsp;↓ creative validation, asset coverage, deployment<br>
-            Every write path<br>
-            &nbsp;&nbsp;↓ validate against business rules → create paused → wait for human approval
-          </div>
-          <div class="prose">
-            <p>Tool names follow the intent rather than the mutation. <code>audit_campaign_4level_shield</code> runs the full quality checklist over a campaign. <code>mine_search_terms_and_harvest_negatives</code> pulls the search query report, classifies terms and returns the negatives worth applying. <code>auto_fix_collisions_and_dupes</code> looks across campaigns for the same keyword competing with itself. Each one hides several API calls and a set of rules.</p>
-          </div>
-        </div>
-
-        <div class="content-grid">
-          <div class="neo-card">
-            <div class="section-label">Worked example 1</div>
-            <h2 class="section-title">Choosing columns instead of forwarding everything</h2>
-            <div class="prose">
-              <p>Pinterest exposes campaign analytics through a reporting endpoint that takes a catalogue of available columns. Handing an agent that catalogue and asking it to choose each time would be slow, inconsistent and expensive in context.</p>
-              <p>The tool pins the set instead. <code>get_pinterest_analytics_report</code> always requests exactly nine columns: campaign id and name, spend, paid impressions, clickthroughs, outbound clicks, saves, total engagement and click-through rate.</p>
-              <p>One request from the agent also fans out into two calls: fetch the campaigns to collect their ids, then request analytics for those ids over the chosen date range.</p>
-              <p>The server also does the unit conversion. Spend arrives from the API in micro units and is turned into currency before the agent ever sees it, which removes an entire category of silent arithmetic mistakes.</p>
-            </div>
-          </div>
-
-          <div class="neo-card">
-            <div class="section-label">Worked example 2</div>
-            <h2 class="section-title">Encoding an invariant the API does not enforce</h2>
-            <div class="prose">
-              <p>Google Ads mutations take a field mask that tells the API which fields to update. Omit it while changing a bid and the call still succeeds. The platform simply applies its fallback and the bid quietly drops to its minimum, which takes the keyword out of the auction.</p>
-              <p>Nothing about that response looks like a failure, so an agent has no way to notice it.</p>
-              <p>In the server every write path that touches a bid or a status builds the mask from the object being updated, using <code>protobuf_helpers.field_mask</code>, before the operation is sent. Three write paths carry it.</p>
-              <p>The agent is never asked to remember this. It cannot express the broken version of the call, because the tool does not offer it.</p>
-            </div>
+            <p>This is my own project, built for my Etsy shop MoonBloom, which sells children's wallpapers and runs Google Ads campaigns in DE, AT, ES and FR. The code is private, so I show short fragments only.</p>
+            <p>My first question was whether I needed to build anything. Google's documentation (developers.google.com, checked 2026-10-13) describes its official Google Ads MCP server as read-only in the current release. It has three tools: <code>list_accessible_customers</code>, <code>search</code> for GAQL queries and <code>get_resource_metadata</code>. In Google's words: "It cannot modify bids, pause campaigns, or create new assets."</p>
+            <p>Write access therefore means calling the mutate methods of the Google Ads API directly. The API executes what it is sent. It has no object locking, so concurrent edits raise <code>CONCURRENT_MODIFICATION_ERROR</code>. Google itself recommends test accounts, <code>validate_only</code> and Change History for making changes safely.</p>
           </div>
         </div>
 
         <div class="highlight-box">
-          <h2>The rule that came out of it</h2>
-          <p>An agent optimises against whatever definition of success its tools give it. If the only available signal is <code>the API accepted this call</code>, that is what gets optimised, and the report will say everything is fine. Moving the definition of correct into the tool surface turns a class of expensive mistakes into calls that cannot be made at all.</p>
+          <h2>My conclusion</h2>
+          <p>The business rules have to live in a layer I own: how far a bid may move, which searches are never wanted, how many ads may run. A prompt can ask the agent to respect them. Code can refuse the call when it does not. That is the whole reason this server exists.</p>
         </div>
 
         <div class="neo-card">
-          <div class="section-label">The decision</div>
-          <h2 class="section-title">Why build a custom MCP server instead of using the ready-made one</h2>
+          <div class="section-label">Architecture</div>
+          <h2 class="section-title">Architecture: one FastMCP tool call, end to end</h2>
           <div class="prose">
-            <p>The public server is well made and it is honest about what it is: a faithful mirror of the advertising API. For general use that is exactly right, and for a while it was enough here too.</p>
-            <p>Generality becomes the constraint at the point where an account acquires standards of its own. A shared, public tool has no way of knowing what counts as a correct ad in your business, so it cannot refuse an incorrect one. Five specific gaps made the case for building a replacement.</p>
-            <h3>1. Level of abstraction</h3>
-            <p>Low level methods named after API mutations put the burden of composing a correct sequence on the agent, every time. The same task can be assembled differently on different days, which makes behaviour hard to reason about and harder to trust.</p>
-            <h3>2. Invariants the platform does not check</h3>
-            <p>The field mask case above is the clearest example. A general purpose server cannot forbid that call, because without knowing the intent it cannot tell a mistake from a deliberate reset. A facade built for one account knows the intent and can refuse.</p>
-            <h3>3. Knowledge of the business</h3>
-            <p>Creative standards, link formats, product constraints and promotional rules exist only in the account they belong to. A public server has no access to any of it, so validation against those rules has to live somewhere else, which in practice means it lives in a prompt and gets forgotten.</p>
-            <h3>4. No cross-campaign view</h3>
-            <p>Endpoints operate on one object at a time. Keyword cannibalisation exists between objects, so no single call can see it. Detecting it requires a tool designed to look across the account, which is a shape the API reference does not suggest.</p>
-            <h3>5. The cost of context</h3>
-            <p>Passing whole platform request and response structures through the agent's context on every action makes routine work slow and expensive. With a facade the agent sends an identifier and some copy, and the server assembles the payload.</p>
+            <p>I wrote this MCP server in Python with FastMCP from the official MCP SDK (mcp 1.28.1) over stdio. Claude Code is the agent, and the server is registered in the project's <code>.mcp.json</code>. This is what happens between one tool call and Google:</p>
+          </div>
+          <div class="arch-diagram">
+            1. Claude Code calls an MCP tool<br>
+            &nbsp;&nbsp;↓ the mcp_tool() decorator in server.py registers it with FastMCP and tags the call with the tool name<br>
+            2. Input shield<br>
+            &nbsp;&nbsp;↓ writes: build_request() builds a Pydantic model, a failed rule is journaled as REQUEST_REJECTED, Google is never called<br>
+            3. Preflight gate<br>
+            &nbsp;&nbsp;↓ refusal_for() returns PREFLIGHT_REQUIRED until the session's log check has passed<br>
+            4. Business logic in tools/*.py<br>
+            &nbsp;&nbsp;↓ campaign, adgroup, rsa, asset, negative, history, observability, eval and preflight tools<br>
+            5. Google Ads client with a gRPC interceptor<br>
+            &nbsp;&nbsp;↓ core/client.py logs every RPC and retries read methods only<br>
+            6. Result and telemetry<br>
+            &nbsp;&nbsp;↓ append_audit_log (secrets redacted) → logs/audit.jsonl → Cloud Logging, span → Cloud Trace
+          </div>
+          <div class="prose">
+            <p>Reads get ID validation (<code>IdArguments</code>, digits only). Writes get a full Pydantic model, so a malformed request dies at step 2.</p>
+            <p>The client retries read methods only: 2 retries, after 1 s and 2 s plus up to 0.5 s of jitter. Writes are never retried automatically, because a repeated mutation could apply twice.</p>
+            <p>The rest of the stack: google-ads client library 31.0.0, Pydantic 2.13, the OpenTelemetry SDK with a Cloud Trace exporter and gRPC instrumentation, and Google Cloud Logging.</p>
           </div>
         </div>
 
         <div class="neo-card">
-          <div class="section-label">Comparison</div>
-          <h2 class="section-title">Off-the-shelf MCP server versus a purpose-built facade</h2>
+          <div class="section-label">Tool surface</div>
+          <h2 class="section-title">Tool catalog: 36 tools over the Google Ads API</h2>
+          <div class="prose">
+            <p>24 tools read and 12 write. I grouped them by what they are for.</p>
+          </div>
           <div class="table-scroll">
             <table class="compare">
               <thead>
                 <tr>
-                  <th scope="col">Dimension</th>
-                  <th scope="col">Off-the-shelf MCP server</th>
-                  <th scope="col">Purpose-built facade</th>
-                  <th scope="col">Consequence when it goes wrong</th>
+                  <th scope="col">Group</th>
+                  <th scope="col">Tools</th>
+                  <th scope="col">Read / write</th>
+                  <th scope="col">Rule it carries</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <th scope="row">Abstraction level</th>
-                  <td>Raw API. Many low level methods named after the mutation they wrap.</td>
-                  <td>Business operations such as <code>audit_campaign_4level_shield</code> and <code>mine_search_terms_and_harvest_negatives</code>.</td>
-                  <td class="risk">Effort goes into plumbing rather than into the account.</td>
+                  <th scope="row">Preflight, journal, observability (7)</th>
+                  <td><code>preflight_log_check</code> <code>get_change_history</code> <code>verify_changes_logged</code> <code>get_cloud_logs</code> <code>get_cloud_trace</code> <code>analyze_tool_health</code> <code>evaluate_agent_process</code></td>
+                  <td>7 read</td>
+                  <td>Opens or keeps shut the preflight gate, reconciles Google's change history with the journal, scores tool health and agent behaviour.</td>
                 </tr>
                 <tr>
-                  <th scope="row">Platform quirks</th>
-                  <td>Unguarded. A bid mutation without a field mask succeeds and silently resets the bid to the 0.01 EUR minimum.</td>
-                  <td>The mask is built inside the server on every write path.</td>
-                  <td class="risk">A keyword drops out of the auction and nothing reports an error.</td>
+                  <th scope="row">Campaigns, budgets, bids (10)</th>
+                  <td><code>get_campaigns</code> <code>get_campaign_details</code> <code>get_campaign_targeting_overview</code> <code>get_ad_groups</code> <code>get_ad_group_keywords</code><br>Write: <code>toggle_campaign_status</code> <code>set_campaign_daily_budget</code> <code>step_bid_threshold</code> <code>set_ad_group_cpc_bid</code> <code>set_keyword_status</code></td>
+                  <td>5 read · 5 write</td>
+                  <td>CPC ceiling in steps of 0.05 EUR within 0.10-3.00 EUR, daily budget 1.00-100.00 EUR in whole cents, ad group bid 0.05-3.00 EUR for MANUAL_CPC only.</td>
                 </tr>
                 <tr>
-                  <th scope="row">Business rules</th>
-                  <td>Unknown to the server by design.</td>
-                  <td>Encoded in the tool and checked on every write.</td>
-                  <td class="risk">Ads go live that contradict the actual offer.</td>
+                  <th scope="row">Ads (2)</th>
+                  <td><code>get_campaign_ads</code><br>Write: <code>deploy_golden_rsa</code></td>
+                  <td>1 read · 1 write</td>
+                  <td>15 headlines, 4 descriptions, headline 1 is the Dynamic Keyword Insertion headline, at most 3 enabled RSAs, create and pause in one request.</td>
                 </tr>
                 <tr>
-                  <th scope="row">Creative validation</th>
-                  <td>Will publish a partial ad with a poor strength rating.</td>
-                  <td>Hard gate at 15 headlines and 4 descriptions in the target language.</td>
-                  <td class="risk">Weaker ad strength raises the price of the same placement.</td>
+                  <th scope="row">Assets (7)</th>
+                  <td><code>get_assets_associations</code> <code>get_assets_performance</code> <code>get_assets_diversity</code> <code>get_campaign_images</code> <code>get_campaign_assets_overview</code><br>Write: <code>link_asset_to_entity</code> <code>unlink_asset_from_entity</code></td>
+                  <td>5 read · 2 write</td>
+                  <td>Reads show coverage and performance. The two writes pass the input shield and the preflight gate like every other write.</td>
                 </tr>
                 <tr>
-                  <th scope="row">Cross-campaign checks</th>
-                  <td>No concept of overlap between your own campaigns.</td>
-                  <td><code>auto_fix_collisions_and_dupes</code> scans the account and clears duplicates.</td>
-                  <td class="risk">Your campaigns bid against each other in the same auction.</td>
-                </tr>
-                <tr>
-                  <th scope="row">Context cost</th>
-                  <td>Full platform payloads travel through the agent's context on every call.</td>
-                  <td>Identifiers and copy in, assembled payload built server side.</td>
-                  <td class="risk">Every routine operation is slower and more expensive.</td>
+                  <th scope="row">Search terms, negatives, audits, recommendations (10)</th>
+                  <td><code>mine_search_terms_and_harvest_negatives</code> <code>audit_campaign_4level_shield</code> <code>get_daily_performance</code> <code>get_impression_share_loss</code> <code>fetch_google_ai_recommendations</code> <code>search_keyword_ideas</code><br>Write: <code>apply_negative_shield</code> <code>add_negative_keywords</code> <code>remove_negative_keyword</code> <code>auto_fix_collisions_and_dupes</code></td>
+                  <td>6 read · 4 write</td>
+                  <td>Per-language negative lists (DE 58, FR 40, ES 39 words), duplicates skipped, chunks of 500. Duplicates of the High Intent campaign are paused elsewhere.</td>
                 </tr>
               </tbody>
             </table>
@@ -346,23 +365,281 @@
         </div>
 
         <div class="neo-card">
-          <div class="section-label">Write safety</div>
-          <h2 class="section-title">Paused by default</h2>
+          <div class="section-label">Business rules</div>
+          <h2 class="section-title">Business rules in code, not in the prompt</h2>
           <div class="prose">
-            <p>Every tool that creates or changes something able to spend money produces it in a paused state. New campaigns, new ad groups, bid adjustments: prepared, validated, inert until a person enables them.</p>
-            <p>The reasoning is specific. The realistic failure mode for a capable agent with write access is not a rogue decision, it is a confident action taken on a misread instruction. A hypothetical question in a chat window should never be able to become a live change to a real budget, and a paused-by-default policy makes that structurally impossible rather than unlikely.</p>
-            <p>Alongside that, every decision, test and adjustment is written to a dated log, so the account carries an audit trail instead of a black box.</p>
+            <p>Each rule below exists because of money or ad quality, and each lives in a file I can read, not in a system prompt the model may weigh against something else.</p>
+          </div>
+          <div class="table-scroll">
+            <table class="compare">
+              <thead>
+                <tr>
+                  <th scope="col">Rule</th>
+                  <th scope="col">Where</th>
+                  <th scope="col">What happens on violation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Preflight gate</th>
+                  <td><code>shield/preflight.py</code> <code>tools/preflight_tools.py</code></td>
+                  <td class="risk">PREFLIGHT_REQUIRED, journaled, no Google call. OK opens the gate. ATTENTION keeps it shut until the owner says "continue" and the agent re-runs with acknowledge=True.</td>
+                </tr>
+                <tr>
+                  <th scope="row">CPC ceiling (Maximize Clicks)</th>
+                  <td><code>tools/campaign_tools.py</code></td>
+                  <td class="risk">Steps of ±0.05 EUR only, within 0.10-3.00 EUR, TARGET_SPEND campaigns only. Out of range or uncapped: refused, nothing sent.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Daily budget</th>
+                  <td><code>shield/models_campaign.py</code> <code>core/client.py</code></td>
+                  <td class="risk">Outside 1.00-100.00 EUR the shield rejects the request. Amounts are rounded to whole cents.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Ad group bid</th>
+                  <td><code>shield/models_adgroup.py</code></td>
+                  <td class="risk">Allowed range 0.05-3.00 EUR, MANUAL_CPC campaigns only.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Responsive search ads ("golden RSA")</th>
+                  <td><code>shield/models_ad.py</code> <code>tools/rsa_tools.py</code></td>
+                  <td class="risk">Exactly 15 headlines and 4 descriptions, headline 1 is the DKI headline, headline up to 30 characters, description up to 90, final URL carries the shop's coupon parameter. At most 3 enabled RSAs per ad group: the new ad is created and the oldest paused in the same mutate request.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Negative keyword shields</th>
+                  <td><code>tools/negative_tools.py</code></td>
+                  <td class="risk">Per-language lists (DE 58, FR 40, ES 39 words). Words already present are skipped, the rest is sent in chunks of 500.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Cross-campaign duplicates</th>
+                  <td><code>tools/negative_tools.py</code></td>
+                  <td class="risk">Keywords that also exist in the High Intent campaign are paused in the other campaigns (<code>auto_fix_collisions_and_dupes</code>).</td>
+                </tr>
+                <tr>
+                  <th scope="row">Sparse update masks</th>
+                  <td>7 write paths</td>
+                  <td class="risk">Every update sends an explicit field mask, so only the named field changes.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Outside changes</th>
+                  <td><code>tools/history_tools.py</code></td>
+                  <td class="risk">Anything changed by a script, another agent or a person in the UI shows up as OUTSIDE_CHANGES.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Retries</th>
+                  <td><code>core/client.py</code></td>
+                  <td class="risk">Reads only. Writes are never retried by the client.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="prose" style="margin-top:22px;">
+            <h3>The CPC ceiling: a bid the agent can only nudge</h3>
+            <p>Under Maximize Clicks the campaign CPC ceiling is the bid lever that counts, because that strategy ignores ad group bids. So it is the one number that decides what a click may cost. The agent may move it by 0.05 EUR per call and never outside 0.10-3.00 EUR, which caps how much damage one wrong call can do to the cost per click. An uncapped campaign has no known starting point, so the tool refuses to guess one.</p>
+          </div>
+          <div class="code-block">
+            <div class="code-cap">tools/campaign_tools.py, the CPC ceiling step</div>
+<pre><code>if c.bidding_strategy_type.name != "TARGET_SPEND":
+    raise ValueError(f"Campaign '{c.name}' uses {c.bidding_strategy_type.name}, not TARGET_SPEND (Maximize Clicks); it has no CPC ceiling to step.")
+
+curr_micros = c.target_spend.cpc_bid_ceiling_micros
+if not curr_micros:
+    raise ValueError(f"Campaign '{c.name}' has no CPC ceiling set (uncapped); refusing to guess a starting value.")
+
+step_micros = 50_000 if req.direction == "+0.05" else -50_000
+new_micros = curr_micros + step_micros
+if not CEILING_MIN_MICROS &lt;= new_micros &lt;= CEILING_MAX_MICROS:
+    raise ValueError(f"New ceiling {new_micros / 1e6:.2f} EUR is outside the 0.10-3.00 EUR safeguard.")</code></pre>
+          </div>
+
+          <div class="prose" style="margin-top:22px;">
+            <h3>The budget: a rounding bug that would look like a Google error</h3>
+            <p>Budgets reach the API in micros. In floating point <code>int(4.10 * 1_000_000)</code> is 4099999, and the API rejects it because it is not a multiple of 0.01 EUR. The helper rounds to whole cents first, so a correct budget never fails in a way the agent would have to interpret. The daily budget itself stays within 1.00-100.00 EUR, so a slipped decimal cannot turn a small daily spend into a large one.</p>
+          </div>
+          <div class="code-block">
+            <div class="code-cap">core/client.py, the budget in whole cents</div>
+<pre><code>def eur_to_micros(amount_eur: float) -&gt; int:
+    """
+    Converts EUR to micros rounded to whole cents.
+    int(4.10 * 1_000_000) == 4099999, which the API rejects as not a multiple of 0.01 EUR.
+    """
+    return int(round(amount_eur * 100)) * 10_000</code></pre>
+          </div>
+
+          <div class="prose" style="margin-top:22px;">
+            <h3>The gate: nothing runs until the log check has passed</h3>
+            <p>The preflight gate is a few lines because the rule is simple: until the session's log check has passed, every non-exempt tool returns the refusal text. The agent cannot argue its way past it, because the refusal happens in code before any tool body runs.</p>
+          </div>
+          <div class="code-block">
+            <div class="code-cap">shield/preflight.py, the gate</div>
+<pre><code>def refusal_for(function: str) -&gt; Optional[str]:
+    """The refusal text when `function` must not run yet, else None."""
+    if not required() or is_open() or function in PREFLIGHT_EXEMPT:
+        return None
+    return REFUSAL</code></pre>
+          </div>
+
+          <div class="prose" style="margin-top:22px;">
+            <h3>Ad quality and the negative lists</h3>
+            <p>The golden RSA rules protect ad quality: every live ad is complete, starts with the keyword-insertion headline, carries the shop's coupon and stays within the character limits. Creating the new ad and pausing the oldest in one mutate request means an ad group is never left half changed. The negative shields protect the budget the other way round: they keep spend away from searches I never want to pay for, in each language I advertise in.</p>
           </div>
         </div>
 
         <div class="neo-card">
-          <div class="section-label">Outcome</div>
-          <h2 class="section-title">What this changed in practice</h2>
+          <div class="section-label">Observability</div>
+          <h2 class="section-title">Tracing and post-run analysis: closing the loop</h2>
           <div class="prose">
-            <p>With the rules living in the tools, the recurring account work became routine instead of occasional: search query audits with negatives applied before the next spend cycle, cross-campaign collision checks, creative compliance enforced before an ad can run, and both channels answering in the same shape.</p>
-            <p>Adding another platform is now a matter of adding a server rather than reworking the whole setup. Google Analytics 4 and Meta Ads are the next candidates.</p>
-            <p><a href="/articles/ai-google-ads-management/?utm_source=portfolio&amp;utm_medium=internal&amp;utm_campaign=ai_ads_management_project&amp;utm_content=business_article_link"><strong>One control panel for every ad channel: the same story for a non-technical reader →</strong></a></p>
-            <p>For a case with real numbers on a live account, see <a href="/articles/google-ads-mcp-ai-agent/?utm_source=portfolio&amp;utm_medium=internal&amp;utm_campaign=ai-ads-management&amp;utm_content=business_case_link">Google Ads MCP: an AI agent that cannot burn your budget</a>.</p>
+            <p>Rules in code stop bad calls. They do not tell me whether the agent behaved well over a whole session, or whether someone changed the account behind its back. So I treat one agent run as one turn of a loop. The evals are not a dashboard I might remember to open: their result is the input that decides whether the next run may start.</p>
+          </div>
+          <div class="arch-diagram">
+            Preflight gate: preflight_log_check reads the journal<br>
+            &nbsp;&nbsp;↓ OK opens the gate, ATTENTION keeps every ad tool shut until the owner reviews it<br>
+            Agent run: Claude Code calls tools<br>
+            &nbsp;&nbsp;↓ every call becomes one span and one structured log line<br>
+            Trace and structured log: Cloud Trace, logs/audit.jsonl, Cloud Logging<br>
+            &nbsp;&nbsp;↓ analyze_tool_health, evaluate_agent_process, verify_changes_logged<br>
+            Post-run evals<br>
+            &nbsp;&nbsp;↓ their findings are read by the next preflight<br>
+            Next preflight gate
+          </div>
+        </div>
+
+        <div class="content-grid">
+          <div class="neo-card">
+            <div class="section-label">Trace</div>
+            <h3 class="section-title">Every tool call is a trace</h3>
+            <div class="prose">
+              <p>I use an OpenTelemetry TracerProvider with a Cloud Trace exporter (<code>shield/cloud_sink.py</code>). Each tool call produces one span named <code>tools/call</code> plus the tool name, with the attribute <code>gen_ai.tool.name</code>.</p>
+              <p>gRPC instrumentation adds a child span for every Google Ads RPC inside it, filtered to Google Ads calls only. The agent can open a trace itself with <code>get_cloud_trace</code>, so a slow call can be followed down to the RPC that took the time.</p>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Logs</div>
+            <h3 class="section-title">Structured logs, correlated with traces</h3>
+            <div class="prose">
+              <p>Each call writes one JSON line: timestamp, tool, action_type (READ or MUTATION), args, success, error_code, latency_ms, sla_status, a google_ads_api block (calls, ms, failed, retried, methods), request ids, trace id and span id, session_id and operator. Secrets are redacted before writing.</p>
+              <p>The line goes to <code>logs/audit.jsonl</code> and is mirrored to Cloud Logging. Severity is NOTICE for a successful change, WARNING for a shield refusal and ERROR for a Google-side failure. The trace id sits in the log line, so I can jump from a log entry to its span. The agent reads its own logs with <code>get_cloud_logs</code>.</p>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">After the run</div>
+            <h3 class="section-title">After the run: tool health</h3>
+            <div class="prose">
+              <p><code>analyze_tool_health</code> flags a tool as slow when its p95 is above 2500 ms with at least 3 samples. It flags an error spike when there are at least 3 errors, at least 2x the previous window and an error rate of at least 10 percent. Every call over 2500 ms is marked DEGRADED.</p>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">After the run</div>
+            <h3 class="section-title">After the run: a deterministic process eval</h3>
+            <div class="prose">
+              <p><code>evaluate_agent_process</code> is a guardrail eval over the journal with no LLM judge, so the same journal always gives the same verdict. It checks four rules:</p>
+              <ul>
+                <li><strong>READ_FIRST:</strong> the session must read <code>get_change_history</code> before its first change. Otherwise the agent acts on a picture of the account that a person may already have changed.</li>
+                <li><strong>ONE_LEVER:</strong> one kind of change per test batch, where changes within 10 minutes form one batch. If a budget and a CPC ceiling move together, I cannot tell which one moved the result.</li>
+                <li><strong>AUTO_FIX_ALONE:</strong> <code>auto_fix_collisions_and_dupes</code> pauses keywords without a dry run, so it must never run together with other changes. Run alone, its effect is easy to attribute in the journal.</li>
+                <li><strong>VERIFY_AFTER:</strong> <code>verify_changes_logged</code> must run between 15 minutes and 24 hours after the last change. Google's change history lags about 15 minutes, so an earlier check would see nothing.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Around the agent</div>
+            <h3 class="section-title">Changes made around the agent</h3>
+            <div class="prose">
+              <p>The agent is not the only one who touches the account. <code>verify_changes_logged</code> reconciles Google's change_event history with the journal's MUTATION rows. A change with no matching MCP call is reported as OUTSIDE_CHANGES: a script, another agent or a person in the UI.</p>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Before the next run</div>
+            <h3 class="section-title">Before the next run: the preflight gate</h3>
+            <div class="prose">
+              <p><code>preflight_log_check</code> runs three checks, TOOL_HEALTH, OUTSIDE_CHANGES and AGENT_PROCESS, over the last 7 days or since the last accepted checkpoint (max 30).</p>
+              <p>OK opens the gate. ATTENTION keeps every ad tool shut until I have reviewed the findings and say "continue", after which the agent re-runs the check with acknowledge=True. Between 05.10 and 12.10.2026 the gate refused tools three times with PREFLIGHT_REQUIRED, and Google was not called.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="neo-card">
+          <div class="section-label">Real example</div>
+          <h3 class="section-title">The checker needed checking too (2026-10-05)</h3>
+          <div class="prose">
+            <p>On 2026-10-05 two of the three preflight checks read the cloud journal, which started on 05.10, and the third read the local journal, which started on 01.10. As a result AGENT_PROCESS missed five violations. The fix: all three checks now choose the journal source the same way.</p>
+            <h3>What the journal shows (01.10-13.10.2026, 13:12 UTC)</h3>
+            <ul class="stack-list">
+              <li>237 calls in 15 sessions: 216 reads and 21 changes.</li>
+              <li>236 calls carry a trace id.</li>
+              <li>1 change was rejected by the shield.</li>
+              <li>Median latency 1.3 s, p95 5.6 s, with 37 calls marked DEGRADED.</li>
+              <li>0 retries.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="neo-card">
+          <div class="section-label">Incidents</div>
+          <h2 class="section-title">Incidents the guardrails caught</h2>
+          <div class="prose">
+            <p>Most rules in the table above started as a mistake. Each entry names the date, what happened and the rule it produced.</p>
+            <ol class="timeline">
+              <li><strong>04.08.2026.</strong> A field-mask helper silently dropped a field set to False, so Google accepted an update that changed nothing. I caught it on a manual read-back and sent the update again with an explicit mask. Rule: every update sends an explicit field mask.</li>
+              <li><strong>01.10.2026.</strong> The RSA deploy paused every ad when 2 or more existed and could drop the first headline. Rule: headline 1 must be the DKI headline, at most 3 RSAs stay enabled, and the oldest is paused in the same request.</li>
+              <li><strong>01.10.2026.</strong> The bid tool changed ad group bids, which Maximize Clicks ignores. Rule: the tool now steps the campaign CPC ceiling instead.</li>
+              <li><strong>05.10.2026.</strong> A ceiling change with a malformed direction was rejected by the Pydantic shield as REQUEST_REJECTED. Google was never called. Rule: the shield, not the prompt, decides what a valid request is.</li>
+              <li><strong>05.10.2026.</strong> A non-numeric campaign ID reached a GAQL query and raised BAD_NUMBER. Rule: an ID validator (digits only) now runs before every read.</li>
+              <li><strong>05.10.2026.</strong> The journal-source mismatch in the preflight, described above. Rule: all three checks choose the journal source the same way.</li>
+              <li><strong>05.10 to 12.10.2026.</strong> Three PREFLIGHT_REQUIRED refusals: the gate stopped tools until the log check had passed. Rule: the gate itself, working as designed.</li>
+              <li><strong>13.10.2026.</strong> The keyword tool rejected a request with 25 keywords (limit 20) and an unsupported country code before calling Google. Rule: read tools validate their input too.</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="neo-card">
+          <div class="section-label">Results</div>
+          <h2 class="section-title">Results on the live account</h2>
+          <div class="prose">
+            <ul>
+              <li>Average CPC fell from 0.82 EUR (05.07-04.08.2026, 2 campaigns) to 0.47 EUR (18.08-17.09.2026, all 6 spending campaigns, 276.66 EUR for 592 clicks).</li>
+              <li>The spend was about 8.92 EUR per day across DE, AT, ES and FR (18.08-17.09.2026).</li>
+              <li>909 search queries were analysed. A leak of 22.07 EUR (11 clicks, 0 sales) was found and its ad group paused on 04.08.2026. 36 duplicate keywords were paused.</li>
+            </ul>
+            <p>Two honest notes. The two CPC windows cover different campaigns, so this is not a controlled comparison. And my sales happen on Etsy, which Google Ads does not attribute, so I make no ROAS or sales claim here.</p>
+            <p>The business side of the same system, written for shop owners: <a href="/articles/google-ads-mcp-ai-agent/?utm_source=portfolio&amp;utm_medium=internal&amp;utm_campaign=ai-ads-management&amp;utm_content=business_article"><strong>Google Ads MCP: how an AI agent runs your ads without burning the budget →</strong></a></p>
+          </div>
+        </div>
+
+        <div class="neo-card">
+          <div class="section-label">FAQ</div>
+          <h2 class="section-title">Questions about building a Google Ads MCP server</h2>
+          <div class="faq">
+            <details class="faq-item">
+              <summary>What is a Google Ads MCP server?</summary>
+              <div class="faq-a">It is a program that exposes Google Ads operations as tools an AI agent can call over the Model Context Protocol. Google ships an official one that only reads. Mine is a custom MCP server in Python with 36 tools, 24 to read and 12 to change an account, and it holds my business rules, so an agent such as Claude Code cannot send arbitrary API calls.</div>
+            </details>
+            <details class="faq-item">
+              <summary>Why not use Google's official Google Ads MCP server?</summary>
+              <div class="faq-a">Google's documentation describes it as read-only: it lists accounts, runs GAQL queries and returns resource metadata. It cannot modify bids, pause campaigns or create assets. Writing means calling the Google Ads API mutate methods directly, and the API executes what it is sent. So the rules about how far a bid may move or how many ads may run have to live in a layer I own.</div>
+            </details>
+            <details class="faq-item">
+              <summary>How do you stop an AI agent from overspending in Google Ads?</summary>
+              <div class="faq-a">I put the limits in code instead of the prompt. A campaign CPC ceiling moves only in steps of 0.05 EUR and must stay within 0.10 to 3.00 EUR, the daily budget within 1.00 to 100.00 EUR, and a request outside the range is refused before Google is called. A preflight gate also blocks every ad tool until the log check has passed.</div>
+            </details>
+            <details class="faq-item">
+              <summary>How do you trace what an AI agent did?</summary>
+              <div class="faq-a">Every tool call creates an OpenTelemetry span named tools/call plus the tool name, exported to Cloud Trace, with a child span for each Google Ads RPC. The same call writes one structured JSON log line with the trace id, mirrored to Cloud Logging, and secrets are redacted. After the run, analyze_tool_health and evaluate_agent_process read that journal.</div>
+            </details>
+            <details class="faq-item">
+              <summary>How do you build an MCP server in Python with FastMCP?</summary>
+              <div class="faq-a">I use FastMCP from the official MCP SDK over stdio. A small decorator, mcp_tool(), registers each function as a tool and tags the call with its name. Pydantic models validate every write before any business logic runs, and Claude Code finds the server through the project's .mcp.json. The hard part is not the protocol but the rules behind each tool.</div>
+            </details>
+            <details class="faq-item">
+              <summary>Can Claude Code manage Google Ads?</summary>
+              <div class="faq-a">It can with a server behind it. In my setup Claude Code reads campaigns, search terms and change history, then changes budgets, CPC ceilings, negative keywords and ads through the 12 write tools. In my setup it has no direct API access, only the server. Every call passes the Pydantic rules and the preflight gate and lands in a traced journal. 237 calls were logged from 01.10 to 13.10.2026.</div>
+            </details>
           </div>
         </div>
 
@@ -371,12 +648,13 @@
           <h2 class="section-title">Tools used</h2>
           <div class="chips">
             <span class="chip">Python</span>
+            <span class="chip">FastMCP</span>
             <span class="chip">MCP</span>
-            <span class="chip">Model Context Protocol</span>
-            <span class="chip">Google Ads API v23</span>
-            <span class="chip">Pinterest Ads API v5</span>
-            <span class="chip">Protobuf field masks</span>
-            <span class="chip">Obsidian</span>
+            <span class="chip">Google Ads API</span>
+            <span class="chip">Pydantic</span>
+            <span class="chip">OpenTelemetry</span>
+            <span class="chip">Cloud Trace</span>
+            <span class="chip">Cloud Logging</span>
             <span class="chip">Claude Code</span>
           </div>
         </div>
@@ -384,7 +662,7 @@
         <div class="cta-strip">
           <div>
             <strong>Need an agent that can safely touch a production system?</strong>
-            <p>I design tool surfaces for AI agents working against real APIs, where the interesting part is which operations to expose and which invariants to enforce. Happy to talk through a specific system.</p>
+            <p>I design the layer between an AI agent and a real API: which tools to expose, which rules to enforce in code and how to trace every call. Happy to talk through a specific system.</p>
           </div>
           <div style="display:flex;gap:10px;flex-wrap:wrap;">
             <a class="cta-btn" href="https://calendly.com/azhyshchev/30min?utm_source=portfolio&amp;utm_medium=website&amp;utm_campaign=booking&amp;utm_content=ai_ads_management_project" target="_blank" rel="noreferrer">Book a 30 min call</a>
@@ -408,6 +686,16 @@
   </nav>
   <script src="/js/nav.js"></script>
   <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" defer></script>
+<script>
+document.querySelectorAll("details.faq-item").forEach(function(item) {
+  item.addEventListener("toggle", function() {
+    if (item.open && typeof gtag === "function") {
+      var s = item.querySelector("summary");
+      gtag("event", "faq_open", { question: s.textContent.trim().substring(0, 60), page_language: document.documentElement.lang || "en" });
+    }
+  });
+});
+</script>
 <script>
   (function () {
     document.querySelectorAll('a[href*="calendly"]').forEach(function (btn) {
