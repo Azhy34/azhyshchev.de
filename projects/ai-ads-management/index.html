@@ -6,7 +6,7 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta name="description" content="Google Ads MCP Server in Python: 36 FastMCP tools, business rules enforced in code, a preflight gate and OpenTelemetry tracing for an AI agent.">
+  <meta name="description" content="How to manage Google Ads with an AI agent safely: an MCP server with business rules, bid limits, a preflight check and tracing of every change.">
   <meta name="keywords" content="google ads mcp server, mcp server, fastmcp, google ads api, custom mcp server, mcp server python, mcp server in python, ai agent guardrails, opentelemetry, cloud trace, claude code, agent observability">
   <meta name="author" content="Mikhail Azhyshchev">
   <link rel="canonical" href="https://azhyshchev.de/projects/ai-ads-management/">
@@ -15,23 +15,23 @@
   <link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/projects/ai-ads-management/" />
 
   <meta property="og:site_name" content="Mikhail Azhyshchev">
-  <meta property="og:title" content="Custom Google Ads MCP Server: Business Logic for an AI Agent">
-  <meta property="og:description" content="36 tools, business rules enforced in code, every call traced. The Google Ads MCP server I built for my shop.">
+  <meta property="og:title" content="How to Manage Google Ads with an AI Agent">
+  <meta property="og:description" content="Let an AI agent run Google Ads: bid limits, negative lists and tracing live in an MCP server, not in the prompt.">
   <meta property="og:url" content="https://azhyshchev.de/projects/ai-ads-management/">
   <meta property="og:type" content="article">
   <meta property="og:image" content="https://azhyshchev.de/projects/ai-ads-management/og.png">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Custom Google Ads MCP Server: Business Logic for an AI Agent">
+  <meta property="og:image:alt" content="How to Manage Google Ads with an AI Agent">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Custom Google Ads MCP Server: Business Logic for an AI Agent">
-  <meta name="twitter:description" content="36 tools, business rules enforced in code, every call traced. The Google Ads MCP server I built for my shop.">
+  <meta name="twitter:title" content="How to Manage Google Ads with an AI Agent">
+  <meta name="twitter:description" content="Let an AI agent run Google Ads: bid limits, negative lists and tracing live in an MCP server, not in the prompt.">
   <meta name="twitter:image" content="https://azhyshchev.de/projects/ai-ads-management/og.png">
-  <meta name="twitter:image:alt" content="Custom Google Ads MCP Server: Business Logic for an AI Agent">
+  <meta name="twitter:image:alt" content="How to Manage Google Ads with an AI Agent">
 
-  <title>Custom Google Ads MCP Server in Python | Mikhail Azhyshchev</title>
+  <title>AI Agent for Google Ads via MCP Server | Mikhail Azhyshchev</title>
 
   <script type="application/ld+json">
   {
@@ -40,8 +40,8 @@
       {
         "@type": "TechArticle",
         "@id": "https://azhyshchev.de/projects/ai-ads-management/#article",
-        "headline": "Custom Google Ads MCP Server: The Business Logic Between an AI Agent and the Ads API",
-        "description": "Engineering case: a 36-tool Google Ads MCP server in Python on FastMCP, with business rules enforced in code, a preflight gate and OpenTelemetry tracing of every tool call.",
+        "headline": "How to Manage Google Ads with an AI Agent: An MCP Server with Business Rules",
+        "description": "How to manage Google Ads with an AI agent: an MCP server in Python (FastMCP, 36 tools) that holds the business rules, checks every session and traces every change.",
         "image": "https://azhyshchev.de/projects/ai-ads-management/og.png",
         "dateModified": "2026-10-13",
         "inLanguage": "en",
@@ -59,7 +59,7 @@
         "@type": "WebPage",
         "@id": "https://azhyshchev.de/projects/ai-ads-management/#webpage",
         "url": "https://azhyshchev.de/projects/ai-ads-management/",
-        "name": "Custom Google Ads MCP Server in Python | Mikhail Azhyshchev",
+        "name": "AI Agent for Google Ads via MCP Server | Mikhail Azhyshchev",
         "isPartOf": { "@id": "https://azhyshchev.de/#website" },
         "inLanguage": "en",
         "dateModified": "2026-10-13",
@@ -71,7 +71,7 @@
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://azhyshchev.de/" },
           { "@type": "ListItem", "position": 2, "name": "Projects", "item": "https://azhyshchev.de/projects" },
-          { "@type": "ListItem", "position": 3, "name": "Custom Google Ads MCP Server: The Business Logic Between an AI Agent and the Ads API" }
+          { "@type": "ListItem", "position": 3, "name": "How to Manage Google Ads with an AI Agent: An MCP Server with Business Rules" }
         ]
       },
       {
@@ -253,14 +253,14 @@
         <nav class="breadcrumb" aria-label="Breadcrumb">
           <a href="/">Home</a><span>→</span>
           <a href="/projects">Projects</a><span>→</span>
-          <span>Custom Google Ads MCP Server</span>
+          <span>AI Agent for Google Ads</span>
         </nav>
 
         <div class="project-hero">
           <div class="project-type">Engineering Case · MCP Server · Google Ads API</div>
-          <h1 class="project-title">Custom Google Ads MCP Server: The Business Logic Between an AI Agent and the Ads API</h1>
+          <h1 class="project-title">How to Manage Google Ads with an AI Agent: An MCP Server with Business Rules</h1>
           <p class="project-lead">
-            I built a Google Ads MCP Server in Python: 36 tools on FastMCP between Claude Code and the Google Ads API, shaped around the business logic of my Etsy shop. Every write passes Pydantic rules, a preflight gate and a traced journal. Google's official MCP server is read-only.
+            How do you manage Google Ads with an AI agent without risking the budget? The agent should not write to the Google Ads API directly. It works through an MCP server that holds the business rules: bid limits, negative keyword lists, a check before every session and a traced record of every change. Below is that setup running on my own Etsy shop.
           </p>
           <div class="metrics-row">
             <div class="metric-box"><strong>36 tools</strong><span>24 read · 12 write</span></div>
