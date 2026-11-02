@@ -267,6 +267,61 @@
           </section>
 
           <section class="neo-card">
+            <div class="section-label">Business &amp; Personal Brand</div>
+            <h2 class="section-title">The Real Value for Founders and B2B Companies</h2>
+            <div class="prose">
+              <p>
+                Most founders know they need a LinkedIn presence, but they face a brutal trade-off: spend two hours every day manually drafting posts, or hire an agency that writes generic marketing fluff with zero technical depth.
+              </p>
+              <p>
+                An AI agent wired directly to official LinkedIn APIs solves this dilemma:
+              </p>
+              <ul>
+                <li><strong>For Solo Founders &amp; Consultants:</strong> The agent transforms your daily engineering notes, git commits, and client wins into structured thought leadership posts. You build consistent industry authority without context switching.</li>
+                <li><strong>For B2B Companies &amp; Startups:</strong> Keep both company pages and leadership profiles active with genuine case studies. Position your company as an engineering authority while your team focuses on building products.</li>
+                <li><strong>Platform-Native Backing:</strong> LinkedIn is actively pushing developers towards its official API ecosystem. They reward clean, versioned REST integrations while aggressively hunting down browser scrapers. Using official endpoints makes your business presence ban-proof.</li>
+              </ul>
+            </div>
+          </section>
+
+          <section class="neo-card">
+            <div class="section-label">Advertising &amp; Growth</div>
+            <h2 class="section-title">Connecting Organic Content to Paid Retargeting (CAPI)</h2>
+            <div class="prose">
+              <p>
+                Organic thought leadership is only the first half of the growth engine. The true leverage happens when you connect organic authority with paid advertising.
+              </p>
+              <p>
+                Here is how the closed-loop advertising flywheel works with our setup:
+              </p>
+              <ol>
+                <li><strong>Top of Funnel:</strong> The agent identifies relevant industry discussions via Exa and posts authoritative comments, driving profile and company page visits.</li>
+                <li><strong>Website Traffic:</strong> Profile visitors click your custom CTA button to visit your landing page with tracked UTM parameters.</li>
+                <li><strong>Server-Side CAPI Streaming:</strong> When a visitor books a discovery call or downloads a case study, our FastMCP server hashes their email locally with SHA-256 and streams the conversion event to LinkedIn's Conversions API (CAPI).</li>
+                <li><strong>Matched Audiences:</strong> LinkedIn automatically populates a dynamic Matched Audience of verified buyers. Your paid campaigns retarget only high-intent prospects, cutting wasted ad spend to near zero.</li>
+              </ol>
+            </div>
+          </section>
+
+          <section class="neo-card">
+            <div class="section-label">Tool Capabilities</div>
+            <h2 class="section-title">What the FastMCP Agent Can Actually Do Right Now</h2>
+            <div class="prose">
+              <p>
+                Our FastMCP gateway exposes 6 production-ready tools directly to Claude, Cursor, or your terminal:
+              </p>
+              <ul>
+                <li><code>get_linkedin_profile_status</code>: Verifies OAuth2 token validity, active permissions (w_member_social, openid, email), and member identity.</li>
+                <li><code>audit_linkedin_post</code>: Validates drafts offline in under 0.01 seconds against zero-leak invariants, mobile 150-char hook limits, and formatting hygiene.</li>
+                <li><code>publish_linkedin_post</code>: Dispatches verified posts to your personal feed or company page with full dry-run support.</li>
+                <li><code>get_linkedin_comments</code>: Fetches active discussion threads and replies from target industry posts.</li>
+                <li><code>post_linkedin_comment</code>: Adds verified first comments with external source links or responds directly to user questions in comment threads.</li>
+                <li><code>stream_linkedin_conversion</code>: Sends server-side conversion telemetry to LinkedIn CAPI for attribution and retargeting audience synchronization.</li>
+              </ul>
+            </div>
+          </section>
+
+          <section class="neo-card">
             <div class="section-label">The Architecture</div>
             <h2 class="section-title">The 4-Layer Safe Agent Framework</h2>
             <div class="prose">
@@ -401,3 +456,4 @@ def check_zero_leak_invariant(text: str) -> None:
   </script>
 </body>
 </html>
+
