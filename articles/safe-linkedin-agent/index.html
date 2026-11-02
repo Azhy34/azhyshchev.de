@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="/js/cookie-consent.js" defer></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="Managing LinkedIn through an AI agent via official REST API v2. No browser extensions, no cookie theft, zero ban risk, and deterministic Pydantic rails.">
+  <meta name="keywords" content="linkedin agent, linkedin automation, linkedin mcp server, fastmcp linkedin, safe ai agent, linkedin api rest, linkedin thought leadership, AI-Enabled Automation Engineer">
+  <meta name="author" content="Mikhail Azhyshchev">
+  <link rel="canonical" href="https://azhyshchev.de/articles/safe-linkedin-agent/">
+  <link rel="alternate" hreflang="en" href="https://azhyshchev.de/articles/safe-linkedin-agent/" />
+  <link rel="alternate" hreflang="de" href="https://azhyshchev.de/de/artikel/sicherer-linkedin-ki-agent/" />
+  <link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/articles/safe-linkedin-agent/" />
+
+  <meta property="og:site_name" content="Mikhail Azhyshchev">
+  <meta property="og:title" content="LinkedIn Agent: Safe Automation via Official API and Deterministic Rails">
+  <meta property="og:description" content="Why browser extensions get accounts banned, how LinkedIn opened self-serve API access, and how an open-source FastMCP agent operates safely.">
+  <meta property="og:url" content="https://azhyshchev.de/articles/safe-linkedin-agent/">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="LinkedIn Agent: Safe Automation via Official API and Deterministic Rails">
+  <meta name="twitter:description" content="Why browser extensions get accounts banned, how LinkedIn opened self-serve API access, and how an open-source FastMCP agent operates safely.">
+
+  <title>LinkedIn Agent: Safe Automation Without Browser Extensions | Mikhail Azhyshchev</title>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "TechArticle",
+        "@id": "https://azhyshchev.de/articles/safe-linkedin-agent/#article",
+        "headline": "Managing LinkedIn Through an AI Agent: Official API, Guardrails, and Zero Bans",
+        "description": "How to operate personal brand and company page presence on LinkedIn using official REST APIs, FastMCP gateways, and deterministic content validators.",
+        "author": {
+          "@type": "Person",
+          "@id": "https://azhyshchev.de/#person",
+          "name": "Mikhail Azhyshchev",
+          "url": "https://azhyshchev.de",
+          "sameAs": ["https://www.linkedin.com/in/azhyshchev/"]
+        },
+        "publisher": { "@id": "https://azhyshchev.de/#person" },
+        "datePublished": "2026-11-02",
+        "dateModified": "2026-11-02",
+        "inLanguage": "en",
+        "keywords": "linkedin agent, linkedin automation, linkedin mcp server, fastmcp linkedin, safe ai agent",
+        "url": "https://azhyshchev.de/articles/safe-linkedin-agent/",
+        "mainEntityOfPage": { "@id": "https://azhyshchev.de/articles/safe-linkedin-agent/#webpage" },
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://azhyshchev.de/articles/safe-linkedin-agent/#webpage",
+        "url": "https://azhyshchev.de/articles/safe-linkedin-agent/",
+        "name": "LinkedIn Agent: Safe Automation Without Browser Extensions | Mikhail Azhyshchev",
+        "description": "A production architecture for controlling LinkedIn presence through AI agents without risking account bans.",
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" },
+        "author": { "@id": "https://azhyshchev.de/#person" },
+        "dateModified": "2026-11-02",
+        "inLanguage": "en",
+        "breadcrumb": { "@id": "https://azhyshchev.de/articles/safe-linkedin-agent/#breadcrumb" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://azhyshchev.de/articles/safe-linkedin-agent/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://azhyshchev.de/" },
+          { "@type": "ListItem", "position": 2, "name": "Articles", "item": "https://azhyshchev.de/articles" },
+          { "@type": "ListItem", "position": 3, "name": "LinkedIn Agent: Safe Automation via Official API" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Why is browser automation risky on LinkedIn?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Browser extensions steal your session cookies and mimic human clicks. LinkedIn detects headless browser signatures and abnormal click patterns, resulting in permanent shadowbans or account closures. Official REST APIs eliminate this risk entirely."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can an AI agent publish directly to personal LinkedIn profiles?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. LinkedIn offers the official 'Share on LinkedIn' developer product with self-serve instant approval for the w_member_social scope, enabling compliant publishing through POST /rest/posts."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do you stop an AI agent from hallucinating bad content?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "By inserting a deterministic Python validation shield before the API call. The shield checks for zero secrets leakage, enforces the 150-character mobile hook limit, strips unrendered markdown asterisks, and kills the process immediately if any invariant fails."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --sky: #61b5e8; --mint: #b9ddb7; --cream: #f8f0dc; --yellow: #f5c84b; --pink: #efb2d5; --blue: #d8ebff; --peach: #f7d4b1; --coral: #ff9a77; --rose: #ecb0c4; --black: #111111; --white: #ffffff; --accent: var(--mint); }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { min-height: 100vh; font-family: 'JetBrains Mono', monospace; color: var(--black); background: linear-gradient(120deg, var(--sky) 0 34%, var(--peach) 34% 55%, var(--coral) 55% 72%, var(--rose) 72% 100%); padding: 48px 24px; }
+    a { color: inherit; text-decoration: none; }
+    .shell { width: min(1320px, 100%); margin: 0 auto; border: 3px solid var(--black); box-shadow: 12px 12px 0 var(--black); background: var(--mint); display: grid; grid-template-columns: 250px 1fr; min-height: 820px; overflow: hidden; }
+    .sidebar { border-right: 3px solid var(--black); padding: 20px 18px; display: flex; flex-direction: column; gap: 22px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 8px; }
+    .brand-badge { width: 42px; height: 34px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 1rem; font-weight: 800; }
+    .nav { display: flex; flex-direction: column; gap: 8px; }
+    .nav-item { display: flex; align-items: center; gap: 12px; padding: 11px 12px; font-size: 0.9rem; font-weight: 700; border: 2px solid transparent; transition: transform 0.18s ease; }
+    .nav-item:hover { transform: translate(-2px, -2px); }
+    .nav-item.active { background: var(--black); color: var(--white); }
+    .icon-box { width: 24px; height: 24px; display: grid; place-items: center; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); font-size: 0.75rem; font-weight: 800; }
+    .nav-item.active .icon-box { background: var(--yellow); color: var(--black); }
+    .sidebar-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+    .socials { display: flex; gap: 10px; padding-top: 8px; }
+    .social-link { width: 42px; height: 42px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 0.8rem; font-weight: 800; transition: transform 0.18s ease; }
+    .social-link:hover { transform: translate(-2px, -2px); }
+    .main { background: var(--cream); padding: 22px; }
+    .panel { border: 2px solid var(--black); background: rgba(255,255,255,0.2); padding: 18px; display: flex; flex-direction: column; gap: 28px; }
+    .breadcrumb { font-size: 0.78rem; opacity: 0.6; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .breadcrumb a:hover { opacity: 1; text-decoration: underline; }
+    .article-hero { border: 3px solid var(--black); background: var(--accent); box-shadow: 6px 6px 0 var(--black); padding: 28px 24px; }
+    .article-type { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; margin-bottom: 12px; }
+    .article-title { font-size: clamp(1.6rem, 3vw, 2.3rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.04em; margin-bottom: 16px; }
+    .article-lead { font-size: 0.95rem; line-height: 1.65; max-width: 72ch; }
+    .metrics-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+    .metric-box { border: 2px solid var(--black); background: rgba(255,255,255,0.75); padding: 14px 12px; }
+    .metric-box strong { display: block; font-size: 1.05rem; line-height: 1.2; margin-bottom: 6px; }
+    .metric-box span { font-size: 0.72rem; line-height: 1.4; opacity: 0.8; }
+    .article-body { display: flex; flex-direction: column; gap: 24px; }
+    .neo-card { border: 3px solid var(--black); background: var(--white); box-shadow: 6px 6px 0 var(--black); padding: 24px; }
+    .section-label { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.45; margin-bottom: 10px; }
+    .section-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.02em; }
+    .prose { display: flex; flex-direction: column; gap: 14px; }
+    .prose p { font-size: 0.88rem; line-height: 1.75; }
+    .prose h3 { font-size: 0.95rem; font-weight: 800; margin-top: 8px; letter-spacing: -0.02em; }
+    .prose ul, .prose ol { padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
+    .prose li { font-size: 0.88rem; line-height: 1.65; }
+    .prose a { text-decoration: underline; text-underline-offset: 3px; font-weight: 700; }
+    .code-block { background: #1a1a1a; color: #f0f0f0; padding: 16px; border: 2px solid var(--black); font-size: 0.8rem; line-height: 1.5; overflow-x: auto; margin: 12px 0; }
+    .highlight-box { border: 3px solid var(--black); background: var(--yellow); box-shadow: 4px 4px 0 var(--black); padding: 22px 24px; margin-top: 18px; }
+    .highlight-box h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 14px; letter-spacing: -0.02em; }
+    .highlight-box p { font-size: 0.86rem; line-height: 1.7; }
+    .faq-list { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+    .faq-item { border: 2px solid var(--black); background: var(--cream); overflow: hidden; }
+    .faq-q { padding: 14px 16px; font-weight: 800; font-size: 0.88rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
+    .faq-q::after { content: "+"; font-size: 1.1rem; font-weight: 800; }
+    .faq-item.open .faq-q::after { content: "-"; }
+    .faq-a { display: none; padding: 0 16px 14px; font-size: 0.84rem; line-height: 1.65; opacity: 0.85; }
+    .faq-item.open .faq-a { display: block; }
+    .cta-strip { border: 3px solid var(--black); background: var(--sky); box-shadow: 6px 6px 0 var(--black); padding: 24px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 12px; }
+    .cta-btn { display: inline-flex; align-items: center; justify-content: center; padding: 12px 22px; font-size: 0.88rem; font-weight: 800; border: 2px solid var(--black); background: var(--white); box-shadow: 4px 4px 0 var(--black); transition: transform 0.15s ease; }
+    .cta-btn:hover { transform: translate(-2px, -2px); }
+    .cta-btn.outline { background: transparent; }
+    .back-link { font-size: 0.82rem; font-weight: 800; display: inline-block; margin-top: 16px; }
+    @media (max-width: 900px) {
+      .shell { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .metrics-row { grid-template-columns: repeat(2, 1fr); }
+      body { padding: 16px 12px 80px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar" data-nosnippet>
+      <div class="brand">
+        <div class="brand-badge">&lt;/&gt;</div>
+        <span>AZHY</span>
+      </div>
+      <nav class="nav">
+        <a class="nav-item" href="/"><div class="icon-box">&lt;/&gt;</div>Home</a>
+        <a class="nav-item" href="/ai-checker"><div class="icon-box">🤖</div>AI Checker</a>
+        <a class="nav-item" href="/experience"><div class="icon-box">E</div>Experience</a>
+        <a class="nav-item" href="/projects"><div class="icon-box">P</div>Projects</a>
+        <a class="nav-item active" href="/articles"><div class="icon-box">A</div>Articles</a>
+        <a class="nav-item" href="/contact"><div class="icon-box">C</div>Contact</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="socials">
+          <a class="social-link" href="https://github.com/Azhy34" target="_blank" rel="noreferrer">GH</a>
+          <a class="social-link" href="https://www.linkedin.com/in/azhyshchev/" target="_blank" rel="noreferrer">IN</a>
+          <a class="social-link" href="mailto:azhyshchev@gmail.com">@</a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="panel">
+        <div class="breadcrumb">
+          <a href="/">Home</a> / <a href="/articles">Articles</a> / <span>Safe LinkedIn Agent</span>
+        </div>
+
+        <header class="article-hero">
+          <div class="article-type">Case Study & Open Source Architecture</div>
+          <h1 class="article-title">Managing LinkedIn Through an AI Agent: Official API, Guardrails, and Zero Bans</h1>
+          <p class="article-lead">
+            Most LinkedIn automation is garbage: brittle browser extensions, stolen session cookies, and spam bots that get accounts terminated.
+          </p>
+          <p class="article-lead" style="margin-top: 10px;">
+            Here is how we built a production-grade FastMCP agent setup on official LinkedIn REST API v2 endpoints, paired with deterministic Python guardrails and real-time Exa discussion search.
+          </p>
+
+          <div class="metrics-row">
+            <div class="metric-box">
+              <strong>100%</strong>
+              <span>Official REST API compliance</span>
+            </div>
+            <div class="metric-box">
+              <strong>0 Bans</strong>
+              <span>Zero browser scraping or cookie theft</span>
+            </div>
+            <div class="metric-box">
+              <strong>&lt; 0.01s</strong>
+              <span>Deterministic invariant audit</span>
+            </div>
+            <div class="metric-box">
+              <strong>Open Source</strong>
+              <span>GitHub repository with FastMCP</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="article-body">
+          <section class="neo-card">
+            <div class="section-label">The Problem</div>
+            <h2 class="section-title">The Browser Scraping Trap</h2>
+            <div class="prose">
+              <p>
+                When founders or agencies look to automate LinkedIn, they usually land on Chrome extensions. These tools inject scripts into your active browser session, copy your cookies, and execute synthetic clicks.
+              </p>
+              <p>
+                LinkedIn monitors client telemetry aggressively. If mouse movement deviates from normal curves or requests lack standard browser fingerprints, the platform flags the account. Thousands of profiles get restricted every week because they rely on gray-hat tools.
+              </p>
+              <p>
+                Meanwhile, connecting an unguided Large Language Model directly to raw API endpoints creates another problem: hallucinations. An AI model can fabricate invalid parameters, leak private API keys into public drafts, or produce rambling text that gets truncated on mobile.
+              </p>
+            </div>
+          </section>
+
+          <section class="neo-card">
+            <div class="section-label">The Breakthrough</div>
+            <h2 class="section-title">The Official Pathway: Self-Serve Developer API</h2>
+            <div class="prose">
+              <p>
+                For years, LinkedIn's Developer Portal was gated behind complex enterprise approval workflows. That has changed. Under the modern REST architecture, LinkedIn provides the <strong>Share on LinkedIn</strong> product.
+              </p>
+              <p>
+                This grants instant, self-serve access to the <code>w_member_social</code> permission scope without requiring manual partner review. Any developer can register an application, complete a 3-legged OAuth 2.0 flow, and publish directly through the official <code>POST /rest/posts</code> endpoint.
+              </p>
+              <p>
+                Because this uses official OAuth tokens (valid for 60 days with refresh capability), there is zero risk of account bans. The API treats your agent like an authorized third-party app.
+              </p>
+            </div>
+          </section>
+
+          <section class="neo-card">
+            <div class="section-label">The Architecture</div>
+            <h2 class="section-title">The 4-Layer Safe Agent Framework</h2>
+            <div class="prose">
+              <p>
+                To make the system production-grade, we do not let the AI model touch LinkedIn directly. We placed deterministic code rails between the agent and the external world:
+              </p>
+              <div class="code-block">
+┌────────────────────────────────────────────────────────┐
+│ 1. DISCOVERY RADAR: Exa Search API                     │
+│    Scans target debates (Google Ads, AI Ops, B2B)      │
+├────────────────────────────────────────────────────────┤
+│ 2. DETERMINISTIC SHIELD: Pydantic Invariants           │
+│    Zero-leak checks, 150-char fold, formatting filters │
+├────────────────────────────────────────────────────────┤
+│ 3. FASTMCP GATEWAY: Python Microservice                │
+│    audit_linkedin_post, publish_linkedin_post, CAPI    │
+├────────────────────────────────────────────────────────┤
+│ 4. OFFICIAL PLATFORM: LinkedIn REST API v2             │
+│    POST /rest/posts with valid OAuth2 Bearer token     │
+└────────────────────────────────────────────────────────┘
+              </div>
+              <p>
+                <strong>Layer 1 (Exa Radar):</strong> Finds live, high-signal LinkedIn discussions using semantic search. Instead of mass spamming, the agent pinpoints specific debates where practitioners are looking for technical solutions.
+              </p>
+              <p>
+                <strong>Layer 2 (Deterministic Shield):</strong> Hardcoded Python code inspects every draft before it touches the network. It verifies that no API tokens leak, checks that the first 150 characters form an engaging hook for mobile readers, and strips out raw markdown asterisks.
+              </p>
+              <p>
+                <strong>Layer 3 (FastMCP Gateway):</strong> Connects your AI coding environment (Cursor, Claude Desktop, Antigravity) to LinkedIn as native tools.
+              </p>
+              <p>
+                <strong>Layer 4 (Conversions API):</strong> Streams server-side lead events (hashed email, attribution source) into LinkedIn CAPI to populate dynamic retargeting audiences.
+              </p>
+            </div>
+          </section>
+
+          <section class="neo-card">
+            <div class="section-label">Practical Code</div>
+            <h2 class="section-title">How the Deterministic Invariant Works</h2>
+            <div class="prose">
+              <p>
+                Here is the actual Pydantic validator that runs offline in under 0.01 seconds. If an AI model hallucinates a forbidden pattern or tries to output a secret, the function fails fast and halts execution:
+              </p>
+              <div class="code-block">
+def check_zero_leak_invariant(text: str) -> None:
+    forbidden_patterns = [
+        r"sk-[a-zA-Z0-9]{20,}",        # OpenAI keys
+        r"ghp_[a-zA-Z0-9]{20,}",       # GitHub tokens
+        r"AIza[0-9A-Za-z-_]{35}",      # Google API keys
+        r"client_secret['\"]?\s*:\s*",  # OAuth secrets
+    ]
+    for pattern in forbidden_patterns:
+        if re.search(pattern, text):
+            raise ValueError("SECURITY VIOLATION: Secret pattern detected in content draft.")
+              </div>
+            </div>
+          </section>
+
+          <div class="highlight-box">
+            <h3>Get the Open-Source Code on GitHub</h3>
+            <p>
+              We packaged this entire framework into a standalone, MIT-licensed open-source repository: <strong>safe-linkedin-agent</strong>.
+            </p>
+            <p>
+              It includes the complete FastMCP server, OAuth helper, Pydantic guardrail suite, offline test suite, and agent skills. You can clone it, set up your developer app, and start managing your presence safely.
+            </p>
+            <div style="margin-top: 14px;">
+              <a class="cta-btn" href="https://github.com/Azhy34/safe-linkedin-agent" target="_blank" rel="noreferrer">
+                View Repository on GitHub &rarr;
+              </a>
+            </div>
+          </div>
+
+          <section class="neo-card">
+            <div class="section-label">Frequently Asked Questions</div>
+            <h2 class="section-title">Key Operational Questions</h2>
+            <div class="faq-list">
+              <div class="faq-item">
+                <div class="faq-q">Is this compliant with LinkedIn terms of service?</div>
+                <div class="faq-a">Yes. Unlike browser extensions, this framework communicates exclusively through official LinkedIn Developer API endpoints with user-authorized OAuth 2.0 tokens.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">Can it manage company pages as well as personal profiles?</div>
+                <div class="faq-a">Yes. The FastMCP gateway supports publishing to personal member profiles via w_member_social and company pages via w_organization_social when the developer app is verified.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">How does the Exa search radar work?</div>
+                <div class="faq-a">The agent uses Exa's semantic neural search to monitor targeted query patterns across linkedin.com/posts, extracting active discussions among CMOs and engineers without web scraping.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">Why use FastMCP instead of a regular Python script?</div>
+                <div class="faq-a">FastMCP exposes these functions as native tools to AI agents in Claude, Cursor, and Antigravity. The agent can invoke audits, draft posts, and publish directly from within your development environment.</div>
+              </div>
+            </div>
+          </section>
+
+          <div class="cta-strip">
+            <div>
+              <strong>Looking to automate your B2B operations safely?</strong>
+              <p>We build custom deterministic agent workflows for performance marketing and enterprise systems.</p>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a class="cta-btn" href="https://calendly.com/azhyshchev/30min?utm_source=portfolio&amp;utm_medium=website&amp;utm_campaign=booking&amp;utm_content=safe_linkedin_agent" target="_blank" rel="noreferrer">Book a 30 min call</a>
+              <a class="cta-btn outline" href="mailto:azhyshchev@gmail.com">Email Mikhail</a>
+            </div>
+          </div>
+
+          <a class="back-link" href="/articles">&larr; Back to articles</a>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <nav class="mobile-bottom-nav" id="mobileBottomNav" data-nosnippet>
+    <a class="mbn-item" href="/"><span class="mbn-icon">&lt;/&gt;</span><span class="mbn-label">Home</span></a>
+    <a class="mbn-item" href="/ai-checker"><span class="mbn-icon">🤖</span><span class="mbn-label">AI Checker</span></a>
+    <a class="mbn-item" href="/experience"><span class="mbn-icon">E</span><span class="mbn-label">Experience</span></a>
+    <a class="mbn-item" href="/projects"><span class="mbn-icon">P</span><span class="mbn-label">Projects</span></a>
+    <a class="mbn-item active" href="/articles"><span class="mbn-icon">A</span><span class="mbn-label">Articles</span></a>
+    <a class="mbn-item" href="/contact"><span class="mbn-icon">C</span><span class="mbn-label">Contact</span></a>
+  </nav>
+
+  <script src="/js/nav.js"></script>
+  <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" defer></script>
+  <script>
+  document.querySelectorAll(".faq-q").forEach(function(q) {
+    q.addEventListener("click", function() {
+      var item = q.closest(".faq-item");
+      item.classList.toggle("open");
+    });
+  });
+  </script>
+</body>
+</html>

@@ -524,6 +524,30 @@
         <!-- Article grid -->
         <div class="articles-grid">
 
+          <!-- Card: Sicherer LinkedIn KI-Agent (DE) -->
+          <article class="article-card" data-tags="automation mcp linkedin" data-modal="modal-sicherer-linkedin-ki-agent">
+            <div class="card-accent" style="background: var(--sky);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">Open-Source-Fallstudie</span>
+                <span class="card-readtime">7 Min. Lesezeit</span>
+              </div>
+              <h2 class="card-title">LinkedIn Agent: Sichere Automatisierung ohne Browser-Plugins</h2>
+              <p class="card-excerpt">Browser-Plugins fuehren zu Account-Sperren. So steuert ein KI-Agent LinkedIn ueber die offizielle REST API v2, FastMCP und deterministische Leitplanken.</p>
+              <div class="card-tags">
+                <span class="tag">LinkedIn API</span>
+                <span class="tag">FastMCP</span>
+                <span class="tag">KI-Agent</span>
+                <span class="tag">Exa</span>
+                <span class="tag">Open Source</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Ergebnis: <span>100% API · 0 Sperren</span></div>
+              <a class="read-link" href="/de/artikel/sicherer-linkedin-ki-agent/">Artikel lesen →</a>
+            </div>
+          </article>
+
           <!-- Card: Google Ads Kosten senken mit einem KI-Agenten (DE) -->
           <article class="article-card" data-modal="modal-google-ads-kosten-ki-agent">
             <div class="card-accent" style="background: var(--mint);"></div>
@@ -957,6 +981,49 @@
   </div>
 
   <!-- ── MODALS ── -->
+
+  <!-- Modal: Sicherer LinkedIn KI-Agent (DE) -->
+  <div class="modal-overlay" id="modal-sicherer-linkedin-ki-agent" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-section-label">Open Source · LinkedIn REST API · FastMCP</div>
+          <h2 class="modal-title">LinkedIn Agent: Sichere Automatisierung ohne Browser-Plugins</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-sicherer-linkedin-ki-agent')">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="modal-section-label">Problem</div>
+          <div class="modal-text">
+            <p>Klassische LinkedIn-Automatisierung ueber Chrome-Erweiterungen birgt enorme Sperrrisiken durch Cookie-Diebstahl, waehrend ungesteuerte Sprachmodelle Sicherheitsluecken erzeugen.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Loesung &amp; Architektur</div>
+          <div class="modal-text">
+            <p>Ein quelloffener FastMCP-Server auf Basis der offiziellen LinkedIn REST API v2. Deterministische Pydantic-Filter verhindern Datenlecks und sichern den mobilen 150-Zeichen-Hook, waehrend die neuronale Exa-Suche gezielt relevante Fachthemen identifiziert.</p>
+          </div>
+          <div class="modal-stack">
+            <span class="stack-chip">Python</span>
+            <span class="stack-chip">FastMCP</span>
+            <span class="stack-chip">LinkedIn REST API</span>
+            <span class="stack-chip">Exa</span>
+            <span class="stack-chip">Pydantic</span>
+            <span class="stack-chip">CAPI</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center;">
+        <p style="font-size: 0.82rem; font-weight: 700; opacity: 0.85;">📖 Vollstaendige Architektur und Open-Source-Code auf GitHub:</p>
+        <div style="display: flex; gap: 10px; width: 100%; justify-content: center; align-items: center; flex-wrap: wrap;">
+          <a class="action-btn dark" href="/de/artikel/sicherer-linkedin-ki-agent/" style="font-size: 0.92rem; padding: 12px 24px; font-weight: 800;">Artikel lesen →</a>
+          <a class="action-btn" href="https://github.com/Azhy34/safe-linkedin-agent" target="_blank" rel="noreferrer" style="font-size: 0.92rem; padding: 12px 24px; font-weight: 800; background: var(--white); color: var(--black);">Code auf GitHub →</a>
+          <button class="mini-btn" onclick="closeModal('modal-sicherer-linkedin-ki-agent')">Schliessen</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Modal: Google Ads Kosten senken mit einem KI-Agenten (DE) -->
   <div class="modal-overlay" id="modal-google-ads-kosten-ki-agent" role="dialog" aria-modal="true">

@@ -612,6 +612,30 @@
         <!-- Article grid -->
         <div class="articles-grid" id="articlesGrid">
 
+          <!-- Card: Safe LinkedIn Agent: Official API & Deterministic Rails -->
+          <article class="article-card" data-tags="automation mcp linkedin" data-modal="modal-safe-linkedin-agent">
+            <div class="card-accent" style="background: var(--sky);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">Open Source Case Study</span>
+                <span class="card-readtime">7 min read</span>
+              </div>
+              <h2 class="card-title">LinkedIn Agent: Safe Automation via Official API and Deterministic Rails</h2>
+              <p class="card-excerpt">Browser extensions get accounts banned. Here is how an AI agent operates LinkedIn safely through official REST API v2, FastMCP gateways, and Pydantic guardrails.</p>
+              <div class="card-tags">
+                <span class="tag">LinkedIn API</span>
+                <span class="tag">FastMCP</span>
+                <span class="tag">AI Agent</span>
+                <span class="tag">Exa</span>
+                <span class="tag">Open Source</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Result: <span>100% API · 0 Bans</span></div>
+              <a class="read-link" href="/articles/safe-linkedin-agent/">Read full article →</a>
+            </div>
+          </article>
+
           <!-- Card: Google Ads MCP: An AI Agent That Can't Burn Your Budget -->
           <article class="article-card" data-tags="automation ads mcp" data-modal="modal-google-ads-mcp-ai-agent">
             <div class="card-accent" style="background: var(--mint);"></div>
@@ -1154,6 +1178,49 @@
   </div>
 
   <!-- ── MODALS ── -->
+
+  <!-- Modal: Safe LinkedIn Agent -->
+  <div class="modal-overlay" id="modal-safe-linkedin-agent" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-section-label">Open Source · LinkedIn REST API · FastMCP</div>
+          <h2 class="modal-title">LinkedIn Agent: Safe Automation Without Browser Plugins</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-safe-linkedin-agent')">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="modal-section-label">Problem</div>
+          <div class="modal-text">
+            <p>Traditional LinkedIn automation relies on brittle Chrome extensions and cookie theft that trigger account restrictions, while unguided LLMs hallucinate secrets and bad formatting.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Solution &amp; Architecture</div>
+          <div class="modal-text">
+            <p>We built an open-source FastMCP server on LinkedIn's official REST API v2 (Share on LinkedIn). Deterministic Pydantic shields enforce zero-leak guarantees and mobile hook limits, while Exa neural search discovers target discussions automatically.</p>
+          </div>
+          <div class="modal-stack">
+            <span class="stack-chip">Python</span>
+            <span class="stack-chip">FastMCP</span>
+            <span class="stack-chip">LinkedIn REST API</span>
+            <span class="stack-chip">Exa</span>
+            <span class="stack-chip">Pydantic</span>
+            <span class="stack-chip">CAPI</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center;">
+        <p style="font-size: 0.82rem; font-weight: 700; opacity: 0.85;">📖 Complete open-source breakdown and code repository:</p>
+        <div style="display: flex; gap: 10px; width: 100%; justify-content: center; align-items: center; flex-wrap: wrap;">
+          <a class="action-btn dark" href="/articles/safe-linkedin-agent/" style="font-size: 0.92rem; padding: 12px 24px; font-weight: 800;">Read full article →</a>
+          <a class="action-btn" href="https://github.com/Azhy34/safe-linkedin-agent" target="_blank" rel="noreferrer" style="font-size: 0.92rem; padding: 12px 24px; font-weight: 800; background: var(--white); color: var(--black);">Get Code on GitHub →</a>
+          <button class="mini-btn" onclick="closeModal('modal-safe-linkedin-agent')">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Modal: Google Ads MCP: An AI Agent That Can't Burn Your Budget -->
   <div class="modal-overlay" id="modal-google-ads-mcp-ai-agent" role="dialog" aria-modal="true">
