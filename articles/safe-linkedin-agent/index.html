@@ -149,7 +149,7 @@
     .prose ul, .prose ol { padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
     .prose li { font-size: 0.88rem; line-height: 1.65; }
     .prose a { text-decoration: underline; text-underline-offset: 3px; font-weight: 700; }
-    .code-block { background: #1a1a1a; color: #f0f0f0; padding: 16px; border: 2px solid var(--black); font-size: 0.8rem; line-height: 1.5; overflow-x: auto; margin: 12px 0; }
+    .code-block { background: #1a1a1a; color: #f0f0f0; padding: 16px; border: 2px solid var(--black); font-size: 0.8rem; line-height: 1.5; overflow-x: auto; margin: 12px 0; white-space: pre; font-family: 'JetBrains Mono', monospace; }
     .highlight-box { border: 3px solid var(--black); background: var(--yellow); box-shadow: 4px 4px 0 var(--black); padding: 22px 24px; margin-top: 18px; }
     .highlight-box h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 14px; letter-spacing: -0.02em; }
     .highlight-box p { font-size: 0.86rem; line-height: 1.7; }
@@ -326,35 +326,35 @@
             <h2 class="section-title">The 4-Layer Safe Agent Framework</h2>
             <div class="prose">
               <p>
-                To make the system production-grade, we do not let the AI model touch LinkedIn directly. We placed deterministic code rails between the agent and the external world:
+                To make the system production-grade, we do not let the AI model touch LinkedIn directly. Every operation passes through a four-stage deterministic gate:
               </p>
-              <div class="code-block">
-┌────────────────────────────────────────────────────────┐
-│ 1. DISCOVERY RADAR: Exa Search API                     │
-│    Scans target debates (Google Ads, AI Ops, B2B)      │
-├────────────────────────────────────────────────────────┤
-│ 2. DETERMINISTIC SHIELD: Pydantic Invariants           │
-│    Zero-leak checks, 150-char fold, formatting filters │
-├────────────────────────────────────────────────────────┤
-│ 3. FASTMCP GATEWAY: Python Microservice                │
-│    audit_linkedin_post, publish_linkedin_post, CAPI    │
-├────────────────────────────────────────────────────────┤
-│ 4. OFFICIAL PLATFORM: LinkedIn REST API v2             │
-│    POST /rest/posts with valid OAuth2 Bearer token     │
-└────────────────────────────────────────────────────────┘
+
+              <!-- 4-Stage Architecture Pipeline Grid -->
+              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:12px;margin:18px 0 20px 0;">
+                <div style="background:var(--cream);border:2px solid var(--black);padding:14px;box-shadow:3px 3px 0 var(--black);">
+                  <div style="font-size:0.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#555;">Layer 1: Discovery</div>
+                  <strong style="display:block;margin:6px 0 4px 0;font-size:0.9rem;">Exa Neural Radar</strong>
+                  <p style="font-size:0.78rem;line-height:1.5;color:#333;">Scans live industry debates (Google Ads, AI Ops, B2B) to find practitioners discussing real problems instead of mass spamming.</p>
+                </div>
+
+                <div style="background:var(--yellow);border:2px solid var(--black);padding:14px;box-shadow:3px 3px 0 var(--black);">
+                  <div style="font-size:0.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#555;">Layer 2: Shield</div>
+                  <strong style="display:block;margin:6px 0 4px 0;font-size:0.9rem;">Pydantic Invariants</strong>
+                  <p style="font-size:0.78rem;line-height:1.5;color:#333;">Offline preflight validation: Zero-Leak secret detection, 150-char mobile hook limits, and raw formatting filters.</p>
+                </div>
+
+                <div style="background:var(--sky);border:2px solid var(--black);padding:14px;box-shadow:3px 3px 0 var(--black);">
+                  <div style="font-size:0.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#555;">Layer 3: Gateway</div>
+                  <strong style="display:block;margin:6px 0 4px 0;font-size:0.9rem;">FastMCP Microservice</strong>
+                  <p style="font-size:0.78rem;line-height:1.5;color:#333;">Local Python tools for Claude / Cursor: token health, post publishing, discussion tracking, and CAPI conversion streaming.</p>
+                </div>
+
+                <div style="background:var(--mint);border:2px solid var(--black);padding:14px;box-shadow:3px 3px 0 var(--black);">
+                  <div style="font-size:0.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#555;">Layer 4: Platform</div>
+                  <strong style="display:block;margin:6px 0 4px 0;font-size:0.9rem;">Official REST API v2</strong>
+                  <p style="font-size:0.78rem;line-height:1.5;color:#333;">Compliant execution via <code>POST /rest/posts</code> with valid OAuth2 Bearer token. Zero scraping or cookie theft.</p>
+                </div>
               </div>
-              <p>
-                <strong>Layer 1 (Exa Radar):</strong> Finds live, high-signal LinkedIn discussions using semantic search. Instead of mass spamming, the agent pinpoints specific debates where practitioners are looking for technical solutions.
-              </p>
-              <p>
-                <strong>Layer 2 (Deterministic Shield):</strong> Hardcoded Python code inspects every draft before it touches the network. It verifies that no API tokens leak, checks that the first 150 characters form an engaging hook for mobile readers, and strips out raw markdown asterisks.
-              </p>
-              <p>
-                <strong>Layer 3 (FastMCP Gateway):</strong> Connects your AI coding environment (Cursor, Claude Desktop, Antigravity) to LinkedIn as native tools.
-              </p>
-              <p>
-                <strong>Layer 4 (Conversions API):</strong> Streams server-side lead events (hashed email, attribution source) into LinkedIn CAPI to populate dynamic retargeting audiences.
-              </p>
             </div>
           </section>
 

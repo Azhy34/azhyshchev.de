@@ -141,7 +141,7 @@
     .prose ul, .prose ol { padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
     .prose li { font-size: 0.88rem; line-height: 1.65; }
     .prose a { text-decoration: underline; text-underline-offset: 3px; font-weight: 700; }
-    .code-block { background: #1a1a1a; color: #f0f0f0; padding: 16px; border: 2px solid var(--black); font-size: 0.8rem; line-height: 1.5; overflow-x: auto; margin: 12px 0; }
+    .code-block { background: #1a1a1a; color: #f0f0f0; padding: 16px; border: 2px solid var(--black); font-size: 0.8rem; line-height: 1.5; overflow-x: auto; margin: 12px 0; white-space: pre; font-family: 'JetBrains Mono', monospace; }
     .highlight-box { border: 3px solid var(--black); background: var(--yellow); box-shadow: 4px 4px 0 var(--black); padding: 22px 24px; margin-top: 18px; }
     .highlight-box h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 14px; letter-spacing: -0.02em; }
     .highlight-box p { font-size: 0.86rem; line-height: 1.7; }
@@ -309,17 +309,35 @@
             <h2 class="section-title">Deterministische Leitplanken vor der Schnittstelle</h2>
             <div class="prose">
               <p>
-                Das Modell agiert nicht direkt auf der API, sondern wird durch Python-Leitplanken abgesichert:
+                Das Modell agiert nicht direkt auf der API, sondern wird durch ein vierstufiges deterministisches Gate abgesichert:
               </p>
-              <div class="code-block">
-1. Exa Radar: Scan relevanter Branchendiskussionen (Google Ads, AI Ops)
-2. Deterministischer Schild: Zero-Leak-Filter, 150-Zeichen Mobil-Hook
-3. FastMCP Gateway: Lokaler Microservice (audit_post, publish_post)
-4. LinkedIn REST API v2: Offizieller REST-Aufruf mit OAuth2
+
+              <!-- 4-Stufen-Architektur Pipeline Grid (DE) -->
+              <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:12px;margin:18px 0 20px 0;">
+                <div style="background:var(--cream);border:2px solid var(--black);padding:14px;box-shadow:3px 3px 0 var(--black);">
+                  <div style="font-size:0.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#555;">Ebene 1: Recherche</div>
+                  <strong style="display:block;margin:6px 0 4px 0;font-size:0.9rem;">Exa Neuronales Radar</strong>
+                  <p style="font-size:0.78rem;line-height:1.5;color:#333;">Echtzeit-Scan von Branchendiskussionen (Google Ads, KI-Ops), um echte Fachgespraeche ohne Massenspam zu identifizieren.</p>
+                </div>
+
+                <div style="background:var(--yellow);border:2px solid var(--black);padding:14px;box-shadow:3px 3px 0 var(--black);">
+                  <div style="font-size:0.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#555;">Ebene 2: Schutzschild</div>
+                  <strong style="display:block;margin:6px 0 4px 0;font-size:0.9rem;">Pydantic-Invarianten</strong>
+                  <p style="font-size:0.78rem;line-height:1.5;color:#333;">Deterministische Offline-Pruefung: Zero-Leak-Sicherheit, 150-Zeichen Mobil-Hook und strikte Formatierungsfilter.</p>
+                </div>
+
+                <div style="background:var(--sky);border:2px solid var(--black);padding:14px;box-shadow:3px 3px 0 var(--black);">
+                  <div style="font-size:0.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#555;">Ebene 3: Gateway</div>
+                  <strong style="display:block;margin:6px 0 4px 0;font-size:0.9rem;">FastMCP-Microservice</strong>
+                  <p style="font-size:0.78rem;line-height:1.5;color:#333;">Lokale Python-Werkzeuge fuer Cursor / Claude: Token-Status, Beitragsveroeffentlichung und CAPI-Streaming.</p>
+                </div>
+
+                <div style="background:var(--mint);border:2px solid var(--black);padding:14px;box-shadow:3px 3px 0 var(--black);">
+                  <div style="font-size:0.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#555;">Ebene 4: Plattform</div>
+                  <strong style="display:block;margin:6px 0 4px 0;font-size:0.9rem;">Offizielle REST API v2</strong>
+                  <p style="font-size:0.78rem;line-height:1.5;color:#333;">Konforme Ausfuehrung ueber <code>POST /rest/posts</code> mit OAuth2-Token. Null Scraping, null Sperren.</p>
+                </div>
               </div>
-              <p>
-                Die KI dient als intelligenter Beschleuniger bei der Recherche und Formulierung, waehrend deterministischer Code die absolute Sicherheit garantiert.
-              </p>
             </div>
           </section>
 
