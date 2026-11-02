@@ -6,8 +6,8 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta name="description" content="Managing LinkedIn through an AI agent via official REST API v2. No browser extensions, no cookie theft, zero ban risk, and deterministic Pydantic rails.">
-  <meta name="keywords" content="linkedin agent, linkedin automation, linkedin mcp server, fastmcp linkedin, safe ai agent, linkedin api rest, linkedin thought leadership, AI-Enabled Automation Engineer">
+  <meta name="description" content="Scale LinkedIn automation safely without browser extensions or cookie theft. An open-source FastMCP agent running on official REST API v2 with deterministic Pydantic rails.">
+  <meta name="keywords" content="linkedin automation, linkedin automation tools, linkedin api, ai agent linkedin, fastmcp linkedin, safe linkedin automation, b2b lead generation, linkedin capi, AI-Enabled Automation Engineer">
   <meta name="author" content="Mikhail Azhyshchev">
   <link rel="canonical" href="https://azhyshchev.de/articles/safe-linkedin-agent/">
   <link rel="alternate" hreflang="en" href="https://azhyshchev.de/articles/safe-linkedin-agent/" />
@@ -15,16 +15,16 @@
   <link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/articles/safe-linkedin-agent/" />
 
   <meta property="og:site_name" content="Mikhail Azhyshchev">
-  <meta property="og:title" content="LinkedIn Agent: Safe Automation via Official API and Deterministic Rails">
+  <meta property="og:title" content="LinkedIn Automation Without Browser Extensions: Safe AI Agent Setup">
   <meta property="og:description" content="Why browser extensions get accounts banned, how LinkedIn opened self-serve API access, and how an open-source FastMCP agent operates safely.">
   <meta property="og:url" content="https://azhyshchev.de/articles/safe-linkedin-agent/">
   <meta property="og:type" content="article">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="LinkedIn Agent: Safe Automation via Official API and Deterministic Rails">
+  <meta name="twitter:title" content="LinkedIn Automation Without Browser Extensions: Safe AI Agent Setup">
   <meta name="twitter:description" content="Why browser extensions get accounts banned, how LinkedIn opened self-serve API access, and how an open-source FastMCP agent operates safely.">
 
-  <title>LinkedIn Agent: Safe Automation Without Browser Extensions | Mikhail Azhyshchev</title>
+  <title>LinkedIn Automation Without Browser Extensions: Safe AI Agent Setup | Mikhail Azhyshchev</title>
 
   <script type="application/ld+json">
   {
@@ -108,6 +108,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/mobile.css">
   <style>
     :root { --sky: #61b5e8; --mint: #b9ddb7; --cream: #f8f0dc; --yellow: #f5c84b; --pink: #efb2d5; --blue: #d8ebff; --peach: #f7d4b1; --coral: #ff9a77; --rose: #ecb0c4; --black: #111111; --white: #ffffff; --accent: var(--mint); }
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -167,9 +168,12 @@
     .back-link { font-size: 0.82rem; font-weight: 800; display: inline-block; margin-top: 16px; }
     @media (max-width: 900px) {
       .shell { grid-template-columns: 1fr; }
-      .sidebar { display: none; }
-      .metrics-row { grid-template-columns: repeat(2, 1fr); }
-      body { padding: 16px 12px 80px; }
+      .metrics-row { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      body { padding: 10px 8px 72px; }
+    }
+    @media (max-width: 480px) {
+      .metrics-row { grid-template-columns: 1fr; }
+      .article-title { font-size: 1.5rem; }
     }
   </style>
 </head>
@@ -180,6 +184,7 @@
         <div class="brand-badge">&lt;/&gt;</div>
         <span>AZHY</span>
       </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">&#9776;</button>
       <nav class="nav">
         <a class="nav-item" href="/"><div class="icon-box">&lt;/&gt;</div>Home</a>
         <a class="nav-item" href="/ai-checker"><div class="icon-box">🤖</div>AI Checker</a>
@@ -204,8 +209,8 @@
         </div>
 
         <header class="article-hero">
-          <div class="article-type">Case Study & Open Source Architecture</div>
-          <h1 class="article-title">Managing LinkedIn Through an AI Agent: Official API, Guardrails, and Zero Bans</h1>
+          <div class="article-type">Case Study &amp; Open Source Architecture</div>
+          <h1 class="article-title">LinkedIn Automation with AI Agents: Official REST API, Zero Bans, and Closed-Loop Leads</h1>
           <p class="article-lead">
             Most LinkedIn automation is garbage: brittle browser extensions, stolen session cookies, and spam bots that get accounts terminated.
           </p>

@@ -6,8 +6,8 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta name="description" content="LinkedIn über einen KI-Agenten steuern: Offizielle REST API v2, FastMCP-Gateway, Pydantic-Sicherheitsleitplanken und null Kontosperren.">
-  <meta name="keywords" content="linkedin agent, linkedin automatisierung, linkedin mcp server, fastmcp linkedin, ki agent linkedin, linkedin api rest, AI-Enabled Automation Engineer">
+  <meta name="description" content="Sichere LinkedIn-Automatisierung ohne riskante Browser-Plugins. Quelloffener FastMCP-Agent ueber offizielle REST API v2 mit deterministischen Leitplanken.">
+  <meta name="keywords" content="linkedin automatisierung, linkedin automatisierung tools, linkedin api, ki agent linkedin, fastmcp linkedin, b2b leadgenerierung linkedin, linkedin capi, AI-Enabled Automation Engineer">
   <meta name="author" content="Mikhail Azhyshchev">
   <link rel="canonical" href="https://azhyshchev.de/de/artikel/sicherer-linkedin-ki-agent/">
   <link rel="alternate" hreflang="en" href="https://azhyshchev.de/articles/safe-linkedin-agent/" />
@@ -15,16 +15,16 @@
   <link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/articles/safe-linkedin-agent/" />
 
   <meta property="og:site_name" content="Mikhail Azhyshchev">
-  <meta property="og:title" content="Sicherer LinkedIn KI-Agent: Offizielle API und deterministische Leitplanken">
-  <meta property="og:description" content="Warum Browser-Erweiterungen zu Kontosperren führen und wie ein FastMCP-Agent LinkedIn über offizielle APIs sicher automatisiert.">
+  <meta property="og:title" content="LinkedIn-Automatisierung ohne Browser-Plugins: Sicherer KI-Agent">
+  <meta property="og:description" content="Warum Browser-Erweiterungen zu Kontosperren fuehren und wie ein FastMCP-Agent LinkedIn ueber offizielle APIs sicher automatisiert.">
   <meta property="og:url" content="https://azhyshchev.de/de/artikel/sicherer-linkedin-ki-agent/">
   <meta property="og:type" content="article">
   <meta property="og:locale" content="de_DE">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Sicherer LinkedIn KI-Agent: Offizielle API und deterministische Leitplanken">
-  <meta name="twitter:description" content="Warum Browser-Erweiterungen zu Kontosperren führen und wie ein FastMCP-Agent LinkedIn über offizielle APIs sicher automatisiert.">
+  <meta name="twitter:title" content="LinkedIn-Automatisierung ohne Browser-Plugins: Sicherer KI-Agent">
+  <meta name="twitter:description" content="Warum Browser-Erweiterungen zu Kontosperren fuehren und wie ein FastMCP-Agent LinkedIn ueber offizielle APIs sicher automatisiert.">
 
-  <title>LinkedIn Agent: Sichere Automatisierung ohne Browser-Plugins | Mikhail Azhyshchev</title>
+  <title>LinkedIn-Automatisierung ohne Browser-Plugins: Sicherer KI-Agent | Mikhail Azhyshchev</title>
 
   <script type="application/ld+json">
   {
@@ -100,6 +100,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/mobile.css">
   <style>
     :root { --sky: #61b5e8; --mint: #b9ddb7; --cream: #f8f0dc; --yellow: #f5c84b; --pink: #efb2d5; --blue: #d8ebff; --peach: #f7d4b1; --coral: #ff9a77; --rose: #ecb0c4; --black: #111111; --white: #ffffff; --accent: var(--mint); }
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -159,9 +160,12 @@
     .back-link { font-size: 0.82rem; font-weight: 800; display: inline-block; margin-top: 16px; }
     @media (max-width: 900px) {
       .shell { grid-template-columns: 1fr; }
-      .sidebar { display: none; }
-      .metrics-row { grid-template-columns: repeat(2, 1fr); }
-      body { padding: 16px 12px 80px; }
+      .metrics-row { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      body { padding: 10px 8px 72px; }
+    }
+    @media (max-width: 480px) {
+      .metrics-row { grid-template-columns: 1fr; }
+      .article-title { font-size: 1.5rem; }
     }
   </style>
 </head>
@@ -172,6 +176,7 @@
         <div class="brand-badge">&lt;/&gt;</div>
         <span>AZHY</span>
       </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Navigation umschalten">&#9776;</button>
       <nav class="nav">
         <a class="nav-item" href="/de/"><div class="icon-box">&lt;/&gt;</div>Start</a>
         <a class="nav-item" href="/de/ai-checker"><div class="icon-box">🤖</div>KI-Checker</a>
@@ -196,8 +201,8 @@
         </div>
 
         <header class="article-hero">
-          <div class="article-type">Fallstudie & Open-Source-Architektur</div>
-          <h1 class="article-title">LinkedIn mit einem KI-Agenten steuern: Offizielle API, Leitplanken und null Sperren</h1>
+          <div class="article-type">Fallstudie &amp; Open-Source-Architektur</div>
+          <h1 class="article-title">LinkedIn-Automatisierung mit KI-Agenten: Offizielle API, null Kontosperren und B2B-Leads</h1>
           <p class="article-lead">
             Klassische LinkedIn-Automatisierung birgt enorme Risiken: Browser-Erweiterungen stehlen Session-Cookies und fuehren regelmaessig zu Account-Sperren.
           </p>
