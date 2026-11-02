@@ -52,7 +52,7 @@
         },
         "publisher": { "@id": "https://azhyshchev.de/#person" },
         "datePublished": "2026-10-13",
-        "dateModified": "2026-10-13",
+        "dateModified": "2026-11-02",
         "inLanguage": "de",
         "keywords": "google ads kosten, google ads kosten senken, google ads agentur, google werbung kosten, google ads betreuung, adwords optimieren, google ads kosten pro monat, google cpc, google ads ki agent",
         "url": "https://azhyshchev.de/de/artikel/google-ads-kosten-ki-agent/",
@@ -66,7 +66,7 @@
         "name": "Google Ads Kosten senken mit KI-Agent",
         "description": "Ein KI-Agent kann Google Ads führen, wenn ein eigenes Backend mit Geschäftsregeln dazwischen steht. Ergebnisse eines Kontos mit kleinem Budget in DE, AT, ES und FR.",
         "isPartOf": { "@id": "https://azhyshchev.de/#website" },
-        "dateModified": "2026-10-13",
+        "dateModified": "2026-11-02",
         "inLanguage": "de",
         "breadcrumb": { "@id": "https://azhyshchev.de/de/artikel/google-ads-kosten-ki-agent/#breadcrumb" }
       },
@@ -333,9 +333,24 @@
           </div>
 
           <div class="highlight-box">
-            <h3>Für technische Leser</h3>
-            <p>Das Backend ist ein MCP Server in Python mit FastMCP. Jeder Aufruf läuft durch ein Preflight-Gate und eine Validierungsschicht, bevor eine Mutation die Google Ads API erreicht. Gebote laufen über die Strategie Maximize clicks (TARGET_SPEND) mit einer CPC-Obergrenze je Kampagne. Das Journal unterscheidet READ und MUTATION und speichert die Trace-ID.</p>
-            <p><a href="/de/projekte/google-ads-mcp-server/?utm_source=portfolio&amp;utm_medium=internal&amp;utm_campaign=google-ads-kosten-ki-agent&amp;utm_content=technische_leser_box">Eigener Google Ads MCP Server: Geschäftslogik, Tracing und Evals nach dem Lauf →</a></p>
+            <h3>FastMCP-Evolution: Neu in Version 1.1.0 (November 2026)</h3>
+            <p>Das System ist von einem internen Prototyp zu einem Open-Source-Enterprise-Framework herangewachsen – erweitert auf <strong>59 spezialisierte Werkzeuge</strong> und abgesichert durch 237 Offline-Tests.</p>
+            <ul>
+              <li><strong>59 Werkzeuge (+23 neu):</strong> Tiefgreifendes Lifecycle-Management für Anzeigengruppen, Bild-Assets, Geo-Targeting, Conversion-Ziele und Suchbegriff-Mining.</li>
+              <li><strong>Google Shopping &amp; Merchant Center Integration:</strong> Automatische Überprüfung des Feed-Status (<code>check_shopping_readiness</code>) über Merchant-Center-IDs hinweg. Jede neue Shopping-Kampagne wird per Design im Status <strong>PAUSED</strong> angelegt.</li>
+              <li><strong>Geschäftsregeln als Daten (Policy as Data):</strong> Alle Unternehmensregeln (Konto-IDs, verbotene Suchbegriffe, erlaubte Domains, Gutschein-Parameter) liegen in einer separaten <code>config/policy.local.json</code>. Der Code selbst ist 100% neutral und lecksicher.</li>
+              <li><strong>Harte Invarianten im Code:</strong> Der Agent kann unmöglich Ihr letztes Zielland löschen, keine leeren Anzeigengruppen aktivieren und verschiebt CPC-Obergrenzen streng um maximal &plusmn;0,05 EUR.</li>
+              <li><strong>W3C Distributed Tracing:</strong> Lückenlose Nachvollziehbarkeit: Erfassung von Google Request-IDs und getrennte Messung lokaler Python-Prüfung vs. Google gRPC-Laufzeit.</li>
+              <li><strong>237 Offline-Tests:</strong> Die komplette Testsuite läuft in 2,2 Sekunden durch – ohne einen Cent für Live-APIs zu verbrauchen.</li>
+            </ul>
+            <div style="margin-top:16px;padding:12px 16px;background:rgba(255,255,255,0.06);border-radius:8px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+              <div>
+                <strong>Open-Source-Framework auf GitHub:</strong>
+                <p style="margin:2px 0 0 0;font-size:14px;color:#cbd5e1;">Klonen Sie die Engine, tragen Sie Ihre Regeln in JSON ein und steuern Sie Ihr Konto sicher über Claude Code oder Cursor.</p>
+              </div>
+              <a class="cta-btn" href="https://github.com/Azhy34/safe-google-ads-mcp" target="_blank" rel="noreferrer" style="font-size:13px;padding:8px 16px;">Auf GitHub ansehen →</a>
+            </div>
+            <p style="margin-top:12px;"><a href="/de/projekte/google-ads-mcp-server/?utm_source=portfolio&amp;utm_medium=internal&amp;utm_campaign=google-ads-kosten-ki-agent&amp;utm_content=technische_leser_box"><strong>Technischer Deep-Dive: FastMCP-Architektur, Tracing und Evals nach dem Lauf →</strong></a></p>
           </div>
 
           <div class="neo-card">

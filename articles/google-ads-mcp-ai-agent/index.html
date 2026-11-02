@@ -52,7 +52,7 @@
         },
         "publisher": { "@id": "https://azhyshchev.de/#person" },
         "datePublished": "2026-10-13",
-        "dateModified": "2026-10-13",
+        "dateModified": "2026-11-02",
         "inLanguage": "en",
         "keywords": "google ads mcp, google ads mcp server, ai agent google ads, claude google ads, google ads cost, google cpc, google ads budget, google ads management",
         "url": "https://azhyshchev.de/articles/google-ads-mcp-ai-agent/",
@@ -67,7 +67,7 @@
         "description": "A case study on running Google Ads with an AI agent through your own backend: business rules, bid limits, a journal of every action, and what happened to the CPC.",
         "isPartOf": { "@id": "https://azhyshchev.de/#website" },
         "author": { "@id": "https://azhyshchev.de/#person" },
-        "dateModified": "2026-10-13",
+        "dateModified": "2026-11-02",
         "inLanguage": "en",
         "breadcrumb": { "@id": "https://azhyshchev.de/articles/google-ads-mcp-ai-agent/#breadcrumb" }
       },
@@ -342,16 +342,24 @@
               </div>
             </div>
             <div class="highlight-box">
-              <h3>For the technical reader</h3>
-              <p>The backend is a Python MCP server built on FastMCP. The facts, as of 13.10.2026:</p>
+              <h3>FastMCP Evolution: What's New in v1.1.0 (November 2026)</h3>
+              <p>The system has evolved from an internal prototype into an enterprise open-source framework, now expanded to <strong>59 purpose-built tools</strong> and battle-tested across 237 offline unit tests.</p>
               <ul>
-                <li>36 tools: reports, search term mining, negative keywords, bid ceiling steps, ad rotation, change history, observability.</li>
-                <li>Preflight gate: until the health check passes, every ad tool answers PREFLIGHT_REQUIRED. In the state ATTENTION the owner confirms before work continues. The journal shows 3 such refusals in October.</li>
-                <li>Bid ceiling hard limits in code: 0.10 to 3.00 EUR, moving only in steps of 0.05 EUR. On 05.10.2026 the validation layer rejected a malformed ceiling change and nothing was changed.</li>
-                <li>Every change sends an explicit update mask, so only the named field changes.</li>
-                <li>Audit journal, 01.10-13.10.2026: 237 entries, 216 reads, 21 changes. Each entry has timestamp, tool, READ or MUTATION, result, latency and trace ID.</li>
+                <li><strong>59 Tools (+23 Added):</strong> Deep lifecycle management for ad groups, image assets, geo-targeting, conversion goals, and search term mining.</li>
+                <li><strong>Google Shopping &amp; Merchant Center Integration:</strong> Audits feed readiness (<code>check_shopping_readiness</code>) across Merchant Center IDs and products before campaigns can be touched. Every new shopping campaign is forced to <strong>PAUSED</strong> by design.</li>
+                <li><strong>Business Policy as Data:</strong> All company rules (account IDs, forbidden negative terms, allowed hosts, coupon parameters) are isolated in a git-ignored <code>config/policy.local.json</code> file. Code is 100% agnostic and zero-leak.</li>
+                <li><strong>Hard Invariants:</strong> The agent is physically blocked from deleting your last target country, cannot enable an empty ad group, and steps CPC ceilings strictly by &plusmn;0.05 EUR.</li>
+                <li><strong>W3C Distributed Tracing:</strong> Full observability capturing Google upstream request IDs and separating local validation latency from Google gRPC execution.</li>
+                <li><strong>237 Offline Tests:</strong> 100% validation suite runs in 2.2 seconds without spending a cent on live APIs.</li>
               </ul>
-              <p><a href="/projects/ai-ads-management/?utm_source=portfolio&amp;utm_medium=internal&amp;utm_campaign=google-ads-mcp-ai-agent&amp;utm_content=engineering_case_link"><strong>Custom Google Ads MCP Server: business logic, tracing and post-run evals →</strong></a></p>
+              <div style="margin-top:16px;padding:12px 16px;background:rgba(255,255,255,0.06);border-radius:8px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+                <div>
+                  <strong>Open-Source Framework on GitHub:</strong>
+                  <p style="margin:2px 0 0 0;font-size:14px;color:#cbd5e1;">Clone the engine, set your business rules in JSON, and connect Claude Code or Cursor safely.</p>
+                </div>
+                <a class="cta-btn" href="https://github.com/Azhy34/safe-google-ads-mcp" target="_blank" rel="noreferrer" style="font-size:13px;padding:8px 16px;">View on GitHub →</a>
+              </div>
+              <p style="margin-top:12px;"><a href="/projects/ai-ads-management/?utm_source=portfolio&amp;utm_medium=internal&amp;utm_campaign=google-ads-mcp-ai-agent&amp;utm_content=engineering_case_link"><strong>Technical Deep-Dive: FastMCP Architecture, Tracing &amp; Post-Run Evals →</strong></a></p>
             </div>
           </div>
 
