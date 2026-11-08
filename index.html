@@ -146,6 +146,7 @@
     ]
   }
   </script>
+  <link rel="preload" as="image" href="/Azhyschev.webp" type="image/webp" fetchpriority="high">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
@@ -437,6 +438,7 @@
       background: rgba(255, 249, 204, 0.65);
     }
 
+    .photo-frame picture,
     .photo-frame img {
       width: 100%;
       height: 100%;
@@ -444,6 +446,7 @@
       object-position: center top;
       position: relative;
       z-index: 1;
+      display: block;
     }
 
     .profile-content {
@@ -1016,7 +1019,10 @@
           <!-- Row 2: content blocks -->
           <article class="neo-card profile-card">
             <div class="photo-frame">
-              <img src="Azhyschev.JPG" alt="Portrait of Mikhail Azhyshchev">
+              <picture>
+                <source srcset="/Azhyschev.webp" type="image/webp">
+                <img src="/Azhyschev.JPG" alt="Portrait of Mikhail Azhyshchev" width="210" height="280" fetchpriority="high" loading="eager">
+              </picture>
             </div>
 
             <div class="profile-content">
