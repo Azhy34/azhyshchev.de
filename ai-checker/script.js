@@ -200,7 +200,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             console.log('Starting analysis for:', url);
-            const response = await fetch(`${API_BASE_URL}/api/analyze?url=${encodeURIComponent(url)}`);
+            // Propagate page language + campaign params so a logged run knows its source
+            const query = new URLSearchParams({ url: url, lang: currentLang });
+            const pageParams = new URLSearchParams((window.location && window.location.search) || '');
+            ['utm_source', 'utm_medium', 'utm_campaign'].forEach(function (key) {
+                const value = pageParams.get(key);
+                if (value) query.set(key, value);
+            });
+            const response = await fetch(`${API_BASE_URL}/api/analyze?${query.toString()}`);
             const data = await response.json();
 
             if (!response.ok) {

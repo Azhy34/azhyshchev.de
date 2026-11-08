@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import urllib.robotparser
 import requests
 import datetime
+import hashlib
 import os
 import json
 import time
@@ -19,6 +20,25 @@ _ANALYZE_CACHE_TTL = 600  # seconds
 _analyze_cache: dict[str, tuple[float, dict]] = {}
 
 DATABASE_URL = os.environ.get("DATABASE_URL", "")
+# Token required for /api/logs and /api/leads (they expose visitor hashes).
+LOG_TOKEN = os.environ.get("CHECKER_LOG_TOKEN", "")
+# Salt for the visitor IP hash. Set IP_HASH_SALT on Cloud Run for real deployments.
+IP_HASH_SALT = os.environ.get("IP_HASH_SALT", "ai-checker")
+
+# Lead-analytics columns. Existing tables are migrated on startup via
+# ALTER TABLE ... ADD COLUMN IF NOT EXISTS, so no manual migration is needed.
+_LOG_EXTRA_COLUMNS = {
+    "domain": "TEXT",
+    "gaps": "JSONB",
+    "ip_hash": "TEXT",
+    "lang": "TEXT",
+    "referrer": "TEXT",
+    "utm_source": "TEXT",
+    "utm_medium": "TEXT",
+    "utm_campaign": "TEXT",
+    "cached": "BOOLEAN DEFAULT FALSE",
+    "error": "TEXT",
+}
 
 def get_db():
     return psycopg2.connect(DATABASE_URL)
@@ -41,21 +61,111 @@ def init_db():
                 checked_at  TIMESTAMPTZ DEFAULT NOW()
             )
         """)
+        for column, column_type in _LOG_EXTRA_COLUMNS.items():
+            cur.execute(
+                f"ALTER TABLE ai_checker_logs ADD COLUMN IF NOT EXISTS {column} {column_type}"
+            )
+        cur.execute(
+            "CREATE INDEX IF NOT EXISTS ai_checker_logs_domain_idx "
+            "ON ai_checker_logs (domain, checked_at DESC)"
+        )
+        cur.execute(
+            "CREATE INDEX IF NOT EXISTS ai_checker_logs_checked_at_idx "
+            "ON ai_checker_logs (checked_at DESC)"
+        )
         conn.commit()
         cur.close()
         conn.close()
     except Exception as e:
         print(f"DB init error: {e}")
 
-def log_check(result: dict, ip: str, user_agent: str):
+
+def _normalize_domain(url: str) -> str:
+    """example.com — no scheme, no path, no leading "www." (one lead per domain)."""
+    try:
+        host = urlparse(url).netloc.lower()
+    except Exception:
+        return ""
+    return host[4:] if host.startswith("www.") else host
+
+
+def _hash_ip(ip: str) -> str:
+    """Store a salted hash instead of the raw visitor IP (GDPR data minimisation)."""
+    return hashlib.sha256(f"{IP_HASH_SALT}:{ip}".encode("utf-8")).hexdigest()[:32]
+
+
+def _extract_gaps(breakdown: dict) -> list[dict]:
+    """Every check that did not earn full marks — this is the actual sales argument."""
+    gaps = []
+    for key, entry in breakdown.items():
+        max_points = entry.get("max", 0) or 0
+        points = entry.get("points", 0) or 0
+        if max_points and points < max_points:
+            gaps.append({
+                "check": key,
+                "points": points,
+                "max": max_points,
+                "detail": entry.get("detail"),
+                "recommendation": entry.get("recommendation"),
+            })
+    return gaps
+
+def log_check(result: dict, meta: dict) -> None:
+    """Record one run: always emit a structured log line, persist to Postgres if configured.
+
+    Cache hits and failed runs (anti-bot 403/429, timeouts) are logged as well —
+    they are real visitor intent and used to disappear from the stats entirely.
+    """
+    breakdown = result.get("breakdown") or {}
+    gaps = _extract_gaps(breakdown)
+    payload = {
+        "event": "ai_checker_run",
+        "url": result.get("url"),
+        "domain": _normalize_domain(result.get("url") or ""),
+        "score": result.get("score"),
+        "verdict": result.get("verdict"),
+        "gaps": [gap["check"] for gap in gaps],
+        "cached": bool(meta.get("cached")),
+        "error": result.get("error"),
+        "lang": meta.get("lang"),
+        "referrer": meta.get("referrer"),
+        "utm_source": meta.get("utm_source"),
+        "utm_medium": meta.get("utm_medium"),
+        "utm_campaign": meta.get("utm_campaign"),
+        "ip_hash": _hash_ip(meta.get("ip", "")),
+        "checked_at": result.get("checked_at"),
+    }
+    # → Cloud Logging jsonPayload (works even when DATABASE_URL is not configured)
+    print(json.dumps(payload, ensure_ascii=False))
+
     if not DATABASE_URL:
         return
     try:
         conn = get_db()
         cur = conn.cursor()
         cur.execute(
-            "INSERT INTO ai_checker_logs (url, score, verdict, breakdown, ip, user_agent) VALUES (%s, %s, %s, %s, %s, %s)",
-            (result["url"], result["score"], result["verdict"], json.dumps(result["breakdown"]), ip, user_agent)
+            """INSERT INTO ai_checker_logs
+               (url, domain, score, verdict, breakdown, gaps, ip, ip_hash, user_agent,
+                lang, referrer, utm_source, utm_medium, utm_campaign, cached, error)
+               VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+            (
+                result.get("url"),
+                payload["domain"],
+                result.get("score"),
+                result.get("verdict"),
+                json.dumps(breakdown),
+                json.dumps(gaps),
+                meta.get("ip"),
+                payload["ip_hash"],
+                meta.get("user_agent"),
+                meta.get("lang"),
+                meta.get("referrer"),
+                meta.get("utm_source"),
+                meta.get("utm_medium"),
+                meta.get("utm_campaign"),
+                bool(meta.get("cached")),
+                result.get("error"),
+            ),
         )
         conn.commit()
         cur.close()
@@ -440,45 +550,161 @@ def audit_ai_readiness(url: str) -> dict:
 import os
 import uvicorn
 
+def _client_meta(request: Request, lang, utm_source, utm_medium, utm_campaign) -> dict:
+    forwarded = request.headers.get("x-forwarded-for", "")
+    ip = forwarded.split(",")[0].strip() or (request.client.host if request.client else "unknown")
+    return {
+        "ip": ip,
+        "user_agent": request.headers.get("user-agent", "")[:512],
+        "referrer": request.headers.get("referer", "")[:512],
+        "lang": (lang or "")[:8],
+        "utm_source": (utm_source or "")[:64],
+        "utm_medium": (utm_medium or "")[:64],
+        "utm_campaign": (utm_campaign or "")[:64],
+    }
+
+
 @app.get("/api/analyze")
-async def analyze(request: Request, url: str = Query(..., description="The URL of the website to analyze")):
+async def analyze(
+    request: Request,
+    url: str = Query(..., description="The URL of the website to analyze"),
+    lang: str | None = Query(None, description="Checker page language (en|de)"),
+    utm_source: str | None = Query(None),
+    utm_medium: str | None = Query(None),
+    utm_campaign: str | None = Query(None),
+):
+    meta = _client_meta(request, lang, utm_source, utm_medium, utm_campaign)
+
     cache_key = url.strip().lower()
-    cached = _analyze_cache.get(cache_key)
-    if cached and time.time() - cached[0] < _ANALYZE_CACHE_TTL:
-        result = cached[1]
+    cached_entry = _analyze_cache.get(cache_key)
+    if cached_entry and time.time() - cached_entry[0] < _ANALYZE_CACHE_TTL:
+        result = cached_entry[1]
+        log_check(result, {**meta, "cached": True})
         if "error" in result:
             raise HTTPException(status_code=400, detail=result["error"])
         return result
 
     result = audit_ai_readiness(url)
     _analyze_cache[cache_key] = (time.time(), result)
+    log_check(result, meta)
     if "error" in result:
         raise HTTPException(status_code=400, detail=result["error"])
-    ip = request.headers.get("x-forwarded-for", request.client.host if request.client else "unknown")
-    user_agent = request.headers.get("user-agent", "")
-    log_check(result, ip, user_agent)
     return result
 
+def _require_log_token(request: Request) -> None:
+    """Reading visitor hashes/domains requires CHECKER_LOG_TOKEN when it is set."""
+    if not LOG_TOKEN:
+        return
+    if request.headers.get("x-log-token") != LOG_TOKEN:
+        raise HTTPException(status_code=401, detail="Missing or invalid X-Log-Token header")
+
+
 @app.get("/api/logs")
-async def logs(limit: int = 50):
+async def logs(
+    request: Request,
+    limit: int = 50,
+    days: int = 30,
+    domain: str | None = None,
+    max_score: int | None = None,
+):
+    _require_log_token(request)
     if not DATABASE_URL:
-        return []
+        return {
+            "enabled": False,
+            "hint": "DATABASE_URL is not configured — runs still land in Cloud Logging (jsonPayload.event=ai_checker_run)",
+            "rows": [],
+        }
+    try:
+        conn = get_db()
+        cur = conn.cursor()
+        sql = (
+            "SELECT id, url, domain, score, verdict, gaps, lang, utm_source, utm_campaign, "
+            "cached, error, ip_hash, checked_at "
+            "FROM ai_checker_logs "
+            "WHERE checked_at >= NOW() - (%s * INTERVAL '1 day')"
+        )
+        params: list = [max(1, min(days, 365))]
+        if domain:
+            sql += " AND domain = %s"
+            params.append(domain.lower().replace("www.", ""))
+        if max_score is not None:
+            sql += " AND score <= %s"
+            params.append(max_score)
+        sql += " ORDER BY checked_at DESC LIMIT %s"
+        params.append(max(1, min(limit, 500)))
+        cur.execute(sql, tuple(params))
+        rows = cur.fetchall()
+        cur.close()
+        conn.close()
+        return {
+            "enabled": True,
+            "rows": [
+                {
+                    "id": r[0], "url": r[1], "domain": r[2], "score": r[3], "verdict": r[4],
+                    "gaps": r[5], "lang": r[6], "utm_source": r[7], "utm_campaign": r[8],
+                    "cached": r[9], "error": r[10], "ip_hash": r[11],
+                    "checked_at": r[12].isoformat() if r[12] else None,
+                }
+                for r in rows
+            ],
+        }
+    except Exception as e:
+        return {"enabled": False, "error": str(e), "rows": []}
+
+
+@app.get("/api/leads")
+async def leads(
+    request: Request,
+    days: int = 30,
+    max_score: int = 90,
+    limit: int = 100,
+):
+    """Domains worth following up: they ran the checker, still have gaps, newest first."""
+    _require_log_token(request)
+    if not DATABASE_URL:
+        return {"enabled": False, "hint": "DATABASE_URL is not configured", "rows": []}
     try:
         conn = get_db()
         cur = conn.cursor()
         cur.execute(
-            "SELECT id, url, score, verdict, ip, user_agent, checked_at FROM ai_checker_logs ORDER BY checked_at DESC LIMIT %s",
-            (limit,)
+            """
+            SELECT r.domain,
+                   COUNT(DISTINCT r.id)                        AS runs,
+                   MIN(r.score)                                AS min_score,
+                   MAX(r.score)                                AS max_score,
+                   MAX(r.checked_at)                           AS last_seen,
+                   COALESCE(
+                       jsonb_agg(DISTINCT g->>'check')
+                       FILTER (WHERE g->>'check' IS NOT NULL),
+                       '[]'::jsonb
+                   )                                           AS gaps
+            FROM ai_checker_logs r
+            LEFT JOIN LATERAL jsonb_array_elements(COALESCE(r.gaps, '[]'::jsonb)) g ON TRUE
+            WHERE r.checked_at >= NOW() - (%s * INTERVAL '1 day')
+              AND r.domain IS NOT NULL AND r.domain <> ''
+              AND r.score IS NOT NULL
+            GROUP BY r.domain
+            HAVING MAX(r.score) <= %s
+            ORDER BY MAX(r.checked_at) DESC
+            LIMIT %s
+            """,
+            (max(1, min(days, 365)), max_score, max(1, min(limit, 500))),
         )
         rows = cur.fetchall()
         cur.close()
         conn.close()
-        return [
-            {"id": r[0], "url": r[1], "score": r[2], "verdict": r[3], "ip": r[4], "user_agent": r[5], "checked_at": r[6]}
-            for r in rows
-        ]
+        return {
+            "enabled": True,
+            "rows": [
+                {
+                    "domain": r[0], "runs": r[1], "min_score": r[2], "max_score": r[3],
+                    "last_seen": r[4].isoformat() if r[4] else None, "gaps": r[5],
+                }
+                for r in rows
+            ],
+        }
     except Exception as e:
-        return {"error": str(e)}
+        return {"enabled": False, "error": str(e), "rows": []}
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))

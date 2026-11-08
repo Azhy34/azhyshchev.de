@@ -457,32 +457,46 @@ All checks (robots.txt, llms.txt, sitemap, markdown) use `base_origin` (`scheme:
 ### API endpoints
 | Method | Path | Description |
 |--------|------|-------------|
-| GET | `/api/analyze?url=<url>` | Run full analysis, logs to DB (cache miss only) |
-| GET | `/api/logs?limit=50` | View recent checks from DB (unauthenticated — do not expose raw IPs) |
+| GET | `/api/analyze?url=<url>&lang=en\|de&utm_source=…&utm_medium=…&utm_campaign=…` | Run the audit and log the run (fresh + cached + failed runs) |
+| GET | `/api/logs?days=30&limit=50&domain=<domain>&max_score=<n>` | Raw run log; requires `X-Log-Token` when `CHECKER_LOG_TOKEN` is set |
+| GET | `/api/leads?days=30&max_score=90&limit=100` | Follow-up list: one row per domain (runs, min/max score, last_seen, gaps); same token |
+
+`lang` / `utm_*` are appended by `portfolio/ai-checker/script.js`; `referrer` comes from the `Referer` header.
+Both read endpoints answer `{"enabled": bool, "rows": [...]}` — `enabled: false` means `DATABASE_URL` is not configured.
 
 Base URL: `https://ai-readiness-api-377331886416.europe-west3.run.app` (Google Cloud Run, europe-west3).
 `portfolio/ai-checker/script.js` → `const API_BASE_URL = 'https://ai-readiness-api-377331886416.europe-west3.run.app'`.
 
-### Database (Railway PostgreSQL)
-Table `ai_checker_logs` — created automatically on startup via `CREATE TABLE IF NOT EXISTS`.
-
-> ⚠️ **Logging is INACTIVE as of 2026-11-08.** The Cloud Run service has no env vars at all,
-> so `DATABASE_URL` is empty → `init_db()` / `log_check()` are no-ops and `GET /api/logs`
-> returns `[]`. The old Railway service (`ai-readiness-api-production.up.railway.app`) is gone (404).
-> To re-enable: set `DATABASE_URL` as a secret (`gcloud run services update ai-readiness-api
-> --set-secrets DATABASE_URL=…`) and redeploy. Until then the only trace of runs is Cloud Run
-> request logs (`httpRequest.remoteIp`, `userAgent`, `requestUrl`, ~30 days, **no score**).
+### Run log — two sinks
+1. **Cloud Logging (always on).** `log_check()` prints one JSON line per run:
+   `jsonPayload.event = "ai_checker_run"` with `domain`, `score`, `verdict`, `gaps[]`, `lang`,
+   `utm_*`, `cached`, `error`, `ip_hash`. Works with no database at all:
+   ```bash
+   gcloud logging read 'jsonPayload.event="ai_checker_run"' --project=azhyshchev --limit=50 --format=json
+   ```
+2. **Postgres (when `DATABASE_URL` is set).** Table `ai_checker_logs`, created and migrated on
+   startup (`CREATE TABLE IF NOT EXISTS` + `ALTER TABLE … ADD COLUMN IF NOT EXISTS` + indexes).
 
 | Column | Type | Notes |
 |--------|------|-------|
 | id | BIGSERIAL | PK |
-| url | TEXT | Final URL after redirects |
-| score | INT | 0-100 |
-| verdict | TEXT | Optimal / Needs Improvement / Critical |
-| breakdown | JSONB | Full per-metric breakdown |
-| ip | TEXT | From x-forwarded-for header |
-| user_agent | TEXT | Browser/client |
+| url / domain | TEXT | Final URL + normalised domain (`www.` stripped) — one lead per domain |
+| score / verdict | INT / TEXT | 0-100 + Optimal / Needs Improvement / Critical |
+| breakdown / gaps | JSONB | Full per-check data + only the checks below max (the sales argument) |
+| ip / ip_hash | TEXT | Raw IP stays in Cloud Run request logs; table stores salted `sha256[:32]` |
+| user_agent, lang, referrer | TEXT | Client + checker page language + referer |
+| utm_source / utm_medium / utm_campaign | TEXT | Campaign attribution |
+| cached / error | BOOLEAN / TEXT | Cache hits and failed runs are logged too |
 | checked_at | TIMESTAMPTZ | UTC timestamp |
+
+**Enable persistence** (currently OFF — no `DATABASE_URL` on Cloud Run, Railway CLI token expired,
+old Railway service gone → only Cloud Logging holds runs):
+```bash
+gcloud run services update ai-readiness-api --region=europe-west3 --project=azhyshchev \
+  --set-env-vars IP_HASH_SALT=<random-string> \
+  --set-secrets DATABASE_URL=DATABASE_URL:latest,CHECKER_LOG_TOKEN=CHECKER_LOG_TOKEN:latest
+```
+Without `CHECKER_LOG_TOKEN` the read endpoints stay open (fine for local dev, not for production).
 
 ### Deploy
 ```bash
@@ -494,7 +508,8 @@ only if `DATABASE_URL` is wired up — see above).
 ### Tests
 ```bash
 cd portfolio/api
-python -m unittest test_scoring -v   # scoring invariants: sum = 100, 100 only when all checks full
+python -m unittest test_scoring -v     # scoring invariants: sum = 100, 100 only when all checks full
+python -m unittest test_analytics -v   # domain normalisation, IP hashing, gaps extraction, log token
 ```
 
 ### No LLM usage
