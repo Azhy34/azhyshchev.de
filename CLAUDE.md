@@ -489,6 +489,13 @@ Base URL: `https://ai-readiness-api-377331886416.europe-west3.run.app` (Google C
 | cached / error | BOOLEAN / TEXT | Cache hits and failed runs are logged too |
 | checked_at | TIMESTAMPTZ | UTC timestamp |
 
+**Follow-up list without a database** (works right now):
+```bash
+python scripts/checker_leads.py --days 30 --max-score 90
+```
+Aggregates `ai_checker_run` events per domain (runs, min/max score, last seen, most frequent gaps)
+straight from Cloud Logging.
+
 **Enable persistence** (currently OFF — no `DATABASE_URL` on Cloud Run, Railway CLI token expired,
 old Railway service gone → only Cloud Logging holds runs):
 ```bash
