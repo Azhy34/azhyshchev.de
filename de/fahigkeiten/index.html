@@ -5,7 +5,7 @@
   <script src="/js/cookie-consent.js" defer></script>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Technischer Stack von KI-Automatisierungsingenieur Mikhail Azhyshchev (München): Google ADK, Multi-Agenten-Systeme, Claude &amp; Gemini Agents, MCP/WebMCP, Python, FastAPI, GCP Cloud Run, Secret Manager, Linux VPS, Supabase.">
+  <meta name="description" content="Technischer Stack von KI-Automatisierungsingenieur Mikhail Azhyshchev (München): Google ADK, Multi-Agenten-Systeme, Claude &amp; Gemini Agents, MCP/WebMCP, Python, FastAPI, GCP Cloud Run, Secret Manager, Google Cloud Run, Firestore, Secret Manager, Linux VPS, PostgreSQL.">
   <meta name="keywords" content="KI Automatisierung Ingenieur, Google ADK, Multi-Agenten-Systeme, MCP, WebMCP, Claude Code, Gemini 2.5 Pro, Python, FastAPI, Pydantic, Pandas, Postman, Google Cloud Run, Secret Manager, Linux VPS, Hybrid RAG, LangGraph, Supabase, Docker, München Deutschland">
   <meta name="author" content="Mikhail Azhyshchev">
   <link rel="canonical" href="https://azhyshchev.de/de/fahigkeiten/">
@@ -13,14 +13,14 @@
   <link rel="alternate" hreflang="en" href="https://azhyshchev.de/skills/" />
   <link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/skills/" />
   <meta property="og:title" content="Fähigkeiten &amp; Tech-Stack — Google ADK, Multi-Agenten, Python, MCP | Mikhail Azhyshchev">
-  <meta property="og:description" content="Technischer Stack von KI-Automatisierungsingenieur Mikhail Azhyshchev (München): Google ADK, Multi-Agenten-Systeme, Claude &amp; Gemini Agents, MCP/WebMCP, Python, FastAPI, GCP Cloud Run, Secret Manager, Linux VPS, Supabase.">
+  <meta property="og:description" content="Technischer Stack von KI-Automatisierungsingenieur Mikhail Azhyshchev (München): Google ADK, Multi-Agenten-Systeme, Claude &amp; Gemini Agents, MCP/WebMCP, Python, FastAPI, GCP Cloud Run, Secret Manager, Google Cloud Run, Firestore, Secret Manager, Linux VPS, PostgreSQL.">
   <meta property="og:url" content="https://azhyshchev.de/de/fahigkeiten/">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://azhyshchev.de/Azhyschev.JPG">
   <meta property="og:locale" content="de_DE">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Fähigkeiten &amp; Tech-Stack — Google ADK, Multi-Agenten, Python, MCP | Mikhail Azhyshchev">
-  <meta name="twitter:description" content="Technischer Stack von KI-Automatisierungsingenieur Mikhail Azhyshchev (München): Google ADK, Multi-Agenten-Systeme, Claude &amp; Gemini Agents, MCP/WebMCP, Python, FastAPI, GCP Cloud Run, Secret Manager, Linux VPS, Supabase.">
+  <meta name="twitter:description" content="Technischer Stack von KI-Automatisierungsingenieur Mikhail Azhyshchev (München): Google ADK, Multi-Agenten-Systeme, Claude &amp; Gemini Agents, MCP/WebMCP, Python, FastAPI, GCP Cloud Run, Secret Manager, Google Cloud Run, Firestore, Secret Manager, Linux VPS, PostgreSQL.">
 
   <title>Fähigkeiten &amp; Tech-Stack — Google ADK, Multi-Agenten, Python, MCP | Mikhail Azhyshchev</title>
   <script type="application/ld+json">
@@ -39,6 +39,52 @@
         "about": { "@id": "https://azhyshchev.de/#person" },
         "mainEntity": { "@id": "https://azhyshchev.de/#person" },
         "dateModified": "2026-08-20"
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://azhyshchev.de/de/fahigkeiten/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Warum bevorzugen Sie individuellen Python-Code gegenüber No-Code-Tools wie Make oder n8n?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Visuellen Baukästen fehlen automatisierte Regressionstests, feingranulares Secret-Management, verteiltes Tracing und deterministisches Error-Handling. Code-basierte Automatisierung mit FastAPI und Google ADK ermöglicht saubere Git CI/CD-Pipelines, automatisierte Tests und vollständige Unabhängigkeit von proprietären Drittanbieter-Gebühren."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Wie wird die DSGVO-Konformität für deutsche Unternehmen sichergestellt?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sämtliche Container und Datenbanken laufen ausschließlich in der EU-Region Frankfurt am Main (europe-west3). Personenbezogene Daten und Bankdaten werden vor der Weiterleitung an KI-Modelle durch Cloud DLP-Filter anonymisiert. Es gelten vertragliche Garantien für den vollständigen Verzicht auf KI-Modelltraining mit Kundendaten."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Welche Funktion übernehmen das Model Context Protocol (MCP) und WebMCP?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "MCP ermöglicht standardisierte, typsichere Schnittstellen zwischen KI-Agenten und externen Systemen (Google Ads, GA4, Postman, PostgreSQL). WebMCP bringt dieses Protokoll direkt in den Browser, sodass Websites eigene Client-Tools und Statuswerte über JSON-RPC 2.0 sicher für KI-Agenten bereitstellen."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Wie verhindern Sie Halluzinationen in vertrieblichen RAG-Systemen?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Halluzinationen werden durch hybride Vektorsuche in Vertex AI Search, strikte Pydantic-Validierung und erzwungene Tool-Choice-Modi verhindert. Der Agent greift ausschließlich auf geprüfte Unternehmensdaten zu und verweigert spekulative Aussagen zu Preisen oder Leistungen."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Können die Pipelines an bestehende ERP- und CRM-Systeme angebunden werden?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ja. Jede Automatisierung stellt standardisierte REST-Webhooks und Cloud-Event-Trigger bereit, wodurch DATEV, SAP, Salesforce, HubSpot, Lexware und relationale PostgreSQL-Datenbanken nahtlos synchronisiert werden."
+            }
+          }
+        ]
       },
       {
         "@type": "Person",
@@ -663,6 +709,54 @@
             VS Code + Claude Code — Code-first Entwicklung. Keine No-Code-Plattformen. Der echte Stack zählt mehr als die Tool-Liste.
           </div>
           <a class="callout-link" href="/de/projekte/">In Projekten ansehen →</a>
+        </div>
+
+        <!-- Architektur-Prinzipien & Technische Standards -->
+        <div class="stack-cards">
+          <div class="neo-card">
+            <div class="section-label">Engineering-Methodik</div>
+            <h2 class="section-title">Code-First Architektur statt fragiler No-Code-Baukästen</h2>
+            <div class="prose">
+              <p><strong>Deterministische Zuverlässigkeit im Unternehmensbetrieb:</strong> Während visuelle No-Code-Plattformen (Make, n8n, Zapier) für einfache Benachrichtigungen ausreichen, erfordert produktive Unternehmens-KI robuste Fehlergrenzen, strikte Typisierung und nachvollziehbare Versionskontrolle. Ich entwickle produktive Systeme mit Python 3.12+, FastAPI und dem Google Agent Development Kit (ADK). Jeder API-Payload wird vor der Weiterverarbeitung durch Pydantic v2 Schemas validiert – für null unkontrollierte Abstürze und reproduzierbare Ergebnisse.</p>
+              <p><strong>Two-Layer Agent Shields &amp; Zero-Trust Governance:</strong> Autonome KI-Agenten mit Anbindung an Unternehmensdatenbanken erfordern kompromisslose Sicherheit. Meine Systeme nutzen eine zweistufige Schutzarchitektur: ein deterministisches Gateway (Cloud DLP Datenanonymisierung, IBAN-Maskierung, Regex-Sanitization) und ein internes Governance-Layer (Google Cloud Model Armor, strikte Tool-Choice-Regeln und IAM Least-Privilege auf Google Cloud Run in Frankfurt am Main). Sensible Kundendaten verlassen niemals unverschlüsselt das europäische Rechenzentrum.</p>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Observability &amp; Multi-Agenten</div>
+            <h2 class="section-title">Multi-Agenten-Systeme, FastMCP-Tooling &amp; Echtzeit-Tracing</h2>
+            <div class="prose">
+              <p><strong>Hierarchische Modelldelegation:</strong> Leistungsfähige KI-Automatisierung nutzt kein Einzelmodell. Komplexe Aufgaben werden über gestaffeltes Routing aufgeteilt: Starke Reasoning-Modelle (Claude Code, Gemini 2.5 Pro) agieren als Architekten und Koordinatoren, während schlanke, echtzeitfähige Modelle (Gemini 2.5 Flash, lokales vLLM) die Vektorsuche, Datenumwandlung und operative Tool-Calls ausführen. Dieser Ansatz senkt die Inferenzkosten um bis zu 90 % bei Antwortzeiten im Subsekundenbereich.</p>
+              <p><strong>Produktions-Observability (4 Säulen):</strong> Sämtliche Agenten-Workflows werden mit strukturierten JSON-Logs protokolliert und über W3C-Traceparent-Header mit Cloud Trace korreliert. Verteilte OpenTelemetry-Spans überwachen Latenzen von Tool-Aufrufen, Token-Verbrauch und Treffsicherheit, wodurch Leistungsengpässe sofort isoliert und behoben werden.</p>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Technische FAQ</div>
+            <h2 class="section-title">Häufig gestellte Fragen: Tech-Stack &amp; Enterprise-Implementierung</h2>
+            <div class="faq">
+              <details class="faq-item">
+                <summary>Warum bevorzugen Sie individuellen Python-Code gegenüber No-Code-Tools wie Make oder n8n?</summary>
+                <div class="faq-a">Visuellen Baukästen fehlen automatisierte Regressionstests, feingranulares Secret-Management, verteiltes Tracing und deterministisches Error-Handling. Code-basierte Automatisierung mit FastAPI und Google ADK ermöglicht saubere Git CI/CD-Pipelines, automatisierte Tests und vollständige Unabhängigkeit von proprietären Drittanbieter-Gebühren.</div>
+              </details>
+              <details class="faq-item">
+                <summary>Wie wird die DSGVO-Konformität für deutsche Unternehmen sichergestellt?</summary>
+                <div class="faq-a">Sämtliche Container und Datenbanken laufen ausschließlich in der EU-Region Frankfurt am Main (europe-west3). Personenbezogene Daten und Bankdaten werden vor der Weiterleitung an KI-Modelle durch Cloud DLP-Filter anonymisiert. Es gelten vertragliche Garantien für den vollständigen Verzicht auf KI-Modelltraining mit Kundendaten.</div>
+              </details>
+              <details class="faq-item">
+                <summary>Welche Funktion übernehmen das Model Context Protocol (MCP) und WebMCP?</summary>
+                <div class="faq-a">MCP ermöglicht standardisierte, typsichere Schnittstellen zwischen KI-Agenten und externen Systemen (Google Ads, GA4, Postman, PostgreSQL). WebMCP bringt dieses Protokoll direkt in den Browser, sodass Websites eigene Client-Tools und Statuswerte über JSON-RPC 2.0 sicher für KI-Agenten bereitstellen.</div>
+              </details>
+              <details class="faq-item">
+                <summary>Wie verhindern Sie Halluzinationen in vertrieblichen RAG-Systemen?</summary>
+                <div class="faq-a">Halluzinationen werden durch hybride Vektorsuche in Vertex AI Search, strikte Pydantic-Validierung und erzwungene Tool-Choice-Modi verhindert. Der Agent greift ausschließlich auf geprüfte Unternehmensdaten zu und verweigert spekulative Aussagen zu Preisen oder Leistungen.</div>
+              </details>
+              <details class="faq-item">
+                <summary>Können die Pipelines an bestehende ERP- und CRM-Systeme angebunden werden?</summary>
+                <div class="faq-a">Ja. Jede Automatisierung stellt standardisierte REST-Webhooks und Cloud-Event-Trigger bereit, wodurch DATEV, SAP, Salesforce, HubSpot, Lexware und relationale PostgreSQL-Datenbanken nahtlos synchronisiert werden.</div>
+              </details>
+            </div>
+          </div>
         </div>
 
       </div>

@@ -5,22 +5,22 @@
 <script src="/js/cookie-consent.js" defer></script>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Production tech stack of Munich-based AI Automation Engineer Mikhail Azhyshchev: Google ADK, Multi-Agent Systems, Claude &amp; Gemini Agents, MCP/WebMCP, Python, FastAPI, GCP Cloud Run, Secret Manager, Linux VPS, Supabase.">
-  <meta name="keywords" content="AI automation engineer, Google ADK, Multi-Agent Systems, MCP, WebMCP, Claude Code, Gemini 2.5 Pro, Python, FastAPI, Pydantic, Pandas, Postman, Google Cloud Run, Secret Manager, Linux VPS, Hybrid RAG, LangGraph, Supabase, Docker, Munich Germany">
+  <meta name="description" content="Production tech stack of Munich-based AI Automation Engineer Mikhail Azhyshchev: Google ADK, Multi-Agent Systems, Claude &amp; Gemini Agents, MCP/WebMCP, Python, FastAPI, GCP Cloud Run, Secret Manager, Google Cloud Run, Firestore, Secret Manager, Linux VPS, PostgreSQL.">
+  <meta name="keywords" content="AI automation engineer, Google ADK, Multi-Agent Systems, MCP, WebMCP, Claude Code, Gemini 2.5 Pro, Python, FastAPI, Pydantic, Pandas, Postman, Google Cloud Run, Secret Manager, Linux VPS, Hybrid RAG, LangGraph, Google Cloud Run, Firestore, PostgreSQL, Docker, Munich Germany">
   <meta name="author" content="Mikhail Azhyshchev">
   <link rel="canonical" href="https://azhyshchev.de/skills/">
   <link rel="alternate" hreflang="en" href="https://azhyshchev.de/skills/" />
   <link rel="alternate" hreflang="de" href="https://azhyshchev.de/de/fahigkeiten/" />
   <link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/skills/" />
   <meta property="og:title" content="Skills &amp; Tech Stack — Google ADK, Multi-Agent, Python, MCP | Mikhail Azhyshchev">
-  <meta property="og:description" content="Production tech stack of Munich-based AI Automation Engineer Mikhail Azhyshchev: Google ADK, Multi-Agent Systems, Claude &amp; Gemini Agents, MCP/WebMCP, Python, FastAPI, GCP Cloud Run, Secret Manager, Linux VPS, Supabase.">
+  <meta property="og:description" content="Production tech stack of Munich-based AI Automation Engineer Mikhail Azhyshchev: Google ADK, Multi-Agent Systems, Claude &amp; Gemini Agents, MCP/WebMCP, Python, FastAPI, GCP Cloud Run, Secret Manager, Google Cloud Run, Firestore, Secret Manager, Linux VPS, PostgreSQL.">
   <meta property="og:url" content="https://azhyshchev.de/skills/">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://azhyshchev.de/Azhyschev.JPG">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Skills &amp; Tech Stack — Google ADK, Multi-Agent, Python, MCP | Mikhail Azhyshchev">
-  <meta name="twitter:description" content="Production tech stack of Munich-based AI Automation Engineer Mikhail Azhyshchev: Google ADK, Multi-Agent Systems, Claude &amp; Gemini Agents, MCP/WebMCP, Python, FastAPI, GCP Cloud Run, Secret Manager, Linux VPS, Supabase.">
+  <meta name="twitter:description" content="Production tech stack of Munich-based AI Automation Engineer Mikhail Azhyshchev: Google ADK, Multi-Agent Systems, Claude &amp; Gemini Agents, MCP/WebMCP, Python, FastAPI, GCP Cloud Run, Secret Manager, Google Cloud Run, Firestore, Secret Manager, Linux VPS, PostgreSQL.">
 
   <title>Skills &amp; Tech Stack — Google ADK, Multi-Agent, Python, MCP | Mikhail Azhyshchev</title>
   <script type="application/ld+json">
@@ -39,6 +39,52 @@
         "about": { "@id": "https://azhyshchev.de/#person" },
         "mainEntity": { "@id": "https://azhyshchev.de/#person" },
         "dateModified": "2026-08-20"
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://azhyshchev.de/skills/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Why choose custom Python code over no-code drag-and-drop automation tools?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Visual drag-and-drop tools lack comprehensive regression testing, native distributed tracing, fine-grained secret management, and deterministic error handling. Code-first automation with FastAPI and Google ADK allows seamless Git CI/CD, automated integration testing, and complete independence from proprietary third-party platform lock-in."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do you ensure GDPR / DSGVO compliance for European clients?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "All server workloads run exclusively within the European Union (Google Cloud Run in Frankfurt am Main, europe-west3). Customer records and personal identifiers are scrubbed via automated Cloud DLP privacy proxies before reaching LLMs. We maintain contractual zero-data-retention guarantees with enterprise AI providers."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What role do Model Context Protocol (MCP) and WebMCP play in your architecture?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "MCP provides standardized, type-safe communication bridges between AI agents and external tools (Google Ads, GA4, Postman, PostgreSQL). WebMCP extends this capability into the browser, enabling web applications to expose client-side tools and structured state directly to visiting AI agents via JSON-RPC 2.0 without screen scraping."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do you prevent hallucinations in customer-facing RAG sales systems?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Hallucinations are prevented using hybrid vector retrieval with Vertex AI Search, strict Pydantic argument validation, and forced Tool Choice modes (ANY / AUTO with deterministic fallbacks). The agent answers exclusively from verified company knowledge bases and explicitly declines unverifiable assertions."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can these AI pipelines integrate into existing ERP and CRM systems?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Every automation pipeline exposes clean REST webhooks and cloud event triggers, allowing effortless bi-directional synchronization with DATEV, SAP, Salesforce, HubSpot, Lexware, and custom PostgreSQL databases."
+            }
+          }
+        ]
       },
       {
         "@type": "Person",
@@ -393,6 +439,26 @@
 
     .callout-link:hover { transform: translate(-2px, -2px); }
 
+    
+    /* ── ENGINEERING & ARCHITECTURE CARDS ── */
+    .stack-cards { display: flex; flex-direction: column; gap: 20px; margin-top: 14px; }
+    .neo-card { border: 3px solid var(--black); background: var(--white); box-shadow: 6px 6px 0 var(--black); padding: 24px; }
+    .section-label { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.5; margin-bottom: 8px; }
+    .section-title { font-size: 1.25rem; font-weight: 800; margin-bottom: 14px; letter-spacing: -0.03em; line-height: 1.25; }
+    .prose { display: flex; flex-direction: column; gap: 12px; font-size: 0.88rem; line-height: 1.75; }
+    .prose strong { font-weight: 800; }
+    .prose p { margin: 0; }
+
+    /* ── FAQ ACCORDION ── */
+    .faq { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
+    details.faq-item { border: 2px solid var(--black); background: var(--cream); padding: 16px 18px; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+    details.faq-item:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--black); }
+    details.faq-item summary { font-size: 0.92rem; font-weight: 800; cursor: pointer; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; user-select: none; list-style: none; }
+    details.faq-item summary::-webkit-details-marker { display: none; }
+    details.faq-item summary::after { content: "+"; font-size: 1.4rem; font-weight: 900; flex-shrink: 0; line-height: 1; }
+    details.faq-item[open] summary::after { content: "-"; }
+    details.faq-item .faq-a { padding-top: 14px; font-size: 0.84rem; line-height: 1.7; }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 1100px) {
       .shell { grid-template-columns: 220px 1fr; }
@@ -677,6 +743,54 @@
             VS Code + Claude Code — code-first development. Not no-code platforms. The real stack matters more than the tools list.
           </div>
           <a class="callout-link" href="/projects">See it in projects →</a>
+        </div>
+
+        <!-- Architectural Principles & Engineering Standards -->
+        <div class="stack-cards">
+          <div class="neo-card">
+            <div class="section-label">Engineering Methodology</div>
+            <h2 class="section-title">Code-First Architecture Over Fragile Visual Builders</h2>
+            <div class="prose">
+              <p><strong>Deterministic reliability in enterprise production:</strong> While visual no-code platforms (Make, n8n, Zapier) excel for simple triggers, enterprise AI automation requires robust error boundaries, strict type safety, and reproducible version control. In production systems, I build with Python 3.12+, FastAPI, and Google Agent Development Kit (ADK). Every external API payload is strictly validated via Pydantic v2 schemas before execution, eliminating silent failures and unpredictable LLM outputs.</p>
+              <p><strong>Two-Layer Agent Shields &amp; Zero-Trust Governance:</strong> Autonomous LLM agents connected to company databases introduce injection and data leakage risks. My systems enforce a two-layer defense perimeter: an outer deterministic gateway (Cloud DLP tokenization, IBAN anonymization, regex sanitization) and an inner model governance layer (Google Cloud Model Armor, strict Tool Choice constraints, and IAM least-privilege service accounts on Google Cloud Run in Frankfurt). Sensitive data never enters external LLM contexts.</p>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Observability &amp; Orchestration</div>
+            <h2 class="section-title">Multi-Agent Systems, FastMCP Tooling &amp; Real-Time Tracing</h2>
+            <div class="prose">
+              <p><strong>Hierarchical model delegation:</strong> High-performance AI automation is never single-model. Complex tasks are broken down using tiered routing: high-reasoning models (Claude Code, Gemini 2.5 Pro) serve as architects and task delegators, while fast, lightweight endpoints (Gemini 2.5 Flash, local vLLM) handle real-time execution, data transformation, and vector search. This architecture slashes API inference costs by up to 90% while maintaining sub-second response times.</p>
+              <p><strong>Production observability (4 Pillars):</strong> Every agent workflow is instrumented with structured JSON logging correlated to Cloud Trace via W3C traceparent headers. Distributed OpenTelemetry spans monitor tool call latencies, token consumption, and retrieval accuracy, allowing continuous evaluation and immediate bottleneck isolation.</p>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">Technical FAQ</div>
+            <h2 class="section-title">Frequently Asked Questions: Technical Stack &amp; Implementation</h2>
+            <div class="faq">
+              <details class="faq-item">
+                <summary>Why choose custom Python code over no-code drag-and-drop automation tools?</summary>
+                <div class="faq-a">Visual drag-and-drop tools lack comprehensive regression testing, native distributed tracing, fine-grained secret management, and deterministic error handling. Code-first automation with FastAPI and Google ADK allows seamless Git CI/CD, automated integration testing, and complete independence from proprietary third-party platform lock-in.</div>
+              </details>
+              <details class="faq-item">
+                <summary>How do you ensure GDPR / DSGVO compliance for European clients?</summary>
+                <div class="faq-a">All server workloads run exclusively within the European Union (Google Cloud Run in Frankfurt am Main, europe-west3). Customer records and personal identifiers are scrubbed via automated Cloud DLP privacy proxies before reaching LLMs. We maintain contractual zero-data-retention guarantees with enterprise AI providers.</div>
+              </details>
+              <details class="faq-item">
+                <summary>What role do Model Context Protocol (MCP) and WebMCP play in your architecture?</summary>
+                <div class="faq-a">MCP provides standardized, type-safe communication bridges between AI agents and external tools (Google Ads, GA4, Postman, PostgreSQL). WebMCP extends this capability into the browser, enabling web applications to expose client-side tools and structured state directly to visiting AI agents via JSON-RPC 2.0 without screen scraping.</div>
+              </details>
+              <details class="faq-item">
+                <summary>How do you prevent hallucinations in customer-facing RAG sales systems?</summary>
+                <div class="faq-a">Hallucinations are prevented using hybrid vector retrieval with Vertex AI Search, strict Pydantic argument validation, and forced Tool Choice modes (ANY / AUTO with deterministic fallbacks). The agent answers exclusively from verified company knowledge bases and explicitly declines unverifiable assertions.</div>
+              </details>
+              <details class="faq-item">
+                <summary>Can these AI pipelines integrate into existing ERP and CRM systems?</summary>
+                <div class="faq-a">Yes. Every automation pipeline exposes clean REST webhooks and cloud event triggers, allowing effortless bi-directional synchronization with DATEV, SAP, Salesforce, HubSpot, Lexware, and custom PostgreSQL databases.</div>
+              </details>
+            </div>
+          </div>
         </div>
 
       </div>
