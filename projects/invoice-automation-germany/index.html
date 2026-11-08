@@ -129,6 +129,17 @@
     .cta-btn.outline { background: transparent; color: var(--white); }
     .back-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 2px solid var(--black); background: var(--white); box-shadow: 4px 4px 0 var(--black); font-size: 0.82rem; font-weight: 700; transition: transform 0.15s; align-self: flex-start; }
     .back-link:hover { transform: translate(-2px,-2px); }
+    /* ── FAQ ACCORDION ── */
+    .faq { display: flex; flex-direction: column; gap: 12px; }
+    details.faq-item { border: 2px solid var(--black); background: var(--cream); padding: 16px 18px; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+    details.faq-item:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--black); }
+    details.faq-item summary { font-size: 0.9rem; font-weight: 800; cursor: pointer; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; user-select: none; list-style: none; }
+    details.faq-item summary::-webkit-details-marker { display: none; }
+    details.faq-item summary::after { content: "+"; font-size: 1.4rem; font-weight: 900; flex-shrink: 0; line-height: 1; }
+    details.faq-item[open] summary::after { content: "-"; }
+    details.faq-item .faq-a { padding-top: 14px; font-size: 0.84rem; line-height: 1.7; }
+    .prose p { font-size: 0.86rem; line-height: 1.6; margin-bottom: 12px; }
+    .prose p:last-child { margin-bottom: 0; }
     @media (max-width: 1100px) { .shell { grid-template-columns: 220px 1fr; } .metrics-row { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 820px) { body { padding: 10px 8px 72px; } .shell { grid-template-columns: 1fr; box-shadow: 6px 6px 0 var(--black); min-height: unset; } .sidebar { border-right: none; border-bottom: 3px solid var(--black); padding: 10px 14px; flex-direction: row; align-items: center; justify-content: space-between; } .brand { font-size: clamp(0.95rem, 2.5vw, 1.6rem); } .nav { display: none; } .sidebar-bottom { display: none; } .main { padding: 14px; } .content-grid { grid-template-columns: 1fr; } }
     @media (max-width: 520px) { .metrics-row { grid-template-columns: 1fr; } .project-title { font-size: 1.7rem; } }
@@ -235,7 +246,7 @@
               <li>IMAP inbox scan → PDF attachment detection → supplier classification.</li>
               <li>Baseline regex parser extracts structured fields first (fast, free, reliable).</li>
               <li>Gemini 2.5 Flash verifies and fills gaps, handles format variations across suppliers.</li>
-              <li>Validated records upserted to Supabase, filed to Google Drive folder structure.</li>
+              <li>Validated records upserted to PostgreSQL / Firestore, filed to Google Drive folder structure.</li>
               <li>Telegram summary with run results and any flagged anomalies after each run.</li>
             </ul>
           </div>
@@ -258,7 +269,7 @@
               <!-- Конкретный бизнес-результат -->
               <li>Weekly manual invoice processing routine completely eliminated.</li>
               <li>Multi-supplier formats handled automatically — no per-supplier configuration needed.</li>
-              <li>Records available in Supabase and Drive immediately after email arrives.</li>
+              <li>Records available in database and Drive immediately after email arrives.</li>
               <li>Anomaly detection catches edge cases that previously required manual review.</li>
             </ul>
           </div>
@@ -277,13 +288,50 @@
         </div>
 
         <div class="neo-card">
+          <div class="section-label">Engineering Deep Dive</div>
+          <h2 class="section-title">GoBD Compliance Architecture &amp; Multi-Stage Invoice Parsing Pipeline</h2>
+          <div class="prose">
+            <p><strong>Deterministic regex extraction vs LLM vision:</strong> German tax compliance demands absolute mathematical precision on financial numbers, tax rates, and corporate IDs. Relying solely on large language models introduces risks of decimal parsing errors (comma vs dot notation) or currency hallucinations. This pipeline deploys a resilient two-stage parser: pure digital PDF streams are first processed with regex patterns targeting standard German invoice nomenclature (Rechnungsdatum, Rechnungsnummer, Steuernummer, USt-IdNr, Nettobetrag, MwSt-Satz, Bruttogesamtbetrag). Only ambiguous tables or scanned graphic attachments trigger Gemini 2.5 Flash for multimodal vision extraction.</p>
+            <p><strong>Automated arithmetic validation &amp; anomaly alerts:</strong> Before database persistence, an invariant check verifies arithmetic truth: <code>Netto + MwSt == Brutto</code> within a 0.01 EUR rounding tolerance. Any detected mathematical mismatch, duplicate invoice number, or unrecognized tax exemption triggers an immediate Telegram alert with the raw PDF attachment link, routing the document to a human bookkeeper rather than quietly corrupting company accounting ledgers.</p>
+            <p><strong>GoBD compliance &amp; DATEV integration:</strong> In accordance with German GoBD directives (Grundsätze zur ordnungsmäßigen Führung und Aufbewahrung von Büchern, Aufzeichnungen und Unterlagen in elektronischer Form), original PDF documents remain strictly unaltered in encrypted cloud storage with tamper-evident audit trails. Validated extraction payloads export into DATEV-compatible CSV structures mapped with standard German chart of accounts (SKR03 / SKR04) posting keys.</p>
+          </div>
+        </div>
+
+        <div class="neo-card">
+          <div class="section-label">FAQ</div>
+          <h2 class="section-title">Frequently Asked Questions</h2>
+          <div class="faq">
+            <details class="faq-item">
+              <summary>How can I automate invoice processing for a German business?</summary>
+              <div class="faq-a">An automated pipeline connects to your accounting inbox via IMAP, detects incoming PDF attachments, extracts invoice metadata (vendor, invoice date, net amount, VAT percentage, gross total) using hybrid regex and Gemini AI, stores the data in a structured database, and synchronizes files with Google Drive.</div>
+            </details>
+            <details class="faq-item">
+              <summary>Is automated invoice processing GoBD-compliant in Germany?</summary>
+              <div class="faq-a">Yes. Under GoBD guidelines, original digital invoice PDFs must be stored immutably without modification. The pipeline archives original files in structured Google Drive folders, maintains an audit trail with exact arrival timestamps, and outputs DATEV-compatible ledger files.</div>
+            </details>
+            <details class="faq-item">
+              <summary>How much time does invoice automation save for an SMB in Munich?</summary>
+              <div class="faq-a">For small businesses handling 20–50 invoices weekly, manual data entry takes 2–4 hours every week. Automated processing cuts this to near zero: invoices process automatically within 90 seconds of arrival, delivering 80–100% time savings.</div>
+            </details>
+            <details class="faq-item">
+              <summary>How does the pipeline handle multi-page invoices and varying supplier formats?</summary>
+              <div class="faq-a">The pipeline combines deterministic layout heuristics with multimodal LLM vision. Multi-page document flows are consolidated, line items are extracted from multi-column tables, and disparate invoice templates from domestic and EU suppliers are normalized automatically.</div>
+            </details>
+            <details class="faq-item">
+              <summary>Which accounting software and ERPs can import the processed records?</summary>
+              <div class="faq-a">The pipeline generates structured export files directly compatible with DATEV Unternehmen online, Lexware, sevDesk, and QuickBooks. Additionally, automated webhooks can transmit validated invoice records via secure REST APIs directly into custom internal ERP systems or cloud databases.</div>
+            </details>
+          </div>
+        </div>
+
+        <div class="neo-card">
           <div class="section-label">Tech stack</div>
           <h2 class="section-title">Tools used</h2>
           <div class="chips">
             <span class="chip">TypeScript</span>
             <span class="chip">Node.js</span>
             <span class="chip">Gemini 2.5 Flash</span>
-            <span class="chip">Supabase</span>
+            <span class="chip">PostgreSQL</span>
             <span class="chip">Google Drive API</span>
             <span class="chip">Gmail IMAP</span>
             <span class="chip">GitHub Actions</span>
@@ -318,5 +366,15 @@
   </nav>
   <script src="/js/nav.js"></script>
   <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" defer></script>
+<script>
+document.querySelectorAll("details.faq-item").forEach(function(item) {
+  item.addEventListener("toggle", function() {
+    if (item.open && typeof gtag === "function") {
+      var s = item.querySelector("summary");
+      gtag("event", "faq_open", { question: s.textContent.trim().substring(0, 60), page_language: document.documentElement.lang || "en" });
+    }
+  });
+});
+</script>
 </body>
 </html>

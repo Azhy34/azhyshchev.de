@@ -6,7 +6,7 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta name="description" content="Rechnungsautomatisierung: IMAP-Postfach → PDF-Extraktion → Gemini KI → Drive + Supabase. Wöchentliche manuelle Routine vollständig eliminiert. GoBD-konform, Prozessautomatisierung für deutsche KMU.">
+  <meta name="description" content="Rechnungsautomatisierung: IMAP-Postfach → PDF-Extraktion → Gemini KI → Drive + PostgreSQL. Wöchentliche manuelle Routine vollständig eliminiert. GoBD-konform, Prozessautomatisierung für deutsche KMU.">
   <meta name="keywords" content="rechnungsautomatisierung, rechnungen automatisch verarbeiten, prozessautomatisierung, buchhaltung automatisieren, rechnungsverarbeitung ki, pdf automatisierung, gmail automatisierung, gobd archivierung, rechnungsautomatisierung deutschland, debitorenbuchhaltung automatisieren">
   <meta name="author" content="Mikhail Azhyshchev">
   <link rel="canonical" href="https://azhyshchev.de/de/projekte/rechnungsautomatisierung-deutschland/">
@@ -15,7 +15,7 @@
   <link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/projects/invoice-automation-germany/" />
 
   <meta property="og:title" content="Rechnungsautomatisierung Deutschland — KI-Pipeline | Mikhail Azhyshchev">
-  <meta property="og:description" content="Rechnungsautomatisierung: IMAP → PDF → Gemini KI → Drive + Supabase. Wöchentliche manuelle Routine eliminiert. GoBD-konform für deutsche Unternehmen.">
+  <meta property="og:description" content="Rechnungsautomatisierung: IMAP → PDF → Gemini KI → Drive + PostgreSQL. Wöchentliche manuelle Routine eliminiert. GoBD-konform für deutsche Unternehmen.">
   <meta property="og:url" content="https://azhyshchev.de/de/projekte/rechnungsautomatisierung-deutschland/">
   <meta property="og:type" content="article">
   <meta property="og:image" content="https://azhyshchev.de/Azhyschev.JPG">
@@ -38,7 +38,7 @@
         "isPartOf": { "@id": "https://azhyshchev.de/#website" },
         "author": { "@id": "https://azhyshchev.de/#person" },
         "dateModified": "2026-06-09",
-        "description": "Vollautomatische Rechnungsverarbeitung fur deutsche Unternehmen: IMAP-Postfach → PDF-Extraktion via Gemini KI → strukturierter Speicher in Supabase und Google Drive. GoBD-konform.",
+        "description": "Vollautomatische Rechnungsverarbeitung fur deutsche Unternehmen: IMAP-Postfach → PDF-Extraktion via Gemini KI → strukturierter Speicher in PostgreSQL und Google Drive. GoBD-konform.",
         "inLanguage": "de",
         "breadcrumb": {
           "@type": "BreadcrumbList",
@@ -53,7 +53,7 @@
         "@type": "SoftwareApplication",
         "@id": "https://azhyshchev.de/de/projekte/rechnungsautomatisierung-deutschland/#project",
         "name": "Rechnungsautomatisierung Pipeline Deutschland",
-        "description": "Ende-zu-Ende Rechnungsverarbeitung fur deutsche KMU: IMAP-Postfachscan, PDF-Extraktion via Gemini KI, strukturierter Speicher in Supabase und Google Drive. Cron-gesteuert, idempotent, GoBD-konform.",
+        "description": "Ende-zu-Ende Rechnungsverarbeitung fur deutsche KMU: IMAP-Postfachscan, PDF-Extraktion via Gemini KI, strukturierter Speicher in PostgreSQL und Google Drive. Cron-gesteuert, idempotent, GoBD-konform.",
         "applicationCategory": "BusinessApplication",
         "operatingSystem": "Web",
         "author": { "@id": "https://azhyshchev.de/#person" },
@@ -74,7 +74,7 @@
         "name": "Wie kann ich die Rechnungsverarbeitung in meinem deutschen Unternehmen automatisieren?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Eine KI-gestutzte Rechnungsautomatisierung scannt das IMAP-Postfach nach eingehenden PDFs, extrahiert Felder mit Gemini KI (Lieferant, Betrag, Datum, Rechnungsnummer) und speichert sie strukturiert in Supabase und Google Drive. Der Prozess lauft automatisch per Cron-Job ohne manuelle Eingriffe — GoBD-konform fur deutsche Unternehmen."
+          "text": "Eine KI-gestutzte Rechnungsautomatisierung scannt das IMAP-Postfach nach eingehenden PDFs, extrahiert Felder mit Gemini KI (Lieferant, Betrag, Datum, Rechnungsnummer) und speichert sie strukturiert in PostgreSQL und Google Drive. Der Prozess lauft automatisch per Cron-Job ohne manuelle Eingriffe — GoBD-konform fur deutsche Unternehmen."
         }
       },
       {
@@ -82,7 +82,7 @@
         "name": "Ist automatische Rechnungsverarbeitung GoBD-konform fur Deutschland?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Ja. Die Pipeline speichert Original-PDF-Dateien unverandert in Google Drive (GoBD verlangt Originaldokumentenerhalt) und erstellt einen strukturierten Prufpfad in Supabase mit Zeitstempeln, idempotenten Verarbeitungs-IDs und vollstandigen Extraktionsprotokollen. DATEV-kompatibler CSV-Export ist enthalten."
+          "text": "Ja. Die Pipeline speichert Original-PDF-Dateien unverandert in Google Drive (GoBD verlangt Originaldokumentenerhalt) und erstellt einen strukturierten Prufpfad in PostgreSQL mit Zeitstempeln, idempotenten Verarbeitungs-IDs und vollstandigen Extraktionsprotokollen. DATEV-kompatibler CSV-Export ist enthalten."
         }
       },
       {
@@ -155,6 +155,17 @@
     .cta-btn.outline { background: transparent; color: var(--white); }
     .back-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 2px solid var(--black); background: var(--white); box-shadow: 4px 4px 0 var(--black); font-size: 0.82rem; font-weight: 700; transition: transform 0.15s; align-self: flex-start; }
     .back-link:hover { transform: translate(-2px,-2px); }
+    /* ── FAQ ACCORDION ── */
+    .faq { display: flex; flex-direction: column; gap: 12px; }
+    details.faq-item { border: 2px solid var(--black); background: var(--cream); padding: 16px 18px; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+    details.faq-item:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--black); }
+    details.faq-item summary { font-size: 0.9rem; font-weight: 800; cursor: pointer; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; user-select: none; list-style: none; }
+    details.faq-item summary::-webkit-details-marker { display: none; }
+    details.faq-item summary::after { content: "+"; font-size: 1.4rem; font-weight: 900; flex-shrink: 0; line-height: 1; }
+    details.faq-item[open] summary::after { content: "-"; }
+    details.faq-item .faq-a { padding-top: 14px; font-size: 0.84rem; line-height: 1.7; }
+    .prose p { font-size: 0.86rem; line-height: 1.6; margin-bottom: 12px; }
+    .prose p:last-child { margin-bottom: 0; }
     @media (max-width: 1100px) { .shell { grid-template-columns: 220px 1fr; } .metrics-row { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 820px) { body { padding: 10px 8px 72px; } .shell { grid-template-columns: 1fr; box-shadow: 6px 6px 0 var(--black); min-height: unset; } .sidebar { border-right: none; border-bottom: 3px solid var(--black); padding: 10px 14px; flex-direction: row; align-items: center; justify-content: space-between; } .brand { font-size: clamp(0.95rem, 2.5vw, 1.6rem); } .nav { display: none; } .sidebar-bottom { display: none; } .main { padding: 14px; } .content-grid { grid-template-columns: 1fr; } }
     @media (max-width: 520px) { .metrics-row { grid-template-columns: 1fr; } .project-title { font-size: 1.7rem; } }
@@ -220,7 +231,7 @@
               <li>IMAP-Postfachscan → PDF-Anhang-Erkennung → Lieferantenklassifizierung.</li>
               <li>Baseline-Regex-Parser extrahiert zunächst strukturierte Felder (schnell, kostenlos, zuverlässig).</li>
               <li>Gemini 2.5 Flash verifiziert und fullt Lucken, behandelt Formatvariationen je Lieferant.</li>
-              <li>Validierte Datensätze per Upsert in Supabase, Ablage in strukturierter Google Drive-Ordnerstruktur.</li>
+              <li>Validierte Datensätze per Upsert in PostgreSQL, Ablage in strukturierter Google Drive-Ordnerstruktur.</li>
               <li>Telegram-Zusammenfassung mit Laufergebnissen und markierten Anomalien nach jedem Lauf.</li>
             </ul>
           </div>
@@ -242,7 +253,7 @@
             <ul class="detail-list">
               <li>Wochentliche manuelle Rechnungsbearbeitung vollständig eliminiert.</li>
               <li>Multi-Lieferant-Formate werden automatisch behandelt — keine lieferantenspezifische Konfiguration nötig.</li>
-              <li>Datensätze sofort in Supabase und Drive verfugbar, sobald die E-Mail eingeht.</li>
+              <li>Datensätze sofort in Datenbank und Drive verfugbar, sobald die E-Mail eingeht.</li>
               <li>Anomalieerkennung erfasst Grenzfälle, die bisher manuelle Prufung erforderten.</li>
             </ul>
           </div>
@@ -260,13 +271,54 @@
         </div>
 
         <div class="neo-card">
+          <div class="section-label">Technische Architektur</div>
+          <h2 class="section-title">GoBD-Konformität &amp; DATEV-Schnittstelle im Detail</h2>
+          <div class="prose">
+            <p><strong>Zweistufige Extraktion: Regex-Präzision vor multimodaler KI:</strong> Deutsche Finanzämter verlangen absolute Genauigkeit bei Centbeträgen und Steuersätzen. Um Rundungsfehler oder KI-Halluzinationen auszuschließen, arbeitet die Pipeline zweistufig: Bei nativen PDF-Dokumenten extrahieren strukturierte Regex-Ausdrücke alle gesetzlichen Pflichtfelder (Rechnungsdatum, Belegnummer, Steuernummer, USt-IdNr., Netto, MwSt-Betrag und Bruttoendsumme) deterministisch. Nur bei unklaren Tabellenlayouts, handschriftlichen Vermerken oder Scan-Belegen wird Gemini 2.5 Flash zur multimodalen visuellen Analyse zugeschaltet.</p>
+            <p><strong>Arithmetische Plausibilitätsprüfung &amp; Alarmierung:</strong> Vor jedem Datensatz-Schreibvorgang führt das System einen mathematischen Konsistenzcheck durch: <code>Nettobetrag + MwSt-Betrag == Bruttobetrag</code> innerhalb einer 0,01-EUR-Rundungstoleranz. Entdeckt das System eine rechnerische Differenz, eine doppelt eingereichte Rechnungsnummer oder fehlende Pflichtangaben, wird der Vorgang isoliert und ein Telegram-Alert mit Beleglink an das Buchhaltungsteam versendet.</p>
+            <p><strong>Revisionssichere Archivierung nach GoBD:</strong> Gemäß den deutschen GoBD-Richtlinien (Grundsätze zur ordnungsmäßigen Führung und Aufbewahrung von Büchern, Aufzeichnungen und Unterlagen in elektronischer Form) bleiben Original-PDFs unberührt in geschützten Cloud-Verzeichnissen archiviert. Die bereinigten Transaktionsdaten exportieren direkt in standardisierte DATEV-Buchungsstapel mit Zuordnung zu den Kontenrahmen SKR03 oder SKR04.</p>
+          </div>
+        </div>
+
+        <div class="neo-card">
+          <div class="section-label">FAQ</div>
+          <h2 class="section-title">Häufig gestellte Fragen (FAQ)</h2>
+          <div class="faq">
+            <details class="faq-item">
+              <summary>Wie kann ich die Rechnungsverarbeitung in meinem deutschen Unternehmen automatisieren?</summary>
+              <div class="faq-a">Eine KI-gestützte Rechnungsautomatisierung scannt das IMAP-Postfach nach eingehenden Rechnungs-PDFs, extrahiert alle kaufmännischen Pflichtfelder mit einer Kombination aus Regex und Gemini KI, speichert die Daten strukturiert in einer Cloud-Datenbank und archiviert die Originaldokumente in Google Drive.</div>
+            </details>
+            <details class="faq-item">
+              <summary>Ist automatische Rechnungsverarbeitung GoBD-konform für Deutschland?</summary>
+              <div class="faq-a">Ja. Die GoBD verlangen die unveränderbare Aufbewahrung des elektronischen Originalbelegs sowie die lückenlose Protokollierung. Die Pipeline archiviert PDFs ohne Modifikation in strukturierter Ordnerhierarchie, vergibt unveränderliche Zeitstempel und exportiert revisionssichere DATEV-Stapel.</div>
+            </details>
+            <details class="faq-item">
+              <summary>Wie viel Zeit spart Rechnungsautomatisierung einem deutschen KMU?</summary>
+              <div class="faq-a">Für mittelständische Betriebe mit 20 bis 50 Lieferantenrechnungen wöchentlich entfallen pro Woche rund 2 bis 4 Stunden manuelle Abtipp-Arbeit. Die automatisierte Pipeline verarbeitet Belege in unter 90 Sekunden ab E-Mail-Eingang und senkt den Routineaufwand um über 80%.</div>
+            </details>
+            <details class="faq-item">
+              <summary>Welche deutschen Unternehmen profitieren am meisten von Rechnungsautomatisierung?</summary>
+              <div class="faq-a">Vor allem Handwerksbetriebe, Agenturen, E-Commerce-Händler und mittelständische Dienstleister mit regelmäßigen Lieferantenrechnungen. Bereits ab 10 Rechnungen pro Woche rechnet sich die Automatisierung durch vermiedene Mahngebühren und pünktliche Skonto-Nutzung.</div>
+            </details>
+            <details class="faq-item">
+              <summary>Welche Buchhaltungs- und ERP-Systeme können die Daten direkt importieren?</summary>
+              <div class="faq-a">Die Pipeline erzeugt DATEV-kompatible Buchungsstapel für DATEV Unternehmen online sowie Schnittstellendaten für Lexware, sevDesk, fastbill und gängige Warenwirtschaftssysteme. Eine REST-API ermöglicht zudem die direkte Synchronisation in interne Datenbanken.</div>
+            </details>
+            <details class="faq-item">
+              <summary>Wie schützt das System vor Rechnungsbetrug und gefälschten Bankverbindungen?</summary>
+              <div class="faq-a">Die Pipeline beinhaltet einen automatisierten Stammdaten- und IBAN-Abgleich. Weicht die auf einer Rechnung gedruckte Bankverbindung von der im Unternehmensstamm hinterlegten IBAN des Lieferanten ab (typischer Fall von CEO-Fraud oder manipulierten PDF-Anhängen), wird der Vorgang sofort isoliert, die Weiterleitung gestoppt und ein Sicherheitsalarm per Telegram an die Geschäftsleitung gesendet.</div>
+            </details>
+          </div>
+        </div>
+
+        <div class="neo-card">
           <div class="section-label">Tech-Stack</div>
           <h2 class="section-title">Verwendete Tools</h2>
           <div class="chips">
             <span class="chip">TypeScript</span>
             <span class="chip">Node.js</span>
             <span class="chip">Gemini 2.5 Flash</span>
-            <span class="chip">Supabase</span>
+            <span class="chip">PostgreSQL</span>
             <span class="chip">Google Drive API</span>
             <span class="chip">Gmail IMAP</span>
             <span class="chip">GitHub Actions</span>
@@ -310,5 +362,15 @@
   </div>
   <script src="/js/nav.js"></script>
   <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" defer></script>
+<script>
+document.querySelectorAll("details.faq-item").forEach(function(item) {
+  item.addEventListener("toggle", function() {
+    if (item.open && typeof gtag === "function") {
+      var s = item.querySelector("summary");
+      gtag("event", "faq_open", { question: s.textContent.trim().substring(0, 60), page_language: "de" });
+    }
+  });
+});
+</script>
 </body>
 </html>
