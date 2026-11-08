@@ -284,28 +284,44 @@ def _check_performance(elapsed_ms: float) -> tuple[int, int, str, str | None]:
 
 
 def _check_token_economics(text: str) -> tuple[int, int, str, str | None]:
+    """Max 10 points of the 100-point total (was 15 of a 105-point scale).
+
+    Zero extractable text is a defect, not a win: it used to score a full 15/15
+    for "~0 Tokens (Optimal)", which silently paid out points on empty pages.
+    """
     tokens = len(text) / 4
-    if tokens < 50000: return (15, 15, f"~{int(tokens)} Tokens (Optimal)", None)
-    elif tokens < 100000: return (10, 15, f"~{int(tokens)} Tokens", "Streamline DOM structure")
-    elif tokens < 200000: return (5, 15, f"~{int(tokens)} Tokens", "Heavily streamline DOM")
-    return (0, 15, f"~{int(tokens)} Tokens (Too large)", "Drastically reduce code/text")
+    if tokens < 1: return (0, 10, "No extractable text", "Serve real text content in the initial HTML")
+    elif tokens < 50000: return (10, 10, f"~{int(tokens)} Tokens (Optimal)", None)
+    elif tokens < 100000: return (7, 10, f"~{int(tokens)} Tokens", "Streamline DOM structure")
+    elif tokens < 200000: return (3, 10, f"~{int(tokens)} Tokens", "Heavily streamline DOM")
+    return (0, 10, f"~{int(tokens)} Tokens (Too large)", "Drastically reduce code/text")
+
+
+# Sum of every check's max — the score is a plain sum, so this MUST stay 100.
+# BASE (7 checks): 20 + 15 + 10 + 10 + 10 + 10 + 10 = 85
+# BONUS:           llms_txt 10 + markdown_availability 5 = 15
+TOTAL_MAX = 100
 
 
 def _compute_score(breakdown: dict) -> int:
+    """Final score = plain sum of all check points (max = TOTAL_MAX = 100).
+
+    Previous formula was `min(100, round(base * 100 / 90) + llms_bonus + md_bonus)`:
+    the base percentage already had 100 as its ceiling, so the additive bonuses
+    could only paper over lost base points — a site with 84/90 base + llms.txt
+    came out as 103 → 100 "Optimal" while two cards still showed gaps.
+    With a plain sum, 100 is reachable ONLY when every check is full.
     """
-    BASE checks (7): ai_agent_access(15) + sitemap(10) + server_side_rendering(10)
-                     + agent_readable_content(20) + schema_org(10) + performance(10) + token_economics(15) = 90 max
-    BONUS: llms_txt → up to 10; markdown_availability → up to 5.
-    score = min(100, round(base_points * 100 / 90) + llms_bonus + md_bonus)
-    """
-    base_keys = {
-        "ai_agent_access", "sitemap", "server_side_rendering",
-        "agent_readable_content", "schema_org", "performance", "token_economics",
-    }
-    base_points = sum(breakdown[k]["points"] for k in base_keys if k in breakdown)
-    llms_bonus = breakdown.get("llms_txt", {}).get("points", 0)
-    md_bonus = breakdown.get("markdown_availability", {}).get("points", 0)
-    return min(100, round(base_points * 100 / 90) + llms_bonus + md_bonus)
+    return int(round(sum(entry["points"] for entry in breakdown.values())))
+
+
+def _verdict_for_score(score: int) -> str:
+    """Verdict bands for the 0-100 plain-sum score."""
+    if score >= 90:
+        return "Optimal"
+    if score >= 70:
+        return "Needs Improvement"
+    return "Critical"
 
 
 def audit_ai_readiness(url: str) -> dict:
@@ -355,12 +371,16 @@ def audit_ai_readiness(url: str) -> dict:
             soup = BeautifulSoup(html, 'html.parser')
             for tag in soup(["script", "style", "noscript", "header", "footer", "nav"]):
                 tag.decompose()
-            content_node = (
-                soup.find('main') or soup.find('article')
-                or soup.find('div', class_=lambda x: x and ('content' in x.lower() or 'main' in x.lower()))
-                or soup.find('body')
-            )
-            if content_node:
+            candidates = [n for n in (soup.find('main'), soup.find('article'), soup.find('body')) if n]
+            if candidates:
+                # Richest node wins. The old chain stopped at the first
+                # <div class="...content...">, which on some sites is an empty
+                # decorative wrapper: content check saw ~800 words while token
+                # economics saw 0 tokens (and paid out a full 15/15 for it).
+                content_node = max(
+                    candidates,
+                    key=lambda n: len(n.get_text(separator=' ', strip=True)),
+                )
                 main_text = content_node.get_text(separator=' ', strip=True)
             else:
                 main_text = html
@@ -399,7 +419,7 @@ def audit_ai_readiness(url: str) -> dict:
             }
 
         score = _compute_score(breakdown)
-        verdict = "Optimal" if score >= 80 else "Needs Improvement" if score >= 55 else "Critical"
+        verdict = _verdict_for_score(score)
 
         result_dict = {
             "score": score,

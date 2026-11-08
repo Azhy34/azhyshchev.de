@@ -409,19 +409,26 @@ Test categories: Normal FAQ, Objections, Off-topic/jailbreak, German language, M
 Live at: `https://azhyshchev.de/ai-checker/`
 
 ### What it does
-Analyzes any website URL for AI/LLM crawlability. Returns a score 0-100 across 8 metrics.
+Analyzes any website URL for AI/LLM crawlability. Returns a score 0-100 across 9 checks (7 base + 2 bonus).
 
-### Scoring metrics (max 100)
+### Scoring metrics (max 100 = plain sum, since 2026-11-08)
 | Metric | Max | Notes |
 |--------|-----|-------|
-| Agent Readable Content | 20 | Word count in `<main>`/`<article>`/`<body>` |
+| Agent Readable Content | 20 | Word count: ≥800 → 20, ≥400 → 16, ≥200 → 10 |
+| AI Agent Access | 15 | Checks 8 bots in robots.txt (1.875 pts each) |
 | Server Side Rendering | 10 | Body text > 500 chars = SSR detected |
-| AI Agent Access | 15 | Checks 8 bots in robots.txt (GPTBot, ClaudeBot, etc.) |
-| llms.txt | 15 | Checks `/llms.txt` and `/llms-full.txt` |
-| Markdown Availability | 15 | Accept-Header negotiation + `/index.md`, `/README.md` |
-| Token Economics | 15 | Estimates tokens as `len(text)/4` |
-| Performance | 10 | TTFB: <200ms=10, <500ms=7, <1000ms=4, else=0 |
-| Sitemap | 10 | robots.txt Sitemap: directive or `/sitemap.xml` |
+| Schema.org Entity Graph | 10 | JSON-LD → 10, microdata → 7 |
+| Performance (TTFB) | 10 | <200ms=10, <500ms=7, <1500ms=4, else=0 (single request, not a median) |
+| Token Economics | 10 | `len(text)/4`: <50k=10, <100k=7, <200k=3; **0 tokens = 0 points** |
+| Sitemap | 10 | robots.txt `Sitemap:` directive or `/sitemap.xml` |
+| *llms.txt* (bonus) | 10 | `/llms.txt` or `/llms-full.txt`, anti-soft-404 guard |
+| *Markdown* (bonus) | 5 | `Accept: text/markdown` + `/index.md`, `/README.md` |
+
+**Formula:** `score = round(sum(points of all 9 checks))`, `TOTAL_MAX = 100`.
+100 is reachable **only** when every check is full — no normalization, no bonuses stacked on a percentage.
+**Verdicts:** `≥90` Optimal, `70–89` Needs Improvement, `<70` Critical.
+History: before 2026-11-08 it was `min(100, round(base*100/90) + llms + md)`, so a site with 84/90 base + llms.txt scored 103 → capped at 100 "Optimal" with visible gaps.
+
 
 ### CSR detection
 Sites using React/Vue/Angular without SSR are detected via empty body + `#root`/`#app`/`#__next`/`#__nuxt` markers.
@@ -440,13 +447,21 @@ All checks (robots.txt, llms.txt, sitemap, markdown) use `base_origin` (`scheme:
 ### API endpoints
 | Method | Path | Description |
 |--------|------|-------------|
-| GET | `/api/analyze?url=<url>` | Run full analysis, logs to DB |
-| GET | `/api/logs?limit=50` | View recent checks from DB |
+| GET | `/api/analyze?url=<url>` | Run full analysis, logs to DB (cache miss only) |
+| GET | `/api/logs?limit=50` | View recent checks from DB (unauthenticated — do not expose raw IPs) |
 
-Base URL: `https://ai-readiness-api-production.up.railway.app`
+Base URL: `https://ai-readiness-api-377331886416.europe-west3.run.app` (Google Cloud Run, europe-west3).
+`portfolio/ai-checker/script.js` → `const API_BASE_URL = 'https://ai-readiness-api-377331886416.europe-west3.run.app'`.
 
 ### Database (Railway PostgreSQL)
 Table `ai_checker_logs` — created automatically on startup via `CREATE TABLE IF NOT EXISTS`.
+
+> ⚠️ **Logging is INACTIVE as of 2026-11-08.** The Cloud Run service has no env vars at all,
+> so `DATABASE_URL` is empty → `init_db()` / `log_check()` are no-ops and `GET /api/logs`
+> returns `[]`. The old Railway service (`ai-readiness-api-production.up.railway.app`) is gone (404).
+> To re-enable: set `DATABASE_URL` as a secret (`gcloud run services update ai-readiness-api
+> --set-secrets DATABASE_URL=…`) and redeploy. Until then the only trace of runs is Cloud Run
+> request logs (`httpRequest.remoteIp`, `userAgent`, `requestUrl`, ~30 days, **no score**).
 
 | Column | Type | Notes |
 |--------|------|-------|
@@ -461,11 +476,16 @@ Table `ai_checker_logs` — created automatically on startup via `CREATE TABLE I
 
 ### Deploy
 ```bash
-cd portfolio/api
-railway up   # IMPORTANT: must run from api/ folder, not repo root
+gcloud run deploy ai-readiness-api --source portfolio/api --project=azhyshchev --region=europe-west3
 ```
-Railway project: `jubilant-tenderness`, service: `ai-readiness-api`
-Environment variable: `DATABASE_URL` — set as reference to the Postgres service in Railway Dashboard.
+The legacy `cd portfolio/api && railway up` path is retired (Railway only hosts the Postgres, and
+only if `DATABASE_URL` is wired up — see above).
+
+### Tests
+```bash
+cd portfolio/api
+python -m unittest test_scoring -v   # scoring invariants: sum = 100, 100 only when all checks full
+```
 
 ### No LLM usage
 Analysis is pure Python — HTTP requests + BeautifulSoup parsing. Zero token cost.
@@ -497,8 +517,10 @@ Cold email template already includes: data source disclosure, legal basis, opt-o
 
 ## AI-Checker (lead magnet) — parity contract
 
-`api/main.py` (deployed on Railway, serves https://azhyshchev.de/ai-checker/) MUST stay in **numeric parity** with the cold-email pipeline audit `ADS_Azhyshchev/src/ai_readiness.py` — same checks, same per-check points, same score formula (texts/language may differ: checker English, pipeline German). A prospect who gets a cold email citing "Score 58" and then runs the checker must see the same number.
+`api/main.py` (deployed on **Google Cloud Run**, serves https://azhyshchev.de/ai-checker/) MUST stay in **numeric parity** with the cold-email pipeline audit `ADS_Azhyshchev/src/ai_readiness.py` — same checks, same per-check points, same score formula (texts/language may differ: checker English, pipeline German). A prospect who gets a cold email citing "Score 58" and then runs the checker must see the same number.
 
-Score scale (since 2026-06-12): 6 base checks = 80 pts → normalized to 100; llms.txt (+10) and markdown (+5) are bonus points. llms.txt has an anti-soft-404 guard. Cookie-consent walls are detected and neutralized. TTFB = median of 3 requests, slow threshold 1500ms.
+Score scale (since 2026-11-08): **plain sum of 9 checks = 0-100**, no normalization. Base 85 (content 20, bots 15, SSR 10, schema 10, performance 10, token economics 10, sitemap 10) + bonuses 15 (llms.txt 10, markdown 5). `TOTAL_MAX = 100`, so 100 only when every check is full. Verdicts: ≥90 Optimal, 70-89 Needs Improvement, <70 Critical. llms.txt has an anti-soft-404 guard; cookie-consent walls are detected and neutralized; TTFB is a single request measurement (threshold 1500 ms).
 
-**If you change audit logic here → mirror it in the pipeline repo (and vice versa), then run the parity script** (`.scripts_parity_audit.py` in the pipeline repo) and **redeploy Railway**.
+Previous scale (2026-06-12 → 2026-11-08, retired): `min(100, round(base*100/90) + llms + md)` — bonuses could mask lost base points.
+
+**If you change audit logic here → mirror it in the pipeline repo (and vice versa), then run the parity script** (`.scripts_parity_audit.py` in the pipeline repo) and **redeploy `ai-readiness-api` with `gcloud run deploy`**.

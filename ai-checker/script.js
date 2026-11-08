@@ -157,13 +157,17 @@ document.addEventListener('DOMContentLoaded', () => {
         scoreVal.textContent = data.score;
         
         // Color coding score
-        scoreVal.className = 'score-num ' + getScoreClass(data.score);
+        scoreVal.className = 'score-num ' + getTotalScoreClass(data.score);
         
         const verdictBadge = document.getElementById('verdictBadge');
-        let verdictText = data.verdict;
-        if (data.score >= 80) verdictText = t.verdicts.optimal;
-        else if (data.score >= 55) verdictText = t.verdicts.needsImprovement;
-        else verdictText = t.verdicts.critical;
+        // Backend owns the thresholds (>=90 Optimal, >=70 Needs Improvement) —
+        // localize its verdict instead of re-deriving it from the score here.
+        const verdictLabels = {
+            'Optimal': t.verdicts.optimal,
+            'Needs Improvement': t.verdicts.needsImprovement,
+            'Critical': t.verdicts.critical
+        };
+        const verdictText = verdictLabels[data.verdict] || data.verdict;
 
         verdictBadge.textContent = verdictText;
         verdictBadge.className = 'verdict-badge ' + getBgClass(data.score);
@@ -207,10 +211,15 @@ document.addEventListener('DOMContentLoaded', () => {
         // Show inline CTA always after analysis
         document.getElementById('inlineCta').classList.remove('hidden');
 
-        // Show bottom CTA block if score is not optimal
+        // Show bottom CTA block whenever any check is not full.
+        // Score alone can no longer hide gaps (score is a plain sum of all checks),
+        // but a 100/-near-100 site with one gap still deserves the fix-it CTA.
         const ctaBlock = document.getElementById('ctaBlock');
         if (ctaBlock) {
-            if (data.score < 80) {
+            const hasGaps = Object.values(data.breakdown).some(function (check) {
+                return check.points < check.max;
+            });
+            if (hasGaps) {
                 ctaBlock.classList.remove('hidden');
             } else {
                 ctaBlock.classList.add('hidden');
@@ -255,9 +264,16 @@ document.addEventListener('DOMContentLoaded', () => {
         return 'score-low';
     }
 
+    // Total-score bands mirror the backend verdict thresholds (>=90 / >=70).
+    function getTotalScoreClass(score) {
+        if (score >= 90) return 'score-high';
+        if (score >= 70) return 'score-mid';
+        return 'score-low';
+    }
+
     function getBgClass(score) {
-        if (score >= 80) return 'bg-high';
-        if (score >= 50) return 'bg-mid';
+        if (score >= 90) return 'bg-high';
+        if (score >= 70) return 'bg-mid';
         return 'bg-low';
     }
 
