@@ -393,11 +393,17 @@ body {
   align-items: center;
   gap: 16px;
   transition: transform 0.2s;
+  position: relative;
 }
 
 .check-card:hover {
   transform: translate(-3px, -3px);
   box-shadow: 9px 9px 0 var(--black);
+}
+
+.check-card:has(.check-explain-wrap:hover),
+.check-card:has(.check-explain-wrap.is-active) {
+  z-index: 30;
 }
 
 .check-info {
@@ -438,49 +444,112 @@ body {
   min-width: 60px;
 }
 
-/* "What it means / How to fix" note inside a check card (collapsed by default) */
+/* "What it means / How to fix" tooltip popover (floats on hover/tap without stretching grid) */
+.check-explain-wrap {
+  position: relative;
+  display: inline-block;
+  margin-top: 8px;
+}
+
 .check-explain-toggle {
-  margin-top: 10px;
-  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 0;
   border: 0;
   border-bottom: 2px dotted var(--black);
   background: none;
   font-family: inherit;
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--black);
-  opacity: 0.55;
+  opacity: 0.6;
   cursor: pointer;
+  transition: opacity 0.15s ease;
 }
 
 .check-explain-toggle:hover,
-.check-explain-toggle[aria-expanded="true"] {
+.check-explain-wrap.is-active .check-explain-toggle {
   opacity: 1;
 }
 
-.check-explain-panel {
-  margin-top: 10px;
-  padding: 10px 12px;
-  border-left: 4px solid var(--black);
-  background: rgba(0, 0, 0, 0.04);
-  font-size: 0.78rem;
-  line-height: 1.5;
+.explain-icon {
+  font-size: 0.75rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.check-explain-popover {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0;
+  width: 310px;
+  max-width: min(320px, calc(100vw - 60px));
+  background: var(--white);
+  border: 3px solid var(--black);
+  box-shadow: 6px 6px 0 var(--black);
+  padding: 12px 14px;
+  z-index: 200;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+  pointer-events: none;
+  text-align: left;
+}
+
+/* Invisible bridge so mouse moving from button to popover doesn't trigger mouseleave */
+.check-explain-popover::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 12px;
+}
+
+/* Neo-brutalist arrow pointing down to the toggle button */
+.check-explain-popover::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 18px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: var(--black) transparent transparent transparent;
+}
+
+.check-explain-wrap:hover .check-explain-popover,
+.check-explain-wrap.is-active .check-explain-popover {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .check-explain-row + .check-explain-row {
   margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(0, 0, 0, 0.15);
 }
 
 .check-explain-label {
   display: block;
-  font-size: 0.66rem;
+  font-size: 0.62rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  opacity: 0.5;
+  opacity: 0.55;
   margin-bottom: 2px;
+}
+
+.check-explain-text {
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--black);
 }
 
 .loading-section {

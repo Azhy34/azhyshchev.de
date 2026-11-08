@@ -241,6 +241,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Close any open check popovers on click outside
+    document.addEventListener('click', () => {
+        document.querySelectorAll('.check-explain-wrap.is-active').forEach((w) => {
+            w.classList.remove('is-active');
+            const btn = w.querySelector('.check-explain-toggle');
+            if (btn) btn.setAttribute('aria-expanded', 'false');
+        });
+    });
+
     function displayResults(data) {
         // Top section
         document.getElementById('targetUrl').textContent = data.url;
@@ -340,19 +349,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const localizedDetail = t.details[check.detail] || check.detail;
         const localizedRec = check.recommendation ? (t.recommendations[check.recommendation] || check.recommendation) : null;
 
-        // Short "what it means / how to fix" note. Collapsed by default on purpose:
-        // cards stay scannable and the "I fix it for you" CTA keeps its weight.
+        // Short "what it means / how to fix" tooltip popover.
+        // Floats above the button on hover/tap without changing card height or stretching grid.
         const explanation = (t.explain && t.explain[id]) || null;
         const explainHtml = explanation ? `
-                <button type="button" class="check-explain-toggle" aria-expanded="false">${t.explainToggle}</button>
-                <div class="check-explain-panel hidden">
-                    <div class="check-explain-row">
-                        <span class="check-explain-label">${t.explainWhat}</span>
-                        ${escapeHtml(explanation.what)}
-                    </div>
-                    <div class="check-explain-row">
-                        <span class="check-explain-label">${t.explainFix}</span>
-                        ${escapeHtml(explanation.fix)}
+                <div class="check-explain-wrap">
+                    <button type="button" class="check-explain-toggle" aria-expanded="false" aria-label="${t.explainToggle}">
+                        ${t.explainToggle} <span class="explain-icon">ⓘ</span>
+                    </button>
+                    <div class="check-explain-popover" role="tooltip">
+                        <div class="check-explain-row">
+                            <span class="check-explain-label">${t.explainWhat}</span>
+                            <div class="check-explain-text">${escapeHtml(explanation.what)}</div>
+                        </div>
+                        <div class="check-explain-row">
+                            <span class="check-explain-label">${t.explainFix}</span>
+                            <div class="check-explain-text">${escapeHtml(explanation.fix)}</div>
+                        </div>
                     </div>
                 </div>` : '';
 
@@ -368,19 +381,38 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
 
-        const explainToggle = card.querySelector('.check-explain-toggle');
-        if (explainToggle) {
-            explainToggle.addEventListener('click', function () {
-                const panel = card.querySelector('.check-explain-panel');
-                const isOpen = !panel.classList.toggle('hidden');
-                explainToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-                explainToggle.textContent = isOpen ? t.explainHide : t.explainToggle;
-                if (isOpen && typeof gtag === 'function') {
+        const explainWrap = card.querySelector('.check-explain-wrap');
+        if (explainWrap) {
+            const toggleBtn = explainWrap.querySelector('.check-explain-toggle');
+            let fired = false;
+
+            function trackOpen() {
+                if (!fired && typeof gtag === 'function') {
+                    fired = true;
                     gtag('event', 'check_explain_open', {
                         check: id,
                         page_language: document.documentElement.lang || 'en'
                     });
                 }
+            }
+
+            // Desktop hover tracking
+            explainWrap.addEventListener('mouseenter', trackOpen);
+
+            // Mobile/click toggle
+            toggleBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                // Close other open popovers
+                document.querySelectorAll('.check-explain-wrap.is-active').forEach(function (w) {
+                    if (w !== explainWrap) {
+                        w.classList.remove('is-active');
+                        const b = w.querySelector('.check-explain-toggle');
+                        if (b) b.setAttribute('aria-expanded', 'false');
+                    }
+                });
+                const isOpen = explainWrap.classList.toggle('is-active');
+                toggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                if (isOpen) trackOpen();
             });
         }
 
