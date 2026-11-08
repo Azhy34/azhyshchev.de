@@ -168,12 +168,6 @@ function switchLang() {
       el.classList.add('active');
     }
   });
-
-  /* Hide reviews on mobile */
-  if (window.innerWidth <= 820) {
-    var reviews = document.querySelector('.reviews');
-    if (reviews) reviews.style.display = 'none';
-  }
 })();
 
 (function () {
