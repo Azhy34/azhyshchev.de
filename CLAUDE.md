@@ -40,32 +40,25 @@ Uses `discoveryengine.googleapis.com/v1/.../siteSearchEngine:recrawlUris` with G
 - **Static HTML (SSG):** Pure static HTML rendered on the wire (no client JS framework hydration required for Googlebot to read content).
 - **Card-to-Modal Pairing:** Every `<article class="article-card" data-modal="ID">` MUST pair with `<div class="modal-overlay" id="ID">` (or `<div class="overlay" id="ID">` on projects).
 
-## Railway CLI
+## Cloud Run Services (Production Backends)
 
-Already authenticated as `azhischev1@gmail.com`. Use directly from terminal.
+All production backend services run on **Google Cloud Run** in `europe-west3` (Frankfurt, Germany) under GCP project `azhyshchev`. (Legacy Railway service `jubilant-tenderness` is retired).
 
-**Chat backend service:**
-```bash
-railway link -p jubilant-tenderness -s 68396619-49be-430b-bcde-aaf1b116198d
-railway variables set KEY="value"
-railway variables list
-```
+**1. AI Readiness Checker API:**
+- Live URL: `https://ai-readiness-api-377331886416.europe-west3.run.app`
+- Directory: `portfolio/api/`
+- Deploy: `gcloud run deploy ai-readiness-api --source portfolio/api --project=azhyshchev --region=europe-west3` (or use built image digest)
+- Logs: Cloud Logging `jsonPayload.event="ai_checker_run"`
 
-**AI Checker API service:**
-```bash
-cd portfolio/api && railway up
-```
+**2. AI Sales Consultant (Chat Widget):**
+- Live URL: `https://azhy-ai-consultant-377331886416.europe-west3.run.app`
+- Directory: `azhy-ai-consultant/`
+- Database: **Google Cloud Firestore** (Native, `europe-west3`, never sleeps)
+- Deploy: `gcloud run deploy azhy-ai-consultant --source azhy-ai-consultant --project=azhyshchev --region=europe-west3`
 
-**Projects:**
-| Project | Service | Purpose |
-|---------|---------|---------|
-| `jubilant-tenderness` | `azhyshchev.de` (ID: `68396619-49be-430b-bcde-aaf1b116198d`) | Chat backend |
-| `jubilant-tenderness` | `ai-readiness-api` | AI Checker FastAPI |
-| `jubilant-tenderness` | Postgres | AI Checker DB |
+## Analytics (Do not use Railway)
 
-## Analytics: do not use Railway
-
-Railway service `azhyshchev.de` (`azhyshchevde-production.up.railway.app`) is CRASHED since 2026-08-20: boot `exit 1` because `GEMINI_API_KEY` is missing. `/api/analytics`, `/api/gsc`, `/api/bing`, `/api/seo-insights` return 502. Live site chat uses Cloud Run (`azhy-ai-consultant-377331886416.europe-west3.run.app`), not this Node service.
+Railway Node backend is completely retired. Live analytics and Search Console are pulled locally via service account scripts in `google-analytics-mcp/`:
 
 ## GA4 Analytics API
 
@@ -379,33 +372,20 @@ PORT                    set by host automatically
 
 ---
 
-## Databases
+## Databases & Persistence
 
-### Supabase (cloud)
+### 1. Google Cloud Firestore (Primary Native CRM)
+- Project: `azhyshchev` (Region: `europe-west3`, Frankfurt)
+- Status: **ACTIVE (Free Tier, Never Sleeps)**
+- Collection: `leads` — Inbound chat leads (name, email, company, pain_point, timestamp).
+- Handled by: `azhy-ai-consultant/src/databases/firestore_adapter.py`.
 
-| Table | Purpose |
-|-------|---------|
-| `chat_logs` | All widget conversations (session_id, ip, lang, messages, timestamp) |
-| `leads` | B2B outreach leads with audit data (email, company_name, gmaps_score, ai_use_case JSON) |
-
-### Railway PostgreSQL (project: jubilant-tenderness, local to Railway service)
-
-| Table | Purpose |
-|-------|---------|
-| `ai_checker_logs` | AI Readiness Checker results (url, score, verdict, breakdown JSONB, ip, checked_at) |
-
-Note: `ai_checker_logs` is NOT in Supabase — it lives in Railway Postgres, auto-created on API startup via `CREATE TABLE IF NOT EXISTS`.
-
----
-
-## Testing
-
-```bash
-cd backend
-node test-faq.js   # runs 21 live tests against production Railway API
-```
-
-Test categories: Normal FAQ, Objections, Off-topic/jailbreak, German language, Multi-turn history
+### 2. Google Cloud Logging (Checker Runs Sink)
+- Project: `azhyshchev`
+- Status: **ACTIVE**
+- Sink: Every AI Checker audit logged as structured JSON `jsonPayload.event="ai_checker_run"` (domain, score, verdict, gaps, ip_hash, utm).
+- Readable via: `python scripts/checker_leads.py` or Cloud Logging Console.
+- (Legacy Supabase and Railway Postgres are retired to prevent pauses/dependency failures).
 
 ---
 
@@ -512,8 +492,7 @@ Without `CHECKER_LOG_TOKEN` the read endpoints stay open (fine for local dev, no
 ```bash
 gcloud run deploy ai-readiness-api --source portfolio/api --project=azhyshchev --region=europe-west3
 ```
-The legacy `cd portfolio/api && railway up` path is retired (Railway only hosts the Postgres, and
-only if `DATABASE_URL` is wired up — see above).
+Legacy Railway deployment is completely retired. The service runs exclusively on Google Cloud Run (`europe-west3`).
 
 ### Tests
 ```bash
