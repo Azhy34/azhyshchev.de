@@ -119,13 +119,13 @@ Old join lived at Railway `GET /api/seo-insights`. Dead. Classify pages locally 
 **Key Events (конверсии) — уже помечены в GA4:** `book_call_click`, `chat_message_sent`, `agent_demo_banner_click`
 Добавить когда появятся: `cv_download`, `generate_lead`
 
-**Custom Dimensions — все 5 зарегистрированы в GA4 (2026-06-09):**
+**Custom Dimensions — все 6 зарегистрированы в GA4 (обновлено 2026-11-08):**
 - `project_name` (event-scoped) — `project_view`
 - `location` (event-scoped) — `cv_download`, `book_call_click`, `ai_checker_click`, `agent_demo_banner_click`
 - `article_name` (event-scoped) — `modal_open`, `article_read_click`
 - `question` (event-scoped) — `faq_open`
 - `page_language` (event-scoped) — `modal_open`, `article_read_click`, `faq_open`, `ai_checker_analyze`, `agent_demo_banner_click`
-- `check` (event-scoped) — `check_explain_open` ⚠️ на 2026-11-08 в GA4 ещё НЕ создан (Admin API отдаёт только 5 измерений). Создать в GA4 Admin → Custom Definitions (Event-scoped, параметр `check`); проверка — `python google-analytics-mcp/check_ga4_config.py`
+- `check` (event-scoped) — `check_explain_open` (создано 2026-11-08; ID `16297752501`; проверено Admin API + отчёт Data API `customEvent:check` → HTTP 200)
 
 **UTM на Calendly ссылках:** `utm_source=portfolio&utm_campaign=booking&utm_content=<contact|ai_checker|chat_header>`
 
