@@ -125,7 +125,7 @@ Old join lived at Railway `GET /api/seo-insights`. Dead. Classify pages locally 
 - `article_name` (event-scoped) — `modal_open`, `article_read_click`
 - `question` (event-scoped) — `faq_open`
 - `page_language` (event-scoped) — `modal_open`, `article_read_click`, `faq_open`, `ai_checker_analyze`, `agent_demo_banner_click`
-- `check` (event-scoped) — `check_explain_open` ⚠️ ещё НЕ зарегистрирован в GA4 Admin (добавить перед первым отчётом по пояснениям)
+- `check` (event-scoped) — `check_explain_open` ⚠️ на 2026-11-08 в GA4 ещё НЕ создан (Admin API отдаёт только 5 измерений). Создать в GA4 Admin → Custom Definitions (Event-scoped, параметр `check`); проверка — `python google-analytics-mcp/check_ga4_config.py`
 
 **UTM на Calendly ссылках:** `utm_source=portfolio&utm_campaign=booking&utm_content=<contact|ai_checker|chat_header>`
 
