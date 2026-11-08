@@ -67,7 +67,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap"></noscript>
   <style>
     :root { --sky: #61b5e8; --mint: #b9ddb7; --cream: #f8f0dc; --yellow: #f5c84b; --pink: #efb2d5; --blue: #d8ebff; --peach: #f7d4b1; --coral: #ff9a77; --rose: #ecb0c4; --black: #111111; --white: #ffffff; --accent: var(--sky); }
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -113,6 +113,15 @@
     .cta-btn { border: 2px solid var(--white); background: var(--coral); color: var(--black); padding: 14px 24px; font-weight: 800; font-size: 1rem; box-shadow: 4px 4px 0 var(--white); }
 
     .back-link { font-weight: 800; text-decoration: underline; margin-top: 10px; display: inline-block; }
+    /* ── FAQ ACCORDION ── */
+    .faq { display: flex; flex-direction: column; gap: 12px; }
+    details.faq-item { border: 2px solid var(--black); background: var(--cream); padding: 16px 18px; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+    details.faq-item:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--black); }
+    details.faq-item summary { font-size: 0.9rem; font-weight: 800; cursor: pointer; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; user-select: none; list-style: none; }
+    details.faq-item summary::-webkit-details-marker { display: none; }
+    details.faq-item summary::after { content: "+"; font-size: 1.4rem; font-weight: 900; flex-shrink: 0; line-height: 1; }
+    details.faq-item[open] summary::after { content: "-"; }
+    details.faq-item .faq-a { padding-top: 14px; font-size: 0.84rem; line-height: 1.7; }
 
     @media (max-width: 1100px) { .shell { grid-template-columns: 220px 1fr; } .metrics-row { grid-template-columns: repeat(2,1fr); } }
     @media (max-width: 820px) { body { padding: 10px 8px 72px; } .shell { grid-template-columns: 1fr; box-shadow: 6px 6px 0 var(--black); min-height: unset; } .sidebar { border-right: none; border-bottom: 3px solid var(--black); padding: 10px 14px; flex-direction: row; align-items: center; justify-content: space-between; } .brand { font-size: clamp(0.95rem,2.5vw,1.6rem); } .nav { display: none; } .sidebar-bottom { display: none; } .main { padding: 14px; } }
@@ -207,6 +216,38 @@
             </div>
           </div>
 
+          <div class="neo-card">
+            <div class="section-label">Engineering Deep Dive</div>
+            <h2 class="section-title">Autonomous Agent Handshake &amp; Protocol Security</h2>
+            <div class="prose">
+              <p><strong>Capability negotiation over ad-hoc scraping:</strong> When an autonomous buyer agent evaluates enterprise vendors, sending raw HTML pages creates token waste and context bloat. The Linux Foundation A2A specification establishes a formal handshake: the caller requests the company's <code>agent-card.json</code> manifest, inspects verified skill schemas (expressed in JSON Schema or OpenAPI definitions), and negotiates supported input/output formats before issuing a single compute request.</p>
+              <p><strong>Rate limiting, token bounds &amp; DLP defense:</strong> Exposing agent endpoints to autonomous web callers introduces severe API cost risks and prompt injection vectors. In my production setup on Google Cloud Run, inbound calls pass through three distinct protective layers: Cloud Armor IP reputation throttling, Pydantic argument type validators that reject malformed schemas before hitting the LLM, and Cloud Data Loss Prevention (DLP) filters that redact client secrets and personal data from session logs.</p>
+            </div>
+          </div>
+
+          <div class="neo-card">
+            <div class="section-label">FAQ</div>
+            <h2 class="section-title">Frequently Asked Questions: Agent SEO &amp; A2A</h2>
+            <div class="faq">
+              <details class="faq-item">
+                <summary>What is Agent SEO and how does it differ from traditional SEO?</summary>
+                <div class="faq-a">Traditional SEO optimizes web pages for human visual scanning and keyword indexing algorithms (Google, Bing). Agent SEO optimizes enterprise infrastructure for autonomous AI procurement agents (ChatGPT, Perplexity, Claude, AutoGen) by publishing standardized machine-readable capabilities (A2A manifests, OpenAPI contracts, WebMCP tools) so agents can evaluate and contract your business programmatically.</div>
+              </details>
+              <details class="faq-item">
+                <summary>How does the Linux Foundation A2A standard work?</summary>
+                <div class="faq-a">A2A (Agent-to-Agent) is an open interoperability standard originally initiated by Google and donated to the Linux Foundation. It defines how AI agents discover other agents via a public manifest (<code>/.well-known/agent-card.json</code>), authenticate, exchange capability definitions, and execute tasks across disparate model frameworks.</div>
+              </details>
+              <details class="faq-item">
+                <summary>Where should a business host its agent-card.json manifest?</summary>
+                <div class="faq-a">The manifest must be hosted at the standardized root URI path <code>/.well-known/agent-card.json</code> with appropriate CORS headers (<code>Access-Control-Allow-Origin: *</code>) and HTTPS encryption, enabling incoming autonomous crawlers and procurement agents to discover services in sub-second handshakes.</div>
+              </details>
+              <details class="faq-item">
+                <summary>What are the business risks of ignoring Agent SEO?</summary>
+                <div class="faq-a">As corporate purchasing teams delegate preliminary vendor screening to autonomous AI agents, businesses lacking machine-readable capability endpoints will be bypassed entirely during automated RFQ (Request for Quotation) candidate selection rounds.</div>
+              </details>
+            </div>
+          </div>
+
           <div class="neo-card" style="background: var(--yellow);">
             <div class="section-label">Next Architectural Step: Part 2</div>
             <h2 class="section-title">WebMCP: From Discovery to Browser-Native Action</h2>
@@ -238,7 +279,7 @@
     <a class="mbn-item active" href="/articles"><span class="mbn-icon">A</span><span class="mbn-label">Articles</span></a>
     <a class="mbn-item" href="/contact"><span class="mbn-icon">C</span><span class="mbn-label">Contact</span></a>
   </nav>
-  <script src="/js/nav.js"></script>
+  <script src="/js/nav.js" defer></script>
   <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" defer></script>
 </body>
 </html>
