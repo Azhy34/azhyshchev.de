@@ -86,7 +86,6 @@
 
   function injectStyles() {
     var css = [
-      '@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap");',
       '#cc-banner{',
       '  position:fixed;bottom:24px;left:24px;right:190px;z-index:99999;',
       '  background:#111111;color:#ffffff;',
