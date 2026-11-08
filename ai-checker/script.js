@@ -50,6 +50,48 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Add JSON-LD Schema.org markup (Organization, Product, FAQPage)': 'Add JSON-LD Schema.org markup (Organization, WebApplication, FAQPage)',
                 'Switch to Next.js/Nuxt SSR so AI crawlers can read your content': 'Switch to SSR/SSG so AI crawlers can read without JavaScript',
                 'Switch to SSR/SSG — AI agents can\'t execute JavaScript': 'Enable server-side rendering for AI crawler accessibility'
+            },
+            explainToggle: 'What is this? How to fix it',
+            explainHide: 'Hide explanation',
+            explainWhat: 'What it means',
+            explainFix: 'How to fix',
+            explain: {
+                agent_readable_content: {
+                    what: 'How much real text an AI crawler finds in the first HTML response — that text is all ChatGPT or Perplexity can quote.',
+                    fix: 'Ship 800+ words of copy inside <main>/<article>, not in images, PDFs or JS widgets.'
+                },
+                ai_agent_access: {
+                    what: 'Whether robots.txt lets the AI crawlers in: GPTBot, ClaudeBot, PerplexityBot and 5 more.',
+                    fix: 'Drop the Disallow rules for those bots — one "User-agent: GPTBot" + "Allow: /" block per crawler.'
+                },
+                server_side_rendering: {
+                    what: 'Does your HTML arrive with the content already inside, or does JavaScript build it in the browser?',
+                    fix: 'Move to SSR/SSG (Next.js, Nuxt, Astro) or prerender pages — AI crawlers do not execute JavaScript.'
+                },
+                schema_org: {
+                    what: 'Machine-readable JSON-LD that tells AI what your page is about: Organization, Person, Product, FAQ.',
+                    fix: 'Add JSON-LD in a script tag of type application/ld+json. Microdata still counts, but scores lower.'
+                },
+                performance: {
+                    what: 'Time to first byte: how fast your server answers one crawler request.',
+                    fix: 'Cache HTML at the edge (CDN) and cut server-side work. Target: under 200 ms.'
+                },
+                token_economics: {
+                    what: 'How many tokens your page costs to read (characters ÷ 4). A bloated DOM burns the crawler\'s context budget.',
+                    fix: 'Trim markup, drop inline scripts, hidden blocks and repeated boilerplate so the real text dominates.'
+                },
+                sitemap: {
+                    what: 'An XML sitemap tells crawlers which pages exist, so nothing valuable stays undiscovered.',
+                    fix: 'Publish /sitemap.xml and reference it with a "Sitemap:" line in robots.txt.'
+                },
+                llms_txt: {
+                    what: 'llms.txt is a small Markdown file that summarises your site for AI models — like robots.txt, but for LLMs.',
+                    fix: 'Publish /llms.txt with your key pages and one-line descriptions (+10 points).'
+                },
+                markdown_availability: {
+                    what: 'Whether a page can also be served as clean Markdown — the cheapest format for an LLM to ingest.',
+                    fix: 'Offer /index.md or an "Accept: text/markdown" variant. Bonus only — most sites skip it.'
+                }
             }
         },
         de: {
@@ -88,6 +130,48 @@ document.addEventListener('DOMContentLoaded', () => {
                 'Add JSON-LD Schema.org markup (Organization, Product, FAQPage)': 'JSON-LD Schema.org Entitäten hinzufügen (Organization, FAQPage)',
                 'Switch to Next.js/Nuxt SSR so AI crawlers can read your content': 'Auf SSR/SSG umstellen, damit KI-Crawler Inhalte ohne JS lesen können',
                 'Switch to SSR/SSG — AI agents can\'t execute JavaScript': 'Serverseitiges Rendering aktivieren für vollständige KI-Sichtbarkeit'
+            },
+            explainToggle: 'Was ist das? So beheben',
+            explainHide: 'Erklärung ausblenden',
+            explainWhat: 'Was es bedeutet',
+            explainFix: 'So beheben',
+            explain: {
+                agent_readable_content: {
+                    what: 'Wie viel echter Text ein KI-Crawler in der ersten HTML-Antwort findet — genau dieser Text kann von ChatGPT oder Perplexity zitiert werden.',
+                    fix: '800+ Wörter Text in <main>/<article> ausliefern, nicht in Bildern, PDFs oder JS-Widgets.'
+                },
+                ai_agent_access: {
+                    what: 'Ob robots.txt die KI-Crawler überhaupt reinlässt: GPTBot, ClaudeBot, PerplexityBot und 5 weitere.',
+                    fix: 'Disallow-Regeln für diese Bots entfernen — je Crawler ein Block "User-agent: GPTBot" + "Allow: /".'
+                },
+                server_side_rendering: {
+                    what: 'Kommt der Inhalt schon im HTML an, oder baut JavaScript ihn erst im Browser?',
+                    fix: 'Auf SSR/SSG umstellen (Next.js, Nuxt, Astro) oder Seiten vorrendern — KI-Crawler führen kein JavaScript aus.'
+                },
+                schema_org: {
+                    what: 'Maschinenlesbares JSON-LD, das der KI sagt, worum es auf der Seite geht: Organization, Person, Product, FAQ.',
+                    fix: 'JSON-LD in einem Script-Tag vom Typ application/ld+json einbauen. Microdata zählt, aber mit weniger Punkten.'
+                },
+                performance: {
+                    what: 'Time to first byte: wie schnell Ihr Server eine einzelne Crawler-Anfrage beantwortet.',
+                    fix: 'HTML am Edge cachen (CDN) und Serverarbeit reduzieren. Ziel: unter 200 ms.'
+                },
+                token_economics: {
+                    what: 'Wie viele Tokens die Seite zum Lesen kostet (Zeichen ÷ 4). Ein aufgeblähtes DOM verbraucht das Kontextbudget des Crawlers.',
+                    fix: 'Markup verschlanken, Inline-Skripte, versteckte Blöcke und wiederholte Boilerplate entfernen.'
+                },
+                sitemap: {
+                    what: 'Eine XML-Sitemap zeigt Crawlern, welche Seiten existieren — sonst bleiben Inhalte unentdeckt.',
+                    fix: '/sitemap.xml veröffentlichen und in robots.txt mit einer "Sitemap:"-Zeile verlinken.'
+                },
+                llms_txt: {
+                    what: 'llms.txt ist eine kleine Markdown-Datei, die Ihre Website für KI-Modelle zusammenfasst — wie robots.txt, nur für LLMs.',
+                    fix: '/llms.txt mit den wichtigsten Seiten und Ein-Satz-Beschreibungen anlegen (+10 Punkte).'
+                },
+                markdown_availability: {
+                    what: 'Ob eine Seite auch als sauberes Markdown ausgeliefert werden kann — das günstigste Format für ein LLM.',
+                    fix: '/index.md oder eine Variante mit "Accept: text/markdown" anbieten. Nur Bonus — die meisten Seiten haben das nicht.'
+                }
             }
         }
     };
@@ -230,6 +314,14 @@ document.addEventListener('DOMContentLoaded', () => {
         resultsSection.scrollIntoView({ behavior: 'smooth' });
     }
 
+    // Escape API/i18n-provided text before injecting it into innerHTML
+    // (explanation strings legitimately contain <main>, <article>, "quotes").
+    function escapeHtml(value) {
+        return String(value).replace(/[&<>"']/g, function (ch) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch];
+        });
+    }
+
     function createCheckCard(id, check) {
         const card = document.createElement('div');
         card.className = 'check-card';
@@ -241,16 +333,50 @@ document.addEventListener('DOMContentLoaded', () => {
         const localizedDetail = t.details[check.detail] || check.detail;
         const localizedRec = check.recommendation ? (t.recommendations[check.recommendation] || check.recommendation) : null;
 
+        // Short "what it means / how to fix" note. Collapsed by default on purpose:
+        // cards stay scannable and the "I fix it for you" CTA keeps its weight.
+        const explanation = (t.explain && t.explain[id]) || null;
+        const explainHtml = explanation ? `
+                <button type="button" class="check-explain-toggle" aria-expanded="false">${t.explainToggle}</button>
+                <div class="check-explain-panel hidden">
+                    <div class="check-explain-row">
+                        <span class="check-explain-label">${t.explainWhat}</span>
+                        ${escapeHtml(explanation.what)}
+                    </div>
+                    <div class="check-explain-row">
+                        <span class="check-explain-label">${t.explainFix}</span>
+                        ${escapeHtml(explanation.fix)}
+                    </div>
+                </div>` : '';
+
         card.innerHTML = `
             <div class="check-info">
                 <div class="check-title">${localizedTitle}</div>
                 <div class="check-detail">${localizedDetail}</div>
                 ${localizedRec ? `<div class="check-recommendation">💡 ${localizedRec}</div>` : ''}
+                ${explainHtml}
             </div>
             <div class="check-points ${scoreClass}">
                 ${check.points === check.max ? '✅' : `${Math.round(check.points)}/${check.max}`}
             </div>
         `;
+
+        const explainToggle = card.querySelector('.check-explain-toggle');
+        if (explainToggle) {
+            explainToggle.addEventListener('click', function () {
+                const panel = card.querySelector('.check-explain-panel');
+                const isOpen = !panel.classList.toggle('hidden');
+                explainToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                explainToggle.textContent = isOpen ? t.explainHide : t.explainToggle;
+                if (isOpen && typeof gtag === 'function') {
+                    gtag('event', 'check_explain_open', {
+                        check: id,
+                        page_language: document.documentElement.lang || 'en'
+                    });
+                }
+            });
+        }
+
         return card;
     }
 

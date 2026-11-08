@@ -438,6 +438,51 @@ body {
   min-width: 60px;
 }
 
+/* "What it means / How to fix" note inside a check card (collapsed by default) */
+.check-explain-toggle {
+  margin-top: 10px;
+  padding: 0;
+  border: 0;
+  border-bottom: 2px dotted var(--black);
+  background: none;
+  font-family: inherit;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--black);
+  opacity: 0.55;
+  cursor: pointer;
+}
+
+.check-explain-toggle:hover,
+.check-explain-toggle[aria-expanded="true"] {
+  opacity: 1;
+}
+
+.check-explain-panel {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-left: 4px solid var(--black);
+  background: rgba(0, 0, 0, 0.04);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.check-explain-row + .check-explain-row {
+  margin-top: 10px;
+}
+
+.check-explain-label {
+  display: block;
+  font-size: 0.66rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.5;
+  margin-bottom: 2px;
+}
+
 .loading-section {
   text-align: center;
   padding: 40px;

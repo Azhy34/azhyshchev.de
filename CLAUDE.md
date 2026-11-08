@@ -113,6 +113,7 @@ Old join lived at Railway `GET /api/seo-insights`. Dead. Classify pages locally 
 | `modal_open` | article card click (preview) | article_name, page_language | /de/artikel/ |
 | `article_read_click` | "Artikel lesen →" click | article_name, page_language | /de/artikel/ |
 | `faq_open` | FAQ accordion open | question (60 chars), page_language | /ai-checker/, /de/ki-checker/, /articles/google-ads-mcp-ai-agent/ (location: google_ads_mcp_ai_agent), /de/artikel/google-ads-kosten-ki-agent/ (location: google_ads_kosten_ki_agent), /projects/ai-ads-management/ (location: ai_ads_management_project), /de/projekte/google-ads-mcp-server/ (location: google_ads_mcp_server_de) |
+| `check_explain_open` | "What is this? How to fix it" toggle inside a checker result card | check (check id, e.g. `markdown_availability`), page_language | /ai-checker/, /de/ki-checker/ |
 | `lang_switch` | EN↔DE toggle | to, from | all DE/EN |
 
 **Key Events (конверсии) — уже помечены в GA4:** `book_call_click`, `chat_message_sent`, `agent_demo_banner_click`
@@ -124,6 +125,7 @@ Old join lived at Railway `GET /api/seo-insights`. Dead. Classify pages locally 
 - `article_name` (event-scoped) — `modal_open`, `article_read_click`
 - `question` (event-scoped) — `faq_open`
 - `page_language` (event-scoped) — `modal_open`, `article_read_click`, `faq_open`, `ai_checker_analyze`, `agent_demo_banner_click`
+- `check` (event-scoped) — `check_explain_open` ⚠️ ещё НЕ зарегистрирован в GA4 Admin (добавить перед первым отчётом по пояснениям)
 
 **UTM на Calendly ссылках:** `utm_source=portfolio&utm_campaign=booking&utm_content=<contact|ai_checker|chat_header>`
 
@@ -429,6 +431,14 @@ Analyzes any website URL for AI/LLM crawlability. Returns a score 0-100 across 9
 **Verdicts:** `≥90` Optimal, `70–89` Needs Improvement, `<70` Critical.
 History: before 2026-11-08 it was `min(100, round(base*100/90) + llms + md)`, so a site with 84/90 base + llms.txt scored 103 → capped at 100 "Optimal" with visible gaps.
 
+
+### Per-check explanations (frontend only)
+Every result card has a collapsed toggle "What is this? How to fix it" (`button.check-explain-toggle` → `div.check-explain-panel`).
+It reveals two short lines: *What it means* (`what`) and *How to fix* (`fix`).
+- Texts live in `portfolio/ai-checker/script.js` → `I18N.{en,de}.explain` (9 check ids), **not** in the API — so the parity contract with the cold-email pipeline is untouched.
+- Collapsed by default and phrased as a direction, not a step-by-step recipe: cards stay scannable and the "I fix it" CTA keeps its weight.
+- Opening it fires GA4 `check_explain_open` with `check` (check id) + `page_language`.
+- `explain.what/fix` strings contain characters like `<main>` — they are injected through `escapeHtml()` before hitting `innerHTML`.
 
 ### CSR detection
 Sites using React/Vue/Angular without SSR are detected via empty body + `#root`/`#app`/`#__next`/`#__nuxt` markers.
