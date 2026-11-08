@@ -11,8 +11,11 @@ Technical documentation for azhyshchev.de. Keep this file up to date when adding
 | ADK AI Consultant | Python + Google ADK + FastAPI | Google Cloud Run (`azhyshchev`) | `gcloud run deploy azhy-ai-consultant` |
 | Observability 4 Pillars | Cloud Logging + Trace + Metrics | Google Cloud Platform | Native GCP + `/api/metrics` |
 | AI Readiness Checker API | Python 3.12 + FastAPI (9-point audit) | Google Cloud Run (`europe-west3`) | `gcloud run deploy ai-readiness-api --source portfolio/api` |
-| AI Readiness DB | PostgreSQL | Railway (Postgres service, project `jubilant-tenderness`) | auto-managed |
-| Chat logs | Supabase (PostgreSQL) | Supabase cloud | - |
+| AI Readiness DB | PostgreSQL | ⚠️ Railway (`jubilant-tenderness`) — **not connected**, no `DATABASE_URL` on Cloud Run | `gcloud run services update … --set-secrets DATABASE_URL=…` |
+| Checker run log | Cloud Logging (`jsonPayload.event=ai_checker_run`) | GCP, 30-day retention | written on every run (no DB needed) |
+| Chat logs + leads | Supabase (PostgreSQL) | Supabase cloud | - |
+| RAG knowledge base | Vertex AI Search (Discovery Engine) | `azhyshchev-portfolio-knowledge`, location `global` | reindex via `scripts/recrawl_vertex_search.py` |
+| Backups | ❌ none in GCP — Firestore API is **disabled** (`firestore.googleapis.com`) | — | — |
 | AI model | Google GenAI / Vertex AI Search | GCP Cloud Run | `gemini-3.1-flash-lite` |
 | Scheduling | Calendly | calendly.com | `calendly.com/azhyshchev/30min` |
 
