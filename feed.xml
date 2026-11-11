@@ -5,11 +5,11 @@
     <link>https://azhyshchev.de/articles/</link>
     <description>Technical engineering deep dives on Web Performance, Google Cloud ADK Multi-Agents, FastMCP architecture, and Google Ads ROI optimization.</description>
     <language>en</language>
-    <lastBuildDate>Wed, 11 Nov 2026 14:15:48 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 11 Nov 2026 14:32:50 GMT</lastBuildDate>
     <atom:link href="https://azhyshchev.de/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>Google PageSpeed Insights: How to Fix Critical Request Chains &amp; Core Web Vitals</title>
-      <link>https://azhyshchev.de/articles/pagespeed-insights-critical-request-chains-core-web-vitals/</link>
+      <link>https://azhyshchev.de/articles/pagespeed-insights-critical-request-chains-core-web-vitals/?utm_source=dailydev&amp;utm_medium=rss&amp;utm_campaign=syndication&amp;utm_content=pagespeed-insights-critical-request-chains-core-web-vitals#read</link>
       <guid isPermaLink="true">https://azhyshchev.de/articles/pagespeed-insights-critical-request-chains-core-web-vitals/</guid>
       <pubDate>Wed, 11 Nov 2026 11:06:22 GMT</pubDate>
       <description>Google PageSpeed Insights: How to fix 'Avoid chaining critical requests' in Lighthouse, optimize mobile Core Web Vitals to 99/100, and stop losing paid Google Ads clicks to slow mobile bounces.</description>
@@ -140,7 +140,7 @@
     </item>
     <item>
       <title>Business Process Automation with RAG AI Agents: The Future of B2B Lead Generation</title>
-      <link>https://azhyshchev.de/articles/rag-sales-agent-lead-gen/</link>
+      <link>https://azhyshchev.de/articles/rag-sales-agent-lead-gen/?utm_source=dailydev&amp;utm_medium=rss&amp;utm_campaign=syndication&amp;utm_content=rag-sales-agent-lead-gen#read</link>
       <guid isPermaLink="true">https://azhyshchev.de/articles/rag-sales-agent-lead-gen/</guid>
       <pubDate>Sun, 08 Nov 2026 17:12:09 GMT</pubDate>
       <description>AI Chatbot &amp; Customer Support Automation with production RAG agents. Vectorize any client data source (websites, PDFs, databases) in minutes with Google ADK &amp; Cloud Run.</description>
@@ -247,7 +247,7 @@
     </item>
     <item>
       <title>Agent SEO &amp; A2A Protocol: Why Your Business Needs an Agent Passport</title>
-      <link>https://azhyshchev.de/articles/agent-seo-a2a-protocol/</link>
+      <link>https://azhyshchev.de/articles/agent-seo-a2a-protocol/?utm_source=dailydev&amp;utm_medium=rss&amp;utm_campaign=syndication&amp;utm_content=agent-seo-a2a-protocol#read</link>
       <guid isPermaLink="true">https://azhyshchev.de/articles/agent-seo-a2a-protocol/</guid>
       <pubDate>Sun, 08 Nov 2026 17:12:08 GMT</pubDate>
       <description>Agent SEO &amp; A2A Protocol: Why B2B businesses need an open Agent Passport (agent-card.json) to stay discoverable to autonomous AI buyer agents. Google ADK, Linux Foundation standard, GCP Cloud Run live setup.</description>
@@ -344,7 +344,7 @@
     </item>
     <item>
       <title>Agentic AI &amp; WebMCP: Why Autonomous AI Agents Are Replacing Classical SEO</title>
-      <link>https://azhyshchev.de/articles/webmcp-agent-ready-web/</link>
+      <link>https://azhyshchev.de/articles/webmcp-agent-ready-web/?utm_source=dailydev&amp;utm_medium=rss&amp;utm_campaign=syndication&amp;utm_content=webmcp-agent-ready-web#read</link>
       <guid isPermaLink="true">https://azhyshchev.de/articles/webmcp-agent-ready-web/</guid>
       <pubDate>Sun, 08 Nov 2026 17:07:29 GMT</pubDate>
       <description>Agentic AI &amp; WebMCP: Why autonomous AI agents are replacing classical SEO in 2026. Discover how Google Cloud WebMCP turns websites into Agent-Ready executable APIs.</description>
@@ -463,7 +463,7 @@
     </item>
     <item>
       <title>How AI Replaced 4-6 Hours of Daily Photoshop Work for a Wallpaper Sales Team</title>
-      <link>https://azhyshchev.de/articles/wallpaper-ai-automation/</link>
+      <link>https://azhyshchev.de/articles/wallpaper-ai-automation/?utm_source=dailydev&amp;utm_medium=rss&amp;utm_campaign=syndication&amp;utm_content=wallpaper-ai-automation#read</link>
       <guid isPermaLink="true">https://azhyshchev.de/articles/wallpaper-ai-automation/</guid>
       <pubDate>Sun, 08 Nov 2026 17:07:29 GMT</pubDate>
       <description>AI replaces 4-6 hours of daily Photoshop work for a wallpaper sales team: React 19 + Gemini multimodal automation cuts mockup time to under 2 minutes. 75% manual-work reduction, same-day client delivery.</description>
@@ -639,7 +639,7 @@
     </item>
     <item>
       <title>LinkedIn Automation with AI Agents: Official REST API, Zero Bans, and Closed-Loop Leads</title>
-      <link>https://azhyshchev.de/articles/safe-linkedin-agent/</link>
+      <link>https://azhyshchev.de/articles/safe-linkedin-agent/?utm_source=dailydev&amp;utm_medium=rss&amp;utm_campaign=syndication&amp;utm_content=safe-linkedin-agent#read</link>
       <guid isPermaLink="true">https://azhyshchev.de/articles/safe-linkedin-agent/</guid>
       <pubDate>Sun, 08 Nov 2026 17:07:29 GMT</pubDate>
       <description>Scale LinkedIn automation safely without browser extensions or cookie theft. An open-source FastMCP agent running on official REST API v2 with deterministic Pydantic rails.</description>
@@ -838,7 +838,7 @@ def check_zero_leak_invariant(text: str) -&amp;gt; None:
     </item>
     <item>
       <title>Enterprise Production RAG with Vertex AI Search — No Heavy Models in Production</title>
-      <link>https://azhyshchev.de/articles/rag-sales-agent-ecommerce/</link>
+      <link>https://azhyshchev.de/articles/rag-sales-agent-ecommerce/?utm_source=dailydev&amp;utm_medium=rss&amp;utm_campaign=syndication&amp;utm_content=rag-sales-agent-ecommerce#read</link>
       <guid isPermaLink="true">https://azhyshchev.de/articles/rag-sales-agent-ecommerce/</guid>
       <pubDate>Sun, 08 Nov 2026 17:07:29 GMT</pubDate>
       <description>Why dragging heavy model weights and self-hosted vector DBs to production is an enterprise trap. Production Blueprint: Serverless Enterprise RAG with Google Cloud Vertex AI Search, Google ADK Multi-Agents, and zero GPU overhead.</description>
@@ -1108,7 +1108,7 @@ def search_enterprise_knowledge(query: str, page_size: int = 3) -&amp;gt; List[D
     </item>
     <item>
       <title>How I Built a Hybrid RAG Sales Agent with Zero Price Hallucinations</title>
-      <link>https://azhyshchev.de/articles/rag-sales-agent/</link>
+      <link>https://azhyshchev.de/articles/rag-sales-agent/?utm_source=dailydev&amp;utm_medium=rss&amp;utm_campaign=syndication&amp;utm_content=rag-sales-agent#read</link>
       <guid isPermaLink="true">https://azhyshchev.de/articles/rag-sales-agent/</guid>
       <pubDate>Sun, 08 Nov 2026 17:07:29 GMT</pubDate>
       <description>LangGraph ReAct RAG agent for e-commerce: SQL + pgvector Hybrid RAG architecture, zero hallucinations, 90% API cost reduction. Production case study — RAG chatbot with 1200+ SKU. AI sales assistant built with LangChain RAG and Supabase.</description>
@@ -1304,7 +1304,7 @@ def search_enterprise_knowledge(query: str, page_size: int = 3) -&amp;gt; List[D
     </item>
     <item>
       <title>How to Automate Invoice Processing from Email — AI Pipeline for Accounting Teams</title>
-      <link>https://azhyshchev.de/articles/invoice-automation-pipeline/</link>
+      <link>https://azhyshchev.de/articles/invoice-automation-pipeline/?utm_source=dailydev&amp;utm_medium=rss&amp;utm_campaign=syndication&amp;utm_content=invoice-automation-pipeline#read</link>
       <guid isPermaLink="true">https://azhyshchev.de/articles/invoice-automation-pipeline/</guid>
       <pubDate>Sun, 08 Nov 2026 17:07:29 GMT</pubDate>
       <description>How to automate invoice processing from email using AI: IMAP fetch, PDF parsing, Gemini extraction, Google Drive filing. Zero manual hours, $0 infrastructure on GitHub Actions.</description>
@@ -1507,7 +1507,7 @@ def search_enterprise_knowledge(query: str, page_size: int = 3) -&amp;gt; List[D
     </item>
     <item>
       <title>Google Ads MCP: How an AI Agent Runs Your Ads Without Burning the Budget</title>
-      <link>https://azhyshchev.de/articles/google-ads-mcp-ai-agent/</link>
+      <link>https://azhyshchev.de/articles/google-ads-mcp-ai-agent/?utm_source=dailydev&amp;utm_medium=rss&amp;utm_campaign=syndication&amp;utm_content=google-ads-mcp-ai-agent#read</link>
       <guid isPermaLink="true">https://azhyshchev.de/articles/google-ads-mcp-ai-agent/</guid>
       <pubDate>Sun, 08 Nov 2026 17:07:29 GMT</pubDate>
       <description>Google Ads MCP: Google's official server is read-only. A safe AI agent setup with its own backend cut a real account's CPC from 0.82 to 0.47 EUR.</description>
@@ -1836,7 +1836,7 @@ def search_enterprise_knowledge(query: str, page_size: int = 3) -&amp;gt; List[D
     </item>
     <item>
       <title>Google ADK Agent Skills: How to Build Production-Grade Skills for Multi-Agent Systems</title>
-      <link>https://azhyshchev.de/articles/google-adk-agent-skills-multi-agents/</link>
+      <link>https://azhyshchev.de/articles/google-adk-agent-skills-multi-agents/?utm_source=dailydev&amp;utm_medium=rss&amp;utm_campaign=syndication&amp;utm_content=google-adk-agent-skills-multi-agents#read</link>
       <guid isPermaLink="true">https://azhyshchev.de/articles/google-adk-agent-skills-multi-agents/</guid>
       <pubDate>Sun, 08 Nov 2026 17:07:29 GMT</pubDate>
       <description>Architectural blueprint for Google ADK Agent Skills: 3-tier structure (YAML, SKILL.md, scripts), Progressive Disclosure, Two-Layer Shields, in-loop self-correction, and Enterprise Cloud Skill Registry.</description>
@@ -2035,7 +2035,7 @@ skills/
     </item>
     <item>
       <title>GDPR-Compliant AI Agents: How to Protect Customer Data &amp; IBAN with DLP Proxies</title>
-      <link>https://azhyshchev.de/articles/gdpr-compliant-ai-agents-dlp-zero-trust/</link>
+      <link>https://azhyshchev.de/articles/gdpr-compliant-ai-agents-dlp-zero-trust/?utm_source=dailydev&amp;utm_medium=rss&amp;utm_campaign=syndication&amp;utm_content=gdpr-compliant-ai-agents-dlp-zero-trust#read</link>
       <guid isPermaLink="true">https://azhyshchev.de/articles/gdpr-compliant-ai-agents-dlp-zero-trust/</guid>
       <pubDate>Sun, 08 Nov 2026 17:07:29 GMT</pubDate>
       <description>GDPR-compliant AI agent architecture: how European businesses protect customer PII, IBAN, and financial data using Cloud DLP proxies and Zero-Trust VPC perimeters without exposing secrets to LLMs.</description>
@@ -2162,7 +2162,7 @@ skills/
     </item>
     <item>
       <title>Automated B2B Lead Generation for Germany: Google Maps → Impressum → CRM in 25 Minutes</title>
-      <link>https://azhyshchev.de/articles/b2b-lead-pipeline-germany/</link>
+      <link>https://azhyshchev.de/articles/b2b-lead-pipeline-germany/?utm_source=dailydev&amp;utm_medium=rss&amp;utm_campaign=syndication&amp;utm_content=b2b-lead-pipeline-germany#read</link>
       <guid isPermaLink="true">https://azhyshchev.de/articles/b2b-lead-pipeline-germany/</guid>
       <pubDate>Sun, 08 Nov 2026 17:07:29 GMT</pubDate>
       <description>Build an automated B2B lead pipeline for Germany: Google Maps → Impressum scraping → AI extraction → CRM. 80+ qualified leads in 25 minutes for $5. Legal under §7 UWG.</description>
@@ -2359,7 +2359,7 @@ skills/
     </item>
     <item>
       <title>Beyond Web Scraping: Automated B2B Lead Generation via Google Maps MCP</title>
-      <link>https://azhyshchev.de/articles/b2b-lead-generation-google-maps-mcp/</link>
+      <link>https://azhyshchev.de/articles/b2b-lead-generation-google-maps-mcp/?utm_source=dailydev&amp;utm_medium=rss&amp;utm_campaign=syndication&amp;utm_content=b2b-lead-generation-google-maps-mcp#read</link>
       <guid isPermaLink="true">https://azhyshchev.de/articles/b2b-lead-generation-google-maps-mcp/</guid>
       <pubDate>Sun, 08 Nov 2026 17:07:29 GMT</pubDate>
       <description>Learn how replacing web scrapers with Google Maps Model Context Protocol (MCP) creates a 3-minute B2B lead generation pipeline for Germany with near-100% domain accuracy and zero subscription costs.</description>
@@ -2481,7 +2481,7 @@ skills/
     </item>
     <item>
       <title>Automating Google Cloud Console with AI Agents &amp; MCP: A Simple Guide</title>
-      <link>https://azhyshchev.de/articles/automating-google-cloud-console-mcp/</link>
+      <link>https://azhyshchev.de/articles/automating-google-cloud-console-mcp/?utm_source=dailydev&amp;utm_medium=rss&amp;utm_campaign=syndication&amp;utm_content=automating-google-cloud-console-mcp#read</link>
       <guid isPermaLink="true">https://azhyshchev.de/articles/automating-google-cloud-console-mcp/</guid>
       <pubDate>Sun, 08 Nov 2026 17:07:29 GMT</pubDate>
       <description>Learn how Model Context Protocol (MCP) transforms Google Cloud Console into a natural language AI chat interface. Deploy to Cloud Run, inspect logs, manage secrets, and control GCP infrastructure without clicking through dozens of UI menus.</description>
@@ -2605,7 +2605,7 @@ skills/
     </item>
     <item>
       <title>How to Automate Keyword Research for Free Using Google Ads API</title>
-      <link>https://azhyshchev.de/articles/automated-keyword-research/</link>
+      <link>https://azhyshchev.de/articles/automated-keyword-research/?utm_source=dailydev&amp;utm_medium=rss&amp;utm_campaign=syndication&amp;utm_content=automated-keyword-research#read</link>
       <guid isPermaLink="true">https://azhyshchev.de/articles/automated-keyword-research/</guid>
       <pubDate>Sun, 08 Nov 2026 17:07:29 GMT</pubDate>
       <description>How to automate keyword research and extract search volumes directly from Google Ads API for free. Step-by-step guide to setting up a test token and running a Python CLI tool.</description>
@@ -2751,7 +2751,7 @@ skills/
     </item>
     <item>
       <title>Why Your Website Is Invisible to ChatGPT, Claude and Perplexity — And How to Fix It</title>
-      <link>https://azhyshchev.de/articles/ai-visibility/</link>
+      <link>https://azhyshchev.de/articles/ai-visibility/?utm_source=dailydev&amp;utm_medium=rss&amp;utm_campaign=syndication&amp;utm_content=ai-visibility#read</link>
       <guid isPermaLink="true">https://azhyshchev.de/articles/ai-visibility/</guid>
       <pubDate>Sun, 08 Nov 2026 17:07:29 GMT</pubDate>
       <description>Why your website is invisible to ChatGPT, Claude and Perplexity — and how to fix it. A practical guide to AI search engine optimization (GEO), llms.txt, robots.txt, and SSR for business owners.</description>
@@ -2965,7 +2965,7 @@ skills/
     </item>
     <item>
       <title>Stop Guessing Where Your Ad Budget Goes: One Control Panel for Every Channel You Run</title>
-      <link>https://azhyshchev.de/articles/ai-google-ads-management/</link>
+      <link>https://azhyshchev.de/articles/ai-google-ads-management/?utm_source=dailydev&amp;utm_medium=rss&amp;utm_campaign=syndication&amp;utm_content=ai-google-ads-management#read</link>
       <guid isPermaLink="true">https://azhyshchev.de/articles/ai-google-ads-management/</guid>
       <pubDate>Sun, 08 Nov 2026 17:07:29 GMT</pubDate>
       <description>Across 30 audited paid search accounts an average of 15% of spend went to search terms the business never wanted. One control panel across every ad channel, with the checks built in, and the system stays yours.</description>
@@ -3200,7 +3200,7 @@ skills/
     </item>
     <item>
       <title>AI Image Composer Built in 1 Day: React 19 + Gemini Multimodal</title>
-      <link>https://azhyshchev.de/articles/ai-image-composer/</link>
+      <link>https://azhyshchev.de/articles/ai-image-composer/?utm_source=dailydev&amp;utm_medium=rss&amp;utm_campaign=syndication&amp;utm_content=ai-image-composer#read</link>
       <guid isPermaLink="true">https://azhyshchev.de/articles/ai-image-composer/</guid>
       <pubDate>Sun, 08 Nov 2026 17:07:29 GMT</pubDate>
       <description>How I built an AI Image Composer in 1 day: React 19 + Gemini multimodal replaces hours of manual AI prompting for a creative studio. Identity replacement in 30 seconds, 85% team adoption, mobile-first production deployment.</description>
@@ -3385,7 +3385,7 @@ skills/
     </item>
     <item>
       <title>AI Music SaaS in Two Weeks: Building hitdlaciebie.pl with Zero Domain Expertise</title>
-      <link>https://azhyshchev.de/articles/ai-music-saas/</link>
+      <link>https://azhyshchev.de/articles/ai-music-saas/?utm_source=dailydev&amp;utm_medium=rss&amp;utm_campaign=syndication&amp;utm_content=ai-music-saas#read</link>
       <guid isPermaLink="true">https://azhyshchev.de/articles/ai-music-saas/</guid>
       <pubDate>Sun, 08 Nov 2026 17:07:29 GMT</pubDate>
       <description>How I built an AI music SaaS for a Polish client in two weeks with zero domain expertise. Two-model lyrics pipeline, four music APIs tested, Suno V5.5 shipped. Real problems: SSRF, webhooks, duplicates.</description>
@@ -3598,7 +3598,7 @@ skills/
     </item>
     <item>
       <title>Claude Code Skills Don't Activate Themselves: The Trigger Table Fix</title>
-      <link>https://azhyshchev.de/articles/agent-skill-trigger/</link>
+      <link>https://azhyshchev.de/articles/agent-skill-trigger/?utm_source=dailydev&amp;utm_medium=rss&amp;utm_campaign=syndication&amp;utm_content=agent-skill-trigger#read</link>
       <guid isPermaLink="true">https://azhyshchev.de/articles/agent-skill-trigger/</guid>
       <pubDate>Sun, 08 Nov 2026 17:07:29 GMT</pubDate>
       <description>Claude Code skills only work if the agent opens them. Here is the trigger table pattern that maps real user phrases to skill files in CLAUDE.md, AGENTS.md, or .cursorrules.</description>
