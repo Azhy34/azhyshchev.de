@@ -1,35 +1,32 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <script src="/js/cookie-consent.js" defer></script>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <meta name="description" content="Google PageSpeed Insights: How to fix 'Avoid chaining critical requests' in Lighthouse, optimize mobile Core Web Vitals to 99/100, and stop losing paid Google Ads clicks to slow mobile bounces.">
-  <meta name="keywords" content="pagespeed insights, pagespeed, google pagespeed, website speed test, core web vitals, critical request chains lighthouse fix, avoid chaining critical requests, mobile lcp optimization, b2b landing page speed, google ads bounce rate">
-  <meta name="author" content="Mikhail Azhyshchev">
-  <link rel="canonical" href="https://azhyshchev.de/articles/pagespeed-insights-critical-request-chains-core-web-vitals/">
-  <link rel="alternate" hreflang="en" href="https://azhyshchev.de/articles/pagespeed-insights-critical-request-chains-core-web-vitals/" />
-  <link rel="alternate" hreflang="de" href="https://azhyshchev.de/de/artikel/pagespeed-insights-kritische-anforderungsketten-core-web-vitals/" />
-  <link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/articles/pagespeed-insights-critical-request-chains-core-web-vitals/" />
-
-  <meta property="og:site_name" content="Mikhail Azhyshchev">
-  <meta property="og:title" content="Google PageSpeed Insights: How to Fix Critical Request Chains & Core Web Vitals">
-  <meta property="og:description" content="Step-by-step engineering breakdown: eliminate critical request chains, cut mobile LCP under 1.5s, reach 99/100 on Google Lighthouse, and protect your paid search budget.">
-  <meta property="og:url" content="https://azhyshchev.de/articles/pagespeed-insights-critical-request-chains-core-web-vitals/">
-  <meta property="og:type" content="article">
-  <meta property="og:image" content="https://raw.githubusercontent.com/Azhy34/azhyshchev.de/main/articles/pagespeed-insights-critical-request-chains-core-web-vitals/og.png">
-  <meta name="twitter:image" content="https://raw.githubusercontent.com/Azhy34/azhyshchev.de/main/articles/pagespeed-insights-critical-request-chains-core-web-vitals/og.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta property="og:locale" content="en_US">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Google PageSpeed Insights: How to Fix Critical Request Chains & Core Web Vitals">
-  <meta name="twitter:description" content="Step-by-step engineering breakdown: eliminate critical request chains, cut mobile LCP under 1.5s, reach 99/100 on Google Lighthouse, and protect your paid search budget.">
-
-  <title>Google PageSpeed Insights: How to Fix Critical Request Chains &amp; Core Web Vitals | Mikhail Azhyshchev</title>
-
-  <script type="application/ld+json">
+<meta charset="utf-8"/>
+<script defer="" src="/js/cookie-consent.js"></script>
+<link href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text y=%22.9em%22 font-size=%2290%22&gt;⚡&lt;/text&gt;&lt;/svg&gt;" rel="icon"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Google PageSpeed Insights: How eliminating critical request chains and inlining critical CSS cuts mobile LCP to 1.4s, boosting Google Ads quality scores." name="description"/>
+<meta content="pagespeed insights, pagespeed, google pagespeed, website speed test, core web vitals, critical request chains lighthouse fix, avoid chaining critical requests, mobile lcp optimization, b2b landing page speed, google ads bounce rate" name="keywords"/>
+<meta content="Mikhail Azhyshchev" name="author"/>
+<link href="https://azhyshchev.de/articles/pagespeed-insights-critical-request-chains-core-web-vitals/" rel="canonical"/>
+<link href="https://azhyshchev.de/articles/pagespeed-insights-critical-request-chains-core-web-vitals/" hreflang="en" rel="alternate">
+<link href="https://azhyshchev.de/de/artikel/pagespeed-insights-kritische-anforderungsketten-core-web-vitals/" hreflang="de" rel="alternate">
+<link href="https://azhyshchev.de/articles/pagespeed-insights-critical-request-chains-core-web-vitals/" hreflang="x-default" rel="alternate"/>
+<meta content="Mikhail Azhyshchev" property="og:site_name"/>
+<meta content="Google PageSpeed Insights: How to Fix Critical Request Chains &amp; Core Web Vitals" property="og:title"/>
+<meta content="Step-by-step engineering breakdown: eliminate critical request chains, cut mobile LCP under 1.5s, reach 99/100 on Google Lighthouse, and protect your paid search budget." property="og:description"/>
+<meta content="https://azhyshchev.de/articles/pagespeed-insights-critical-request-chains-core-web-vitals/" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="https://raw.githubusercontent.com/Azhy34/azhyshchev.de/main/articles/pagespeed-insights-critical-request-chains-core-web-vitals/og.png" property="og:image"/>
+<meta content="https://raw.githubusercontent.com/Azhy34/azhyshchev.de/main/articles/pagespeed-insights-critical-request-chains-core-web-vitals/og.png" name="twitter:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Google PageSpeed Insights: How to Fix Critical Request Chains &amp; Core Web Vitals" name="twitter:title"/>
+<meta content="Step-by-step engineering breakdown: eliminate critical request chains, cut mobile LCP under 1.5s, reach 99/100 on Google Lighthouse, and protect your paid search budget." name="twitter:description"/>
+<title>Google PageSpeed Insights: How to Fix Critical Request Chains &amp; Core Web Vitals | Mikhail Azhyshchev</title>
+<script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
@@ -123,8 +120,8 @@
     ]
   }
   </script>
-  <link rel="preload" href="/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <style>
+<link as="font" crossorigin="" href="/fonts/jetbrains-mono-latin.woff2" rel="preload" type="font/woff2"/>
+<style>
     @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400 800;font-display:swap;src:url('/fonts/jetbrains-mono-latin.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
     :root { --sky: #61b5e8; --mint: #b9ddb7; --cream: #f8f0dc; --yellow: #f5c84b; --pink: #efb2d5; --blue: #d8ebff; --peach: #f7d4b1; --coral: #ff9a77; --rose: #ecb0c4; --black: #111111; --white: #ffffff; --accent: var(--yellow); }
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -197,271 +194,253 @@
       .metrics-row { grid-template-columns: 1fr 1fr; }
     }
   </style>
-  <style>/* mobile.css */a.brand{text-decoration:none;color:inherit}.brand{font-size:clamp(0.95rem,2.5vw,1.6rem);letter-spacing:-0.05em}.nav-toggle{display:none}.mobile-bottom-nav{display:none}@media (max-width:820px){html,body{overflow-x:hidden !important;max-width:100vw !important}body{padding:10px 8px 72px}.shell{grid-template-columns:1fr;box-shadow:6px 6px 0 var(--black);min-height:unset !important;min-width:0 !important;max-width:100% !important}.sidebar{border-right:none;border-bottom:3px solid var(--black);padding:10px 14px;flex-direction:row;align-items:center;justify-content:space-between;gap:0;flex-wrap:nowrap}.brand{margin-bottom:0}.nav-toggle,.nav,.sidebar-bottom{display:none !important}.main{padding:10px;min-width:0 !important;max-width:100% !important}.panel{padding:12px;gap:16px;min-width:0 !important;max-width:100% !important}.mobile-bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:999;background:var(--white);border-top:3px solid var(--black);box-shadow:0 -4px 0 var(--black)}.mbn-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:8px 4px;color:var(--black);text-decoration:none;font-family:'JetBrains Mono',monospace;font-weight:700;border-right:2px solid var(--black);min-height:56px}.mbn-item:last-child{border-right:none}.mbn-item.active{background:var(--black);color:var(--white)}.mbn-item.active .mbn-icon{background:var(--yellow);color:var(--black)}.mbn-icon{width:26px;height:26px;display:grid;place-items:center;border:2px solid var(--black);background:var(--white);font-size:0.65rem;font-weight:800}.mbn-label{font-size:0.58rem;font-weight:700;letter-spacing:-0.02em}}</style>
-</head>
+<style>/* mobile.css */a.brand{text-decoration:none;color:inherit}.brand{font-size:clamp(0.95rem,2.5vw,1.6rem);letter-spacing:-0.05em}.nav-toggle{display:none}.mobile-bottom-nav{display:none}@media (max-width:820px){html,body{overflow-x:hidden !important;max-width:100vw !important}body{padding:10px 8px 72px}.shell{grid-template-columns:1fr;box-shadow:6px 6px 0 var(--black);min-height:unset !important;min-width:0 !important;max-width:100% !important}.sidebar{border-right:none;border-bottom:3px solid var(--black);padding:10px 14px;flex-direction:row;align-items:center;justify-content:space-between;gap:0;flex-wrap:nowrap}.brand{margin-bottom:0}.nav-toggle,.nav,.sidebar-bottom{display:none !important}.main{padding:10px;min-width:0 !important;max-width:100% !important}.panel{padding:12px;gap:16px;min-width:0 !important;max-width:100% !important}.mobile-bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:999;background:var(--white);border-top:3px solid var(--black);box-shadow:0 -4px 0 var(--black)}.mbn-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:8px 4px;color:var(--black);text-decoration:none;font-family:'JetBrains Mono',monospace;font-weight:700;border-right:2px solid var(--black);min-height:56px}.mbn-item:last-child{border-right:none}.mbn-item.active{background:var(--black);color:var(--white)}.mbn-item.active .mbn-icon{background:var(--yellow);color:var(--black)}.mbn-icon{width:26px;height:26px;display:grid;place-items:center;border:2px solid var(--black);background:var(--white);font-size:0.65rem;font-weight:800}.mbn-label{font-size:0.58rem;font-weight:700;letter-spacing:-0.02em}}</style>
+</link></link></head>
 <body>
-  <div class="shell">
-    <!-- SIDEBAR -->
-    <aside class="sidebar" data-nosnippet>
-      <a class="brand" href="/">
-        <div class="brand-badge">&lt;/&gt;</div>
-        <span>AZHYSHCHEV</span>
-      </a>
-      <nav class="nav">
-        <a class="nav-item" href="/">
-          <span class="icon-box">H</span>
-          <span>Home</span>
-        </a>
-        <a class="nav-item" href="/ai-checker">
-          <span class="icon-box">🤖</span>
-          <span>AI Checker</span>
-        </a>
-        <a class="nav-item" href="/experience">
-          <span class="icon-box">E</span>
-          <span>Experience</span>
-        </a>
-        <a class="nav-item" href="/projects">
-          <span class="icon-box">P</span>
-          <span>Projects</span>
-        </a>
-        <a class="nav-item active" href="/articles">
-          <span class="icon-box">A</span>
-          <span>Articles</span>
-        </a>
-        <a class="nav-item" href="/contact">
-          <span class="icon-box">C</span>
-          <span>Contact</span>
-        </a>
-      </nav>
-      <div class="sidebar-bottom">
-        <a class="nav-item" href="/CV.pdf" download>
-          <span class="icon-box">CV</span>
-          <span>Resume</span>
-        </a>
-        <a class="nav-item" href="mailto:azhyshchev@gmail.com">
-          <span class="icon-box">@</span>
-          <span>Email</span>
-        </a>
-        <div class="socials">
-          <a class="social-link" href="https://www.linkedin.com/in/azhyshchev/" target="_blank" rel="noreferrer">in</a>
-          <a class="social-link" href="https://github.com/Azhy34" target="_blank" rel="noreferrer">gh</a>
-        </div>
-      </div>
-    </aside>
-
-    <!-- MAIN -->
-    <main class="main">
-      <div class="panel">
-        <nav class="breadcrumb" aria-label="Breadcrumb">
-          <a href="/">Home</a>
-          <span>/</span>
-          <a href="/articles">Articles</a>
-          <span>/</span>
-          <span>PageSpeed Insights &amp; Critical Request Chains</span>
-        </nav>
-
-        <header class="article-hero">
-          <div class="article-type">Case Study · Performance Engineering &amp; Google Ads ROAS</div>
-          <h1 class="article-title">Google PageSpeed Insights: How to Fix Critical Request Chains &amp; Core Web Vitals</h1>
-          <p class="article-lead">
-            <strong>Critical request chains delay mobile rendering by 388ms to 1,200ms on over 70% of B2B websites.</strong> When running paid search campaigns paying $15 to $45+ CPC, every second of mobile delay drives a 32% bounce surge. By eliminating external Google Fonts chains and inlining above-the-fold CSS, we brought mobile Lighthouse performance to 99/100 and cut LCP to 1.4s.
+<div class="shell">
+<!-- SIDEBAR -->
+<aside class="sidebar" data-nosnippet="">
+<a class="brand" href="/">
+<div class="brand-badge">&lt;/&gt;</div>
+<span>AZHYSHCHEV</span>
+</a>
+<nav class="nav">
+<a class="nav-item" href="/">
+<span class="icon-box">H</span>
+<span>Home</span>
+</a>
+<a class="nav-item" href="/ai-checker">
+<span class="icon-box">🤖</span>
+<span>AI Checker</span>
+</a>
+<a class="nav-item" href="/experience">
+<span class="icon-box">E</span>
+<span>Experience</span>
+</a>
+<a class="nav-item" href="/projects">
+<span class="icon-box">P</span>
+<span>Projects</span>
+</a>
+<a class="nav-item active" href="/articles">
+<span class="icon-box">A</span>
+<span>Articles</span>
+</a>
+<a class="nav-item" href="/contact">
+<span class="icon-box">C</span>
+<span>Contact</span>
+</a>
+</nav>
+<div class="sidebar-bottom">
+<a class="nav-item" download="" href="/CV.pdf">
+<span class="icon-box">CV</span>
+<span>Resume</span>
+</a>
+<a class="nav-item" href="mailto:azhyshchev@gmail.com">
+<span class="icon-box">@</span>
+<span>Email</span>
+</a>
+<div class="socials">
+<a class="social-link" href="https://www.linkedin.com/in/azhyshchev/" rel="noreferrer" target="_blank">in</a>
+<a class="social-link" href="https://github.com/Azhy34" rel="noreferrer" target="_blank">gh</a>
+</div>
+</div>
+</aside>
+<!-- MAIN -->
+<main class="main">
+<div class="panel">
+<nav aria-label="Breadcrumb" class="breadcrumb">
+<a href="/">Home</a>
+<span>/</span>
+<a href="/articles">Articles</a>
+<span>/</span>
+<span>PageSpeed Insights &amp; Critical Request Chains</span>
+</nav>
+<header class="article-hero">
+<div class="article-type">Case Study · Performance Engineering &amp; Google Ads ROAS</div>
+<h1 class="article-title">Google PageSpeed Insights: How to Fix Critical Request Chains &amp; Core Web Vitals</h1>
+<p class="article-lead">
+<strong>Critical request chains delay mobile rendering by 388ms to 1,200ms on over 70% of B2B websites.</strong> When running paid search campaigns paying $15 to $45+ CPC, every second of mobile delay drives a 32% bounce surge. By eliminating external Google Fonts chains and inlining above-the-fold CSS, we brought mobile Lighthouse performance to 99/100 and cut LCP to 1.4s.
           </p>
-
-          <div class="metrics-row">
-            <div class="metric-box">
-              <strong>99 / 100</strong>
-              <span>Mobile Lighthouse Score</span>
-            </div>
-            <div class="metric-box">
-              <strong>1.4s LCP</strong>
-              <span>Largest Contentful Paint</span>
-            </div>
-            <div class="metric-box">
-              <strong>0 Chains</strong>
-              <span>Zero Render-Blocking Trees</span>
-            </div>
-            <div class="metric-box">
-              <strong>0ms TBT</strong>
-              <span>Total Blocking Time</span>
-            </div>
-          </div>
-        </header>
-
-        <div class="article-body">
-          <!-- SECTION 1: THE PAID AD TRAP -->
-          <article class="neo-card">
-            <div class="section-label">1. The Paid Ad Problem</div>
-            <h2 class="section-title">Why Mobile Latency Silently Burns B2B Google Ads Budgets</h2>
-            <div class="prose">
-              <p>
+<div class="metrics-row">
+<div class="metric-box">
+<strong>99 / 100</strong>
+<span>Mobile Lighthouse Score</span>
+</div>
+<div class="metric-box">
+<strong>1.4s LCP</strong>
+<span>Largest Contentful Paint</span>
+</div>
+<div class="metric-box">
+<strong>0 Chains</strong>
+<span>Zero Render-Blocking Trees</span>
+</div>
+<div class="metric-box">
+<strong>0ms TBT</strong>
+<span>Total Blocking Time</span>
+</div>
+</div>
+</header>
+<div class="article-body">
+<!-- SECTION 1: THE PAID AD TRAP -->
+<article class="neo-card">
+<div class="section-label">1. The Paid Ad Problem</div>
+<h2 class="section-title">Why Mobile Latency Silently Burns B2B Google Ads Budgets</h2>
+<div class="prose">
+<p>
                 In high-intent B2B search campaigns, ad clicks are expensive. Keywords like "enterprise CRM migration", "AI automation consulting", or "invoice processing software" routinely command between €18 and €45 per click in Germany, the UK, and the US.
               </p>
-              <p>
+<p>
                 Google Ads charges your credit card the millisecond the redirect occurs. If the visitor's mobile browser is connected over an average 4G or throttled cellular connection, the page has exactly <strong>2.5 seconds</strong> to render meaningful content before bounce probability skyrockets. According to Google research, page load times increasing from 1s to 3s elevate bounce rates by 32%; at 5s, bounce likelihood jumps by 90%.
               </p>
-              <p>
+<p>
                 When founders ask why their Google Ads landing page converts at 0.8% instead of 3.5%, the diagnosis is rarely the copywriting. In 8 out of 10 audits, the culprit is <strong>render-blocking latency</strong> caused by chained asset downloads.
               </p>
-            </div>
-          </article>
-
-          <!-- SECTION 2: CRITICAL REQUEST CHAINS EXPLAINED -->
-          <article class="neo-card">
-            <div class="section-label">2. The Technical Bottleneck</div>
-            <h2 class="section-title">Anatomy of "Avoid Chaining Critical Requests" in Lighthouse</h2>
-            <div class="prose">
-              <p>
+</div>
+</article>
+<!-- SECTION 2: CRITICAL REQUEST CHAINS EXPLAINED -->
+<article class="neo-card">
+<div class="section-label">2. The Technical Bottleneck</div>
+<h2 class="section-title">Anatomy of "Avoid Chaining Critical Requests" in Lighthouse</h2>
+<div class="prose">
+<p>
                 When you run your URL through <a href="/ai-checker/?tab=speed">our free Mobile Speed &amp; UX Checker</a> or Google PageSpeed Insights, the most frequent diagnostic warning is:
               </p>
-              <div class="code-block">
+<div class="code-block">
                 Avoid chaining critical requests — 2 chains found (Max latency: 420 ms)
               </div>
-              <p>
+<p>
                 A critical request chain occurs when the browser cannot render text or images until resource A loads, which then discovers resource B, which in turn requests resource C. The most widespread offender is the default Google Fonts snippet:
               </p>
-
-              <div class="waterfall-compare">
-                <div class="waterfall-box bad">
-                  <div class="waterfall-title">
-                    <span>❌ The Standard 2-Hop Chain</span>
-                    <span>~580 ms latency</span>
-                  </div>
-                  <div class="waterfall-step"><strong>Hop 1:</strong> Browser requests HTML from origin (e.g. azhyshchev.de)</div>
-                  <div class="waterfall-step"><strong>Hop 2:</strong> HTML requests CSS from <code>fonts.googleapis.com</code> (DNS + TLS handshake + 80ms TTFB)</div>
-                  <div class="waterfall-step"><strong>Hop 3:</strong> CSS is parsed, discovering font binary at <code>fonts.gstatic.com</code> (Second DNS + TLS handshake + 250ms WOFF2 download)</div>
-                  <div class="waterfall-step"><strong>Result:</strong> Browser renders nothing (blank screen) during all 3 sequential network round-trips.</div>
-                </div>
-
-                <div class="waterfall-box good">
-                  <div class="waterfall-title">
-                    <span>✅ The 1-Hop Self-Hosted Fix</span>
-                    <span>0 ms blocking latency</span>
-                  </div>
-                  <div class="waterfall-step"><strong>Hop 1:</strong> Browser requests HTML from origin with inlined critical CSS</div>
-                  <div class="waterfall-step"><strong>Parallel:</strong> <code>&lt;link rel="preload" href="/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin&gt;</code> fetches font directly from origin over HTTP/2</div>
-                  <div class="waterfall-step"><strong>Zero Handshakes:</strong> Reuses existing TLS connection with origin host</div>
-                  <div class="waterfall-step"><strong>Result:</strong> First Contentful Paint renders instantly at 0.8s. Mobile Lighthouse score reaches 99–100.</div>
-                </div>
-              </div>
-
-              <h3>Step-by-Step Engineering Fix</h3>
-              <p>
+<div class="waterfall-compare">
+<div class="waterfall-box bad">
+<div class="waterfall-title">
+<span>❌ The Standard 2-Hop Chain</span>
+<span>~580 ms latency</span>
+</div>
+<div class="waterfall-step"><strong>Hop 1:</strong> Browser requests HTML from origin (e.g. azhyshchev.de)</div>
+<div class="waterfall-step"><strong>Hop 2:</strong> HTML requests CSS from <code>fonts.googleapis.com</code> (DNS + TLS handshake + 80ms TTFB)</div>
+<div class="waterfall-step"><strong>Hop 3:</strong> CSS is parsed, discovering font binary at <code>fonts.gstatic.com</code> (Second DNS + TLS handshake + 250ms WOFF2 download)</div>
+<div class="waterfall-step"><strong>Result:</strong> Browser renders nothing (blank screen) during all 3 sequential network round-trips.</div>
+</div>
+<div class="waterfall-box good">
+<div class="waterfall-title">
+<span>✅ The 1-Hop Self-Hosted Fix</span>
+<span>0 ms blocking latency</span>
+</div>
+<div class="waterfall-step"><strong>Hop 1:</strong> Browser requests HTML from origin with inlined critical CSS</div>
+<div class="waterfall-step"><strong>Parallel:</strong> <code>&lt;link rel="preload" href="/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin&gt;</code> fetches font directly from origin over HTTP/2</div>
+<div class="waterfall-step"><strong>Zero Handshakes:</strong> Reuses existing TLS connection with origin host</div>
+<div class="waterfall-step"><strong>Result:</strong> First Contentful Paint renders instantly at 0.8s. Mobile Lighthouse score reaches 99–100.</div>
+</div>
+</div>
+<h3>Step-by-Step Engineering Fix</h3>
+<p>
                 To eliminate critical request chains completely across your web stack:
               </p>
-              <ol>
-                <li><strong>Self-Host WOFF2 Assets:</strong> Download the exact font weights your design requires in modern WOFF2 format. Store them in <code>/fonts/</code> on your web server or CDN origin.</li>
-                <li><strong>Preload Above-the-Fold Fonts:</strong> In your <code>&lt;head&gt;</code>, issue a direct preload hint with <code>crossorigin</code> so the browser pipeline downloads the font before encountering stylesheet references:
+<ol>
+<li><strong>Self-Host WOFF2 Assets:</strong> Download the exact font weights your design requires in modern WOFF2 format. Store them in <code>/fonts/</code> on your web server or CDN origin.</li>
+<li><strong>Preload Above-the-Fold Fonts:</strong> In your <code>&lt;head&gt;</code>, issue a direct preload hint with <code>crossorigin</code> so the browser pipeline downloads the font before encountering stylesheet references:
                   <div class="code-block">&lt;link rel="preload" href="/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin&gt;</div>
-                </li>
-                <li><strong>Inline Critical Above-the-Fold CSS:</strong> Move layout, reset, and hero typography directly into a <code>&lt;style&gt;</code> tag in the HTML head. Avoid external render-blocking stylesheets for the initial viewport.</li>
-                <li><strong>Defer Non-Critical Scripts:</strong> Add <code>defer</code> and <code>fetchpriority="low"</code> to analytics, chat widgets, and social embeds to keep the main JavaScript thread completely unblocked (0ms Total Blocking Time).</li>
-              </ol>
-            </div>
-          </article>
-
-          <!-- SECTION 3: AI SEARCH IMPACT -->
-          <article class="neo-card">
-            <div class="section-label">3. The 2026 Shift</div>
-            <h2 class="section-title">Why Fast Speed is Mandatory for Autonomous AI Agent Crawlers</h2>
-            <div class="prose">
-              <p>
+</li>
+<li><strong>Inline Critical Above-the-Fold CSS:</strong> Move layout, reset, and hero typography directly into a <code>&lt;style&gt;</code> tag in the HTML head. Avoid external render-blocking stylesheets for the initial viewport.</li>
+<li><strong>Defer Non-Critical Scripts:</strong> Add <code>defer</code> and <code>fetchpriority="low"</code> to analytics, chat widgets, and social embeds to keep the main JavaScript thread completely unblocked (0ms Total Blocking Time).</li>
+</ol>
+</div>
+</article>
+<!-- SECTION 3: AI SEARCH IMPACT -->
+<article class="neo-card">
+<div class="section-label">3. The 2026 Shift</div>
+<h2 class="section-title">Why Fast Speed is Mandatory for Autonomous AI Agent Crawlers</h2>
+<div class="prose">
+<p>
                 Speed is no longer merely a user experience or Google organic ranking factor. In 2026, autonomous AI search systems (PerplexityBot, ChatGPT Search, Claude Web Fetch, and WebMCP agents) crawl websites under tight operational budgets.
               </p>
-              <p>
+<p>
                 Unlike desktop users who may wait 4 seconds, an AI agent runs synchronous HTTP requests with aggressive timeouts (frequently capped at <strong>2.5 to 4.0 seconds</strong> total pipeline latency). If your server takes 800ms to respond (TTFB) and chains multiple external stylesheets, the AI crawler aborts the connection, classifies the domain as unresponsive, and answers the user's commercial prompt using your faster competitor's documentation.
               </p>
-              <p>
+<p>
                 Sites scoring 95+ on Google PageSpeed with sub-1.5s Largest Contentful Paint consistently achieve higher indexing frequency across generative answer engines.
               </p>
-            </div>
-          </article>
-
-          <!-- INTERACTIVE CHECKER CTA STRIP -->
-          <div class="cta-strip">
-            <div>
-              <strong>Audit Your Website's Speed &amp; AI Readiness Now</strong>
-              <p>Run a live 9-point AI accessibility audit and Google Lighthouse Mobile Core Web Vitals check on your URL in 10 seconds.</p>
-            </div>
-            <a href="/ai-checker/?tab=speed" class="cta-btn yellow">Run Free Audit →</a>
-          </div>
-
-          <!-- FAQ SECTION -->
-          <article class="neo-card">
-            <div class="section-label">4. FAQ</div>
-            <h2 class="section-title">Frequently Asked Questions</h2>
-            <div class="faq">
-              <div class="faq-item open">
-                <div class="faq-q">How do I fix "Avoid chaining critical requests" in Google PageSpeed Insights?</div>
-                <div class="faq-a">To eliminate critical request chains: 1) Self-host web fonts as local WOFF2 files and preload them with &lt;link rel="preload"&gt; instead of importing Google Fonts CSS. 2) Inline critical above-the-fold CSS directly into an HTML &lt;style&gt; tag. 3) Defer non-critical scripts with defer and fetchpriority="low".</div>
-              </div>
-
-              <div class="faq-item">
-                <div class="faq-q">Why does a slow mobile landing page waste Google Ads spend?</div>
-                <div class="faq-a">In B2B Google Ads, each mobile click costs between 15 and 45 EUR. If your mobile Largest Contentful Paint (LCP) exceeds 2.5 seconds, bounce rates increase by 32% to 90%. Potential buyers bounce before seeing your value proposition, directly burning ad spend.</div>
-              </div>
-
-              <div class="faq-item">
-                <div class="faq-q">What is the difference between FCP and LCP in Core Web Vitals?</div>
-                <div class="faq-a">First Contentful Paint (FCP) marks when the browser renders the first DOM element (text or logo, target &lt; 1.8s). Largest Contentful Paint (LCP) marks when the primary hero block or main text finishes rendering (target &lt; 2.5s). LCP is the primary user-perceived speed metric.</div>
-              </div>
-
-              <div class="faq-item">
-                <div class="faq-q">How does website speed affect autonomous AI search agents?</div>
-                <div class="faq-a">AI search agents like PerplexityBot, ChatGPT Search, and WebMCP operate with strict network timeouts between 2.5 and 4.0 seconds. If your server is slow or blocks rendering behind deep dependency chains, the crawler times out and your site is omitted from AI answers.</div>
-              </div>
-
-              <div class="faq-item">
-                <div class="faq-q">How can I check my website's critical request chains right now?</div>
-                <div class="faq-a">You can test your website instantly using the free Mobile UX &amp; Speed tool on azhyshchev.de/ai-checker/?tab=speed, which queries the official Google Lighthouse API and visualizes your exact dependency tree.</div>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </main>
-  </div>
-
-  <!-- MOBILE BOTTOM NAV -->
-  <nav class="mobile-bottom-nav" id="mobileBottomNav" data-nosnippet>
-    <a class="mbn-item" href="/">
-      <span class="mbn-icon">&lt;/&gt;</span>
-      <span class="mbn-label">Home</span>
-    </a>
-    <a class="mbn-item" href="/ai-checker">
-      <span class="mbn-icon">🤖</span>
-      <span class="mbn-label">AI Checker</span>
-    </a>
-    <a class="mbn-item" href="/experience">
-      <span class="mbn-icon">E</span>
-      <span class="mbn-label">Experience</span>
-    </a>
-    <a class="mbn-item" href="/projects">
-      <span class="mbn-icon">P</span>
-      <span class="mbn-label">Projects</span>
-    </a>
-    <a class="mbn-item active" href="/articles">
-      <span class="mbn-icon">A</span>
-      <span class="mbn-label">Articles</span>
-    </a>
-    <a class="mbn-item" href="/contact">
-      <span class="mbn-icon">C</span>
-      <span class="mbn-label">Contact</span>
-    </a>
-  </nav>
-
-  <footer data-nosnippet style="padding: 18px 12px 92px; text-align: center; font-size: 0.92rem; line-height: 1.8;">
-    <a href="/impressum">Impressum</a>
-    <span style="padding: 0 10px;">·</span>
-    <a href="/datenschutz">Datenschutzerklärung</a>
-    <span style="padding: 0 10px;">·</span>
-    <a href="/agb">AGB</a>
-    <span style="padding: 0 10px;">·</span>
-    <a href="/datenschutz#cookie-settings">Cookie-Einstellungen</a>
-  </footer>
-
-  <script src="/js/nav.js" defer fetchpriority="low"></script>
-  <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" defer></script>
-  <script>
+</div>
+</article>
+<!-- INTERACTIVE CHECKER CTA STRIP -->
+<div class="cta-strip">
+<div>
+<strong>Audit Your Website's Speed &amp; AI Readiness Now</strong>
+<p>Run a live 9-point AI accessibility audit and Google Lighthouse Mobile Core Web Vitals check on your URL in 10 seconds.</p>
+</div>
+<a class="cta-btn yellow" href="/ai-checker/?tab=speed">Run Free Audit →</a>
+</div>
+<!-- FAQ SECTION -->
+<article class="neo-card">
+<div class="section-label">4. FAQ</div>
+<h2 class="section-title">Frequently Asked Questions</h2>
+<div class="faq">
+<div class="faq-item open">
+<div class="faq-q">How do I fix "Avoid chaining critical requests" in Google PageSpeed Insights?</div>
+<div class="faq-a">To eliminate critical request chains: 1) Self-host web fonts as local WOFF2 files and preload them with &lt;link rel="preload"&gt; instead of importing Google Fonts CSS. 2) Inline critical above-the-fold CSS directly into an HTML &lt;style&gt; tag. 3) Defer non-critical scripts with defer and fetchpriority="low".</div>
+</div>
+<div class="faq-item">
+<div class="faq-q">Why does a slow mobile landing page waste Google Ads spend?</div>
+<div class="faq-a">In B2B Google Ads, each mobile click costs between 15 and 45 EUR. If your mobile Largest Contentful Paint (LCP) exceeds 2.5 seconds, bounce rates increase by 32% to 90%. Potential buyers bounce before seeing your value proposition, directly burning ad spend.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q">What is the difference between FCP and LCP in Core Web Vitals?</div>
+<div class="faq-a">First Contentful Paint (FCP) marks when the browser renders the first DOM element (text or logo, target &lt; 1.8s). Largest Contentful Paint (LCP) marks when the primary hero block or main text finishes rendering (target &lt; 2.5s). LCP is the primary user-perceived speed metric.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q">How does website speed affect autonomous AI search agents?</div>
+<div class="faq-a">AI search agents like PerplexityBot, ChatGPT Search, and WebMCP operate with strict network timeouts between 2.5 and 4.0 seconds. If your server is slow or blocks rendering behind deep dependency chains, the crawler times out and your site is omitted from AI answers.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q">How can I check my website's critical request chains right now?</div>
+<div class="faq-a">You can test your website instantly using the free Mobile UX &amp; Speed tool on azhyshchev.de/ai-checker/?tab=speed, which queries the official Google Lighthouse API and visualizes your exact dependency tree.</div>
+</div>
+</div>
+</article>
+</div>
+</div>
+</main>
+</div>
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-bottom-nav" data-nosnippet="" id="mobileBottomNav">
+<a class="mbn-item" href="/">
+<span class="mbn-icon">&lt;/&gt;</span>
+<span class="mbn-label">Home</span>
+</a>
+<a class="mbn-item" href="/ai-checker">
+<span class="mbn-icon">🤖</span>
+<span class="mbn-label">AI Checker</span>
+</a>
+<a class="mbn-item" href="/experience">
+<span class="mbn-icon">E</span>
+<span class="mbn-label">Experience</span>
+</a>
+<a class="mbn-item" href="/projects">
+<span class="mbn-icon">P</span>
+<span class="mbn-label">Projects</span>
+</a>
+<a class="mbn-item active" href="/articles">
+<span class="mbn-icon">A</span>
+<span class="mbn-label">Articles</span>
+</a>
+<a class="mbn-item" href="/contact">
+<span class="mbn-icon">C</span>
+<span class="mbn-label">Contact</span>
+</a>
+</nav>
+<footer data-nosnippet="" style="padding: 18px 12px 92px; text-align: center; font-size: 0.92rem; line-height: 1.8;">
+<a href="/impressum">Impressum</a>
+<span style="padding: 0 10px;">·</span>
+<a href="/datenschutz">Datenschutzerklärung</a>
+<span style="padding: 0 10px;">·</span>
+<a href="/agb">AGB</a>
+<span style="padding: 0 10px;">·</span>
+<a href="/datenschutz#cookie-settings">Cookie-Einstellungen</a>
+</footer>
+<script defer="" fetchpriority="low" src="/js/nav.js"></script>
+<script data-token="3530a5f865dcb0cc6489f5999cb0bfcb" defer="" src="/js/chat-widget.js"></script>
+<script>
     document.querySelectorAll('.faq-q').forEach(function(q) {
       q.addEventListener('click', function() {
         var item = this.parentElement;
