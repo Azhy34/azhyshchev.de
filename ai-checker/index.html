@@ -87,97 +87,226 @@
         <!-- MAIN -->
         <main class="main">
             <div class="panel">
-                <header class="hero-section">
-                    <h1 class="hero-title">Free AI Readiness Checker</h1>
-                    <p class="hero-subtitle">
-                        Is your website visible to ChatGPT, Claude and Perplexity? Free 9-point audit for LLM visibility, Schema.org entity graphs, AI crawler access, generative engine optimization (GEO) and answer engine optimization (AEO). Check your llms.txt, robots.txt, SSR and sitemap — instantly.
-                    </p>
 
-                    <div class="checker-input-group">
-                        <input type="url" id="urlInput" placeholder="https://yourwebsite.com" class="checker-input">
-                        <button id="analyzeBtn" class="checker-btn">Analyze</button>
+                <!-- CHECKER TABS -->
+                <div class="checker-tabs-wrapper">
+                    <div class="checker-tabs" role="tablist">
+                        <button class="checker-tab-btn active" id="tabBtnAI" role="tab" aria-selected="true" aria-controls="tabContentAI">
+                            <span>🤖</span>
+                            <span>AI Readiness Audit</span>
+                        </button>
+                        <button class="checker-tab-btn tab-speed" id="tabBtnSpeed" role="tab" aria-selected="false" aria-controls="tabContentSpeed">
+                            <span>⚡</span>
+                            <span>Mobile UX &amp; Speed</span>
+                        </button>
                     </div>
-                    <div id="errorMessage" class="error-message hidden"></div>
-                </header>
+                </div>
 
-                <section id="loadingSection" class="loading-section hidden">
-                    <div class="spinner"></div>
-                    <p style="font-weight: 800; text-align: center;">Auditing 9-point readiness... (5-10s)</p>
-                </section>
+                <!-- TAB 1: AI READINESS -->
+                <div id="tabContentAI" class="tab-panel">
+                    <header class="hero-section">
+                        <h1 class="hero-title">Free AI Readiness Checker</h1>
+                        <p class="hero-subtitle">
+                            Is your website visible to ChatGPT, Claude and Perplexity? Free 9-point audit for LLM visibility, Schema.org entity graphs, AI crawler access, generative engine optimization (GEO) and answer engine optimization (AEO). Check your llms.txt, robots.txt, SSR and sitemap — instantly.
+                        </p>
 
-                <section id="resultsSection" class="results-section hidden">
-                    <div class="results-header">
-                        <div class="url-display">
-                            <div style="font-size: 0.8rem; font-weight: 800; opacity: 0.6;">ANALYZING</div>
-                            <span id="targetUrl" class="url-value"></span>
+                        <div class="checker-input-group">
+                            <input type="url" id="urlInput" placeholder="https://yourwebsite.com" class="checker-input">
+                            <button id="analyzeBtn" class="checker-btn">Analyze</button>
                         </div>
-                        <div class="score-summary">
-                            <span id="scoreValue" class="score-num">--</span>
-                            <div id="verdictBadge" class="verdict-badge">--</div>
-                        </div>
-                    </div>
+                        <div id="errorMessage" class="error-message hidden"></div>
+                    </header>
 
-                    <div class="progress-container">
-                        <div id="progressBar" class="progress-bar"></div>
-                    </div>
+                    <section id="loadingSection" class="loading-section hidden">
+                        <div class="spinner"></div>
+                        <p style="font-weight: 800; text-align: center;">Auditing 9-point readiness... (5-10s)</p>
+                    </section>
 
-                    <div id="inlineCta" class="inline-cta hidden">
-                        <span class="inline-cta-text">Want a human expert to fix this?</span>
-                        <a href="https://calendly.com/azhyshchev/30min?utm_source=portfolio&utm_medium=website&utm_campaign=booking&utm_content=ai_checker_inline"
-                           target="_blank" rel="noreferrer"
-                           class="inline-cta-btn"
-                           onclick="if(window.gtag)gtag('event','book_call_click',{location:'ai_checker_inline'});">
-                            Book a free 30-min call →
-                        </a>
-                    </div>
+                    <section id="resultsSection" class="results-section hidden">
+                        <div class="results-header">
+                            <div class="url-display">
+                                <div style="font-size: 0.8rem; font-weight: 800; opacity: 0.6;">ANALYZING</div>
+                                <span id="targetUrl" class="url-value"></span>
+                            </div>
+                            <div class="score-summary">
+                                <span id="scoreValue" class="score-num">--</span>
+                                <div id="verdictBadge" class="verdict-badge">--</div>
+                            </div>
+                        </div>
 
-                    <div id="breakdownGrid" class="breakdown-grid">
-                        <!-- Cards injected here -->
-                    </div>
-                    
-                    <p style="margin-top: 40px; font-size: 0.8rem; font-weight: 700; opacity: 0.5; text-align: right;">
-                        Checked at: <span id="checkedAt"></span>
-                    </p>
+                        <div class="progress-container">
+                            <div id="progressBar" class="progress-bar"></div>
+                        </div>
 
-                    <div id="csrExplainer" class="csr-explainer hidden">
-                        <div class="csr-explainer-label">WHY YOUR SCORE IS LOW</div>
-                        <div class="csr-explainer-title">Your site is built with client-side rendering (React / Vue / Angular)</div>
-                        <div class="csr-explainer-text">
-                            AI crawlers like GPTBot, ClaudeBot and PerplexityBot do not execute JavaScript.
-                            They send one HTTP request, read the raw HTML, and move on.
-                            If your content is rendered by JavaScript in the browser, they see an empty page.
+                        <div id="inlineCta" class="inline-cta hidden">
+                            <span class="inline-cta-text">Want a human expert to fix this?</span>
+                            <a href="https://calendly.com/azhyshchev/30min?utm_source=portfolio&utm_medium=website&utm_campaign=booking&utm_content=ai_checker_inline"
+                               target="_blank" rel="noreferrer"
+                               class="inline-cta-btn"
+                               onclick="if(window.gtag)gtag('event','book_call_click',{location:'ai_checker_inline'});">
+                                Book a free 30-min call →
+                            </a>
                         </div>
-                        <ul class="csr-explainer-facts">
-                            <li>GPTBot (ChatGPT) - does not execute JS, sees empty HTML shell</li>
-                            <li>ClaudeBot (Anthropic) - does not execute JS, sees empty HTML shell</li>
-                            <li>PerplexityBot - does not execute JS, sees empty HTML shell</li>
-                            <li class="ok">Google-Extended (Gemini) - renders JS via Googlebot infrastructure</li>
-                            <li class="ok">Next.js SSR / Nuxt SSR / WordPress - content in initial HTML, fully visible</li>
-                        </ul>
-                        <div class="csr-explainer-text" style="margin-bottom:0;">
-                            Source: Vercel + MERJ analysis of 500M+ GPTBot requests - zero JavaScript execution detected.
-                            Pure CSR apps have a median 97% "ghost ratio" - almost all content invisible to AI.
-                            The fix: migrate to SSR (Next.js, Nuxt) or add server-side prerendering.
-                        </div>
-                    </div>
 
-                    <div id="ctaBlock" class="cta-block hidden">
-                        <div class="cta-label">NEED HELP FIXING THIS?</div>
-                        <h2 class="cta-title">I can fix your AI visibility issues</h2>
-                        <p class="cta-text">SSR setup, llms.txt, sitemap, AI crawler access — I audit and implement the fixes. Freelance SEO & AI optimization consultant based in Munich.</p>
-                        <div class="cta-actions">
-                            <a href="https://calendly.com/azhyshchev/30min?utm_source=portfolio&utm_medium=website&utm_campaign=booking&utm_content=ai_checker" target="_blank" rel="noreferrer" class="cta-btn-primary">Book a free 30-min call</a>
-                            <a href="/contact" class="cta-btn-secondary">Or send a message</a>
+                        <div id="breakdownGrid" class="breakdown-grid">
+                            <!-- Cards injected here -->
                         </div>
-                        <div class="cta-tags">
-                            <span>llms.txt setup</span>
-                            <span>SSR migration</span>
-                            <span>AI crawler access</span>
-                            <span>GEO optimization</span>
-                            <span>Web audit</span>
+                        
+                        <p style="margin-top: 40px; font-size: 0.8rem; font-weight: 700; opacity: 0.5; text-align: right;">
+                            Checked at: <span id="checkedAt"></span>
+                        </p>
+
+                        <div id="csrExplainer" class="csr-explainer hidden">
+                            <div class="csr-explainer-label">WHY YOUR SCORE IS LOW</div>
+                            <div class="csr-explainer-title">Your site is built with client-side rendering (React / Vue / Angular)</div>
+                            <div class="csr-explainer-text">
+                                AI crawlers like GPTBot, ClaudeBot and PerplexityBot do not execute JavaScript.
+                                They send one HTTP request, read the raw HTML, and move on.
+                                If your content is rendered by JavaScript in the browser, they see an empty page.
+                            </div>
+                            <ul class="csr-explainer-facts">
+                                <li>GPTBot (ChatGPT) - does not execute JS, sees empty HTML shell</li>
+                                <li>ClaudeBot (Anthropic) - does not execute JS, sees empty HTML shell</li>
+                                <li>PerplexityBot - does not execute JS, sees empty HTML shell</li>
+                                <li class="ok">Google-Extended (Gemini) - renders JS via Googlebot infrastructure</li>
+                                <li class="ok">Next.js SSR / Nuxt SSR / WordPress - content in initial HTML, fully visible</li>
+                            </ul>
+                            <div class="csr-explainer-text" style="margin-bottom:0;">
+                                Source: Vercel + MERJ analysis of 500M+ GPTBot requests - zero JavaScript execution detected.
+                                Pure CSR apps have a median 97% "ghost ratio" - almost all content invisible to AI.
+                                The fix: migrate to SSR (Next.js, Nuxt) or add server-side prerendering.
+                            </div>
                         </div>
-                    </div>
-                </section>
+
+                        <div id="ctaBlock" class="cta-block hidden">
+                            <div class="cta-label">NEED HELP FIXING THIS?</div>
+                            <h2 class="cta-title">I can fix your AI visibility issues</h2>
+                            <p class="cta-text">SSR setup, llms.txt, sitemap, AI crawler access — I audit and implement the fixes. Freelance SEO & AI optimization consultant based in Munich.</p>
+                            <div class="cta-actions">
+                                <a href="https://calendly.com/azhyshchev/30min?utm_source=portfolio&utm_medium=website&utm_campaign=booking&utm_content=ai_checker" target="_blank" rel="noreferrer" class="cta-btn-primary">Book a free 30-min call</a>
+                                <a href="/contact" class="cta-btn-secondary">Or send a message</a>
+                            </div>
+                            <div class="cta-tags">
+                                <span>llms.txt setup</span>
+                                <span>SSR migration</span>
+                                <span>AI crawler access</span>
+                                <span>GEO optimization</span>
+                                <span>Web audit</span>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- TAB 2: SPEED & CORE WEB VITALS -->
+                <div id="tabContentSpeed" class="tab-panel hidden">
+                    <header class="hero-section">
+                        <h1 class="hero-title">Free UX &amp; Speed Checker</h1>
+                        <p class="hero-subtitle">
+                            Does your website load fast enough for mobile users and Google Ads? Free real-time Google Lighthouse mobile audit for Largest Contentful Paint (LCP), First Contentful Paint (FCP), and critical request chains. Stop burning your paid ad budget on slow mobile bounces.
+                        </p>
+
+                        <div class="checker-input-group">
+                            <input type="url" id="speedUrlInput" placeholder="https://yourwebsite.com" class="checker-input">
+                            <button id="speedAnalyzeBtn" class="checker-btn" style="background:var(--yellow); color:var(--black);">Analyze Speed</button>
+                        </div>
+                        <div id="speedErrorMessage" class="error-message hidden"></div>
+                    </header>
+
+                    <section id="speedLoadingSection" class="loading-section hidden">
+                        <div class="spinner"></div>
+                        <p style="font-weight: 800; text-align: center;">Running Google Lighthouse Mobile Audit... (10-15s)</p>
+                    </section>
+
+                    <section id="speedResultsSection" class="results-section hidden">
+                        <div class="results-header">
+                            <div class="url-display">
+                                <div style="font-size: 0.8rem; font-weight: 800; opacity: 0.6;">ANALYZED URL</div>
+                                <span id="speedTargetUrl" class="url-value"></span>
+                            </div>
+                            <div class="score-summary">
+                                <span id="speedScoreValue" class="score-num">--</span>
+                                <div id="speedVerdictBadge" class="verdict-badge">--</div>
+                            </div>
+                        </div>
+
+                        <div class="progress-container">
+                            <div id="speedProgressBar" class="progress-bar"></div>
+                        </div>
+
+                        <!-- Core Web Vitals 4-Grid -->
+                        <div class="speed-metrics-grid">
+                            <div class="speed-metric-card">
+                                <div class="speed-metric-label">Largest Contentful Paint (LCP)</div>
+                                <div class="speed-metric-value-row">
+                                    <span class="speed-metric-val" id="metricLcp">--</span>
+                                    <span class="speed-status-pill" id="pillLcp">--</span>
+                                </div>
+                                <p class="speed-metric-desc">Target: &lt; 2.5s. Main visual content rendered. Directly affects mobile bounce rate.</p>
+                            </div>
+                            <div class="speed-metric-card">
+                                <div class="speed-metric-label">First Contentful Paint (FCP)</div>
+                                <div class="speed-metric-value-row">
+                                    <span class="speed-metric-val" id="metricFcp">--</span>
+                                    <span class="speed-status-pill" id="pillFcp">--</span>
+                                </div>
+                                <p class="speed-metric-desc">Target: &lt; 1.8s. Time until the browser renders first text or image.</p>
+                            </div>
+                            <div class="speed-metric-card">
+                                <div class="speed-metric-label">Cumulative Layout Shift (CLS)</div>
+                                <div class="speed-metric-value-row">
+                                    <span class="speed-metric-val" id="metricCls">--</span>
+                                    <span class="speed-status-pill" id="pillCls">--</span>
+                                </div>
+                                <p class="speed-metric-desc">Target: &lt; 0.1. Visual stability during render (prevents accidental misclicks).</p>
+                            </div>
+                            <div class="speed-metric-card">
+                                <div class="speed-metric-label">Total Blocking Time (TBT)</div>
+                                <div class="speed-metric-value-row">
+                                    <span class="speed-metric-val" id="metricTbt">--</span>
+                                    <span class="speed-status-pill" id="pillTbt">--</span>
+                                </div>
+                                <p class="speed-metric-desc">Target: &lt; 200ms. CPU main thread blockage from heavy JavaScript execution.</p>
+                            </div>
+                        </div>
+
+                        <!-- Ad Budget Impact Card -->
+                        <div class="speed-impact-card">
+                            <div class="speed-impact-title">
+                                <span>🎯</span>
+                                <span>Paid Ad &amp; Conversion Impact</span>
+                            </div>
+                            <p class="speed-impact-text" id="speedAdVerdictText">--</p>
+                        </div>
+
+                        <!-- Critical Chains Card -->
+                        <div class="speed-impact-card" id="speedChainsCard">
+                            <div class="speed-impact-title">
+                                <span id="speedChainsIcon">⛓️</span>
+                                <span id="speedChainsTitle">Network Dependency Tree</span>
+                            </div>
+                            <p class="speed-impact-text" id="speedChainsText">--</p>
+                        </div>
+
+                        <!-- Opportunities Card -->
+                        <div class="speed-opps-card" id="speedOppsCard">
+                            <div class="speed-impact-title" style="margin-bottom: 14px;">
+                                <span>🚀</span>
+                                <span>Top Speed Opportunities</span>
+                            </div>
+                            <div id="speedOppsList"></div>
+                        </div>
+
+                        <div class="cta-block">
+                            <div class="cta-label">NEED HELP SPEEDING UP YOUR SITE?</div>
+                            <h2 class="cta-title">I eliminate critical request chains and boost Core Web Vitals to 95–100</h2>
+                            <p class="cta-text">Font self-hosting, CSS inlining, SSR optimization, JavaScript debloating — I personally diagnose and implement the engineering fixes. Freelance AI &amp; Performance Consultant based in Munich.</p>
+                            <div class="cta-actions">
+                                <a href="https://calendly.com/azhyshchev/30min?utm_source=portfolio&amp;utm_medium=website&amp;utm_campaign=booking&amp;utm_content=speed_checker" target="_blank" rel="noreferrer" class="cta-btn-primary">Book a free 30-min call</a>
+                                <a href="/contact" class="cta-btn-secondary">Or send a message</a>
+                            </div>
+                        </div>
+                    </section>
+                </div>
 
                 <!-- STATIC HOW I CAN HELP (always visible below checker) -->
                 <section class="help-section">
@@ -225,9 +354,26 @@
                     <p class="seo-p">Immer mehr Nutzer suchen mit ChatGPT, Perplexity oder Google AI Overviews statt mit klassischen Suchmaschinen. Wenn Ihre Website technisch nicht fur KI-Crawler zugaenglich ist, erscheint sie in diesen Antworten nicht. KI Sichtbarkeit zu optimieren bedeutet: serverseitiges Rendering, offene robots.txt fur KI-Bots und eine llms.txt-Datei.</p>
                     <p class="seo-p">Als KI Berater in Munchen helfe ich Unternehmen dabei, ihre Website fur ChatGPT, Perplexity und Google AI sichtbar zu machen. Das umfasst technische Audits, SSR-Migration, llms.txt-Setup und strukturierte Daten. Wenn Sie wissen mochten, wie Ihre Website fur KI-Suche aufgestellt ist: Nutzen Sie den kostenlosen Checker oben.</p>
 
+                    <h2 class="seo-h2">Why Mobile Speed &amp; Core Web Vitals Protect Your Paid Ad Budget</h2>
+                    <p class="seo-p">When running paid search and social campaigns via Google Ads or LinkedIn Ads, every mobile click carries a direct cost ($15 to $45+ CPC in B2B). However, if your mobile landing page takes longer than 2.5 seconds to render, bounce probability increases by 32% to 90%. Users abandon the page before seeing your headline, causing severe conversion loss and wasting ad budgets.</p>
+                    <p class="seo-p">The most frequent hidden bottleneck flagged by Google Lighthouse audits is <strong>Critical Request Chains</strong> ("Avoid chaining critical requests"). This occurs when a landing page fetches dependent assets sequentially — such as an external Google Fonts CSS file that triggers a second-round font download, alongside blocking CSS and synchronous scripts. Eliminating critical request chains via local font hosting and inlining critical CSS directly resolves the latency bottleneck, boosting mobile performance scores to 95–100.</p>
+
+                    <h3 class="seo-h3">Why Fast Speed is the Foundation of AI Agent Discovery</h3>
+                    <p class="seo-p">Speed is equally vital for autonomous AI crawlers (PerplexityBot, ChatGPT Search, WebMCP). AI agents crawl under strict latency timeouts (often 2.5 to 4.0 seconds). A sluggish server with render-blocking dependency chains causes AI crawlers to time out or parse incomplete DOM snapshots, making your brand invisible in conversational search results.</p>
+
                     <!-- FAQ SECTION -->
                     <div class="seo-faq">
                         <h3 class="seo-h3">Frequently Asked Questions</h3>
+
+                        <div class="faq-item">
+                            <div class="faq-q">Why does a slow mobile landing page destroy Google Ads ROAS?</div>
+                            <div class="faq-a">Google Ads bills you the moment a user clicks your ad. If your landing page Largest Contentful Paint (LCP) takes over 3 seconds, up to 50% of mobile users bounce before the page visually loads. Furthermore, Google Ads Quality Score penalizes slow landing pages, driving up your Cost Per Click (CPC) and reducing ad rank.</div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-q">How do I fix "Avoid chaining critical requests" in Google Lighthouse?</div>
+                            <div class="faq-a">To eliminate critical request chains: (1) Self-host web fonts as WOFF2 files and preload them directly from your origin instead of relying on external Google Fonts stylesheets. (2) Inline critical above-the-fold CSS directly into your HTML &lt;style&gt; block. (3) Defer non-critical scripts with defer and fetchpriority="low". Switch to the "Mobile UX &amp; Speed" tab above to audit your site's request chains instantly.</div>
+                        </div>
 
                         <div class="faq-item">
                             <div class="faq-q">How do I make my website visible to ChatGPT and Perplexity?</div>

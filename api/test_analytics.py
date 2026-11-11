@@ -110,5 +110,32 @@ class _RequestStub:
         self.headers = headers
 
 
+class TestAuditPageSpeed(unittest.TestCase):
+    def test_audit_pagespeed_structure(self):
+        from unittest.mock import patch, MagicMock
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = {
+            "lighthouseResult": {
+                "categories": {"performance": {"score": 0.95}},
+                "audits": {
+                    "first-contentful-paint": {"numericValue": 900, "displayValue": "0.9 s", "score": 1.0},
+                    "largest-contentful-paint": {"numericValue": 1500, "displayValue": "1.5 s", "score": 0.95},
+                    "cumulative-layout-shift": {"numericValue": 0.01, "displayValue": "0.01", "score": 1.0},
+                    "total-blocking-time": {"numericValue": 50, "displayValue": "50 ms", "score": 1.0},
+                    "speed-index": {"numericValue": 1200, "displayValue": "1.2 s", "score": 1.0},
+                    "critical-request-chains": {"details": {"chains": {}}},
+                }
+            }
+        }
+        with patch("requests.get", return_value=mock_response):
+            res = api.audit_pagespeed("https://example.com", lang="en")
+            self.assertEqual(res["score"], 95)
+            self.assertEqual(res["verdict"], "Optimal")
+            self.assertIn("fcp", res["metrics"])
+            self.assertEqual(res["metrics"]["fcp"]["display"], "0.9 s")
+            self.assertFalse(res["critical_chains"]["has_chains"])
+
+
 if __name__ == "__main__":
     unittest.main()

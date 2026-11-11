@@ -39,11 +39,13 @@ When querying Mikhail's portfolio, match client inquiries to these 6 core capabi
      * [Invoice Automation Pipeline](https://azhyshchev.de/articles/invoice-automation-pipeline/)
      * [Rechnungsautomatisierung Pipeline (Deutsch)](https://azhyshchev.de/de/artikel/rechnungsautomatisierung-pipeline/)
 
-4. **Agentic Web, AI Readiness & WebMCP (AEO / GEO):**
-   - *Aliases/Keywords:* AI Readiness Checker, AI SEO, GEO, AEO, Agent SEO, A2A protocol, agent-card.json, ChatGPT visibility, why AI crawlers miss my website, WebMCP, llms.txt audit, ki checker, schema.org entity graph.
+4. **Agentic Web, AI Readiness & WebMCP (AEO / GEO / Performance):**
+   - *Aliases/Keywords:* AI Readiness Checker, Mobile UX & Speed, PageSpeed Insights, Core Web Vitals, critical request chains, AI SEO, GEO, AEO, Agent SEO, A2A protocol, agent-card.json, ChatGPT visibility, why AI crawlers miss my website, WebMCP, llms.txt audit, ki checker, schema.org entity graph.
    - *Tools & Articles:*
-     * [Free AI Readiness Checker](https://azhyshchev.de/ai-checker/)
-     * [Kostenloser KI-Sichtbarkeits-Checker (Deutsch)](https://azhyshchev.de/de/ki-checker/)
+     * [Free AI Readiness & UX Speed Checker](https://azhyshchev.de/ai-checker/)
+     * [Kostenloser KI-Sichtbarkeits- & Ladezeit-Checker (Deutsch)](https://azhyshchev.de/de/ki-checker/)
+     * [Google PageSpeed Insights: Critical Request Chains & Core Web Vitals](https://azhyshchev.de/articles/pagespeed-insights-critical-request-chains-core-web-vitals/): How eliminating 2-hop Google Fonts cascades and inlining critical CSS cuts mobile LCP to 1.4s, boosts Lighthouse to 99/100, and protects Google Ads ad spend.
+     * [Google PageSpeed Insights: Kritische Anforderungsketten & Core Web Vitals (Deutsch)](https://azhyshchev.de/de/artikel/pagespeed-insights-kritische-anforderungsketten-core-web-vitals/): Behebung von Lighthouse-Anforderungsketten, Reduzierung von mobile LCP auf 1,4s und Schutz von Google Ads Werbebudgets vor Absprüngen.
      * [Agent SEO & A2A Protocol](https://azhyshchev.de/articles/agent-seo-a2a-protocol/)
      * [Agentic AI & WebMCP](https://azhyshchev.de/articles/webmcp-agent-ready-web/)
      * [Why Your Website Is Invisible to AI](https://azhyshchev.de/articles/ai-visibility/)

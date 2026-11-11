@@ -835,3 +835,197 @@ body {
   .cta-actions { flex-direction: column; }
   .seo-h2 { font-size: 1.3rem; }
 }
+
+/* ── CHECKER TABS ── */
+.checker-tabs-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.checker-tabs {
+  display: inline-flex;
+  border: 3px solid var(--black);
+  background: var(--white);
+  box-shadow: 6px 6px 0 var(--black);
+  gap: 0;
+  max-width: 100%;
+}
+
+.checker-tab-btn {
+  padding: 12px 20px;
+  border: none;
+  border-right: 3px solid var(--black);
+  background: var(--white);
+  color: var(--black);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.88rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+}
+
+.checker-tab-btn:last-child {
+  border-right: none;
+}
+
+.checker-tab-btn:hover {
+  background: var(--cream);
+}
+
+.checker-tab-btn.active {
+  background: var(--black);
+  color: var(--white);
+}
+
+.checker-tab-btn.tab-speed.active {
+  background: var(--yellow);
+  color: var(--black);
+}
+
+/* ── SPEED RESULTS CARDS ── */
+.speed-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.speed-metric-card {
+  border: 3px solid var(--black);
+  background: var(--white);
+  box-shadow: 4px 4px 0 var(--black);
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.speed-metric-label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.6;
+}
+
+.speed-metric-value-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.speed-metric-val {
+  font-size: 1.8rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.speed-status-pill {
+  padding: 3px 8px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  border: 1.5px solid var(--black);
+  text-transform: uppercase;
+}
+
+.status-good {
+  background: var(--mint);
+  color: var(--black);
+}
+
+.status-needs_improvement {
+  background: var(--yellow);
+  color: var(--black);
+}
+
+.status-poor {
+  background: var(--coral);
+  color: var(--black);
+}
+
+.speed-metric-desc {
+  font-size: 0.78rem;
+  line-height: 1.45;
+  opacity: 0.85;
+  margin-top: 4px;
+}
+
+/* Impact & Critical Chains Cards */
+.speed-impact-card {
+  border: 3px solid var(--black);
+  background: var(--cream);
+  box-shadow: 6px 6px 0 var(--black);
+  padding: 22px;
+  margin-bottom: 24px;
+}
+
+.speed-impact-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.speed-impact-text {
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.speed-opps-card {
+  border: 3px solid var(--black);
+  background: var(--white);
+  box-shadow: 6px 6px 0 var(--black);
+  padding: 22px;
+  margin-bottom: 24px;
+}
+
+.speed-opp-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px dashed rgba(0,0,0,0.2);
+  font-size: 0.86rem;
+  gap: 12px;
+}
+
+.speed-opp-item:last-child {
+  border-bottom: none;
+}
+
+.speed-opp-title {
+  font-weight: 700;
+}
+
+.speed-opp-savings {
+  font-weight: 800;
+  background: var(--yellow);
+  border: 1.5px solid var(--black);
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .checker-tabs {
+    flex-direction: column;
+    width: 100%;
+  }
+  .checker-tab-btn {
+    border-right: none;
+    border-bottom: 3px solid var(--black);
+    width: 100%;
+    justify-content: center;
+  }
+  .checker-tab-btn:last-child {
+    border-bottom: none;
+  }
+}

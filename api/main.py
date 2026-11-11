@@ -24,6 +24,11 @@ DATABASE_URL = os.environ.get("DATABASE_URL", "")
 LOG_TOKEN = os.environ.get("CHECKER_LOG_TOKEN", "")
 # Salt for the visitor IP hash. Set IP_HASH_SALT on Cloud Run for real deployments.
 IP_HASH_SALT = os.environ.get("IP_HASH_SALT", "ai-checker")
+# Google PageSpeed API Key
+PAGESPEED_API_KEY = os.environ.get("PAGESPEED_API_KEY", "")
+
+_PAGESPEED_CACHE_TTL = 3600  # 1 hour
+_pagespeed_cache: dict[str, tuple[float, dict]] = {}
 
 # Lead-analytics columns. Existing tables are migrated on startup via
 # ALTER TABLE ... ADD COLUMN IF NOT EXISTS, so no manual migration is needed.
@@ -587,6 +592,121 @@ async def analyze(
     result = audit_ai_readiness(url)
     _analyze_cache[cache_key] = (time.time(), result)
     log_check(result, meta)
+    if "error" in result:
+        raise HTTPException(status_code=400, detail=result["error"])
+    return result
+
+
+def audit_pagespeed(url: str, lang: str = "en") -> dict:
+    if not url.startswith("http://") and not url.startswith("https://"):
+        url = "https://" + url
+
+    api_url = f"https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url={url}&strategy=mobile"
+    if PAGESPEED_API_KEY:
+        api_url += f"&key={PAGESPEED_API_KEY}"
+
+    try:
+        resp = requests.get(api_url, timeout=50)
+        if resp.status_code != 200:
+            return {"error": f"Google PageSpeed API returned status {resp.status_code}", "status_code": resp.status_code}
+        data = resp.json()
+    except Exception as e:
+        return {"error": f"Failed to connect to Google PageSpeed API: {str(e)}"}
+
+    lighthouse = data.get("lighthouseResult", {})
+    categories = lighthouse.get("categories", {})
+    perf = categories.get("performance", {})
+    score = int((perf.get("score") or 0) * 100)
+
+    audits = lighthouse.get("audits", {})
+
+    def _metric(key, default_unit="s"):
+        item = audits.get(key, {})
+        val = item.get("numericValue", 0)
+        disp = item.get("displayValue") or f"{val:.1f} {default_unit}"
+        score_val = item.get("score", 1)
+        if score_val is None or score_val >= 0.9:
+            status = "good"
+        elif score_val >= 0.5:
+            status = "needs_improvement"
+        else:
+            status = "poor"
+        return {"display": disp, "numeric": round(val, 2), "status": status}
+
+    fcp = _metric("first-contentful-paint", "s")
+    lcp = _metric("largest-contentful-paint", "s")
+    cls = _metric("cumulative-layout-shift", "")
+    tbt = _metric("total-blocking-time", "ms")
+    si = _metric("speed-index", "s")
+
+    # Critical request chains
+    chains_audit = audits.get("critical-request-chains", {})
+    chains_details = chains_audit.get("details", {}) or {}
+    chains_dict = chains_details.get("chains", {}) or {}
+    chain_count = len(chains_dict)
+    chain_delay = round(chains_details.get("longestChain", {}).get("duration", 0), 1)
+
+    # Top opportunities
+    opps = []
+    for audit_id in ["render-blocking-resources", "unused-javascript", "unused-css-rules", "unminified-javascript", "unminified-css", "modern-image-formats", "uses-optimized-images", "offscreen-images"]:
+        item = audits.get(audit_id)
+        if item and item.get("score") is not None and item.get("score") < 0.9:
+            disp = item.get("displayValue") or ""
+            title = item.get("title") or audit_id
+            if disp:
+                opps.append({"title": title, "savings": disp})
+
+    # Verdict & Ad budget risk analysis
+    if score >= 90:
+        verdict = "Optimal"
+        ad_risk_en = "High speed performance: Under 2.5s LCP on mobile. Low bounce rate risk for Google/Meta Ads."
+        ad_risk_de = "Optimale Ladezeit: Unter 2,5s LCP auf Mobilgeräten. Geringes Absprungrisiko für Google/Meta Ads."
+    elif score >= 50:
+        verdict = "Needs Improvement"
+        ad_risk_en = f"Moderate ad budget risk: LCP is {lcp['display']}. Mobile visitors face noticeable rendering delay, increasing ad bounce rates by ~20–35%."
+        ad_risk_de = f"Mittleres Werbebudget-Risiko: LCP liegt bei {lcp['display']}. Mobile Nutzer erleben spürbare Verzögerungen, was Absprungraten um ~20–35 % erhöht."
+    else:
+        verdict = "Critical"
+        ad_risk_en = f"Severe ad budget leak: LCP is {lcp['display']}. Over 50% of mobile clicks from paid ads likely bounce before above-the-fold content renders."
+        ad_risk_de = f"Kritischer Werbebudget-Verlust: LCP liegt bei {lcp['display']}. Über 50 % der mobilen Klicks aus bezahlter Werbung springen vermutlich ab."
+
+    return {
+        "url": url,
+        "score": score,
+        "verdict": verdict,
+        "metrics": {
+            "fcp": fcp,
+            "lcp": lcp,
+            "cls": cls,
+            "tbt": tbt,
+            "speed_index": si
+        },
+        "critical_chains": {
+            "has_chains": chain_count > 0,
+            "count": chain_count,
+            "max_delay_ms": chain_delay
+        },
+        "opportunities": opps[:4],
+        "ad_risk_verdict": ad_risk_de if lang == "de" else ad_risk_en
+    }
+
+
+@app.get("/api/pagespeed")
+async def pagespeed(
+    request: Request,
+    url: str = Query(..., description="The URL of the website to analyze for mobile speed"),
+    lang: str | None = Query("en", description="Checker page language (en|de)"),
+):
+    cache_key = url.strip().lower()
+    cached_entry = _pagespeed_cache.get(cache_key)
+    if cached_entry and time.time() - cached_entry[0] < _PAGESPEED_CACHE_TTL:
+        result = cached_entry[1]
+        if "error" in result:
+            raise HTTPException(status_code=400, detail=result["error"])
+        return result
+
+    result = audit_pagespeed(url, lang or "en")
+    _pagespeed_cache[cache_key] = (time.time(), result)
     if "error" in result:
         raise HTTPException(status_code=400, detail=result["error"])
     return result

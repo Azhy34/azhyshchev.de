@@ -523,6 +523,30 @@
         <!-- Article grid -->
         <div class="articles-grid">
 
+          <!-- Card: Google PageSpeed Insights: Kritische Anforderungsketten & Core Web Vitals (DE) -->
+          <article class="article-card" data-tags="automation seo pagespeed" data-modal="modal-pagespeed-insights-kritische-anforderungsketten-core-web-vitals">
+            <div class="card-accent" style="background: var(--yellow);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">Performance-Fallstudie</span>
+                <span class="card-readtime">8 Min. Lesezeit</span>
+              </div>
+              <h2 class="card-title">Google PageSpeed Insights: Kritische Anforderungsketten beheben &amp; Core Web Vitals</h2>
+              <p class="card-excerpt">Kritische Anforderungsketten vermeiden: Wie der Abbau von 2-Hop Google Fonts und Above-the-fold-CSS-Inlining den mobilen LCP auf 1,4s senkt, Lighthouse auf 99/100 hebt und Werbebudgets schützt.</p>
+              <div class="card-tags">
+                <span class="tag">PageSpeed</span>
+                <span class="tag">Core Web Vitals</span>
+                <span class="tag">Google Ads</span>
+                <span class="tag">Lighthouse</span>
+                <span class="tag">Ladezeit</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Score: <span>99/100 · 1,4s LCP</span></div>
+              <a class="read-link" href="/de/artikel/pagespeed-insights-kritische-anforderungsketten-core-web-vitals/">Artikel lesen →</a>
+            </div>
+          </article>
+
           <!-- DRAFT (UNLISTED): Card: Sicherer LinkedIn KI-Agent (DE)
           <article class="article-card" data-tags="automation mcp linkedin" data-modal="modal-sicherer-linkedin-ki-agent">
             <div class="card-accent" style="background: var(--sky);"></div>
@@ -981,6 +1005,48 @@
   </div>
 
   <!-- ── MODALS ── -->
+
+  <!-- Modal: Google PageSpeed Insights: Kritische Anforderungsketten & Core Web Vitals (DE) -->
+  <div class="modal-overlay" id="modal-pagespeed-insights-kritische-anforderungsketten-core-web-vitals" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-section-label">Performance-Fallstudie · Lighthouse · Core Web Vitals</div>
+          <h2 class="modal-title">Google PageSpeed Insights: Kritische Anforderungsketten &amp; Core Web Vitals</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-pagespeed-insights-kritische-anforderungsketten-core-web-vitals')">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="modal-section-label">Problem</div>
+          <div class="modal-text">
+            <p>Kaskadierende Google-Fonts- und Stylesheet-Ketten verzögern mobile Landingpages um 388ms bis 1.200ms. Bei teuren B2B-Klicks in Google Ads führt dies zu hohen Absprungraten und blockiert autonome KI-Crawler durch Timeouts.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Lösung &amp; Ergebnis</div>
+          <div class="modal-text">
+            <p>Self-Hosting von WOFF2-Schriften mit Preloading, Inlining von Above-the-fold-CSS und Deferring nicht-kritischer Skripte eliminierten alle blockierenden Ketten, senkten den mobilen LCP auf 1,4s und erreichten 99/100 bei Lighthouse.</p>
+          </div>
+          <div class="modal-stack">
+            <span class="stack-chip">Lighthouse</span>
+            <span class="stack-chip">Core Web Vitals</span>
+            <span class="stack-chip">PageSpeed API</span>
+            <span class="stack-chip">WOFF2 Preload</span>
+            <span class="stack-chip">CSS Inlining</span>
+            <span class="stack-chip">Google Ads ROAS</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center;">
+        <div style="display: flex; gap: 10px; width: 100%; justify-content: center; align-items: center; flex-wrap: wrap;">
+          <a class="action-btn dark" href="/de/artikel/pagespeed-insights-kritische-anforderungsketten-core-web-vitals/" style="font-size: 0.92rem; padding: 12px 24px; font-weight: 800;">Artikel lesen →</a>
+          <a class="action-btn" href="/de/ki-checker/?tab=speed" style="font-size: 0.92rem; padding: 12px 24px; font-weight: 800; background: var(--yellow); color: var(--black);">Ladezeit prüfen →</a>
+          <button class="mini-btn" onclick="closeModal('modal-pagespeed-insights-kritische-anforderungsketten-core-web-vitals')">Schließen</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- DRAFT (UNLISTED): Modal: Sicherer LinkedIn KI-Agent (DE)
   <div class="modal-overlay" id="modal-sicherer-linkedin-ki-agent" role="dialog" aria-modal="true">

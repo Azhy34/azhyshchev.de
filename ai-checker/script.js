@@ -6,6 +6,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const errorMessage = document.getElementById('errorMessage');
     const breakdownGrid = document.getElementById('breakdownGrid');
     
+    // Tab Elements
+    const tabBtnAI = document.getElementById('tabBtnAI');
+    const tabBtnSpeed = document.getElementById('tabBtnSpeed');
+    const tabContentAI = document.getElementById('tabContentAI');
+    const tabContentSpeed = document.getElementById('tabContentSpeed');
+
+    // Speed Checker Elements
+    const speedUrlInput = document.getElementById('speedUrlInput');
+    const speedAnalyzeBtn = document.getElementById('speedAnalyzeBtn');
+    const speedResultsSection = document.getElementById('speedResultsSection');
+    const speedLoadingSection = document.getElementById('speedLoadingSection');
+    const speedErrorMessage = document.getElementById('speedErrorMessage');
+    
     // API Config (Google Cloud Run europe-west3 Frankfurt)
     const API_BASE_URL = 'https://ai-readiness-api-377331886416.europe-west3.run.app'; 
     // const API_BASE_URL = 'http://localhost:8000'; 
@@ -92,6 +105,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     what: 'Whether a page can also be served as clean Markdown — the cheapest format for an LLM to ingest.',
                     fix: 'Offer /index.md or an "Accept: text/markdown" variant. Bonus only — most sites skip it.'
                 }
+            },
+            speed: {
+                cleanChainsTitle: 'Clean Network Tree',
+                cleanChainsText: 'Zero render-blocking request chains detected. Initial paint is not delayed by chained external fonts or CSS.',
+                warnChainsTitle: 'Critical Request Chains Detected',
+                warnChainsText: 'Warning: Render-blocking chains found, delaying initial render by {ms}ms. Unoptimized web fonts or cascading stylesheets block mobile users.',
+                noOpps: 'Great job! No major render-blocking bottlenecks detected by Lighthouse.',
+                pills: {
+                    good: 'Good',
+                    needs_improvement: 'Needs Work',
+                    poor: 'Poor'
+                }
             }
         },
         de: {
@@ -172,6 +197,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     what: 'Ob eine Seite auch als sauberes Markdown ausgeliefert werden kann — das günstigste Format für ein LLM.',
                     fix: '/index.md oder eine Variante mit "Accept: text/markdown" anbieten. Nur Bonus — die meisten Seiten haben das nicht.'
                 }
+            },
+            speed: {
+                cleanChainsTitle: 'Sauberer Netzwerk-Baum',
+                cleanChainsText: 'Keine render-blockierenden Anfrageketten erkannt. Die initiale Anzeige wird nicht durch verkettete externe Schriften oder CSS verzögert.',
+                warnChainsTitle: 'Kritische Anfrageketten erkannt',
+                warnChainsText: 'Warnung: Blockierende Anfrageketten verzögern die Anzeige um {ms}ms. Externe Google Fonts oder kaskadierende Stylesheets blockieren mobile Nutzer.',
+                noOpps: 'Hervorragend! Keine größeren Render-Engpässe von Lighthouse festgestellt.',
+                pills: {
+                    good: 'Gut',
+                    needs_improvement: 'Verbessern',
+                    poor: 'Kritisch'
+                }
             }
         }
     };
@@ -232,6 +269,170 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Trigger on Button Click
     analyzeBtn.addEventListener('click', handleAnalyze);
+
+    // Tab Switching Logic
+    function switchTab(tab) {
+        if (tab === 'speed') {
+            if (tabBtnAI) tabBtnAI.classList.remove('active');
+            if (tabBtnSpeed) tabBtnSpeed.classList.add('active');
+            if (tabContentAI) tabContentAI.classList.add('hidden');
+            if (tabContentSpeed) tabContentSpeed.classList.remove('hidden');
+            if (urlInput && speedUrlInput && urlInput.value && !speedUrlInput.value) {
+                speedUrlInput.value = urlInput.value;
+            }
+        } else {
+            if (tabBtnSpeed) tabBtnSpeed.classList.remove('active');
+            if (tabBtnAI) tabBtnAI.classList.add('active');
+            if (tabContentSpeed) tabContentSpeed.classList.add('hidden');
+            if (tabContentAI) tabContentAI.classList.remove('hidden');
+            if (urlInput && speedUrlInput && speedUrlInput.value && !urlInput.value) {
+                urlInput.value = speedUrlInput.value;
+            }
+        }
+    }
+
+    if (tabBtnAI) tabBtnAI.addEventListener('click', () => switchTab('ai'));
+    if (tabBtnSpeed) tabBtnSpeed.addEventListener('click', () => switchTab('speed'));
+
+    // Auto-switch tab if URL contains ?tab=speed or #speed
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('tab') === 'speed' || window.location.hash === '#speed') {
+        switchTab('speed');
+    }
+
+    // Speed Analysis Handler
+    async function handleSpeedAnalyze() {
+        if (!speedUrlInput) return;
+        let url = speedUrlInput.value.trim();
+        if (!url) {
+            showSpeedError(t.enterValidUrl);
+            return;
+        }
+
+        if (!url.startsWith('http://') && !url.startsWith('https://')) {
+            url = 'https://' + url;
+            speedUrlInput.value = url;
+        }
+
+        if (speedErrorMessage) speedErrorMessage.classList.add('hidden');
+        if (speedResultsSection) speedResultsSection.classList.add('hidden');
+        if (speedLoadingSection) speedLoadingSection.classList.remove('hidden');
+        if (speedAnalyzeBtn) speedAnalyzeBtn.disabled = true;
+
+        try {
+            console.log('Starting speed analysis for:', url);
+            const query = new URLSearchParams({ url: url, lang: currentLang });
+            const response = await fetch(`${API_BASE_URL}/api/pagespeed?${query.toString()}`);
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.detail || t.genericFailed);
+            }
+
+            console.log('Speed analysis result received:', data);
+            displaySpeedResults(data);
+        } catch (err) {
+            console.error('Speed Fetch Error:', err);
+            showSpeedError(err.message || t.genericFailed);
+        } finally {
+            if (speedLoadingSection) speedLoadingSection.classList.add('hidden');
+            if (speedAnalyzeBtn) speedAnalyzeBtn.disabled = false;
+        }
+    }
+
+    function showSpeedError(msg) {
+        if (!speedErrorMessage) return;
+        speedErrorMessage.textContent = msg;
+        speedErrorMessage.classList.remove('hidden');
+    }
+
+    function displaySpeedResults(data) {
+        document.getElementById('speedTargetUrl').textContent = data.url;
+        const scoreVal = document.getElementById('speedScoreValue');
+        scoreVal.textContent = data.score;
+        scoreVal.className = 'score-num ' + getTotalScoreClass(data.score);
+
+        const badge = document.getElementById('speedVerdictBadge');
+        badge.textContent = data.verdict;
+        badge.className = 'verdict-badge ' + getScoreClass(data.score);
+
+        const pBar = document.getElementById('speedProgressBar');
+        if (pBar) {
+            pBar.style.width = data.score + '%';
+            pBar.className = 'progress-bar ' + getBgClass(data.score);
+        }
+
+        // Metrics
+        const m = data.metrics || {};
+        function setMetric(id, pillId, obj) {
+            const el = document.getElementById(id);
+            const pill = document.getElementById(pillId);
+            if (!el || !obj) return;
+            el.textContent = obj.display || '--';
+            if (pill) {
+                const status = obj.status || 'good';
+                pill.textContent = (t.speed && t.speed.pills && t.speed.pills[status]) || status;
+                pill.className = 'speed-status-pill status-' + status;
+            }
+        }
+
+        setMetric('metricLcp', 'pillLcp', m.lcp);
+        setMetric('metricFcp', 'pillFcp', m.fcp);
+        setMetric('metricCls', 'pillCls', m.cls);
+        setMetric('metricTbt', 'pillTbt', m.tbt);
+
+        // Ad verdict
+        const adText = document.getElementById('speedAdVerdictText');
+        if (adText) adText.textContent = data.ad_risk_verdict || '';
+
+        // Critical chains
+        const chainsTitle = document.getElementById('speedChainsTitle');
+        const chainsText = document.getElementById('speedChainsText');
+        const chainsIcon = document.getElementById('speedChainsIcon');
+        const chainsCard = document.getElementById('speedChainsCard');
+        if (data.critical_chains && data.critical_chains.has_chains) {
+            if (chainsTitle) chainsTitle.textContent = (t.speed && t.speed.warnChainsTitle) || 'Critical Request Chains Detected';
+            if (chainsText) {
+                const template = (t.speed && t.speed.warnChainsText) || 'Warning: {count} chains delay mobile initial paint by {ms}ms.';
+                chainsText.textContent = template.replace('{count}', data.critical_chains.count).replace('{ms}', data.critical_chains.max_delay_ms);
+            }
+            if (chainsIcon) chainsIcon.textContent = '⛓️';
+            if (chainsCard) chainsCard.style.background = '#ffebeb';
+        } else {
+            if (chainsTitle) chainsTitle.textContent = (t.speed && t.speed.cleanChainsTitle) || 'Clean Network Tree';
+            if (chainsText) chainsText.textContent = (t.speed && t.speed.cleanChainsText) || 'Zero render-blocking request chains detected.';
+            if (chainsIcon) chainsIcon.textContent = '🟢';
+            if (chainsCard) chainsCard.style.background = '#eefbf0';
+        }
+
+        // Opportunities
+        const oppsList = document.getElementById('speedOppsList');
+        if (oppsList) {
+            oppsList.innerHTML = '';
+            if (data.opportunities && data.opportunities.length > 0) {
+                data.opportunities.forEach(opp => {
+                    const row = document.createElement('div');
+                    row.className = 'speed-opp-item';
+                    row.innerHTML = `<span class="speed-opp-title">${opp.title}</span><span class="speed-opp-savings">${opp.savings}</span>`;
+                    oppsList.appendChild(row);
+                });
+            } else {
+                oppsList.innerHTML = `<div style="font-size:0.85rem; opacity:0.8;">${(t.speed && t.speed.noOpps) || 'No major render-blocking bottlenecks detected.'}</div>`;
+            }
+        }
+
+        if (speedResultsSection) speedResultsSection.classList.remove('hidden');
+    }
+
+    if (speedAnalyzeBtn) speedAnalyzeBtn.addEventListener('click', handleSpeedAnalyze);
+    if (speedUrlInput) {
+        speedUrlInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleSpeedAnalyze();
+            }
+        });
+    }
 
     // 🐛 Fix: Trigger on Enter keypress
     urlInput.addEventListener('keydown', (e) => {

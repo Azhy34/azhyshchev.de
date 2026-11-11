@@ -66,6 +66,22 @@
         "mainEntity": [
           {
             "@type": "Question",
+            "name": "Warum zerstört eine langsame mobile Ladezeit das Google Ads Budget?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Google Ads berechnet jeden Klick sofort. Wenn der Largest Contentful Paint (LCP) auf Mobilgeräten über 2,5 bis 3 Sekunden liegt, springen bis zu 50% der Nutzer ab, bevor die Seite sichtbar ist. Zudem senkt Google den Qualitätsfaktor, was den CPC verteuert."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Wie behebe ich 'Kritische Anforderungsketten vermeiden' in Lighthouse?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "1. Webfonts lokal hosten (WOFF2) und vorladen, statt externe Google-Fonts-CSS zu laden. 2. Kritisches CSS direkt in den HTML-<style>-Block einbetten. 3. Nicht-kritische Skripte mit defer und fetchpriority='low' asynchron ausführen."
+            }
+          },
+          {
+            "@type": "Question",
             "name": "Wie mache ich meine Website fur ChatGPT und Perplexity sichtbar?",
             "acceptedAnswer": {
               "@type": "Answer",
@@ -158,6 +174,22 @@
     <!-- MAIN -->
     <main class="main">
       <div class="panel">
+        <!-- CHECKER TABS -->
+        <div class="checker-tabs-wrapper">
+          <div class="checker-tabs" role="tablist">
+            <button class="checker-tab-btn active" id="tabBtnAI" role="tab" aria-selected="true" aria-controls="tabContentAI">
+              <span>🤖</span>
+              <span>KI-Readiness-Audit</span>
+            </button>
+            <button class="checker-tab-btn tab-speed" id="tabBtnSpeed" role="tab" aria-selected="false" aria-controls="tabContentSpeed">
+              <span>⚡</span>
+              <span>Mobile UX &amp; Ladezeit</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- TAB 1: AI READINESS -->
+        <div id="tabContentAI" class="tab-panel">
         <header class="hero-section">
           <h1 class="hero-title">Kostenloser KI-SEO-Checker</h1>
           <p class="hero-subtitle">
@@ -245,6 +277,118 @@
             </div>
           </div>
         </section>
+        </div>
+
+        <!-- TAB 2: SPEED & CORE WEB VITALS -->
+        <div id="tabContentSpeed" class="tab-panel hidden">
+          <header class="hero-section">
+            <h1 class="hero-title">Kostenloser UX &amp; Speed Checker</h1>
+            <p class="hero-subtitle">
+              Lädt Ihre Website schnell genug für mobile Nutzer und Google Ads? Kostenloses Echtzeit-Google-Lighthouse-Audit für Largest Contentful Paint (LCP), First Contentful Paint (FCP) und kritische Anforderungsketten. Verhindern Sie Budgetverschwendung durch mobile Absprünge.
+            </p>
+
+            <div class="checker-input-group">
+              <input type="url" id="speedUrlInput" placeholder="https://ihrewebsite.de" class="checker-input">
+              <button id="speedAnalyzeBtn" class="checker-btn" style="background:var(--yellow); color:var(--black);">Ladezeit analysieren</button>
+            </div>
+            <div id="speedErrorMessage" class="error-message hidden"></div>
+          </header>
+
+          <section id="speedLoadingSection" class="loading-section hidden">
+            <div class="spinner"></div>
+            <p style="font-weight: 800; text-align: center;">Google Lighthouse Mobile Audit läuft... (10-15s)</p>
+          </section>
+
+          <section id="speedResultsSection" class="results-section hidden">
+            <div class="results-header">
+              <div class="url-display">
+                <div style="font-size: 0.8rem; font-weight: 800; opacity: 0.6;">ANALYSIERTE URL</div>
+                <span id="speedTargetUrl" class="url-value"></span>
+              </div>
+              <div class="score-summary">
+                <span id="speedScoreValue" class="score-num">--</span>
+                <div id="speedVerdictBadge" class="verdict-badge">--</div>
+              </div>
+            </div>
+
+            <div class="progress-container">
+              <div id="speedProgressBar" class="progress-bar"></div>
+            </div>
+
+            <!-- Core Web Vitals 4-Grid -->
+            <div class="speed-metrics-grid">
+              <div class="speed-metric-card">
+                <div class="speed-metric-label">Largest Contentful Paint (LCP)</div>
+                <div class="speed-metric-value-row">
+                  <span class="speed-metric-val" id="metricLcp">--</span>
+                  <span class="speed-status-pill" id="pillLcp">--</span>
+                </div>
+                <p class="speed-metric-desc">Ziel: &lt; 2.5s. Hauptinhalt gerendert. Beeinflusst die mobile Absprungrate direkt.</p>
+              </div>
+              <div class="speed-metric-card">
+                <div class="speed-metric-label">First Contentful Paint (FCP)</div>
+                <div class="speed-metric-value-row">
+                  <span class="speed-metric-val" id="metricFcp">--</span>
+                  <span class="speed-status-pill" id="pillFcp">--</span>
+                </div>
+                <p class="speed-metric-desc">Ziel: &lt; 1.8s. Zeit bis zum ersten Text- oder Bild-Element im Browser.</p>
+              </div>
+              <div class="speed-metric-card">
+                <div class="speed-metric-label">Cumulative Layout Shift (CLS)</div>
+                <div class="speed-metric-value-row">
+                  <span class="speed-metric-val" id="metricCls">--</span>
+                  <span class="speed-status-pill" id="pillCls">--</span>
+                </div>
+                <p class="speed-metric-desc">Ziel: &lt; 0.1. Visuelle Stabilität beim Laden (verhindert versehentliche Fehlklicks).</p>
+              </div>
+              <div class="speed-metric-card">
+                <div class="speed-metric-label">Total Blocking Time (TBT)</div>
+                <div class="speed-metric-value-row">
+                  <span class="speed-metric-val" id="metricTbt">--</span>
+                  <span class="speed-status-pill" id="pillTbt">--</span>
+                </div>
+                <p class="speed-metric-desc">Ziel: &lt; 200ms. CPU-Blockierung des Main Threads durch schwere JavaScript-Ausführung.</p>
+              </div>
+            </div>
+
+            <!-- Ad Budget Impact Card -->
+            <div class="speed-impact-card">
+              <div class="speed-impact-title">
+                <span>🎯</span>
+                <span>Werbebudget &amp; Conversion-Einfluss</span>
+              </div>
+              <p class="speed-impact-text" id="speedAdVerdictText">--</p>
+            </div>
+
+            <!-- Critical Chains Card -->
+            <div class="speed-impact-card" id="speedChainsCard">
+              <div class="speed-impact-title">
+                <span id="speedChainsIcon">⛓️</span>
+                <span id="speedChainsTitle">Netzwerk-Abhängigkeitsbaum</span>
+              </div>
+              <p class="speed-impact-text" id="speedChainsText">--</p>
+            </div>
+
+            <!-- Opportunities Card -->
+            <div class="speed-opps-card" id="speedOppsCard">
+              <div class="speed-impact-title" style="margin-bottom: 14px;">
+                <span>🚀</span>
+                <span>Wichtigste Ladezeit-Optimierungen</span>
+              </div>
+              <div id="speedOppsList"></div>
+            </div>
+
+            <div class="cta-block">
+              <div class="cta-label">HILFE BEI DER BESCHLEUNIGUNG IHRER WEBSITE?</div>
+              <h2 class="cta-title">Ich eliminiere kritische Anforderungsketten und bringe Core Web Vitals auf 95–100</h2>
+              <p class="cta-text">Font Self-Hosting, CSS-Inlining, SSR-Optimierung, JavaScript-Entschlackung — ich analysiere und implementiere die technischen Lösungen persönlich. Freelance KI- &amp; Performance-Berater in München.</p>
+              <div class="cta-actions">
+                <a href="https://calendly.com/azhyshchev/30min?utm_source=portfolio&amp;utm_medium=website&amp;utm_campaign=booking&amp;utm_content=speed_checker_de" target="_blank" rel="noreferrer" class="cta-btn-primary" onclick="if(typeof gtag==='function') gtag('event','book_call_click',{location:'speed_checker_de'})">Kostenloses 30-Min-Gespräch buchen</a>
+                <a href="/de/kontakt/" class="cta-btn-secondary">Oder Nachricht senden</a>
+              </div>
+            </div>
+          </section>
+        </div>
 
         <!-- HELP SECTION -->
         <section class="help-section">
@@ -293,9 +437,26 @@
           <p class="seo-p">Im zweiten Schritt optimieren Sie Ihre robots.txt. Viele Websites blockieren versehentlich KI-Crawler oder haben keine expliziten Regeln fur GPTBot, ClaudeBot und PerplexityBot. Eine offene robots.txt mit expliziter Erlaubnis fur diese Bots ist fur die KI-Sichtbarkeit entscheidend.</p>
           <p class="seo-p">Als KI-Berater in Munchen helfe ich Unternehmen dabei, ihre Website fur ChatGPT, Perplexity und Google AI Overviews sichtbar zu machen. Das umfasst technische Audits, SSR-Migration, llms.txt-Setup und strukturierte Daten. Wenn Sie wissen mochten, wie Ihre Website fur KI-Suche aufgestellt ist — nutzen Sie den kostenlosen Checker oben.</p>
 
+          <h2 class="seo-h2">Warum mobile Ladezeit &amp; Core Web Vitals Ihr Google Ads Werbebudget sch&uuml;tzen</h2>
+          <p class="seo-p">Beim Schalten von bezahlten Google Ads oder LinkedIn Ads Kampagnen verursacht jeder mobile Klick spürbare Kosten (15 € bis 45 €+ CPC im B2B-Bereich). Wenn die mobile Landingpage jedoch l&auml;nger als 2,5 Sekunden zum Rendern ben&ouml;tigt, steigt die Absprungwahrscheinlichkeit um 32 % bis 90 %. Nutzer verlassen die Seite noch bevor das Hero-Angebot sichtbar ist — Ihr Mediabudget verpufft wirkungslos.</p>
+          <p class="seo-p">Der h&auml;ufigste Flaschenhals im Google Lighthouse Audit sind <strong>kritische Anforderungsketten</strong> (&bdquo;Critical Request Chains vermeiden&ldquo;). Dies passiert, wenn ein Stylesheet externe Webfonts nachl&auml;dt, JavaScript synchron blockiert und Bild-Assets nicht optimiert sind. Durch lokales Font-Self-Hosting (WOFF2) und Inlining von Above-the-fold-CSS l&auml;sst sich dieser Flaschenhals vollst&auml;ndig eliminieren, was den mobilen Performance-Score auf 95–100 hebt.</p>
+
+          <h3 class="seo-h3">Ladezeit als Fundament autonomer KI-Agenten</h3>
+          <p class="seo-p">Geschwindigkeit ist auch f&uuml;r autonome KI-Agenten und Crawler (ChatGPT Search, PerplexityBot, WebMCP) &uuml;berlebenswichtig. KI-Agenten scannen Webseiten mit harten Timeouts (meist 2,5 bis maximal 4,0 Sekunden). Ein tr&auml;ger Server mit render-blockierenden Abhängigkeiten f&uuml;hrt dazu, dass KI-Agenten abbrechen oder ein unvollst&auml;ndiges Dokument parsen — Ihr Unternehmen wird in generativen Antworten &uuml;bersehen.</p>
+
           <!-- FAQ -->
           <div class="seo-faq">
             <h3 class="seo-h3">Haufige Fragen</h3>
+
+            <div class="faq-item">
+              <div class="faq-q">Warum zerstört eine langsame mobile Ladezeit das Google Ads Budget?</div>
+              <div class="faq-a">Google Ads berechnet jeden Klick sofort. Wenn der Largest Contentful Paint (LCP) auf Mobilgeräten über 2,5 bis 3 Sekunden liegt, springen bis zu 50% der Nutzer ab, bevor die Seite sichtbar ist. Zudem senkt Google den Qualitätsfaktor, was den CPC verteuert.</div>
+            </div>
+
+            <div class="faq-item">
+              <div class="faq-q">Wie behebe ich &bdquo;Kritische Anforderungsketten vermeiden&ldquo; (Critical Request Chains) in Lighthouse?</div>
+              <div class="faq-a">1. Webfonts lokal als WOFF2 hosten und vorladen, statt externe Google-Fonts-CSS zu laden. 2. Kritisches Above-the-fold-CSS direkt in den HTML-&lt;style&gt;-Block einbetten. 3. Nicht-kritische Skripte mit defer und fetchpriority="low" asynchron ausf&uuml;hren. Wechseln Sie oben auf den Reiter &bdquo;Mobile UX &amp; Ladezeit&ldquo;, um Ihre Kette sofort zu pr&uuml;fen.</div>
+            </div>
 
             <div class="faq-item">
               <div class="faq-q">Wie mache ich meine Website fur ChatGPT und Perplexity sichtbar?</div>
@@ -382,6 +543,12 @@
       if (analyzeBtn) {
         analyzeBtn.addEventListener('click', function () {
           if (window.gtag) gtag('event', 'ai_checker_analyze', { page_language: 'de' });
+        });
+      }
+      var speedAnalyzeBtn = document.getElementById('speedAnalyzeBtn');
+      if (speedAnalyzeBtn) {
+        speedAnalyzeBtn.addEventListener('click', function () {
+          if (window.gtag) gtag('event', 'speed_checker_analyze', { page_language: 'de' });
         });
       }
     })();

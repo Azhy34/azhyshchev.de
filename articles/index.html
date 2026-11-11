@@ -611,6 +611,30 @@
         <!-- Article grid -->
         <div class="articles-grid" id="articlesGrid">
 
+          <!-- Card: Google PageSpeed Insights: Critical Request Chains & Core Web Vitals -->
+          <article class="article-card" data-tags="automation seo pagespeed" data-modal="modal-pagespeed-insights-critical-request-chains-core-web-vitals">
+            <div class="card-accent" style="background: var(--yellow);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">Performance Case Study</span>
+                <span class="card-readtime">8 min read</span>
+              </div>
+              <h2 class="card-title">Google PageSpeed Insights: How to Fix Critical Request Chains &amp; Core Web Vitals</h2>
+              <p class="card-excerpt">Avoid chaining critical requests: how eliminating 2-hop Google Fonts cascades and inlining critical CSS cuts mobile LCP to 1.4s, boosts Lighthouse to 99/100, and protects Google Ads ad spend.</p>
+              <div class="card-tags">
+                <span class="tag">PageSpeed</span>
+                <span class="tag">Core Web Vitals</span>
+                <span class="tag">Google Ads</span>
+                <span class="tag">Lighthouse</span>
+                <span class="tag">Performance</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Score: <span>99/100 · 1.4s LCP</span></div>
+              <a class="read-link" href="/articles/pagespeed-insights-critical-request-chains-core-web-vitals/">Read full article →</a>
+            </div>
+          </article>
+
           <!-- DRAFT (UNLISTED): Card: Safe LinkedIn Agent: Official API & Deterministic Rails
           <article class="article-card" data-tags="automation mcp linkedin" data-modal="modal-safe-linkedin-agent">
             <div class="card-accent" style="background: var(--sky);"></div>
@@ -1178,6 +1202,48 @@
   </div>
 
   <!-- ── MODALS ── -->
+
+  <!-- Modal: Google PageSpeed Insights: Critical Request Chains & Core Web Vitals -->
+  <div class="modal-overlay" id="modal-pagespeed-insights-critical-request-chains-core-web-vitals" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-section-label">Performance Case Study · Lighthouse · Core Web Vitals</div>
+          <h2 class="modal-title">Google PageSpeed Insights: Critical Request Chains &amp; Core Web Vitals</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-pagespeed-insights-critical-request-chains-core-web-vitals')">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="modal-section-label">Problem</div>
+          <div class="modal-text">
+            <p>Critical request chains from Google Fonts and external stylesheets create 388ms–1,200ms latency bottlenecks on mobile devices, causing high bounce rates on expensive Google Ads clicks and timing out AI search crawlers.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Solution &amp; Results</div>
+          <div class="modal-text">
+            <p>Self-hosting WOFF2 fonts with preloading, inlining above-the-fold CSS, and deferring non-critical scripts eliminated all render-blocking chains, reducing mobile LCP to 1.4s and lifting Google Lighthouse score to 99/100.</p>
+          </div>
+          <div class="modal-stack">
+            <span class="stack-chip">Lighthouse</span>
+            <span class="stack-chip">Core Web Vitals</span>
+            <span class="stack-chip">PageSpeed API</span>
+            <span class="stack-chip">WOFF2 Preload</span>
+            <span class="stack-chip">CSS Inlining</span>
+            <span class="stack-chip">Google Ads ROAS</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center;">
+        <div style="display: flex; gap: 10px; width: 100%; justify-content: center; align-items: center; flex-wrap: wrap;">
+          <a class="action-btn dark" href="/articles/pagespeed-insights-critical-request-chains-core-web-vitals/" style="font-size: 0.92rem; padding: 12px 24px; font-weight: 800;">Read full article →</a>
+          <a class="action-btn" href="/ai-checker/?tab=speed" style="font-size: 0.92rem; padding: 12px 24px; font-weight: 800; background: var(--yellow); color: var(--black);">Run Speed Audit →</a>
+          <button class="mini-btn" onclick="closeModal('modal-pagespeed-insights-critical-request-chains-core-web-vitals')">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- DRAFT (UNLISTED): Modal: Safe LinkedIn Agent
   <div class="modal-overlay" id="modal-safe-linkedin-agent" role="dialog" aria-modal="true">
