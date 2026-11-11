@@ -605,6 +605,30 @@
         <!-- Projects grid -->
         <section class="projects-grid">
 
+          <!-- Card: MoonBloom Walls PageSpeed CI/CD Automation -->
+          <article class="project-card" data-modal="modal-moonbloom-pagespeed">
+            <div class="card-accent" style="background: var(--yellow);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">E-Commerce Engineering · CI/CD · Core Web Vitals</span>
+                <span class="card-readtime">Production</span>
+              </div>
+              <h2 class="card-title">E-Commerce PageSpeed &amp; Core Web Vitals CI/CD Automation</h2>
+              <p class="card-excerpt">MoonBloom Walls nursery decor store: eliminated 2-hop font cascades, inlined critical CSS, and deployed an automated PageSpeed API quality gate in GitHub Actions. Mobile score 54 → 90+.</p>
+              <div class="card-tags">
+                <span class="tag">PageSpeed API</span>
+                <span class="tag">Core Web Vitals</span>
+                <span class="tag">GitHub Actions</span>
+                <span class="tag">Lighthouse</span>
+                <span class="tag">Google Ads</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Result: <span>54 → 90+ · +22% Conv</span></div>
+              <a class="read-link" href="/projects/ecommerce-core-web-vitals-pagespeed-automation/">Open full page →</a>
+            </div>
+          </article>
+
           <!-- Card 0: Custom Google Ads MCP Server (business logic, tracing, evals) -->
           <article class="project-card" data-modal="modal-adsmcp">
             <div class="card-accent" style="background: var(--mint);"></div>
@@ -813,6 +837,63 @@
       </div>
 
   <!-- ── MODALS ── -->
+
+  <!-- Modal: MoonBloom Walls PageSpeed CI/CD Automation -->
+  <div class="overlay" id="modal-moonbloom-pagespeed">
+    <div class="modal">
+      <div class="modal-accent" style="background:var(--yellow);"></div>
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">E-Commerce PageSpeed &amp; Core Web Vitals CI/CD Automation</div>
+          <div class="modal-meta">MoonBloom Walls · Performance Engineering · CI Gate</div>
+        </div>
+        <button class="modal-close" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <h3 style="font-size:1rem;font-weight:800;margin-bottom:10px;letter-spacing:-0.02em;">The problem</h3>
+          <p>Over 74% of paid Google Ads traffic arrives from mobile devices. Heavy wallpaper preview images and a 2-hop Google Fonts cascade created a 388ms blocking chain, driving mobile Lighthouse down to 54 and causing high bounce rates.</p>
+        </div>
+        <div class="modal-section">
+          <h3 style="font-size:1rem;font-weight:800;margin-bottom:10px;letter-spacing:-0.02em;">What I built</h3>
+          <p>Eliminated critical request chains through self-hosted WOFF2 fonts with preloading, inlined above-the-fold CSS, and converted images to WebP/AVIF. Built an automated CI/CD performance gate in GitHub Actions via the PageSpeed API that blocks PRs if mobile score falls below 85.</p>
+        </div>
+        <div class="modal-metrics">
+          <div class="metric-box">
+            <strong>54 → 90+</strong>
+            <span>Mobile Lighthouse Score</span>
+          </div>
+          <div class="metric-box">
+            <strong>6.8s → 2.4s</strong>
+            <span>Largest Contentful Paint (LCP)</span>
+          </div>
+          <div class="metric-box">
+            <strong>0 Chains</strong>
+            <span>Zero render-blocking cascades</span>
+          </div>
+          <div class="metric-box">
+            <strong>+22%</strong>
+            <span>Mobile checkout conversion</span>
+          </div>
+        </div>
+        <div class="modal-section">
+          <h3>Tech stack</h3>
+          <div class="modal-chips">
+            <span class="modal-chip">PageSpeed API</span>
+            <span class="modal-chip">Lighthouse</span>
+            <span class="modal-chip">GitHub Actions</span>
+            <span class="modal-chip">WOFF2 Preload</span>
+            <span class="modal-chip">WebP / AVIF</span>
+            <span class="modal-chip">Core Web Vitals</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="modal-btn dark" href="/projects/ecommerce-core-web-vitals-pagespeed-automation/">Open full page →</a>
+        <a class="modal-btn light" href="/ai-checker/?tab=speed">Run Speed Audit →</a>
+      </div>
+    </div>
+  </div>
 
   <!-- Modal: Web Sales Assistant -->
   <!-- Modal: Custom Google Ads MCP Server -->

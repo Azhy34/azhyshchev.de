@@ -539,6 +539,30 @@
 
         <section class="projects-grid">
 
+          <!-- Card: MoonBloom Walls PageSpeed CI/CD Automatisierung -->
+          <article class="project-card" data-modal="modal-moonbloom-pagespeed-de">
+            <div class="card-accent" style="background: var(--yellow);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">E-Commerce Engineering · CI/CD · Core Web Vitals</span>
+                <span class="card-readtime">Produktiv</span>
+              </div>
+              <h2 class="card-title">E-Commerce PageSpeed &amp; Core Web Vitals CI/CD Automatisierung</h2>
+              <p class="card-excerpt">MoonBloom Walls Tapetenshop: 2-Hop-Schriftkaskaden eliminiert, Above-the-fold-CSS geinlinet und automatisierten PageSpeed-API-Quality-Gate in GitHub Actions integriert. Mobile Score 54 → 90+.</p>
+              <div class="card-tags">
+                <span class="tag">PageSpeed API</span>
+                <span class="tag">Core Web Vitals</span>
+                <span class="tag">GitHub Actions</span>
+                <span class="tag">Lighthouse</span>
+                <span class="tag">Google Ads</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Ergebnis: <span>54 → 90+ · +22% Conv</span></div>
+              <a class="read-link" href="/de/projekte/ecommerce-core-web-vitals-pagespeed-automatisierung/">Vollständige Seite →</a>
+            </div>
+          </article>
+
           <!-- Card 0: Eigener Google Ads MCP Server (Geschäftslogik, Tracing, Evals) -->
           <article class="project-card" data-modal="modal-adsmcp">
             <div class="card-accent" style="background: var(--mint);"></div>
@@ -739,6 +763,63 @@
       </div>
 
   <!-- ── MODALS ── -->
+
+  <!-- Modal: MoonBloom Walls PageSpeed CI/CD Automatisierung -->
+  <div class="overlay" id="modal-moonbloom-pagespeed-de">
+    <div class="modal">
+      <div class="modal-accent" style="background:var(--yellow);"></div>
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">E-Commerce PageSpeed &amp; Core Web Vitals CI/CD Automatisierung</div>
+          <div class="modal-meta">MoonBloom Walls · Performance Engineering · CI Gate</div>
+        </div>
+        <button class="modal-close" aria-label="Schliessen">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <h3 style="font-size:1rem;font-weight:800;margin-bottom:10px;letter-spacing:-0.02em;">Das Problem</h3>
+          <p>Über 74 % des bezahlten Google Ads Traffics kommen über Smartphones. Große Produktbilder und eine 2-Hop Google-Fonts-Kaskade erzeugten 388ms blockierende Latenz, drückten den mobilen Lighthouse-Score auf 54 und führten zu hohen Absprungraten.</p>
+        </div>
+        <div class="modal-section">
+          <h3 style="font-size:1rem;font-weight:800;margin-bottom:10px;letter-spacing:-0.02em;">Was ich gebaut habe</h3>
+          <p>Kritische Anforderungsketten durch selbst gehostete WOFF2-Schriften mit Preload eliminiert, kritisches CSS direkt eingebettet und Bilder nach WebP/AVIF konvertiert. Einen automatisierten CI/CD-Quality-Gate in GitHub Actions via PageSpeed API integriert, der Pull Requests bei einem Score unter 85 blockiert.</p>
+        </div>
+        <div class="modal-metrics">
+          <div class="metric-box">
+            <strong>54 → 90+</strong>
+            <span>Mobiler Lighthouse Score</span>
+          </div>
+          <div class="metric-box">
+            <strong>6,8s → 2,4s</strong>
+            <span>Largest Contentful Paint (LCP)</span>
+          </div>
+          <div class="metric-box">
+            <strong>0 Ketten</strong>
+            <span>Keine blockierenden Kaskaden</span>
+          </div>
+          <div class="metric-box">
+            <strong>+22%</strong>
+            <span>Mobile Checkout-Conversions</span>
+          </div>
+        </div>
+        <div class="modal-section">
+          <h3>Tech Stack</h3>
+          <div class="modal-chips">
+            <span class="modal-chip">PageSpeed API</span>
+            <span class="modal-chip">Lighthouse</span>
+            <span class="modal-chip">GitHub Actions</span>
+            <span class="modal-chip">WOFF2 Preload</span>
+            <span class="modal-chip">WebP / AVIF</span>
+            <span class="modal-chip">Core Web Vitals</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="modal-btn dark" href="/de/projekte/ecommerce-core-web-vitals-pagespeed-automatisierung/">Vollständige Seite →</a>
+        <a class="modal-btn light" href="/de/ki-checker/?tab=speed">Ladezeit prüfen →</a>
+      </div>
+    </div>
+  </div>
 
   <!-- Modal: Eigener Google Ads MCP Server -->
   <div class="overlay" id="modal-adsmcp">

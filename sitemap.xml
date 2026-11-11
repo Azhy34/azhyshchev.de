@@ -528,4 +528,22 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://azhyshchev.de/articles/pagespeed-insights-critical-request-chains-core-web-vitals/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/articles/pagespeed-insights-critical-request-chains-core-web-vitals/"/>
   </url>
+  <url>
+    <loc>https://azhyshchev.de/projects/ecommerce-core-web-vitals-pagespeed-automation/</loc>
+    <lastmod>2026-11-11</lastmod>
+    <priority>0.85</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="en" href="https://azhyshchev.de/projects/ecommerce-core-web-vitals-pagespeed-automation/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://azhyshchev.de/de/projekte/ecommerce-core-web-vitals-pagespeed-automatisierung/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/projects/ecommerce-core-web-vitals-pagespeed-automation/"/>
+  </url>
+  <url>
+    <loc>https://azhyshchev.de/de/projekte/ecommerce-core-web-vitals-pagespeed-automatisierung/</loc>
+    <lastmod>2026-11-11</lastmod>
+    <priority>0.85</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="de" href="https://azhyshchev.de/de/projekte/ecommerce-core-web-vitals-pagespeed-automatisierung/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://azhyshchev.de/projects/ecommerce-core-web-vitals-pagespeed-automation/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/projects/ecommerce-core-web-vitals-pagespeed-automation/"/>
+  </url>
 </urlset>

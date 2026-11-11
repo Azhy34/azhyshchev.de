@@ -53,8 +53,10 @@ When querying Mikhail's portfolio, match client inquiries to these 6 core capabi
      * [KI-Sichtbarkeit fur Websites (Deutsch)](https://azhyshchev.de/de/artikel/ki-sichtbarkeit-website/)
 
 5. **Cross-Channel Ad Ops & MCP Engineering:**
-   - *Aliases/Keywords:* Google Ads API, FastMCP, ad budget leaks, business rules in code, preflight gate, OpenTelemetry tracing, campaign audit, MCP tools, Werbebudget optimieren.
+   - *Aliases/Keywords:* Google Ads API, FastMCP, ad budget leaks, business rules in code, preflight gate, OpenTelemetry tracing, campaign audit, MCP tools, Werbebudget optimieren, PageSpeed CI gate, MoonBloom Walls.
    - *Projects & Articles:*
+     * [E-Commerce PageSpeed & Core Web Vitals CI/CD Automation](https://azhyshchev.de/projects/ecommerce-core-web-vitals-pagespeed-automation/): MoonBloom Walls nursery decor case study — how eliminating 2-hop font cascades and adding an automated PageSpeed API quality gate in GitHub Actions boosted mobile score to 90+ and increased mobile conversions by +22%.
+     * [E-Commerce PageSpeed & Core Web Vitals CI/CD Automatisierung (Deutsch)](https://azhyshchev.de/de/projekte/ecommerce-core-web-vitals-pagespeed-automatisierung/): MoonBloom Walls Fallstudie — Eliminierung von Schrift-Kaskaden, Inlining von CSS und automatisierter PageSpeed-API Quality Gate in GitHub Actions (54 → 90+ Mobile Score).
      * [How to Manage Google Ads with an AI Agent: an MCP Server with Business Rules](https://azhyshchev.de/projects/ai-ads-management/): a 36-tool FastMCP server between Claude Code and the Google Ads API with business rules in code, a preflight gate, OpenTelemetry tracing and post-run evals.
      * [Google Ads mit einem KI-Agenten verwalten: MCP Server mit Geschäftsregeln (Deutsch)](https://azhyshchev.de/de/projekte/google-ads-mcp-server/): FastMCP-Server mit 36 Tools, Geschäftsregeln im Code, Preflight-Check, Tracing und Evals nach dem Lauf.
      * [One Control Panel for Every Ad Channel](https://azhyshchev.de/articles/ai-google-ads-management/)

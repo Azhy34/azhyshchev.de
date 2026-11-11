@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="/js/cookie-consent.js" defer></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="Case study on automating Google PageSpeed Insights & Core Web Vitals in CI/CD for MoonBloom Walls: mobile Lighthouse 54 to 90+, LCP cut to 2.4s, and +22% mobile conversion.">
+  <meta name="keywords" content="pagespeed automation, core web vitals ci cd, lighthouse github actions, ecommerce speed optimization, moonbloom walls, avoid chaining critical requests, google ads roas, mobile lcp optimization">
+  <meta name="author" content="Mikhail Azhyshchev">
+  <link rel="canonical" href="https://azhyshchev.de/projects/ecommerce-core-web-vitals-pagespeed-automation/">
+  <link rel="alternate" hreflang="en" href="https://azhyshchev.de/projects/ecommerce-core-web-vitals-pagespeed-automation/" />
+  <link rel="alternate" hreflang="de" href="https://azhyshchev.de/de/projekte/ecommerce-core-web-vitals-pagespeed-automatisierung/" />
+  <link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/projects/ecommerce-core-web-vitals-pagespeed-automation/" />
+
+  <meta property="og:site_name" content="Mikhail Azhyshchev">
+  <meta property="og:title" content="E-Commerce PageSpeed & Core Web Vitals CI/CD Automation">
+  <meta property="og:description" content="How an automated PageSpeed API quality gate in GitHub Actions protected Google Ads ROAS and lifted MoonBloom Walls mobile Lighthouse to 90+.">
+  <meta property="og:url" content="https://azhyshchev.de/projects/ecommerce-core-web-vitals-pagespeed-automation/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://azhyshchev.de/Azhyschev.JPG">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="E-Commerce PageSpeed & Core Web Vitals CI/CD Automation">
+  <meta name="twitter:description" content="How an automated PageSpeed API quality gate in GitHub Actions protected Google Ads ROAS and lifted MoonBloom Walls mobile Lighthouse to 90+.">
+
+  <title>E-Commerce PageSpeed &amp; Core Web Vitals CI/CD Automation | Mikhail Azhyshchev</title>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "TechArticle",
+        "@id": "https://azhyshchev.de/projects/ecommerce-core-web-vitals-pagespeed-automation/#article",
+        "headline": "E-Commerce PageSpeed & Core Web Vitals CI/CD Automation: MoonBloom Walls Case Study",
+        "description": "Technical case study on diagnosing and fixing Lighthouse critical request chains, image bottlenecks, and deploying an automated PageSpeed API quality gate in GitHub Actions.",
+        "author": {
+          "@type": "Person",
+          "@id": "https://azhyshchev.de/#person",
+          "name": "Mikhail Azhyshchev",
+          "url": "https://azhyshchev.de",
+          "sameAs": ["https://www.linkedin.com/in/azhyshchev/"]
+        },
+        "publisher": { "@id": "https://azhyshchev.de/#person" },
+        "datePublished": "2026-11-11",
+        "dateModified": "2026-11-11",
+        "inLanguage": "en",
+        "keywords": "pagespeed automation, core web vitals ci cd, lighthouse github actions, ecommerce speed optimization, moonbloom walls",
+        "url": "https://azhyshchev.de/projects/ecommerce-core-web-vitals-pagespeed-automation/",
+        "mainEntityOfPage": { "@id": "https://azhyshchev.de/projects/ecommerce-core-web-vitals-pagespeed-automation/#webpage" },
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://azhyshchev.de/projects/ecommerce-core-web-vitals-pagespeed-automation/#webpage",
+        "url": "https://azhyshchev.de/projects/ecommerce-core-web-vitals-pagespeed-automation/",
+        "name": "E-Commerce PageSpeed & Core Web Vitals CI/CD Automation | Mikhail Azhyshchev",
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" },
+        "inLanguage": "en",
+        "dateModified": "2026-11-11",
+        "breadcrumb": { "@id": "https://azhyshchev.de/projects/ecommerce-core-web-vitals-pagespeed-automation/#breadcrumb" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://azhyshchev.de/projects/ecommerce-core-web-vitals-pagespeed-automation/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://azhyshchev.de/" },
+          { "@type": "ListItem", "position": 2, "name": "Projects", "item": "https://azhyshchev.de/projects" },
+          { "@type": "ListItem", "position": 3, "name": "E-Commerce PageSpeed & Core Web Vitals CI/CD Automation" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How does automated PageSpeed testing in CI/CD prevent speed regressions?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "By calling the Google PageSpeed Insights REST API inside a GitHub Actions workflow on every Pull Request. If a new banner, unoptimized font, or heavy script drops the mobile Lighthouse score below 85 or pushes LCP beyond 2.5 seconds, the workflow fails, preventing slow code from reaching production."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why were critical request chains slowing down MoonBloom Walls?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The shop initially loaded Google Fonts through external CSS, causing a 2-hop sequential download (fonts.googleapis.com followed by fonts.gstatic.com). Self-hosting WOFF2 fonts with direct preload hints eliminated 388ms of blocking network delay."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What was the business impact on Google Ads campaigns?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Cutting mobile LCP from 6.8s to 2.4s reduced bounce rates on paid mobile traffic across Germany, Austria, and France, delivering a +22% increase in mobile checkout conversions."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <link rel="preload" href="/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <style>
+    @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400 800;font-display:swap;src:url('/fonts/jetbrains-mono-latin.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+    :root { --sky: #61b5e8; --mint: #b9ddb7; --cream: #f8f0dc; --yellow: #f5c84b; --pink: #efb2d5; --blue: #d8ebff; --peach: #f7d4b1; --coral: #ff9a77; --rose: #ecb0c4; --black: #111111; --white: #ffffff; --accent: var(--mint); }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { min-height: 100vh; font-family: 'JetBrains Mono', monospace; color: var(--black); background: linear-gradient(120deg, var(--sky) 0 34%, var(--peach) 34% 55%, var(--coral) 55% 72%, var(--rose) 72% 100%); padding: 48px 24px; }
+    a { color: inherit; text-decoration: none; }
+    .shell { width: min(1320px, 100%); margin: 0 auto; border: 3px solid var(--black); box-shadow: 12px 12px 0 var(--black); background: var(--mint); display: grid; grid-template-columns: 250px 1fr; min-height: 820px; overflow: hidden; }
+    .sidebar { border-right: 3px solid var(--black); padding: 20px 18px; display: flex; flex-direction: column; gap: 22px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 8px; }
+    .brand-badge { width: 42px; height: 34px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 1rem; font-weight: 800; }
+    .nav { display: flex; flex-direction: column; gap: 8px; }
+    .nav-item { display: flex; align-items: center; gap: 12px; padding: 11px 12px; font-size: 0.9rem; font-weight: 700; border: 2px solid transparent; transition: transform 0.18s ease; }
+    .nav-item:hover { transform: translate(-2px, -2px); }
+    .nav-item.active { background: var(--black); color: var(--white); }
+    .icon-box { width: 24px; height: 24px; display: grid; place-items: center; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); font-size: 0.75rem; font-weight: 800; }
+    .nav-item.active .icon-box { background: var(--yellow); color: var(--black); }
+    .sidebar-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+    .socials { display: flex; gap: 10px; padding-top: 8px; }
+    .social-link { width: 42px; height: 42px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 0.8rem; font-weight: 800; transition: transform 0.18s ease; }
+    .social-link:hover { transform: translate(-2px, -2px); }
+    .main { background: var(--cream); padding: 22px; }
+    .panel { border: 2px solid var(--black); background: rgba(255,255,255,0.2); padding: 18px; display: flex; flex-direction: column; gap: 28px; }
+    .breadcrumb { font-size: 0.78rem; opacity: 0.6; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .breadcrumb a:hover { opacity: 1; text-decoration: underline; }
+    .project-hero { border: 3px solid var(--black); background: var(--accent); box-shadow: 6px 6px 0 var(--black); padding: 28px 24px; }
+    .project-type { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; margin-bottom: 12px; }
+    .project-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.04em; margin-bottom: 16px; }
+    .project-lead { font-size: 0.95rem; line-height: 1.65; max-width: 72ch; }
+    .metrics-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+    .metric-box { border: 2px solid var(--black); background: rgba(255,255,255,0.85); padding: 14px 12px; }
+    .metric-box strong { display: block; font-size: 1.1rem; line-height: 1.2; margin-bottom: 6px; }
+    .metric-box span { font-size: 0.72rem; line-height: 1.4; opacity: 0.8; }
+    .project-body { display: flex; flex-direction: column; gap: 24px; }
+    .neo-card { border: 3px solid var(--black); background: var(--white); box-shadow: 6px 6px 0 var(--black); padding: 24px; }
+    .section-label { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.5; margin-bottom: 10px; }
+    .section-title { font-size: 1.15rem; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.02em; }
+    .prose { display: flex; flex-direction: column; gap: 14px; }
+    .prose p { font-size: 0.88rem; line-height: 1.75; }
+    .prose h3 { font-size: 0.98rem; font-weight: 800; margin-top: 12px; letter-spacing: -0.02em; }
+    .prose ul, .prose ol { padding-left: 18px; display: flex; flex-direction: column; gap: 8px; }
+    .prose li { font-size: 0.88rem; line-height: 1.65; }
+    .prose a { text-decoration: underline; text-underline-offset: 3px; font-weight: 700; }
+    .code-block { border: 2px solid var(--black); background: var(--cream); padding: 16px; font-size: 0.82rem; line-height: 1.5; overflow-x: auto; font-family: 'JetBrains Mono', monospace; margin: 12px 0; }
+    .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+    .comp-col { border: 2px solid var(--black); padding: 16px; }
+    .comp-col.before { background: #ffebeb; }
+    .comp-col.after { background: #eefbf0; }
+    .comp-title { font-weight: 800; font-size: 0.9rem; margin-bottom: 10px; display: flex; justify-content: space-between; }
+    .comp-item { font-size: 0.82rem; line-height: 1.6; padding: 6px 0; border-bottom: 1px dashed rgba(0,0,0,0.2); }
+    .comp-item:last-child { border-bottom: none; }
+    .cta-strip { border: 3px solid var(--black); background: var(--black); color: var(--white); box-shadow: 6px 6px 0 rgba(0,0,0,0.3); padding: 22px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .cta-strip p { font-size: 0.9rem; line-height: 1.6; max-width: 58ch; }
+    .cta-strip strong { display: block; font-size: 1.05rem; margin-bottom: 6px; }
+    .cta-btn { padding: 12px 20px; border: 2px solid var(--white); background: var(--white); color: var(--black); font: inherit; font-weight: 700; cursor: pointer; transition: transform 0.15s; display: inline-block; }
+    .cta-btn:hover { transform: translate(-2px,-2px); }
+    .cta-btn.yellow { background: var(--yellow); border-color: var(--yellow); color: var(--black); }
+    .faq { display: flex; flex-direction: column; gap: 14px; }
+    .faq-item { border: 2px solid var(--black); background: var(--cream); padding: 16px 18px; transition: transform 0.2s, box-shadow 0.2s; }
+    .faq-item:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--black); }
+    .faq-q { font-size: 0.88rem; font-weight: 800; cursor: pointer; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+    .faq-q::after { content: "+"; font-size: 1.3rem; font-weight: 900; }
+    .faq-item.open .faq-q::after { content: "-"; }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; font-size: 0.84rem; line-height: 1.7; opacity: 0.85; padding-top: 0; }
+    .faq-item.open .faq-a { max-height: 500px; padding-top: 10px; }
+    @media (max-width: 820px) {
+      body { padding: 10px 8px 72px; }
+      .shell { grid-template-columns: 1fr; box-shadow: 6px 6px 0 var(--black); }
+      .sidebar { display: none; }
+      .comparison-grid { grid-template-columns: 1fr; }
+      .metrics-row { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+  <style>/* mobile.css */a.brand{text-decoration:none;color:inherit}.brand{font-size:clamp(0.95rem,2.5vw,1.6rem);letter-spacing:-0.05em}.nav-toggle{display:none}.mobile-bottom-nav{display:none}@media (max-width:820px){html,body{overflow-x:hidden !important;max-width:100vw !important}body{padding:10px 8px 72px}.shell{grid-template-columns:1fr;box-shadow:6px 6px 0 var(--black);min-height:unset !important;min-width:0 !important;max-width:100% !important}.sidebar{border-right:none;border-bottom:3px solid var(--black);padding:10px 14px;flex-direction:row;align-items:center;justify-content:space-between;gap:0;flex-wrap:nowrap}.brand{margin-bottom:0}.nav-toggle,.nav,.sidebar-bottom{display:none !important}.main{padding:10px;min-width:0 !important;max-width:100% !important}.panel{padding:12px;gap:16px;min-width:0 !important;max-width:100% !important}.mobile-bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:999;background:var(--white);border-top:3px solid var(--black);box-shadow:0 -4px 0 var(--black)}.mbn-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:8px 4px;color:var(--black);text-decoration:none;font-family:'JetBrains Mono',monospace;font-weight:700;border-right:2px solid var(--black);min-height:56px}.mbn-item:last-child{border-right:none}.mbn-item.active{background:var(--black);color:var(--white)}.mbn-item.active .mbn-icon{background:var(--yellow);color:var(--black)}.mbn-icon{width:26px;height:26px;display:grid;place-items:center;border:2px solid var(--black);background:var(--white);font-size:0.65rem;font-weight:800}.mbn-label{font-size:0.58rem;font-weight:700;letter-spacing:-0.02em}}</style>
+</head>
+<body>
+  <div class="shell">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" data-nosnippet>
+      <a class="brand" href="/">
+        <div class="brand-badge">&lt;/&gt;</div>
+        <span>AZHYSHCHEV</span>
+      </a>
+      <nav class="nav">
+        <a class="nav-item" href="/">
+          <span class="icon-box">H</span>
+          <span>Home</span>
+        </a>
+        <a class="nav-item" href="/ai-checker">
+          <span class="icon-box">🤖</span>
+          <span>AI Checker</span>
+        </a>
+        <a class="nav-item" href="/experience">
+          <span class="icon-box">E</span>
+          <span>Experience</span>
+        </a>
+        <a class="nav-item active" href="/projects">
+          <span class="icon-box">P</span>
+          <span>Projects</span>
+        </a>
+        <a class="nav-item" href="/articles">
+          <span class="icon-box">A</span>
+          <span>Articles</span>
+        </a>
+        <a class="nav-item" href="/contact">
+          <span class="icon-box">C</span>
+          <span>Contact</span>
+        </a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a class="nav-item" href="/CV.pdf" download>
+          <span class="icon-box">CV</span>
+          <span>Resume</span>
+        </a>
+        <a class="nav-item" href="mailto:azhyshchev@gmail.com">
+          <span class="icon-box">@</span>
+          <span>Email</span>
+        </a>
+        <div class="socials">
+          <a class="social-link" href="https://www.linkedin.com/in/azhyshchev/" target="_blank" rel="noreferrer">in</a>
+          <a class="social-link" href="https://github.com/Azhy34" target="_blank" rel="noreferrer">gh</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+      <div class="panel">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Home</a>
+          <span>/</span>
+          <a href="/projects">Projects</a>
+          <span>/</span>
+          <span>MoonBloom Walls PageSpeed CI/CD Automation</span>
+        </nav>
+
+        <header class="project-hero">
+          <div class="project-type">E-Commerce Engineering · CI/CD Automation · Core Web Vitals</div>
+          <h1 class="project-title">E-Commerce PageSpeed &amp; Core Web Vitals CI/CD Automation: MoonBloom Walls</h1>
+          <p class="project-lead">
+            <strong>MoonBloom Walls sells designer nursery wallpapers with paid Google Ads across Germany, Austria, and France.</strong> Heavy room mockups and render-blocking font cascades initially bogged down mobile performance to a 54 Lighthouse score. By eliminating critical request chains, modernizing asset delivery, and deploying an automated PageSpeed API quality gate in GitHub Actions, mobile score rose to 90+, and mobile conversion grew by +22%.
+          </p>
+
+          <div class="metrics-row">
+            <div class="metric-box">
+              <strong>54 → 90+</strong>
+              <span>Mobile Lighthouse Score</span>
+            </div>
+            <div class="metric-box">
+              <strong>6.8s → 2.4s</strong>
+              <span>Largest Contentful Paint (LCP)</span>
+            </div>
+            <div class="metric-box">
+              <strong>0 Chains</strong>
+              <span>Zero Blocking Cascades</span>
+            </div>
+            <div class="metric-box">
+              <strong>+22%</strong>
+              <span>Mobile Checkout Conversion</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="project-body">
+          <!-- SECTION 1: THE BUSINESS CONTEXT -->
+          <article class="neo-card">
+            <div class="section-label">1. Context &amp; Diagnosis</div>
+            <h2 class="section-title">The Problem: High Ad Spend Burning on Slow Mobile Bounces</h2>
+            <div class="prose">
+              <p>
+                MoonBloom Walls (<a href="https://moonbloomwalls.com" target="_blank" rel="noreferrer">moonbloomwalls.com</a>) runs international Google Search and Shopping campaigns for premium children's wallpapers. In e-commerce home decor, more than 74% of traffic arrives from mobile phones via Instagram and Google Ads clicks.
+              </p>
+              <p>
+                Our initial audit revealed a critical bottleneck:
+              </p>
+              <ul>
+                <li><strong>Mobile Lighthouse score was 54 / 100:</strong> Largest Contentful Paint (LCP) lagged at 6.8 seconds on 4G connections.</li>
+                <li><strong>Critical Request Chains:</strong> External Google Fonts stylesheets created a 2-hop cascade delaying the first text render by 388ms.</li>
+                <li><strong>Unoptimized Imagery:</strong> High-resolution wallpaper pattern previews were loaded as uncompressed JPEGs without responsive srcset attributes.</li>
+              </ul>
+              <p>
+                When paying €1.20 to €3.50 per click in shopping campaigns, a 6.8s load time meant up to 40% of visitors bounced before seeing product pricing.
+              </p>
+            </div>
+          </article>
+
+          <!-- SECTION 2: ARCHITECTURE & FIXES -->
+          <article class="neo-card">
+            <div class="section-label">2. Engineering Fixes</div>
+            <h2 class="section-title">Technical Implementation: Eliminating Cascades &amp; Inlining CSS</h2>
+            <div class="prose">
+              <div class="comparison-grid">
+                <div class="comp-col before">
+                  <div class="comp-title">
+                    <span>❌ Before Optimization</span>
+                    <span>Score: 54</span>
+                  </div>
+                  <div class="comp-item"><strong>Font Cascade:</strong> Google Fonts 2-hop fetch (388ms delay)</div>
+                  <div class="comp-item"><strong>Hero Images:</strong> 1.8MB uncompressed JPEG mockups</div>
+                  <div class="comp-item"><strong>Render Block:</strong> Synchronous CSS &amp; tracking scripts</div>
+                  <div class="comp-item"><strong>LCP:</strong> 6.8s on simulated 4G mobile</div>
+                </div>
+
+                <div class="comp-col after">
+                  <div class="comp-title">
+                    <span>✅ After Optimization</span>
+                    <span>Score: 90+</span>
+                  </div>
+                  <div class="comp-item"><strong>Font Delivery:</strong> Local WOFF2 preload directly on origin (0ms delay)</div>
+                  <div class="comp-item"><strong>Hero Images:</strong> Next-Gen WebP/AVIF with responsive sizes (120KB)</div>
+                  <div class="comp-item"><strong>Render Block:</strong> Inlined above-the-fold CSS + deferred JS</div>
+                  <div class="comp-item"><strong>LCP:</strong> 2.4s on simulated 4G mobile</div>
+                </div>
+              </div>
+
+              <h3>1. WOFF2 Font Self-Hosting &amp; Preload</h3>
+              <p>
+                We removed external calls to <code>fonts.googleapis.com</code> and converted fonts to modern WOFF2. In the HTML head, we added direct preloading:
+              </p>
+              <div class="code-block">&lt;link rel="preload" href="/fonts/primary-latin.woff2" as="font" type="font/woff2" crossorigin&gt;</div>
+
+              <h3>2. Critical CSS Inlining</h3>
+              <p>
+                Header, navigation, and top viewport styles were extracted and inlined directly into a single <code>&lt;style&gt;</code> block in the initial HTML document, allowing immediate FCP at 1.3s.
+              </p>
+            </div>
+          </article>
+
+          <!-- SECTION 3: CI/CD QUALITY GATE -->
+          <article class="neo-card">
+            <div class="section-label">3. Automated CI/CD Protection</div>
+            <h2 class="section-title">The Innovation: GitHub Actions PageSpeed Quality Gate</h2>
+            <div class="prose">
+              <p>
+                In fast-moving e-commerce, speed optimizations tend to decay over time. A marketing manager uploads an uncompressed 4MB promotional banner, or a developer introduces an external script, silently tanking Core Web Vitals.
+              </p>
+              <p>
+                To prevent regressions permanently, we built an automated <strong>CI/CD Performance Gate</strong> in GitHub Actions:
+              </p>
+              <div class="code-block"># .github/workflows/pagespeed-gate.yml
+name: Core Web Vitals CI Gate
+on: [pull_request, push]
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Google PageSpeed Insights API Audit
+        run: |
+          python scripts/ci_pagespeed_check.py \
+            --url "https://preview.moonbloomwalls.com" \
+            --min-score 85 \
+            --max-lcp 2.5
+        env:
+          PAGESPEED_API_KEY: ${{ secrets.PAGESPEED_API_KEY }}</div>
+              <p>
+                <strong>How the gate operates:</strong> Every pull request and release build queries the official Google PageSpeed API. If the synthetic mobile audit reveals a performance score below 85 or an LCP greater than 2.5 seconds, the build pipeline fails automatically, with the Lighthouse report and failing audits posted as a PR comment.
+              </p>
+            </div>
+          </article>
+
+          <!-- CTA STRIP -->
+          <div class="cta-strip">
+            <div>
+              <strong>Audit Your Website with the Same PageSpeed API Engine</strong>
+              <p>Test your live Core Web Vitals, LCP, and critical request chains instantly with our free tool.</p>
+            </div>
+            <a href="/ai-checker/?tab=speed" class="cta-btn yellow">Test Your Website →</a>
+          </div>
+
+          <!-- FAQ SECTION -->
+          <article class="neo-card">
+            <div class="section-label">4. FAQ</div>
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq">
+              <div class="faq-item open">
+                <div class="faq-q">How does automated PageSpeed testing in CI/CD prevent speed regressions?</div>
+                <div class="faq-a">By calling the Google PageSpeed Insights REST API inside a GitHub Actions workflow on every Pull Request. If a new banner, unoptimized font, or heavy script drops the mobile Lighthouse score below 85 or pushes LCP beyond 2.5 seconds, the workflow fails, preventing slow code from reaching production.</div>
+              </div>
+
+              <div class="faq-item">
+                <div class="faq-q">Why were critical request chains slowing down MoonBloom Walls?</div>
+                <div class="faq-a">The shop initially loaded Google Fonts through external CSS, causing a 2-hop sequential download (fonts.googleapis.com followed by fonts.gstatic.com). Self-hosting WOFF2 fonts with direct preload hints eliminated 388ms of blocking network delay.</div>
+              </div>
+
+              <div class="faq-item">
+                <div class="faq-q">What was the business impact on Google Ads campaigns?</div>
+                <div class="faq-a">Cutting mobile LCP from 6.8s to 2.4s reduced bounce rates on paid mobile traffic across Germany, Austria, and France, delivering a +22% increase in mobile checkout conversions.</div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- MOBILE BOTTOM NAV -->
+  <nav class="mobile-bottom-nav" id="mobileBottomNav" data-nosnippet>
+    <a class="mbn-item" href="/">
+      <span class="mbn-icon">&lt;/&gt;</span>
+      <span class="mbn-label">Home</span>
+    </a>
+    <a class="mbn-item" href="/ai-checker">
+      <span class="mbn-icon">🤖</span>
+      <span class="mbn-label">AI Checker</span>
+    </a>
+    <a class="mbn-item" href="/experience">
+      <span class="mbn-icon">E</span>
+      <span class="mbn-label">Experience</span>
+    </a>
+    <a class="mbn-item active" href="/projects">
+      <span class="mbn-icon">P</span>
+      <span class="mbn-label">Projects</span>
+    </a>
+    <a class="mbn-item" href="/articles">
+      <span class="mbn-icon">A</span>
+      <span class="mbn-label">Articles</span>
+    </a>
+    <a class="mbn-item" href="/contact">
+      <span class="mbn-icon">C</span>
+      <span class="mbn-label">Contact</span>
+    </a>
+  </nav>
+
+  <footer data-nosnippet style="padding: 18px 12px 92px; text-align: center; font-size: 0.92rem; line-height: 1.8;">
+    <a href="/impressum">Impressum</a>
+    <span style="padding: 0 10px;">·</span>
+    <a href="/datenschutz">Datenschutzerklärung</a>
+    <span style="padding: 0 10px;">·</span>
+    <a href="/agb">AGB</a>
+    <span style="padding: 0 10px;">·</span>
+    <a href="/datenschutz#cookie-settings">Cookie-Einstellungen</a>
+  </footer>
+
+  <script src="/js/nav.js" defer fetchpriority="low"></script>
+  <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" defer></script>
+  <script>
+    document.querySelectorAll('.faq-q').forEach(function(q) {
+      q.addEventListener('click', function() {
+        var item = this.parentElement;
+        item.classList.toggle('open');
+      });
+    });
+  </script>
+</body>
+</html>
