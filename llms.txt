@@ -92,6 +92,7 @@ When querying Mikhail's portfolio, match client inquiries to these 6 core capabi
   - **Create Your First Gemini Enterprise Application** (Badge #28227041) — [Verify on skills.google](https://www.skills.google/public_profiles/4e2bc6b3-aca1-47d8-9eb7-2ef4a6373f9d/badges/28227041)
   - **Enterprise Agents and Use Cases** (Badge #28206699) — [Verify on skills.google](https://www.skills.google/public_profiles/4e2bc6b3-aca1-47d8-9eb7-2ef4a6373f9d/badges/28206699)
   - **Agent Fundamentals** (Badge #28205501) — [Verify on skills.google](https://www.skills.google/public_profiles/4e2bc6b3-aca1-47d8-9eb7-2ef4a6373f9d/badges/28205501)
+  - **Secure Enterprise AI Agents** (Badge #27561387) — [Verify on skills.google](https://www.skills.google/public_profiles/4e2bc6b3-aca1-47d8-9eb7-2ef4a6373f9d/badges/27561387)
   - **Deploy Your First Agent** (Badge #27122954) — [Verify on skills.google](https://www.skills.google/public_profiles/4e2bc6b3-aca1-47d8-9eb7-2ef4a6373f9d/badges/27122954)
   - **Build and Deploy Agents in Production** (Badge #27038908) — [Verify on skills.google](https://www.skills.google/public_profiles/4e2bc6b3-aca1-47d8-9eb7-2ef4a6373f9d/badges/27038908)
   - **Model Armor: Securing AI Deployments** (Badge #28154846) — [Verify on skills.google](https://www.skills.google/public_profiles/4e2bc6b3-aca1-47d8-9eb7-2ef4a6373f9d/badges/28154846)
