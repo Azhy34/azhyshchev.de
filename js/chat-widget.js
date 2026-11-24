@@ -216,7 +216,20 @@
       }
     };
 
+    // Silent Cloud Run warm-up ping (throttled to once per 5 min) when user opens chat
+    const warmUpBackend = () => {
+      try {
+        const lastPing = Number(sessionStorage.getItem('portfolio_chat_last_warmup') || '0');
+        if (Date.now() - lastPing < 5 * 60 * 1000) return;
+        sessionStorage.setItem('portfolio_chat_last_warmup', String(Date.now()));
+        const healthUrl = widgetApiUrl.replace(/\/api\/chat\/?$/, '/health');
+        fetch(healthUrl, { method: 'GET', mode: 'no-cors', keepalive: true }).catch(() => {});
+      } catch (e) {}
+    };
+
     const openDrawer = () => {
+      // Wake up Cloud Run container while user selects language / types first message
+      warmUpBackend();
       // Remove proactive teaser if visible
       const teaser = document.getElementById('nbw-proactive-teaser');
       if (teaser) teaser.remove();
