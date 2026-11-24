@@ -611,6 +611,30 @@
         <!-- Article grid -->
         <div class="articles-grid" id="articlesGrid">
 
+          <!-- Card: AI Agent on Google Cloud Run: Why Default Concurrency=80 Breaks Production -->
+          <article class="article-card" data-tags="automation cloud ai-agent" data-modal="modal-google-cloud-run-ai-agent">
+            <div class="card-accent" style="background: var(--blue);"></div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span class="card-type">Cloud Architecture</span>
+                <span class="card-readtime">6 min read</span>
+              </div>
+              <h2 class="card-title">AI Agent on Google Cloud Run: Why Default Concurrency=80 Breaks Production</h2>
+              <p class="card-excerpt">In 2nd Gen Cloud Run functions, 1 vCPU silently sets concurrency=80. How replacing that OOM trap with concurrency=15, Cloud Pub/Sub (concurrency=5), and ContextVar protects uptime and cloud budgets.</p>
+              <div class="card-tags">
+                <span class="tag">Google Cloud Run</span>
+                <span class="tag">AI Agent</span>
+                <span class="tag">Cloud Pub/Sub</span>
+                <span class="tag">Google ADK</span>
+                <span class="tag">Python</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="metric-pill">Capacity: <span>150-200 users · 0 OOM</span></div>
+              <a class="read-link" href="/articles/google-cloud-run-ai-agent/">Read full article →</a>
+            </div>
+          </article>
+
           <!-- Card: Google PageSpeed Insights: Critical Request Chains & Core Web Vitals -->
           <article class="article-card" data-tags="automation seo pagespeed" data-modal="modal-pagespeed-insights-critical-request-chains-core-web-vitals">
             <div class="card-accent" style="background: var(--yellow);"></div>
@@ -1202,6 +1226,46 @@
   </div>
 
   <!-- ── MODALS ── -->
+
+  <!-- Modal: AI Agent on Google Cloud Run: Concurrency & Pub/Sub -->
+  <div class="modal-overlay" id="modal-google-cloud-run-ai-agent" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-section-label">Cloud Architecture · Google Cloud Run · Pub/Sub</div>
+          <h2 class="modal-title">AI Agent on Google Cloud Run: Why Default Concurrency=80 Breaks Production</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-google-cloud-run-ai-agent')">&#x2715;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <div class="modal-section-label">Problem</div>
+          <div class="modal-text">
+            <p>In 2nd Gen Cloud Run / Firebase Functions, allocating 1 vCPU silently sets concurrency=80 per container. Under traffic spikes, 80 stateful AI agent sessions crash 1 GB containers with OOM errors, dropping live shoppers and breaking post-payment webhooks.</p>
+          </div>
+        </div>
+        <div>
+          <div class="modal-section-label">Solution &amp; Architecture</div>
+          <div class="modal-text">
+            <p>Splitting traffic into two layers: Direct HTTP with concurrency=15 (serving 150-200 live chat users on 1 GB RAM) and Eventarc + Cloud Pub/Sub with concurrency=5 (buffering 1,000+ background events with zero 429s), plus Python ContextVar for thread-safe tracing.</p>
+          </div>
+          <div class="modal-stack">
+            <span class="stack-chip">Google Cloud Run</span>
+            <span class="stack-chip">Cloud Pub/Sub</span>
+            <span class="stack-chip">Eventarc</span>
+            <span class="stack-chip">Google ADK</span>
+            <span class="stack-chip">Python ContextVar</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center;">
+        <div style="display: flex; gap: 10px; width: 100%; justify-content: center; align-items: center; flex-wrap: wrap;">
+          <a class="action-btn dark" href="/articles/google-cloud-run-ai-agent/" style="font-size: 0.92rem; padding: 12px 24px; font-weight: 800;">Read full article →</a>
+          <button class="mini-btn" onclick="closeModal('modal-google-cloud-run-ai-agent')">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Modal: Google PageSpeed Insights: Critical Request Chains & Core Web Vitals -->
   <div class="modal-overlay" id="modal-pagespeed-insights-critical-request-chains-core-web-vitals" role="dialog" aria-modal="true">

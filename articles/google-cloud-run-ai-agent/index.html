@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="/js/cookie-consent.js" defer></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow">
+
+  <meta name="description" content="Running an AI agent on Google Cloud Run? The default concurrency=80 causes OOM crashes. Learn how concurrency=15, Cloud Pub/Sub, and ContextVar protect uptime and budgets.">
+  <meta name="keywords" content="ai agent, google cloud run, ai automation, cloud pub sub, cloud run concurrency, google adk, firebase functions 2nd gen, out of memory crash, AI-Enabled Automation Engineer">
+  <meta name="author" content="Mikhail Azhyshchev">
+  <link rel="canonical" href="https://azhyshchev.de/articles/google-cloud-run-ai-agent/">
+  <link rel="alternate" hreflang="en" href="https://azhyshchev.de/articles/google-cloud-run-ai-agent/" />
+  <link rel="alternate" hreflang="de" href="https://azhyshchev.de/de/artikel/google-cloud-run-ki-agent/" />
+  <link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/articles/google-cloud-run-ai-agent/" />
+
+  <!-- WebMCP & A2A Agent Discovery Protocols -->
+  <link rel="model-context" type="application/json" href="/.well-known/agent-card.json">
+  <link rel="agent-card" type="application/json" href="/.well-known/agent-card.json">
+  <meta name="agent-ready" content="true">
+  <meta name="agent-protocol" content="WebMCP/0.3, A2A/1.0">
+  <meta name="agent-url" content="https://azhy-ai-consultant-377331886416.europe-west3.run.app">
+  <meta name="agent-package" content="de.azhyshchev.azhy_ai_consultant">
+
+  <meta property="og:site_name" content="Mikhail Azhyshchev">
+  <meta property="og:title" content="AI Agent on Google Cloud Run: Why Default Concurrency=80 Breaks Production">
+  <meta property="og:description" content="Why Google Cloud Run's default concurrency=80 causes OOM crashes for AI agents, what it costs your business, and how Sync HTTP + Cloud Pub/Sub fixes it.">
+  <meta property="og:url" content="https://azhyshchev.de/articles/google-cloud-run-ai-agent/">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://azhyshchev.de/articles/google-cloud-run-ai-agent/og.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1920">
+  <meta property="og:image:height" content="1080">
+  <meta property="og:image:alt" content="Two-Layer Request Routing for Production AI Agents: Direct HTTP vs. Cloud Pub/Sub on Google Cloud Run">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AI Agent on Google Cloud Run: Concurrency &amp; Pub/Sub Architecture">
+  <meta name="twitter:description" content="Replacing the silent concurrency=80 OOM trap with warm containers (15 slots), Cloud Pub/Sub queues (5 slots), and Python ContextVar.">
+  <meta name="twitter:image" content="https://azhyshchev.de/articles/google-cloud-run-ai-agent/og.png">
+
+  <title>AI Agent on Google Cloud Run: Concurrency &amp; Pub/Sub | Mikhail Azhyshchev</title>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "TechArticle",
+        "@id": "https://azhyshchev.de/articles/google-cloud-run-ai-agent/#article",
+        "headline": "AI Agent on Google Cloud Run: Why Default Concurrency=80 Breaks Production",
+        "image": "https://azhyshchev.de/articles/google-cloud-run-ai-agent/og.png",
+        "description": "Production guide to tuning Google Cloud Run concurrency, memory limits, Cloud Pub/Sub buffering, and Python ContextVar thread-safety for AI agents.",
+        "author": {
+          "@type": "Person",
+          "@id": "https://azhyshchev.de/#person",
+          "name": "Mikhail Azhyshchev",
+          "url": "https://azhyshchev.de",
+          "sameAs": ["https://www.linkedin.com/in/azhyshchev/"]
+        },
+        "publisher": { "@id": "https://azhyshchev.de/#person" },
+        "datePublished": "2026-11-24",
+        "dateModified": "2026-11-24",
+        "inLanguage": "en",
+        "keywords": "ai agent, google cloud run, ai automation, cloud pub sub, cloud run concurrency, google adk, python contextvar",
+        "url": "https://azhyshchev.de/articles/google-cloud-run-ai-agent/",
+        "mainEntityOfPage": { "@id": "https://azhyshchev.de/articles/google-cloud-run-ai-agent/#webpage" },
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://azhyshchev.de/articles/google-cloud-run-ai-agent/#webpage",
+        "url": "https://azhyshchev.de/articles/google-cloud-run-ai-agent/",
+        "name": "AI Agent on Google Cloud Run: Concurrency & Pub/Sub | Mikhail Azhyshchev",
+        "description": "How to prevent OOM crashes, 429 errors, and runaway cloud bills when running AI agents on Google Cloud Run.",
+        "isPartOf": { "@id": "https://azhyshchev.de/#website" },
+        "author": { "@id": "https://azhyshchev.de/#person" },
+        "dateModified": "2026-11-24",
+        "inLanguage": "en",
+        "breadcrumb": { "@id": "https://azhyshchev.de/articles/google-cloud-run-ai-agent/#breadcrumb" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://azhyshchev.de/articles/google-cloud-run-ai-agent/#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://azhyshchev.de/" },
+          { "@type": "ListItem", "position": 2, "name": "Articles", "item": "https://azhyshchev.de/articles/" },
+          { "@type": "ListItem", "position": 3, "name": "AI Agent on Google Cloud Run: Concurrency & Pub/Sub" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Why does an AI agent crash with Out-Of-Memory on Google Cloud Run?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "In Google Cloud Run and Firebase Functions 2nd Gen, allocating 1 vCPU (typical at 512 MB or 1 GB RAM) silently defaults concurrency to 80 requests per container. While fine for simple JSON APIs, 80 simultaneous stateful AI agent sessions (Google ADK or LangGraph) exceed 1 GB RAM and trigger an OOM crash."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How many live chat users can concurrency=15 handle on a 1 GB Cloud Run container?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A concurrency slot is only held during the 3 to 5 seconds of active LLM inference, not while a user reads or types. Setting concurrency=15 on one warm 1 GB container safely serves roughly 150 to 200 concurrent shoppers on a website with zero cold starts."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "When should an AI automation pipeline use Cloud Pub/Sub instead of direct HTTP?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Use direct HTTP with concurrency=15 when the customer is waiting on the screen (live chat or checkout). Use Eventarc and Cloud Pub/Sub with concurrency=5 for background work such as post-payment webhooks, email dispatch, or AI support drafts so traffic bursts of 1,000+ events never cause 429 errors or lost orders."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What code changes are required when running Cloud Run with concurrency greater than 1?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Cloud Run shares container memory across parallel requests. Store per-request telemetry (trace_id, span_id, user context) in Python ContextVar instead of plain globals, guard shared in-memory caches with threading.Lock(), and reuse a global requests.Session() pool to save 50 to 150 ms per TLS handshake."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preload" href="/fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <style>
+    @font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400 800;font-display:swap;src:url('/fonts/jetbrains-mono-latin.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+    :root { --sky: #61b5e8; --mint: #b9ddb7; --cream: #f8f0dc; --yellow: #f5c84b; --pink: #efb2d5; --blue: #d8ebff; --peach: #f7d4b1; --coral: #ff9a77; --rose: #ecb0c4; --black: #111111; --white: #ffffff; --accent: var(--blue); }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { min-height: 100vh; font-family: 'JetBrains Mono', monospace; color: var(--black); background: linear-gradient(120deg, var(--sky) 0 34%, var(--peach) 34% 55%, var(--coral) 55% 72%, var(--rose) 72% 100%); padding: 48px 24px; }
+    a { color: inherit; text-decoration: none; }
+    .shell { width: min(1320px, 100%); margin: 0 auto; border: 3px solid var(--black); box-shadow: 12px 12px 0 var(--black); background: var(--mint); display: grid; grid-template-columns: 250px 1fr; min-height: 820px; overflow: hidden; }
+    .sidebar { border-right: 3px solid var(--black); padding: 20px 18px; display: flex; flex-direction: column; gap: 22px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 1.6rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 8px; }
+    .brand-badge { width: 42px; height: 34px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 1rem; font-weight: 800; }
+    .nav { display: flex; flex-direction: column; gap: 8px; }
+    .nav-item { display: flex; align-items: center; gap: 12px; padding: 11px 12px; font-size: 0.9rem; font-weight: 700; border: 2px solid transparent; transition: transform 0.18s ease; }
+    .nav-item:hover { transform: translate(-2px, -2px); }
+    .nav-item.active { background: var(--black); color: var(--white); }
+    .icon-box { width: 24px; height: 24px; display: grid; place-items: center; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); font-size: 0.75rem; font-weight: 800; }
+    .nav-item.active .icon-box { background: var(--yellow); color: var(--black); }
+    .sidebar-bottom { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+    .socials { display: flex; gap: 10px; padding-top: 8px; }
+    .social-link { width: 42px; height: 42px; border: 2px solid var(--black); background: var(--white); box-shadow: 3px 3px 0 var(--black); display: grid; place-items: center; font-size: 0.8rem; font-weight: 800; transition: transform 0.18s ease; }
+    .social-link:hover { transform: translate(-2px, -2px); }
+    .main { background: var(--cream); padding: 22px; }
+    .panel { border: 2px solid var(--black); background: rgba(255,255,255,0.2); padding: 18px; display: flex; flex-direction: column; gap: 28px; }
+    .breadcrumb { font-size: 0.78rem; opacity: 0.65; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .breadcrumb a:hover { opacity: 1; text-decoration: underline; }
+    .article-hero { border: 3px solid var(--black); background: var(--accent); box-shadow: 6px 6px 0 var(--black); padding: 28px 24px; }
+    .article-type { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.65; margin-bottom: 12px; }
+    .article-title { font-size: clamp(1.6rem, 3vw, 2.35rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.04em; margin-bottom: 16px; }
+    .article-lead { font-size: 0.94rem; line-height: 1.68; max-width: 74ch; }
+    .article-lead + .article-lead { margin-top: 12px; }
+    .metrics-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+    .metric-box { border: 2px solid var(--black); background: rgba(255,255,255,0.82); padding: 14px 12px; }
+    .metric-box strong { display: block; font-size: 1.08rem; line-height: 1.2; margin-bottom: 6px; }
+    .metric-box span { font-size: 0.74rem; line-height: 1.4; opacity: 0.85; }
+    .article-body { display: flex; flex-direction: column; gap: 24px; }
+    .neo-card { border: 3px solid var(--black); background: var(--white); box-shadow: 6px 6px 0 var(--black); padding: 24px; }
+    .section-label { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.5; margin-bottom: 10px; }
+    .section-title { font-size: 1.15rem; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.02em; }
+    .prose { display: flex; flex-direction: column; gap: 14px; }
+    .prose p { font-size: 0.88rem; line-height: 1.75; }
+    .prose h3 { font-size: 0.96rem; font-weight: 800; margin-top: 10px; letter-spacing: -0.02em; }
+    .prose ul, .prose ol { padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+    .prose li { font-size: 0.88rem; line-height: 1.65; }
+    .prose a { text-decoration: underline; text-underline-offset: 3px; }
+    .highlight-box { border: 3px solid var(--black); background: var(--yellow); box-shadow: 4px 4px 0 var(--black); padding: 20px 22px; margin-top: 8px; }
+    .highlight-box h3 { font-size: 1rem; font-weight: 800; margin-bottom: 10px; }
+    .highlight-box p { font-size: 0.86rem; line-height: 1.7; }
+    .diagram-frame { border: 3px solid var(--black); background: var(--white); padding: 10px; margin: 8px 0; }
+    .diagram-frame img { width: 100%; height: auto; display: block; }
+    .diagram-caption { font-size: 0.75rem; opacity: 0.72; margin-top: 8px; line-height: 1.5; }
+    .code-neo { border: 2px solid var(--black); background: #141820; color: #f8fafc; padding: 18px 20px; overflow-x: auto; font-size: 0.8rem; line-height: 1.6; }
+    .table-wrap { overflow-x: auto; margin: 6px 0; }
+    .data-table { width: 100%; border-collapse: collapse; border: 2px solid var(--black); font-size: 0.8rem; line-height: 1.55; }
+    .data-table th, .data-table td { border: 2px solid var(--black); padding: 10px 12px; text-align: left; vertical-align: top; }
+    .data-table th { background: var(--black); color: var(--white); font-weight: 800; }
+    .data-table tr:nth-child(even) td { background: var(--cream); }
+    .faq { display: flex; flex-direction: column; gap: 14px; }
+    .faq-item { border: 2px solid var(--black); background: var(--cream); padding: 16px 18px; }
+    .faq-q { font-size: 0.9rem; font-weight: 800; cursor: pointer; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; user-select: none; }
+    .faq-q::after { content: "+"; font-size: 1.3rem; font-weight: 900; flex-shrink: 0; }
+    .faq-item.open .faq-q::after { content: "-"; }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding-top 0.2s ease; padding-top: 0; font-size: 0.84rem; line-height: 1.7; opacity: 0.9; }
+    .faq-item.open .faq-a { max-height: 900px; padding-top: 12px; }
+    .cta-strip { border: 3px solid var(--black); background: var(--black); color: var(--white); box-shadow: 6px 6px 0 rgba(0,0,0,0.3); padding: 22px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .cta-strip p { font-size: 0.88rem; line-height: 1.6; max-width: 58ch; }
+    .cta-strip strong { display: block; font-size: 1.05rem; margin-bottom: 6px; }
+    .cta-btn { padding: 12px 20px; border: 2px solid var(--white); background: var(--white); color: var(--black); font: inherit; font-weight: 700; cursor: pointer; transition: transform 0.15s; display: inline-block; }
+    .cta-btn:hover { transform: translate(-2px,-2px); }
+    .cta-btn.outline { background: transparent; color: var(--white); }
+    .back-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 2px solid var(--black); background: var(--white); box-shadow: 4px 4px 0 var(--black); font-size: 0.82rem; font-weight: 700; align-self: flex-start; }
+    .site-footer { font-size: 0.74rem; opacity: 0.7; padding-top: 8px; border-top: 2px solid var(--black); display: flex; gap: 10px; flex-wrap: wrap; }
+    @media (max-width: 1100px) { .shell { grid-template-columns: 220px 1fr; } .metrics-row { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 820px) { body { padding: 10px 8px 72px; } .shell { grid-template-columns: 1fr; box-shadow: 6px 6px 0 var(--black); min-height: unset; } .sidebar { border-right: none; border-bottom: 3px solid var(--black); padding: 10px 14px; flex-direction: row; align-items: center; justify-content: space-between; } .nav, .sidebar-bottom { display: none; } .main { padding: 14px; } }
+    @media (max-width: 520px) { .metrics-row { grid-template-columns: 1fr; } .article-title { font-size: 1.5rem; } }
+  </style>
+  <link rel="stylesheet" href="/mobile.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link" style="position:absolute;left:-9999px;">Skip to content</a>
+
+  <div class="shell">
+    <aside class="sidebar" data-nosnippet>
+      <a class="brand" href="/"><div class="brand-badge">&lt;/&gt;</div><span>AZHYSHCHEV</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">&#9776;</button>
+      <nav class="nav" aria-label="Main Navigation">
+        <a class="nav-item" href="/"><span class="icon-box">H</span><span>Home</span></a>
+        <a class="nav-item" href="/ai-checker/"><span class="icon-box">🤖</span><span>AI Checker</span></a>
+        <a class="nav-item" href="/experience/"><span class="icon-box">E</span><span>Experience</span></a>
+        <a class="nav-item" href="/projects/"><span class="icon-box">P</span><span>Projects</span></a>
+        <a class="nav-item active" href="/articles/"><span class="icon-box">A</span><span>Articles</span></a>
+        <a class="nav-item" href="/skills/"><span class="icon-box">S</span><span>Skills</span></a>
+        <a class="nav-item" href="/certifications/"><span class="icon-box">🎓</span><span>Certificates</span></a>
+        <a class="nav-item" href="/contact/"><span class="icon-box">C</span><span>Contact</span></a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a class="nav-item" href="/CV.pdf" download><span class="icon-box">CV</span><span>Download CV</span></a>
+        <a class="nav-item" href="mailto:azhyshchev@gmail.com"><span class="icon-box">@</span><span>Email</span></a>
+        <div class="socials">
+          <a class="social-link" href="https://www.linkedin.com/in/azhyshchev/" target="_blank" rel="noreferrer">in</a>
+          <a class="social-link" href="https://github.com/Azhy34" target="_blank" rel="noreferrer">gh</a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main" id="main-content">
+      <div class="panel">
+        <div class="breadcrumb">
+          <a href="/">Home</a> / <a href="/articles/">Articles</a> / <span>AI Agent on Google Cloud Run</span>
+        </div>
+
+        <header class="article-hero">
+          <div class="article-type">Production Architecture · Google Cloud Run · AI Automation</div>
+          <h1 class="article-title">AI Agent on Google Cloud Run: Why Default Concurrency=80 Breaks Production</h1>
+          <p class="article-lead">
+            <strong>Direct answer:</strong> In Google Cloud Run (2nd Gen Firebase Functions), allocating 1 vCPU silently sets <code>concurrency=80</code> per container. For a stateful AI agent running Google ADK or LangGraph on 512 MB or 1 GB RAM, 80 parallel sessions trigger Out-Of-Memory (OOM) crashes, dropped customer chats, and cold-start latency spikes.
+          </p>
+          <p class="article-lead">
+            Here is the business impact of leaving that default untouched, and the two-layer architecture (<code>concurrency=15</code> Direct HTTP + <code>Cloud Pub/Sub</code> with <code>concurrency=5</code>) I enforce in production in Frankfurt (<code>europe-west3</code>).
+          </p>
+          <div class="metrics-row">
+            <div class="metric-box"><strong>concurrency=15</strong><span>Handles 150-200 live chat users on 1 GB RAM</span></div>
+            <div class="metric-box"><strong>concurrency=5</strong><span>Safe 512 MB worker behind Cloud Pub/Sub</span></div>
+            <div class="metric-box"><strong>0.1s Ack</strong><span>Webhook writes to Firestore &amp; exits fast</span></div>
+            <div class="metric-box"><strong>max_instances=3</strong><span>Hard cloud budget &amp; DB protection</span></div>
+          </div>
+        </header>
+
+        <article class="article-body">
+          <section class="neo-card" id="business-impact">
+            <div class="section-label">01 · Business Risk</div>
+            <h2 class="section-title">What the Silent concurrency=80 Flag Actually Costs Your Business</h2>
+            <div class="prose">
+              <p>
+                Most teams discover container limits only after launching a campaign or connecting an AI agent to live e-commerce traffic. Because <code>concurrency=80</code> is applied silently whenever a 2nd Gen function gets 1 vCPU, the system looks healthy in local tests and fails exactly when real customers arrive.
+              </p>
+              <ul>
+                <li><strong>Lost paid clicks during traffic peaks:</strong> When 20 to 80 shoppers open your AI shopping assistant during a Google Ads or social media push, a single OOM crash kills the container and drops every active chat session at once.</li>
+                <li><strong>Broken post-payment workflows:</strong> If payment webhooks (for example Stripe) wait on slow synchronous AI or email calls, bursts exceed your instance cap and return <code>429 Too Many Requests</code> errors, delaying order confirmations and support hand-offs.</li>
+                <li><strong>Unpredictable cloud bills:</strong> Removing <code>max_instances</code> to "fix" crashes exposes your cloud budget and external LLM API quotas to bot spikes and retry storms.</li>
+              </ul>
+              <div class="highlight-box">
+                <h3>Business Rule for Production AI</h3>
+                <p>Default serverless settings are tuned for stateless JSON endpoints, not stateful AI agents. Controlling concurrency and adding a Pub/Sub buffer turns unpredictable OOM outages into a fixed, quantifiable capacity model.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="neo-card" id="warm-container-math">
+            <div class="section-label">02 · Capacity Math</div>
+            <h2 class="section-title">Why concurrency=15 Serves 150 to 200 Live Users on One 1 GB Container</h2>
+            <div class="prose">
+              <p>
+                Lowering concurrency from 80 to 15 does not mean only 15 people can visit your site. You have to separate <em>active chat sessions on screen</em> from <em>in-flight server turns</em>:
+              </p>
+              <ul>
+                <li>A concurrency slot is <strong>not</strong> occupied while a customer reads the answer or types a follow-up question. Idle readers consume <strong>0 slots</strong>.</li>
+                <li>A slot is held only for the <strong>3 to 5 seconds</strong> of active LLM inference after the customer clicks Send. Once the response returns, the slot is released immediately.</li>
+                <li>In real e-commerce traffic, 15 simultaneous in-flight turns within the same 4-second window correspond to roughly <strong>150 to 200 active shoppers</strong> chatting at the same time.</li>
+                <li>Paired with <code>max_instances=3</code>, the backend safely absorbs <strong>45 simultaneous active LLM requests per second</strong> while staying well below the 1 GB RAM ceiling.</li>
+              </ul>
+
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Configuration</th>
+                      <th>RAM</th>
+                      <th>Concurrency</th>
+                      <th>Transport</th>
+                      <th>Production Result</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Default 2nd Gen SDK</strong></td>
+                      <td>512 MB - 1 GB</td>
+                      <td><code>80</code> (silent)</td>
+                      <td>Direct HTTP</td>
+                      <td>OOM crash under spike, dropped sessions, forced cold starts</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Path A: Live AI Chat</strong></td>
+                      <td>1 GB</td>
+                      <td><code>15</code></td>
+                      <td>Direct HTTP</td>
+                      <td>150-200 live users per warm container, zero cold-start lag</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Path B: Background Agent</strong></td>
+                      <td>512 MB</td>
+                      <td><code>5</code></td>
+                      <td>Eventarc + Pub/Sub</td>
+                      <td>Buffers 1,000+ burst events, zero 429s, auto-retry on 500</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section class="neo-card" id="two-layer-architecture">
+            <div class="section-label">03 · Two-Layer Architecture</div>
+            <h2 class="section-title">Splitting Workloads: Direct HTTP vs. Cloud Pub/Sub Buffering</h2>
+            <div class="prose">
+              <p>
+                Not every AI task should hit a container synchronously. I split production backends in <code>europe-west3</code> into two paths based on user intent and urgency:
+              </p>
+              <div class="diagram-frame">
+                <img src="/articles/google-cloud-run-ai-agent/architecture.png" alt="Two-Layer Request Routing on Google Cloud Run: Synchronous Direct HTTP (1 GB, concurrency=15) vs Asynchronous Eventarc and Cloud Pub/Sub (512 MB, concurrency=5)" loading="lazy">
+                <div class="diagram-caption">Two-layer production routing on Google Cloud Run (2nd Gen): Direct HTTP for live user-facing chat, Eventarc + Cloud Pub/Sub for background AI drafts and webhooks.</div>
+              </div>
+
+              <h3>Path A: Synchronous Live Chat (1 GB RAM, concurrency=15)</h3>
+              <p>
+                When the customer is waiting on the screen (for instance, asking a <a href="/articles/rag-sales-agent-ecommerce/?utm_source=portfolio&amp;utm_medium=internal&amp;utm_campaign=google_cloud_run_ai_agent&amp;utm_content=ecommerce_agent_link">RAG e-commerce assistant</a> about product size or parcel status), the request goes via Direct HTTP to a warm container with <code>google-adk</code> already loaded in memory.
+              </p>
+
+              <h3>Path B: Asynchronous Background Agent (512 MB RAM, Pub/Sub + concurrency=5)</h3>
+              <p>
+                When the task happens in the background (sending order emails after Stripe payment or drafting a Telegram reply for a human operator), the webhook writes to Firestore in <strong>0.1 seconds</strong> and releases the caller. Eventarc and Cloud Pub/Sub buffer up to 1,000+ burst events and feed them into the 512 MB worker in controlled batches of 5.
+              </p>
+
+              <pre class="code-neo"><code>from firebase_functions import https_fn, firestore_fn, options
+
+# Path A: Synchronous Live AI Chat (1 GB RAM, 15 concurrent turns)
+@https_fn.on_request(
+    region="europe-west3",
+    memory=options.MemoryOption.GB_1,
+    concurrency=15,
+    max_instances=3,
+    timeout_sec=30,
+)
+def berater_api(req: https_fn.Request) -&gt; https_fn.Response:
+    return handle_live_chat(req)
+
+
+# Path B: Background AI Support Agent behind Pub/Sub + Eventarc (512 MB RAM)
+@firestore_fn.on_document_created(
+    document="telegram_support_outbox/{docId}",
+    region="europe-west3",
+    memory=options.MemoryOption.MB_512,
+    concurrency=5,
+    max_instances=3,
+    timeout_sec=120,
+)
+def deliver_support_outbox(event: firestore_fn.Event) -&gt; None:
+    process_support_draft(event)</code></pre>
+            </div>
+          </section>
+
+          <section class="neo-card" id="thread-safety">
+            <div class="section-label">04 · Code Safety</div>
+            <h2 class="section-title">Thread-Safety Inside Warm Containers When concurrency &gt; 1</h2>
+            <div class="prose">
+              <p>
+                Increasing concurrency above 1 introduces one strict requirement: Cloud Run does not isolate memory between parallel requests inside the same container. Storing a customer's <code>trace_id</code> or <code>span_id</code> in a plain global variable causes concurrent sessions to overwrite each other's data.
+              </p>
+              <pre class="code-neo"><code>import contextvars
+import threading
+import requests
+
+# 1. Isolate per-request telemetry (trace_id, span_id) across parallel threads
+_log_context: contextvars.ContextVar[dict] = contextvars.ContextVar(
+    "_log_context", default={}
+)
+
+# 2. Protect shared in-memory token caches or rate limiters with a lock
+_cache_lock = threading.Lock()
+_token_cache = {}
+
+# 3. Reuse a global HTTP session pool (saves 50-150ms per TLS handshake)
+_http_session = requests.Session()</code></pre>
+              <p>
+                Combining <code>ContextVar</code> isolation with a global Keep-Alive <code>requests.Session()</code> keeps data consistency intact while cutting 50 to 150 ms of TLS overhead from every external API call.
+              </p>
+            </div>
+          </section>
+
+          <section class="neo-card" id="faq">
+            <div class="section-label">05 · FAQ</div>
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq">
+              <div class="faq-item">
+                <div class="faq-q">Why does an AI agent crash with Out-Of-Memory on Google Cloud Run?</div>
+                <div class="faq-a">In Google Cloud Run and Firebase Functions 2nd Gen, allocating 1 vCPU (standard at 512 MB or 1 GB RAM) silently defaults concurrency to 80 requests per container. While fine for simple JSON APIs, 80 simultaneous stateful AI agent sessions exceed 1 GB RAM and trigger an OOM crash.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">How many live chat users can concurrency=15 handle on a 1 GB Cloud Run container?</div>
+                <div class="faq-a">A concurrency slot is only held during the 3 to 5 seconds of active LLM inference, not while a user reads or types. Setting concurrency=15 on one warm 1 GB container safely serves roughly 150 to 200 concurrent shoppers on a website with zero cold starts.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">When should an AI automation pipeline use Cloud Pub/Sub instead of direct HTTP?</div>
+                <div class="faq-a">Use direct HTTP with concurrency=15 when the customer is waiting on the screen (live chat or checkout). Use Eventarc and Cloud Pub/Sub with concurrency=5 for background work such as post-payment webhooks, email dispatch, or AI support drafts so traffic bursts of 1,000+ events never cause 429 errors or lost orders.</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q">What code changes are required when running Cloud Run with concurrency greater than 1?</div>
+                <div class="faq-a">Cloud Run shares container memory across parallel requests. Store per-request telemetry (trace_id, span_id, user context) in Python ContextVar instead of plain globals, guard shared in-memory caches with threading.Lock(), and reuse a global requests.Session() pool to save 50 to 150 ms per TLS handshake.</div>
+              </div>
+            </div>
+          </section>
+
+          <section class="cta-strip" id="contact">
+            <div>
+              <strong>Deploying an AI agent to production on Google Cloud?</strong>
+              <p>Let's review your architecture, concurrency limits, and GDPR guardrails in a 30-minute technical call so your system stays fast and predictable under load.</p>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <a class="cta-btn" href="https://calendly.com/azhyshchev/30min?utm_source=portfolio&amp;utm_medium=website&amp;utm_campaign=booking&amp;utm_content=google_cloud_run_ai_agent" target="_blank" rel="noreferrer">Book a 30 min call</a>
+              <a class="cta-btn outline" href="mailto:azhyshchev@gmail.com">Email me instead</a>
+            </div>
+          </section>
+
+          <a class="back-link" href="/articles/">← Back to articles</a>
+        </article>
+
+        <footer class="site-footer" data-nosnippet>
+          <span>© 2026 Mikhail Azhyshchev</span> ·
+          <a href="/impressum/">Impressum</a> ·
+          <a href="/datenschutz/">Datenschutz</a> ·
+          <a href="/agb/">AGB</a>
+        </footer>
+      </div>
+    </main>
+  </div>
+
+  <nav class="mobile-bottom-nav" id="mobileBottomNav" data-nosnippet aria-label="Mobile navigation">
+    <a class="mbn-item" href="/"><span class="mbn-icon">&lt;/&gt;</span><span class="mbn-label">Home</span></a>
+    <a class="mbn-item" href="/ai-checker/"><span class="mbn-icon">🤖</span><span class="mbn-label">AI Checker</span></a>
+    <a class="mbn-item" href="/experience/"><span class="mbn-icon">E</span><span class="mbn-label">Experience</span></a>
+    <a class="mbn-item" href="/projects/"><span class="mbn-icon">P</span><span class="mbn-label">Projects</span></a>
+    <a class="mbn-item active" href="/articles/"><span class="mbn-icon">A</span><span class="mbn-label">Articles</span></a>
+    <a class="mbn-item" href="/contact/"><span class="mbn-icon">C</span><span class="mbn-label">Contact</span></a>
+  </nav>
+
+  <script src="/js/nav.js" defer fetchpriority="low"></script>
+  <script src="/js/chat-widget.js" data-token="3530a5f865dcb0cc6489f5999cb0bfcb" defer></script>
+  <script src="/js/webmcp.js" defer></script>
+  <script>
+    document.querySelectorAll(".faq-q").forEach(function(q) {
+      q.addEventListener("click", function() {
+        var item = q.closest(".faq-item");
+        var isOpen = item.classList.toggle("open");
+        if (isOpen && typeof gtag === "function") {
+          gtag("event", "faq_open", { question: q.textContent.trim().substring(0, 60), page_language: "en" });
+        }
+      });
+    });
+    document.querySelectorAll('a[href*="calendly"]').forEach(function(btn) {
+      btn.addEventListener("click", function() {
+        if (window.gtag) gtag("event", "book_call_click", { location: "google_cloud_run_ai_agent" });
+      });
+    });
+  </script>
+</body>
+</html>

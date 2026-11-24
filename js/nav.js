@@ -37,7 +37,9 @@ var langMap = {
   '/ai-checker/': '/de/ki-checker/',
   '/de/ki-checker/': '/ai-checker/',
   '/articles/b2b-lead-generation-google-maps-mcp/': '/de/artikel/b2b-lead-generierung-google-maps-mcp/',
-  '/de/artikel/b2b-lead-generierung-google-maps-mcp/': '/articles/b2b-lead-generation-google-maps-mcp/'
+  '/de/artikel/b2b-lead-generierung-google-maps-mcp/': '/articles/b2b-lead-generation-google-maps-mcp/',
+  '/articles/google-cloud-run-ai-agent/': '/de/artikel/google-cloud-run-ki-agent/',
+  '/de/artikel/google-cloud-run-ki-agent/': '/articles/google-cloud-run-ai-agent/'
 };
 
 function normalizePath(p) {

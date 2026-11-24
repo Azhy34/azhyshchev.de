@@ -546,4 +546,22 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://azhyshchev.de/projects/ecommerce-core-web-vitals-pagespeed-automation/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/projects/ecommerce-core-web-vitals-pagespeed-automation/"/>
   </url>
+  <url>
+    <loc>https://azhyshchev.de/articles/google-cloud-run-ai-agent/</loc>
+    <lastmod>2026-11-24</lastmod>
+    <priority>0.85</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="en" href="https://azhyshchev.de/articles/google-cloud-run-ai-agent/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://azhyshchev.de/de/artikel/google-cloud-run-ki-agent/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/articles/google-cloud-run-ai-agent/"/>
+  </url>
+  <url>
+    <loc>https://azhyshchev.de/de/artikel/google-cloud-run-ki-agent/</loc>
+    <lastmod>2026-11-24</lastmod>
+    <priority>0.85</priority>
+    <changefreq>monthly</changefreq>
+    <xhtml:link rel="alternate" hreflang="de" href="https://azhyshchev.de/de/artikel/google-cloud-run-ki-agent/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://azhyshchev.de/articles/google-cloud-run-ai-agent/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://azhyshchev.de/articles/google-cloud-run-ai-agent/"/>
+  </url>
 </urlset>
